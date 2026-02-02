@@ -35,11 +35,20 @@
             <div class="indicator">Face Detect: <span id="calib-face">--</span></div>
           </div>
           <button id="btn-start-session" disabled>Start Session</button>
+          <div style="margin-top:10px;">
+            <button id="btn-force-start" style="font-size:0.8em; border-color: #555; color: #888;">Force Start
+              (Dev)</button>
+          </div>
         </div>
 
         <div id="stimulus-container">
           <!-- Stimuli will be rendered here (Canvas or DOM) -->
           <canvas id="task-canvas"></canvas>
+          <!-- Key Hint Overlay -->
+          <div id="key-hint"
+            style="position:absolute; bottom: 20px; left:0; right:0; text-align:center; color:#888; pointer-events:none;">
+            [F] Left &nbsp;&nbsp;&nbsp;&nbsp; [J] Right <br> (or Tap Screen)
+          </div>
           <div id="feedback-message" class="hidden">Correct!</div>
         </div>
 

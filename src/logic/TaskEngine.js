@@ -103,7 +103,12 @@ export class TaskEngine {
 
     waitForResponse() {
         return new Promise(resolve => {
-            const handler = (e) => {
+            const cleanup = () => {
+                window.removeEventListener('keydown', keyHandler);
+                this.canvas.removeEventListener('click', clickHandler);
+            };
+
+            const keyHandler = (e) => {
                 if (e.key.toLowerCase() === 'f') { // Left
                     cleanup();
                     resolve('LEFT');
@@ -113,10 +118,22 @@ export class TaskEngine {
                 }
             };
 
-            const cleanup = () => window.removeEventListener('keydown', handler);
-            window.addEventListener('keydown', handler);
+            const clickHandler = (e) => {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const width = rect.width;
 
-            // Can add timeout here if needed
+                if (x < width / 2) {
+                    cleanup();
+                    resolve('LEFT');
+                } else {
+                    cleanup();
+                    resolve('RIGHT');
+                }
+            };
+
+            window.addEventListener('keydown', keyHandler);
+            this.canvas.addEventListener('click', clickHandler);
         });
     }
 
