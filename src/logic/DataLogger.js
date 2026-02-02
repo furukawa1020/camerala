@@ -55,7 +55,12 @@ export class DataLogger {
             const windowFrames = this.windowBuffer.filter(f => f.t >= this.nextWindowStartTime && f.t < windowEnd);
 
             if (windowFrames.length > 0) {
-                this.aggregateWindow(windowFrames, this.nextWindowStartTime, windowEnd, blockId, condition);
+                // Find trials overlapping this window
+                // We need access to trials. 
+                // Since DataLogger holds `this.sessionData.trials`, we can filter them.
+                const trialsInWindow = this.sessionData.trials.filter(t => t.timestamp >= this.nextWindowStartTime && t.timestamp < windowEnd);
+
+                this.aggregateWindow(windowFrames, trialsInWindow, this.nextWindowStartTime, windowEnd, blockId, condition);
             }
 
             // Advance
@@ -63,17 +68,30 @@ export class DataLogger {
         }
     }
 
-    aggregateWindow(frames, start, end, blockId, condition) {
-        // Calculate means/variances
+    aggregateWindow(frames, trials, start, end, blockId, condition) {
+        // Calculate means/variances for Signals
         const count = frames.length;
         const features = {};
-        const keys = ['roival', 'motion', 'ear', 'quality'];
+        const keys = ['roival', 'motion', 'ear', 'quality', 'exposure_fluc'];
 
         keys.forEach(k => {
             const sum = frames.reduce((acc, cur) => acc + (cur[k] || 0), 0);
             features['mean_' + k] = sum / count;
-            // Variance could be added
         });
+
+        // Calculate Behavior Metrics (FR-12: Aggregated behavior)
+        let meanRT = null;
+        let accuracy = null;
+        let errorCount = 0;
+
+        if (trials && trials.length > 0) {
+            const rts = trials.map(t => t.rt);
+            meanRT = rts.reduce((a, b) => a + b, 0) / rts.length;
+
+            const correctCount = trials.filter(t => t.correct).length;
+            accuracy = correctCount / trials.length;
+            errorCount = trials.length - correctCount;
+        }
 
         this.aggregatedWindows.push({
             window_id: crypto.randomUUID(),
@@ -82,7 +100,12 @@ export class DataLogger {
             start_time: start,
             end_time: end,
             frame_count: count,
-            ...features
+            ...features,
+            // Behavior
+            mean_rt: meanRT,
+            accuracy: accuracy,
+            error_count: errorCount,
+            trial_count: trials.length
         });
     }
 

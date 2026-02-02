@@ -58,12 +58,31 @@ export class TaskEngine {
         this.state = 'FEEDBACK';
         this.draw(isCorrect);
 
-        // Adapt Difficulty (1-up 2-down or simple tracking)
-        // Simple: Correct -> Harder, Incorrect -> Easier
-        if (isCorrect) {
-            this.difficulty = Math.max(0.01, this.difficulty * 0.95); // getting harder (smaller tilt)
+        // Adapt Difficulty (FR-6: Updated based on recent N trials)
+        // Target 75% accuracy.
+        // We look at last 5 trials.
+        const history = this.trialHistory || [];
+        history.push({ correct: isCorrect, rt: rt });
+        if (history.length > 10) history.shift();
+        this.trialHistory = history;
+
+        // Check last 5 trials accuracy
+        if (history.length >= 5) {
+            const recent = history.slice(-5);
+            const acc = recent.filter(r => r.correct).length / recent.length;
+
+            // Simple P-controllerish updates
+            if (acc > 0.8) {
+                // Too easy -> Increase difficulty (reduce tilt)
+                this.difficulty = Math.max(0.01, this.difficulty * 0.9);
+            } else if (acc < 0.6) {
+                // Too hard -> Decrease difficulty (increase tilt)
+                this.difficulty = Math.min(1.0, this.difficulty * 1.1);
+            }
         } else {
-            this.difficulty = Math.min(1.0, this.difficulty * 1.2); // getting easier
+            // Startup phase: 1-up 1-down rapid approach
+            if (isCorrect) this.difficulty *= 0.95;
+            else this.difficulty *= 1.1;
         }
 
         // Log logic (user prompt specifically asked for closed loop)
