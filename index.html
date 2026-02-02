@@ -1,13 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>camerala</title>
+    <title>CAM-MIND Prototype</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Status Bar -->
+      <header id="status-bar">
+        <div class="status-item">FPS: <span id="fps-display">--</span></div>
+        <div class="status-item">Face: <span id="face-status">Waiting...</span></div>
+        <div class="status-item">Phase: <span id="mode-display">Init</span></div>
+      </header>
+
+      <!-- Main Layout -->
+      <main id="main-container">
+        <!-- Camera Preview (hidden by default during task? or small corner) -->
+        <div id="camera-container" class="preview-hidden">
+          <video id="input-video" playsinline muted autoplay></video>
+          <canvas id="output-canvas"></canvas>
+        </div>
+
+        <!-- Task Area -->
+        <div id="task-area">
+          <div id="calibration-overlay" class="overlay">
+            <h2>Calibration</h2>
+            <p>Please center your face and ensure good lighting.</p>
+            <div class="quality-indicators">
+               <div class="indicator">Brightness: <span id="calib-bright">--</span></div>
+               <div class="indicator">Face Detect: <span id="calib-face">--</span></div>
+            </div>
+            <button id="btn-start-session" disabled>Start Session</button>
+          </div>
+
+          <div id="stimulus-container">
+            <!-- Stimuli will be rendered here (Canvas or DOM) -->
+            <canvas id="task-canvas"></canvas>
+            <div id="feedback-message" class="hidden">Correct!</div>
+          </div>
+          
+          <div id="block-instruction" class="overlay hidden">
+            <h2 id="instruction-title">Task Instruction</h2>
+            <p id="instruction-text">...</p>
+            <button id="btn-start-block">Start Block</button>
+          </div>
+
+          <div id="subjective-overlay" class="overlay hidden">
+            <h2>Block Complete</h2>
+            <div class="slider-group">
+              <label>Threat ↔ Challenge</label>
+              <div class="slider-labels">
+                <span>Threat</span><span>Challenge</span>
+              </div>
+              <input type="range" id="slider-appraisal" min="-3" max="3" step="1" value="0">
+            </div>
+             <div class="slider-group">
+              <label>Unpleasant ↔ Pleasant</label>
+              <div class="slider-labels">
+                <span>Unpleasant</span><span>Pleasant</span>
+              </div>
+              <input type="range" id="slider-valence" min="-3" max="3" step="1" value="0">
+            </div>
+             <div class="slider-group">
+              <label>Hindrance ↔ Helpful</label>
+              <div class="slider-labels">
+                <span>Hindrance</span><span>Helpful</span>
+              </div>
+              <input type="range" id="slider-utility" min="-3" max="3" step="1" value="0">
+            </div>
+            <button id="btn-submit-subjective">Next</button>
+          </div>
+        </div>
+      </main>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

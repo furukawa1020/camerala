@@ -1,0 +1,170 @@
+:root {
+  --bg-color: #0f0f13;
+  --text-color: #e0e0e0;
+  --accent-color: #00f0ff; /* Neon Cyan */
+  --accent-secondary: #ff0055; /* Neon Red */
+  --panel-bg: rgba(255, 255, 255, 0.05);
+  --font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Status Bar */
+#status-bar {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.5);
+  font-size: 0.9em;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.status-item span {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+/* Main Container */
+#main-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Camera Preview */
+#camera-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 160px;
+  height: 120px;
+  border: 1px solid var(--accent-color);
+  z-index: 100;
+  background: black;
+}
+#camera-container video, #camera-container canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+#input-video {
+  opacity: 0.5; /* Show landmarks on top clearly */
+  transform: scaleX(-1); /* Mirror */
+}
+#output-canvas {
+  transform: scaleX(-1);
+}
+
+/* Task Area */
+#task-area {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#task-canvas {
+  /* The main psychophysics canvas */
+  width: 800px;
+  height: 600px;
+  /* background: #1a1a1a; */
+}
+
+/* Overlays */
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: all 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-color);
+  color: black;
+  box-shadow: 0 0 15px var(--accent-color);
+}
+
+button:disabled {
+  border-color: #555;
+  color: #555;
+  cursor: not-allowed;
+}
+
+/* Sliders */
+.slider-group {
+  margin: 20px 0;
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.slider-group label {
+  display: block;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+input[type=range] {
+  width: 100%;
+  accent-color: var(--accent-color);
+}
