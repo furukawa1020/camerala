@@ -21,9 +21,9 @@ export class DOMManager {
 
         // Text Content
         this.texts = {
-            'THREAT': "This task is to evaluate your capabilities. Please perform as fast and accurately as possible.",
-            'CHALLENGE': "This task is for practice. Feel free to explore your own pace. Mistakes are fine.",
-            'NEUTRAL': "Please follow the instructions on the screen."
+            'THREAT': "これからの課題はあなたの能力を測る目的で行われます。できるだけ正確に速く答えてください。",
+            'CHALLENGE': "これからの課題は練習です。うまくいかなくても構いません。自分のペースで挑戦してください。",
+            'NEUTRAL': "これから課題を行います。画面の指示に従って答えてください。"
         };
     }
 

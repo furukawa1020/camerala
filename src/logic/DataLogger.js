@@ -10,7 +10,10 @@ export class DataLogger {
             subjective: []
         };
 
-        this.windowBuffer = []; // Accumulate features here (e.g. every frame)
+        this.windowBuffer = []; // Buffer for raw frames to be aggregated
+        this.aggregatedWindows = []; // Completed windows
+        this.windowConfig = { size: 10000, overlap: 5000 };
+        this.nextWindowStartTime = -1;
         this.startTime = Date.now();
     }
 
@@ -25,30 +28,62 @@ export class DataLogger {
 
     // Called every frame by main loop
     logFrameFeatures(features, condition, blockId) {
+        const now = performance.now();
+
+        // 1. Raw Logging (still useful)
         this.windowBuffer.push({
-            t: performance.now(),
+            t: now,
             c: condition || 'NONE',
             b: blockId,
             ...features
         });
 
-        // Auto-flush windows (e.g. every 10 seconds of data) works too, 
-        // but requirement said 10s window with 5s overlap. 
-        // For simplicity in raw log, we can just save ALL frames and window during analysis, 
-        // OR we can pre-calculate windows here. 
-        // The requirement "FR-11" implies changes, but "FR-14" requests "windows.csv".
-        // I'll implement a simple window aggregator.
+        // 2. Windowing Logic
+        // Initialize start time if needed
+        if (this.nextWindowStartTime < 0) this.nextWindowStartTime = now;
 
-        this.checkWindows();
+        // Check if we have enough data for a window (current time > start + size)
+        // We process "past" windows. 
+        // Ideally this is done in post-processing, but requirement FR-12 implies saving "windows".
+        // We will scan the buffer for the target window range.
+
+        // Simple sliding window: Check if we have covered the current target window
+        const windowEnd = this.nextWindowStartTime + this.windowConfig.size;
+
+        if (now >= windowEnd) {
+            // Extract window data
+            const windowFrames = this.windowBuffer.filter(f => f.t >= this.nextWindowStartTime && f.t < windowEnd);
+
+            if (windowFrames.length > 0) {
+                this.aggregateWindow(windowFrames, this.nextWindowStartTime, windowEnd, blockId, condition);
+            }
+
+            // Advance
+            this.nextWindowStartTime += (this.windowConfig.size - this.windowConfig.overlap);
+        }
     }
 
-    checkWindows() {
-        // Prototype: Just logging raw frames (features.csv) is safer for analysis freedom? 
-        // User Req says: "FR-12: Windowing... Window 10s, 5s overlap".
-        // I will log raw frames to be safe, AND computed windows.
-        // But for memory, maybe just windows is better. 
-        // Let's do straight aggregation: Every 5 seconds, look back 10 seconds.
-        // This requires keeping ~10s of buffer.
+    aggregateWindow(frames, start, end, blockId, condition) {
+        // Calculate means/variances
+        const count = frames.length;
+        const features = {};
+        const keys = ['roival', 'motion', 'ear', 'quality'];
+
+        keys.forEach(k => {
+            const sum = frames.reduce((acc, cur) => acc + (cur[k] || 0), 0);
+            features['mean_' + k] = sum / count;
+            // Variance could be added
+        });
+
+        this.aggregatedWindows.push({
+            window_id: crypto.randomUUID(),
+            block_id: blockId,
+            condition: condition,
+            start_time: start,
+            end_time: end,
+            frame_count: count,
+            ...features
+        });
     }
 
     logTrial(data) {
@@ -81,9 +116,13 @@ export class DataLogger {
         // Subjective
         zip.file("subjective.csv", this.toCSV(this.sessionData.subjective));
 
-        // Features (Raw frames for max flexibility in prototype)
-        // In a real robust app we might window here, but raw is better for "proving" invariance locally.
-        // I'll dump the raw buffer as windows.csv (actually frames)
+        // Blocks
+        zip.file("blocks.csv", this.toCSV(this.sessionData.blocks));
+
+        // Windows
+        zip.file("windows.csv", this.toCSV(this.aggregatedWindows));
+
+        // Features (Raw)
         zip.file("features_raw.csv", this.toCSV(this.windowBuffer));
 
         zip.generateAsync({ type: "blob" })
