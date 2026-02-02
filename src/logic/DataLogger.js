@@ -19,7 +19,7 @@ export class DataLogger {
 
     startSession(blockPlan) {
         this.sessionData.metadata = {
-            sessionId: crypto.randomUUID(),
+            sessionId: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `session_${Date.now()}`,
             startTime: new Date().toISOString(),
             userAgent: navigator.userAgent,
             blockPlan: blockPlan
@@ -94,7 +94,7 @@ export class DataLogger {
         }
 
         this.aggregatedWindows.push({
-            window_id: crypto.randomUUID(),
+            window_id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `win_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             block_id: blockId,
             condition: condition,
             start_time: start,

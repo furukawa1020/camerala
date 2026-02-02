@@ -62,9 +62,17 @@ async function main() {
   };
 
   // Start Button Logic
-  document.getElementById('btn-start-session').addEventListener('click', () => {
+  const startSession = () => {
     document.getElementById('calibration-overlay').classList.add('hidden');
     session.start();
+  };
+
+  document.getElementById('btn-start-session').addEventListener('click', startSession);
+
+  // Force Start
+  document.getElementById('btn-force-start').addEventListener('click', () => {
+    console.warn("Force starting session without quality checks.");
+    startSession();
   });
 
   // Init Camera
