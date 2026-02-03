@@ -2,6 +2,7 @@ export class DOMManager {
     constructor() {
         this.overlays = {
             calibration: document.getElementById('calibration-overlay'),
+            tutorial: document.getElementById('tutorial-overlay'),
             instruction: document.getElementById('block-instruction'),
             subjective: document.getElementById('subjective-overlay')
         };
@@ -13,6 +14,7 @@ export class DOMManager {
             calibBright: document.getElementById('calib-bright'),
             calibFace: document.getElementById('calib-face'),
             btnStart: document.getElementById('btn-start-session'),
+            btnTutorial: document.getElementById('btn-end-tutorial'),
             btnBlock: document.getElementById('btn-start-block'),
             btnSubjective: document.getElementById('btn-submit-subjective'),
             instrTitle: document.getElementById('instruction-title'),

@@ -52,6 +52,28 @@
           <div id="feedback-message" class="hidden">Correct!</div>
         </div>
 
+        <!-- Tutorial Overlay -->
+        <div id="tutorial-overlay" class="overlay hidden">
+          <h2>How to Play</h2>
+          <p>Discriminate the tilt of the stripes.</p>
+          <div style="display:flex; justify-content:center; gap:40px; margin: 20px 0;">
+            <div style="text-align:center;">
+              <div
+                style="width:100px; height:100px; border-radius:50%; background: repeating-linear-gradient(90deg, #fff, #fff 4px, #333 4px, #333 8px); transform: rotate(-15deg); border: 2px solid cyan; margin:0 auto;">
+              </div>
+              <p style="margin-top:10px; color:cyan;">[F] Left</p>
+            </div>
+            <div style="text-align:center;">
+              <div
+                style="width:100px; height:100px; border-radius:50%; background: repeating-linear-gradient(90deg, #fff, #fff 4px, #333 4px, #333 8px); transform: rotate(15deg); border: 2px solid cyan; margin:0 auto;">
+              </div>
+              <p style="margin-top:10px; color:cyan;">[J] Right</p>
+            </div>
+          </div>
+          <p style="font-size:0.9em; color:#aaa;">(Tap left or right side of screen also works)</p>
+          <button id="btn-end-tutorial">Start Experiment</button>
+        </div>
+
         <div id="block-instruction" class="overlay hidden">
           <h2 id="instruction-title">Task Instruction</h2>
           <p id="instruction-text">...</p>

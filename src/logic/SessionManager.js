@@ -35,6 +35,7 @@ export class SessionManager {
     async start() {
         this.initSession();
         this.isPlaying = true;
+        await this.ui.showTutorial();
         await this.runSequence();
     }
 
