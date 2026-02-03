@@ -49,6 +49,20 @@ export class DOMManager {
         Object.values(this.overlays).forEach(el => el.classList.add('hidden'));
     }
 
+    showTutorial() {
+        return new Promise(resolve => {
+            this.hideAllOverlays();
+            this.overlays.tutorial.classList.remove('hidden');
+
+            const handler = () => {
+                this.elements.btnTutorial.removeEventListener('click', handler);
+                this.overlays.tutorial.classList.add('hidden');
+                resolve();
+            };
+            this.elements.btnTutorial.addEventListener('click', handler);
+        });
+    }
+
     showInstruction(condition) {
         return new Promise(resolve => {
             this.hideAllOverlays();
