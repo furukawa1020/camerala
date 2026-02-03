@@ -1,0 +1,7 @@
+blockId,condition,appraisal,valence,utility,time
+0,"CHALLENGE","0","0","0",48759
+1,"THREAT","0","1","0",76741
+2,"THREAT","0","-1","0",106423
+3,"NEUTRAL","0","0","0",129336
+4,"NEUTRAL","0","0","0",152193
+5,"CHALLENGE","0","-1","0",179986
