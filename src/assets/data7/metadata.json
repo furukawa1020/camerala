@@ -1,0 +1,13 @@
+{
+  "sessionId": "3305cebf-0693-4333-a997-18495f64f80b",
+  "startTime": "2026-02-08T04:22:25.769Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0",
+  "blockPlan": [
+    "THREAT",
+    "CHALLENGE",
+    "NEUTRAL",
+    "NEUTRAL",
+    "THREAT",
+    "CHALLENGE"
+  ]
+}
