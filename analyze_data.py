@@ -82,27 +82,41 @@ def analyze_all_data():
     centers = scaler.inverse_transform(kmeans.cluster_centers_)
     df_centers = pd.DataFrame(centers, columns=['Motion', 'EAR', 'ROI'])
     
-    # --- 3. Behavioral Differentiation ---
-    # Accuracy / RT
-    print("\n[Behavior] Condition Differences:")
-    for metric in ['mean_rt', 'accuracy']:
-        print(f"\n-- {metric} --")
-        # Ensure numeric type
-        windows[metric] = pd.to_numeric(windows[metric], errors='coerce')
-        stats = windows.dropna(subset=[metric]).groupby('condition')[metric].agg(['mean', 'std', 'count'])
-        print(stats)
-
-    print("\n[Clustering] Condition Distribution per Cluster:")
-    print(pd.crosstab(windows['cluster'], windows['condition'], normalize='index'))
-
-    # C. Context Interaction (ANOVA-like check)
-    # Does 'Home' change the effect of 'Threat'?
-    print("\n[Interaction] Motion by Condition x Context:")
-    print(windows.groupby(['context', 'condition'])['mean_motion'].mean())
+    # --- 3. Behavioral Differentiation (Using Trials Data) ---
+    # Load all trials
+    all_trials = []
+    for i in range(1, 11):
+        t_path = os.path.join(base_path, f"data{i}", "trials.csv")
+        context = 'University' if i <= 5 else 'Home'
+        if os.path.exists(t_path):
+            df_t = pd.read_csv(t_path)
+            df_t['session'] = i
+            df_t['context'] = context
+            all_trials.append(df_t)
+    
+    if all_trials:
+        trials = pd.concat(all_trials, ignore_index=True)
+        print("\n[Behavior] Condition Differences (from Trials):")
+        # RT (ms)
+        print("-- Reaction Time (ms) --")
+        print(trials.groupby('condition')['rt'].agg(['mean', 'std', 'count']))
+        
+        # Accuracy
+        print("\n-- Accuracy --")
+        # correct is boolean, convert to int
+        trials['correct_int'] = trials['correct'].astype(int)
+        print(trials.groupby('condition')['correct_int'].agg(['mean', 'count']))
+        
+        # Framing Effect Check: Efficiency (Accuracy / RT) ?
+        # Or just Context x Condition for RT
+        print("\n[Interaction] RT by Condition x Context:")
+        print(trials.groupby(['context', 'condition'])['rt'].mean())
 
     # D. Time series trend (Fatigue effect?)
     # Correlation between Session Index and Baseline Motion
-    r, p = stats.pearsonr(windows['session'], windows['mean_motion'])
+    # Fix: use stats.pearsonr correctly
+    clean_win = windows.dropna(subset=['mean_motion', 'session'])
+    r, p = stats.pearsonr(clean_win['session'], clean_win['mean_motion'])
     print(f"\n[Trend] Session vs Motion: r={r:.3f}, p={p:.3f}")
 
 
