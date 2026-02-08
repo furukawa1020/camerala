@@ -12,20 +12,24 @@ def analyze_all_data():
     # Path to assets
     base_path = r"c:\Users\hatake\OneDrive\画像\デスクトップ\.vscode\camerala\src\assets"
     
-    # Iterate through data1 to data5
-    for i in range(1, 6):
+    # Iterate through data1 to data10
+    for i in range(1, 11):
         folder = os.path.join(base_path, f"data{i}")
         win_path = os.path.join(folder, "windows.csv")
         sub_path = os.path.join(folder, "subjective.csv")
         
+        context = 'University' if i <= 5 else 'Home'
+
         if os.path.exists(win_path):
             df_w = pd.read_csv(win_path)
             df_w['session'] = i
+            df_w['context'] = context
             all_windows.append(df_w)
             
         if os.path.exists(sub_path):
             df_s = pd.read_csv(sub_path)
             df_s['session'] = i
+            df_s['context'] = context
             all_subjective.append(df_s)
 
     if not all_windows:
@@ -38,6 +42,11 @@ def analyze_all_data():
 
     print(f"Total Windows: {len(windows)}")
     print(f"Total Subjective Ratings: {len(subjective)}")
+    print(f"Sessions: {sorted(windows['session'].unique())}")
+
+    # --- 0. Context Comparison (Ecological Validity) ---
+    print("\n[Ecological Validity] Home vs University (Baseline Features):")
+    print(windows.groupby('context')[['mean_roival', 'mean_motion', 'mean_exposure_fluc', 'mean_quality']].mean())
 
     # --- 1. Signal Quality Check (Exposure Fluctuation) ---
     # Low means good quality.
