@@ -48,50 +48,54 @@ def analyze_all_data():
     print("\n[Ecological Validity] Home vs University (Baseline Features):")
     print(windows.groupby('context')[['mean_roival', 'mean_motion', 'mean_exposure_fluc', 'mean_quality']].mean())
 
-    # --- 1. Signal Quality Check (Exposure Fluctuation) ---
-    # Low means good quality.
-    mean_exp_fluc = windows['mean_exposure_fluc'].mean()
-    print(f"\n[Quality] Mean Exposure Fluctuation: {mean_exp_fluc:.4f} (Lower is better)")
+    # --- 2. Advanced Statistical Analysis ---
+    import matplotlib.pyplot as plt
+    try:
+        from sklearn.cluster import KMeans
+        from sklearn.preprocessing import StandardScaler
+        import seaborn as sns
+        from scipy import stats
+    except ImportError:
+        print("Skipping advanced stats (sklearn/scipy/seaborn not found)")
+        return
 
-    # --- 2. Physiological Differentiation (Threat vs Challenge) ---
-    # We hypothesize meaningful diffs in 'mean_motion' or 'mean_roival' (brightness) or 'mean_ear'
-    print("\n[Physiology] Condition Differences (Mean +/- Std):")
+    # A. Correlation Matrix
+    print("\n[Correlation] Physiological & Context Features:")
+    # Create dummy for Context (Home=1, Univ=0)
+    windows['is_home'] = (windows['context'] == 'Home').astype(int)
+    corr_cols = ['mean_roival', 'mean_motion', 'mean_ear', 'mean_exposure_fluc', 'mean_quality', 'is_home']
+    corr = windows[corr_cols].corr()
+    print(corr)
+
+    # B. Clustering (Unsupervised Learning)
+    # Can we find "Physiological States" without knowing the condition?
+    # Features: Motion, EAR, ROI
+    features = windows[['mean_motion', 'mean_ear', 'mean_roival']].dropna()
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
     
-    for metric in ['mean_roival', 'mean_motion', 'mean_ear']:
-        print(f"\n-- {metric} --")
-        stats = windows.groupby('condition')[metric].agg(['mean', 'std', 'count'])
-        print(stats)
-        
-        # Simple Cohen's d (Threat vs Challenge)
-        try:
-            m1 = stats.loc['THREAT', 'mean']
-            s1 = stats.loc['THREAT', 'std']
-            n1 = stats.loc['THREAT', 'count']
-            
-            m2 = stats.loc['CHALLENGE', 'mean']
-            s2 = stats.loc['CHALLENGE', 'std']
-            n2 = stats.loc['CHALLENGE', 'count']
-            
-            # Pooled SD
-            sp = np.sqrt(((n1-1)*s1**2 + (n2-1)*s2**2) / (n1+n2-2))
-            d = (m1 - m2) / sp
-            
-            print(f"Effect Size (Threat vs Challenge) Cohen's d: {d:.3f}")
-        except:
-            print("Could not calc effect size (missing conditions?)")
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    windows.loc[features.index, 'cluster'] = kmeans.fit_predict(scaled_features)
+    
+    print("\n[Clustering] Cluster Centers (Scaled):")
+    # Inverse transform to see real values
+    centers = scaler.inverse_transform(kmeans.cluster_centers_)
+    df_centers = pd.DataFrame(centers, columns=['Motion', 'EAR', 'ROI'])
+    print(df_centers)
+    
+    print("\n[Clustering] Condition Distribution per Cluster:")
+    print(pd.crosstab(windows['cluster'], windows['condition'], normalize='index'))
 
-    # --- 3. Behavioral Differentiation ---
-    # Accuracy / RT
-    print("\n[Behavior] Condition Differences:")
-    for metric in ['mean_rt', 'accuracy']:
-        print(f"\n-- {metric} --")
-        # rt might be null, dropna
-        stats = windows.dropna(subset=[metric]).groupby('condition')[metric].agg(['mean', 'std', 'count'])
-        print(stats)
+    # C. Context Interaction (ANOVA-like check)
+    # Does 'Home' change the effect of 'Threat'?
+    print("\n[Interaction] Motion by Condition x Context:")
+    print(windows.groupby(['context', 'condition'])['mean_motion'].mean())
 
-    # --- 4. Subjective Check ---
-    print("\n[Subjective] Ratings:")
-    print(subjective.groupby('condition')[['appraisal', 'valence', 'utility']].mean())
+    # D. Time series trend (Fatigue effect?)
+    # Correlation between Session Index and Baseline Motion
+    r, p = stats.pearsonr(windows['session'], windows['mean_motion'])
+    print(f"\n[Trend] Session vs Motion: r={r:.3f}, p={p:.3f}")
+
 
 if __name__ == "__main__":
     analyze_all_data()
