@@ -81,8 +81,17 @@ def analyze_all_data():
     # Inverse transform to see real values
     centers = scaler.inverse_transform(kmeans.cluster_centers_)
     df_centers = pd.DataFrame(centers, columns=['Motion', 'EAR', 'ROI'])
-    print(df_centers)
     
+    # --- 3. Behavioral Differentiation ---
+    # Accuracy / RT
+    print("\n[Behavior] Condition Differences:")
+    for metric in ['mean_rt', 'accuracy']:
+        print(f"\n-- {metric} --")
+        # Ensure numeric type
+        windows[metric] = pd.to_numeric(windows[metric], errors='coerce')
+        stats = windows.dropna(subset=[metric]).groupby('condition')[metric].agg(['mean', 'std', 'count'])
+        print(stats)
+
     print("\n[Clustering] Condition Distribution per Cluster:")
     print(pd.crosstab(windows['cluster'], windows['condition'], normalize='index'))
 
