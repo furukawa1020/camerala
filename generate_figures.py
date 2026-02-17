@@ -4,6 +4,73 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import numpy as np
+from scipy import stats
+
+def annotate_significance(ax, data, x, y, hue, pair_conds):
+    """
+    Annotate significance between two conditions (pair_conds) within each x-category.
+    """
+    contexts = data[x].unique()
+    
+    # Y-offset for annotations
+    y_max = data[y].max()
+    h = y_max * 0.05
+    
+    for i, context in enumerate(sorted(contexts, reverse=True)): # University first if desc, but seaborn order matters.
+        # Get data
+        d1 = data[(data[x] == context) & (data[hue] == pair_conds[0])][y].dropna()
+        d2 = data[(data[x] == context) & (data[hue] == pair_conds[1])][y].dropna()
+        
+        n1 = len(d1)
+        n2 = len(d2)
+        
+        # T-test
+        if n1 > 1 and n2 > 1:
+            t, p = stats.ttest_ind(d1, d2, equal_var=False)
+            
+            # Format p-value
+            if p < 0.001:
+                sig_symbol = "***"
+            elif p < 0.01:
+                sig_symbol = "**"
+            elif p < 0.05:
+                sig_symbol = "*"
+            else:
+                sig_symbol = "n.s."
+            
+            # Draw line and text
+            # Approximate x-coords for hue bars. 
+            # Seaborn dodge: width=0.8. 3 bars. centers at -0.27, 0, 0.27 roughly?
+            # THREAT (red) vs CHALLENGE (blue)
+            # hue_order was THREAT, CHALLENGE, NEUTRAL
+            # THREAT is index 0, CHALLENGE is index 1.
+            
+            # Context-centers: 0, 1. Univ is usually 1 (alphabetical H, U? No. Home, Univ).
+            # Let's dynamically find centers if possible, or assume seaborn default.
+            # Default order: Home (0), University (1)
+            
+            x_center = i 
+            bar_width = 0.26 # Approx
+            x1 = x_center - epsilon
+            x2 = x_center
+            
+            # Hardcoded offset for hue_order=['THREAT', 'CHALLENGE', 'NEUTRAL']
+            # THREAT is 1st (-0.26), CHALLENGE is 2nd (0), NEUTRAL is 3rd (+0.26)
+            x_threat = x_center - 0.26
+            x_chal = x_center
+            
+            y1 = data[(data[x] == context)][y].mean() + data[(data[x] == context)][y].std() # Just above bar? No, above max.
+            # Find max of the two comparison bars
+            y_curr_max = max(d1.mean() + d1.std(), d2.mean() + d2.std())
+            y_curr_max = max(d1.max(), d2.max()) # safer for raw data points
+            
+            # Draw
+            line_y = y_curr_max + h
+            ax.plot([x_threat, x_threat, x_chal, x_chal], [line_y, line_y+h, line_y+h, line_y], lw=1.5, c='k')
+            ax.text((x_threat+x_chal)/2, line_y+h, f"{sig_symbol}\n(p={p:.3f})", ha='center', va='bottom', fontsize=10)
+            
+            # Add N
+            ax.text(x_center, 0, f"n={n1+n2}", ha='center', va='bottom', fontsize=8, color='black', fontweight='bold')
 
 def generate_paper_figures():
     # Setup style
@@ -52,18 +119,27 @@ def generate_paper_figures():
     windows = windows[windows['condition'].isin(valid_conds)]
     trials = trials[trials['condition'].isin(valid_conds)]
     
+    # Cleanup data types
+    windows['mean_motion'] = pd.to_numeric(windows['mean_motion'], errors='coerce')
+    trials['rt'] = pd.to_numeric(trials['rt'], errors='coerce')
+    windows['mean_exposure_fluc'] = pd.to_numeric(windows['mean_exposure_fluc'], errors='coerce')
+
     # OUTPUT DIR
     out_dir = "paper_figures"
     os.makedirs(out_dir, exist_ok=True)
 
     # --- FIGURE 3: Interaction Effect (The "Safe Haven" Effect) ---
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+    
+    # Define Order
+    hue_order = ['THREAT', 'CHALLENGE', 'NEUTRAL']
+    context_order = ['University', 'Home']
     
     # A. Physiology (Motion)
-    # Ensure numeric
-    windows['mean_motion'] = pd.to_numeric(windows['mean_motion'], errors='coerce')
+    # Filter out outliers specifically for plotting? or keep raw? Keep raw.
     
     sns.barplot(data=windows, x='context', y='mean_motion', hue='condition', 
+                hue_order=hue_order, order=context_order,
                 palette={'THREAT': '#ff4d4d', 'CHALLENGE': '#4d79ff', 'NEUTRAL': '#999999'},
                 errorbar='se', ax=axes[0], capsize=.1)
     
@@ -72,10 +148,43 @@ def generate_paper_figures():
     axes[0].set_xlabel('Context')
     axes[0].legend(title='Condition')
     
-    # B. Behavior (RT)
-    trials['rt'] = pd.to_numeric(trials['rt'], errors='coerce')
+    # Custom Annotation for Motion
+    # We compare THREAT vs CHALLENGE
+    # University (Index 0)
+    # Home (Index 1)
     
+    # Manually annotate for control
+    # University
+    u_th = windows[(windows['context']=='University') & (windows['condition']=='THREAT')]['mean_motion'].dropna()
+    u_ch = windows[(windows['context']=='University') & (windows['condition']=='CHALLENGE')]['mean_motion'].dropna()
+    t_u, p_u = stats.ttest_ind(u_th, u_ch, equal_var=False)
+    
+    # Home
+    h_th = windows[(windows['context']=='Home') & (windows['condition']=='THREAT')]['mean_motion'].dropna()
+    h_ch = windows[(windows['context']=='Home') & (windows['condition']=='CHALLENGE')]['mean_motion'].dropna()
+    t_h, p_h = stats.ttest_ind(h_th, h_ch, equal_var=False)
+
+    # Draw Univ
+    y_max = windows['mean_motion'].max()
+    h = y_max * 0.05
+    x_u = 0 # Univ is index 0
+    # THREAT(-0.27), CHAL(0)
+    axes[0].plot([-0.27, -0.27, 0, 0], [1.3e-3, 1.35e-3, 1.35e-3, 1.3e-3], lw=1.5, c='k') # Hardcoded Y for neatness
+    sig_u = "***" if p_u < 0.001 else "**" if p_u < 0.01 else "*" if p_u < 0.05 else "n.s."
+    axes[0].text(-0.135, 1.35e-3, f"{sig_u}\n(p={p_u:.3f})", ha='center', va='bottom')
+    axes[0].text(0, 0, f"n(win)={len(u_th)+len(u_ch)}", ha='center', va='bottom', fontsize=9)
+
+    # Draw Home
+    x_h = 1 # Home is index 1
+    axes[0].plot([1-0.27, 1-0.27, 1, 1], [1.3e-3, 1.35e-3, 1.35e-3, 1.3e-3], lw=1.5, c='k')
+    sig_h = "***" if p_h < 0.001 else "**" if p_h < 0.01 else "*" if p_h < 0.05 else "n.s."
+    axes[0].text(1-0.135, 1.35e-3, f"{sig_h}\n(p={p_h:.3f})", ha='center', va='bottom')
+    axes[0].text(1, 0, f"n(win)={len(h_th)+len(h_ch)}", ha='center', va='bottom', fontsize=9)
+
+
+    # B. Behavior (RT)
     sns.barplot(data=trials, x='context', y='rt', hue='condition',
+                hue_order=hue_order, order=context_order,
                 palette={'THREAT': '#ff4d4d', 'CHALLENGE': '#4d79ff', 'NEUTRAL': '#999999'},
                 errorbar='se', ax=axes[1], capsize=.1)
     
@@ -86,18 +195,46 @@ def generate_paper_figures():
         axes[1].get_legend().remove() # Unified legend
     except:
         pass
+        
+    # Stats for RT
+    # University
+    u_th_rt = trials[(trials['context']=='University') & (trials['condition']=='THREAT')]['rt'].dropna()
+    u_ch_rt = trials[(trials['context']=='University') & (trials['condition']=='CHALLENGE')]['rt'].dropna()
+    t_u_rt, p_u_rt = stats.ttest_ind(u_th_rt, u_ch_rt, equal_var=False)
+
+    y_max_rt = trials['rt'].max() # approx 3500? No avg is 1000.
+    y_line = 1300 # manual
+    axes[1].plot([-0.27, -0.27, 0, 0], [y_line, y_line+50, y_line+50, y_line], lw=1.5, c='k')
+    sig_u_rt = "***" if p_u_rt < 0.001 else "**" if p_u_rt < 0.01 else "*" if p_u_rt < 0.05 else "n.s."
+    axes[1].text(-0.135, y_line+50, f"{sig_u_rt}\n(p={p_u_rt:.3f})", ha='center', va='bottom')
+    axes[1].text(0, 0, f"n(trial)={len(u_th_rt)+len(u_ch_rt)}", ha='center', va='bottom', fontsize=9)
+
+    # Home
+    h_th_rt = trials[(trials['context']=='Home') & (trials['condition']=='THREAT')]['rt'].dropna()
+    h_ch_rt = trials[(trials['context']=='Home') & (trials['condition']=='CHALLENGE')]['rt'].dropna()
+    t_h_rt, p_h_rt = stats.ttest_ind(h_th_rt, h_ch_rt, equal_var=False)
+    
+    axes[1].plot([1-0.27, 1-0.27, 1, 1], [y_line, y_line+50, y_line+50, y_line], lw=1.5, c='k')
+    sig_h_rt = "***" if p_h_rt < 0.001 else "**" if p_h_rt < 0.01 else "*" if p_h_rt < 0.05 else "n.s."
+    axes[1].text(1-0.135, y_line+50, f"{sig_h_rt}\n(p={p_h_rt:.3f})", ha='center', va='bottom')
+    axes[1].text(1, 0, f"n(trial)={len(h_th_rt)+len(h_ch_rt)}", ha='center', va='bottom', fontsize=9)
     
     plt.tight_layout()
     plt.savefig(f"{out_dir}/Figure3_Interaction.png", dpi=300)
-    # plt.savefig(f"{out_dir}/Figure3_Interaction.pdf") # PDF might fail on windows without backend
-    print("Generated Figure 3: Interaction Effect")
+    print("Generated Figure 3: Interaction Effect with Stats")
 
     # --- FIGURE 2: Data Quality (Ecological Validity) ---
     plt.figure(figsize=(6, 5))
-    windows['mean_exposure_fluc'] = pd.to_numeric(windows['mean_exposure_fluc'], errors='coerce')
     sns.boxplot(data=windows, x='context', y='mean_exposure_fluc', hue='context', palette="Set2", legend=False)
     plt.title('B. Environment Signal Quality', fontweight='bold')
     plt.ylabel('Exposure Fluctuation (Noise Level)')
+    
+    # Add N
+    n_u = len(windows[windows['context']=='University'])
+    n_h = len(windows[windows['context']=='Home'])
+    plt.text(0, windows['mean_exposure_fluc'].max(), f"n={n_u}", ha='center', va='bottom')
+    plt.text(1, windows['mean_exposure_fluc'].max(), f"n={n_h}", ha='center', va='bottom')
+
     plt.tight_layout()
     plt.savefig(f"{out_dir}/Figure2_Quality.png", dpi=300)
     print("Generated Figure 2: Quality")
