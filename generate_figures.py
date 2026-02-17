@@ -239,5 +239,53 @@ def generate_paper_figures():
     plt.savefig(f"{out_dir}/Figure2_Quality.png", dpi=300)
     print("Generated Figure 2: Quality")
 
+    # --- FIGURE 4: Longitudinal SCED Dynamics (Time Series) ---
+    plt.figure(figsize=(14, 6))
+    
+    # We need a continuous time axis or just block index
+    # Sort by session then block_id (assuming blocks 0,1,2...)
+    # windows has block_id.
+    
+    # Create a unique block index: (session-1)*3 + block_id
+    # Wait, block_id resets? Let's check data. Usually block_id is 0..N per session.
+    # In DataLogger, block_id is 0,1,2...
+    # Let's assume 6 blocks per session? Or variable.
+    # We can just plot by "Session-Block"
+    
+    # Assign a global order
+    windows = windows.sort_values(by=['session', 'start_time'])
+    windows['global_index'] = range(len(windows))
+    
+    # Plot
+    # University (Session 1-5)
+    sns.lineplot(data=windows, x='global_index', y='mean_motion', hue='condition', 
+                 palette={'THREAT': '#ff4d4d', 'CHALLENGE': '#4d79ff', 'NEUTRAL': '#999999'},
+                 alpha=0.5, linewidth=1, legend=False)
+    
+    sns.scatterplot(data=windows, x='global_index', y='mean_motion', hue='condition', style='context',
+                    palette={'THREAT': '#ff4d4d', 'CHALLENGE': '#4d79ff', 'NEUTRAL': '#999999'},
+                    s=60, alpha=0.9)
+    
+    # Add vertical line data separating Univ/Home
+    # Find index where Home starts
+    home_start_idx = windows[windows['context']=='Home'].index.min()
+    # Windows index might not be contiguous if we filtered? 
+    # global_index is contiguous range.
+    home_start_global = windows[windows['context']=='Home']['global_index'].min()
+    
+    if not np.isnan(home_start_global):
+        plt.axvline(x=home_start_global - 0.5, color='black', linestyle='--', linewidth=2)
+        plt.text(home_start_global/2, windows['mean_motion'].max()*0.9, "University (Lab)", ha='center', fontsize=12, fontweight='bold')
+        plt.text(home_start_global + (windows['global_index'].max() - home_start_global)/2, windows['mean_motion'].max()*0.9, "Home (Natural)", ha='center', fontsize=12, fontweight='bold')
+
+    plt.title('C. Longitudinal Dynamics (SCED): Threat Response Dampening', fontweight='bold')
+    plt.ylabel('Head Motion (Freezing)')
+    plt.xlabel('Time (Blocks over 10 Sessions)')
+    
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/Figure4_Longitudinal.png", dpi=300)
+    print("Generated Figure 4: Longitudinal Time Series")
+
+
 if __name__ == "__main__":
     generate_paper_figures()
