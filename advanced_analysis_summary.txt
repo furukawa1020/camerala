@@ -1,0 +1,13 @@
+ADVANCED STATISTICAL ANALYSIS SUMMARY
+================================================================================
+
+1. TWO-WAY ANOVA
+2. EFFECT SIZE TABLE
+Measure    Context  Cohen's d  t-statistic  p-value Interpretation
+ Motion University  -0.332429    -1.740995 0.084832          Small
+ Motion       Home  -0.037360    -0.180705 0.857031     Negligible
+     RT University  -0.412129    -2.914193 0.004032          Small
+     RT       Home  -0.146668    -1.037097 0.301165     Negligible
+
+3. HABITUATION
+   r=-0.464, p=0.3012
