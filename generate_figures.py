@@ -35,6 +35,8 @@ def annotate_significance(ax, data, x, y, hue, pair_conds):
                 sig_symbol = "**"
             elif p < 0.05:
                 sig_symbol = "*"
+            elif p < 0.1:
+                sig_symbol = "†" # Trend
             else:
                 sig_symbol = "n.s."
             
