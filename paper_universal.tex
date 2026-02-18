@@ -36,17 +36,42 @@
 % ABSTRACT
 % =================================================================================
 \begin{abstract}
-\textbf{\textit{Objective}}: As the field of Affective Computing rapidly transitions from controlled laboratory settings to continuous, in-the-wild monitoring, it faces a fundamental theoretical and practical challenge: the ambiguity of physiological signals across different environmental contexts. Traditional affective models predominantly rely on a static, context-agnostic mapping between physiological arousal and affective states, operating on the assumption that elevated biomarkers (e.g., heart rate, skin conductance) indiscriminately indicate stress or negative affect. This assumption fundamentally ignores the "Invariance Breaking" phenomenon, where identical physiological patterns can support divergent subjective states—such as Threat (maladaptive stress) versus Challenge (adaptive engagement)—depending on the individual's cognitive appraisal and the safety of the surrounding environment.
+\textbf{\textit{Objective}}: As the field of Affective Computing rapidly transitions from controlled laboratory settings 
+to continuous, in-the-wild monitoring, it faces a fundamental theoretical and practical challenge: 
+the ambiguity of physiological signals across different environmental contexts. 
+Traditional affective models predominantly rely on a static, context-agnostic mapping between physiological arousal and affective states, 
+operating on the assumption that elevated biomarkers (e.g., heart rate, skin conductance) indiscriminately indicate stress or negative affect. 
+This assumption fundamentally ignores the "Invariance Breaking" phenomenon, where identical physiological patterns can support 
+divergent subjective states—such as Threat (maladaptive stress) versus Challenge (adaptive engagement)—depending on the 
+individual's cognitive appraisal and the safety of the surrounding environment.
 
-\textbf{\textit{Methods}}: To address this limitation, we propose a privacy-preserving, fully client-side web sensing framework, termed \textbf{Camerala}, designed to capture these subtle context-dependencies through rigorous Single-Case Experimental Design (SCED). By processing high-resolution facial landmarks and remote photoplethysmography (rPPG) signals entirely within the user's browser (Edge Computing), Camerala enables longitudinal, ethically sound monitoring in private spaces without compromising user privacy. We validated this system through a comprehensive 10-session longitudinal study ($N=1$, 30 blocks, 600 trials) conducted over two weeks, comparing two distinct ecological environments: a controlled University Laboratory (representing an evaluative, high-pressure context) and a naturalistic Home environment (representing a safe, private context). To isolate the effect of appraisal from task difficulty, we implemented a psychophysical staircase algorithm (1-up 1-down) that clamped performance at a fixed accuracy threshold.
+\textbf{\textit{Methods}}: To address this limitation, we propose a privacy-preserving, fully client-side web sensing framework, 
+termed \textbf{Camerala}, designed to capture these subtle context-dependencies through rigorous Single-Case Experimental Design (SCED). 
+By processing high-resolution facial landmarks and remote photoplethysmography (rPPG) signals entirely within the user's browser (Edge Computing), 
+Camerala enables longitudinal, ethically sound monitoring in private spaces without compromising user privacy. 
+We validated this system through a comprehensive 10-session longitudinal study ($N=1$, 30 blocks, 600 trials) conducted over two weeks, 
+comparing two distinct ecological environments: a controlled University Laboratory (representing an evaluative, high-pressure context) 
+and a naturalistic Home environment (representing a safe, private context). 
+To isolate the effect of appraisal from task difficulty, we implemented a psychophysical staircase algorithm (1-up 1-down) 
+that clamped performance at a fixed accuracy threshold.
 
-\textbf{\textit{Results}}: Our results reveal a robust and significant interaction between environmental context and psychophysiological reactivity. A 2-way Analysis of Variance (ANOVA) demonstrated that while "Threat" framing significantly enhanced behavioral performance (Reaction Time acceleration, $p=0.002, d=-0.41$) and induced physiological freezing ($p=0.08, d=-0.33$) in the University setting, these effects were completely abolished in the Home environment ($p>0.30$, negligible effect sizes). Bayesian analysis provided strong evidence for this dissociation (BF$_{10}=66.7$ in Lab vs. BF$_{10}=1.7$ at Home). Furthermore, a Linear Mixed-Effects Model confirmed that these effects were not attributable to habituation over time.
+\textbf{\textit{Results}}: Our results reveal a robust and significant interaction between environmental context and psychophysiological reactivity. 
+A 2-way Analysis of Variance (ANOVA) demonstrated that while "Threat" framing significantly enhanced behavioral performance 
+(Reaction Time acceleration, $p=0.002, d=-0.41$) and induced physiological freezing ($p=0.08, d=-0.33$) in the University setting, 
+these effects were completely abolished in the Home environment ($p>0.30$, negligible effect sizes). 
+Bayesian analysis provided strong evidence for this dissociation (BF$_{10}=66.7$ in Lab vs. BF$_{10}=1.7$ at Home). 
+Furthermore, a Linear Mixed-Effects Model confirmed that these effects were not attributable to habituation over time.
 
-\textbf{\textit{Conclusion}}: These findings provide empirical support for the "Safe Haven" hypothesis, suggesting that familiar, safe environments act as powerful moderators of the autonomic nervous system, effectively buffering the impact of cognitive stressors. We discuss the profound implications of this "Invariance Breaking" for the design of next-generation ubiquitous computing systems, arguing that future affective models must be dynamically parameterized by the user's environmental context to avoid catastrophic misinterpretation of physiological signals.
+\textbf{\textit{Conclusion}}: These findings provide empirical support for the "Safe Haven" hypothesis, suggesting that familiar, 
+safe environments act as powerful moderators of the autonomic nervous system, effectively buffering the impact of cognitive stressors. 
+We discuss the profound implications of this "Invariance Breaking" for the design of next-generation ubiquitous computing systems, 
+arguing that future affective models must be dynamically parameterized by the user's environmental context 
+to avoid catastrophic misinterpretation of physiological signals.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Web-based Sensing, Single-Case Experimental Design, Invariance Breaking, Remote Photoplethysmography (rPPG), Affective Computing, Ecological Validity, Context Dependency, Polyvagal Theory, Challenge and Threat, Privacy-Preserving AI.
+Web-based Sensing, Single-Case Experimental Design, Invariance Breaking, Remote Photoplethysmography (rPPG), 
+Affective Computing, Ecological Validity, Context Dependency, Polyvagal Theory, Challenge and Threat, Privacy-Preserving AI.
 \end{IEEEkeywords}
 
 % =================================================================================
@@ -54,118 +79,232 @@ Web-based Sensing, Single-Case Experimental Design, Invariance Breaking, Remote 
 % =================================================================================
 \section{Introduction}
 
-\IEEEPARstart{T}{he} vision of Affective Computing, as originally articulated by Picard within the MIT Media Lab in the late 1990s \cite{picard_affective_computing}, was to endow machines with the capacity to recognize, interpret, simulate, and potentially influence human emotions. For over three decades, this vision has catalyzed extensive interdisciplinary research spanning computer science, psychology, neuroscience, and biomedical engineering. The ability to automatically detect user states—ranging from frustration and stress to engagement and flow—promises to revolutionize human-computer interaction (HCI), enabling systems that adapt dynamically to the user's cognitive and emotional needs.
+\IEEEPARstart{T}{he} vision of Affective Computing, as originally articulated by Picard within the MIT Media Lab in the late 1990s \cite{picard_affective_computing}, 
+was to endow machines with the capacity to recognize, interpret, simulate, and potentially influence human emotions. 
+For over three decades, this vision has catalyzed extensive interdisciplinary research spanning computer science, psychology, 
+neuroscience, and biomedical engineering. The ability to automatically detect user states—ranging from frustration and stress 
+to engagement and flow—promises to revolutionize human-computer interaction (HCI), enabling systems that adapt dynamically 
+to the user's cognitive and emotional needs.
 
-Early work in this domain was predominantly conducted in highly controlled laboratory environments. Researchers utilized medical-grade sensors—such as electrocardiograms (ECG) to measure heart rate variability (HRV), electroencephalograms (EEG) to monitor cortical asymmetry, and galvanic skin response (GSR) sensors to track sympathetic arousal. These pioneering studies successfully established the somatic markers of basic emotions, enabling the development of classifiers that could distinguish high-arousal states (e.g., anger, fear) from low-arousal states (e.g., sadness, relaxation) with remarkable accuracy. Indeed, within the sanitized, noise-free confines of a sound-proofed laboratory, with a participant wired to a stationary rig, we can predict acute stress with near-perfect fidelity.
+Early work in this domain was predominantly conducted in highly controlled laboratory environments. 
+Researchers utilized medical-grade sensors—such as electrocardiograms (ECG) to measure heart rate variability (HRV), 
+electroencephalograms (EEG) to monitor cortical asymmetry, and galvanic skin response (GSR) sensors to track sympathetic arousal. 
+These pioneering studies successfully established the somatic markers of basic emotions, enabling the development of classifiers 
+that could distinguish high-arousal states (e.g., anger, fear) from low-arousal states (e.g., sadness, relaxation) with remarkable accuracy. 
+Indeed, within the sanitized, noise-free confines of a sound-proofed laboratory, with a participant wired to a stationary rig, 
+we can predict acute stress with near-perfect fidelity.
 
-However, as the field matures and transitions from the laboratory to "in-the-wild" applications \cite{ambulatory_assessment}, a fundamental disconnect has emerged between the capabilities of these models and the complexity of real-world human experience. This disconnect, which we term the "Contextual Gap," places the field at a critical juncture: we have successfully democratized the \textit{sensors} to measure physiology anywhere (via smartwatches, rings, and now standard webcams), but we critically lack the \textit{contextual models} to interpret these signals correctly outside the lab.
+However, as the field matures and transitions from the laboratory to "in-the-wild" applications \cite{ambulatory_assessment}, 
+a fundamental disconnect has emerged between the capabilities of these models and the complexity of real-world human experience. 
+This disconnect, which we term the "Contextual Gap," places the field at a critical juncture: we have successfully democratized 
+the \textit{sensors} to measure physiology anywhere (via smartwatches, rings, and now standard webcams), 
+but we critically lack the \textit{contextual models} to interpret these signals correctly outside the lab.
 
 \subsection{The Crisis of Contextual Rigidity and "Invariance Breaking"}
-Current affective computing systems, particularly those deployed in consumer wearables or smart environments, often operate on the implicit assumption of \textit{Physiological Invariance}. This is the notion that a specific physiological pattern—such as an abrupt increase in heart rate or a phasic spike in skin conductance—consistently and universally maps to a specific, unique affective state, such as "stress," regardless of the environmental or social context in which it occurs. For example, a commercially available smartwatch detecting a heart rate of 100 bpm might alert the user to "Take a deep breath," assuming physiological stress, without any awareness of the user's current activity or environment.
+Current affective computing systems, particularly those deployed in consumer wearables or smart environments, 
+often operate on the implicit assumption of \textit{Physiological Invariance}. 
+This is the notion that a specific physiological pattern—such as an abrupt increase in heart rate or a phasic spike in skin conductance—
+consistently and universally maps to a specific, unique affective state, such as "stress," regardless of the environmental or social context in which it occurs. 
+For example, a commercially available smartwatch detecting a heart rate of 100 bpm might alert the user to "Take a deep breath," assuming physiological stress, 
+without any awareness of the user's current activity or environment.
 
-This "Context-Agnostic" approach is fundamentally flawed. It fails to account for the rich, adaptive, and context-dependent nature of human physiology. A heart rate of 100 bpm could indeed indicate distress (e.g., during a conflict), but it could equally indicate excitement (e.g., watching a sports game), intense cognitive engagement (e.g., solving a complex puzzle), or simply physical exertion. The physiological signal provides the \textit{intensity} (arousal), but the \textit{valence} and \textit{semantic meaning} of that arousal are constructed from the interaction between the body and the environment.
+This "Context-Agnostic" approach is fundamentally flawed. It fails to account for the rich, adaptive, and context-dependent nature of human physiology. 
+A heart rate of 100 bpm could indeed indicate distress (e.g., during a conflict), but it could equally indicate excitement (e.g., watching a sports game), 
+intense cognitive engagement (e.g., solving a complex puzzle), or simply physical exertion. 
+The physiological signal provides the \textit{intensity} (arousal), but the \textit{valence} and \textit{semantic meaning} 
+of that arousal are constructed from the interaction between the body and the environment.
 
-Failing to account for these contextual moderators leads to what we define as "Invariance Breaking"—the systematic failure of affective models when transferred between environments. A model trained to detect stress in a driving simulator may completely fail when applied to a user sitting in their living room, not because the sensor is broken, but because the mapping function $f: Physiology \rightarrow Affect$ has shifted. The "stress" response in a laboratory—often characterized by vigilance, freezing, and rapid orienting—may be physiologically distinct from "stress" at home, where safety cues dampen the autonomic response.
+Failing to account for these contextual moderators leads to what we define as "Invariance Breaking"—
+the systematic failure of affective models when transferred between environments. 
+A model trained to detect stress in a driving simulator may completely fail when applied to a user sitting in their living room, 
+not because the sensor is broken, but because the mapping function $f: Physiology \rightarrow Affect$ has shifted. 
+The "stress" response in a laboratory—often characterized by vigilance, freezing, and rapid orienting—
+may be physiologically distinct from "stress" at home, where safety cues dampen the autonomic response.
 
 \subsection{Theoretical Framework: Integrating Biopsychosocial and Polyvagal Models}
-To address Invariance Breaking, we must ground our engineering efforts in robust psychophysiological theory. Engineering models often oversimplify emotion into a 2D Circumplex (Valence-Arousal), assuming linear separability. However, biological reality is more nuanced. Two theoretical frameworks are particularly relevant for understanding the context-dependency of stress:
+To address Invariance Breaking, we must ground our engineering efforts in robust psychophysiological theory. 
+Engineering models often oversimplify emotion into a 2D Circumplex (Valence-Arousal), assuming linear separability. 
+However, biological reality is more nuanced. Two theoretical frameworks are particularly relevant for understanding the context-dependency of stress:
 
 \subsubsection{The Biopsychosocial Model (BPSM) of Challenge and Threat}
-Proposed by Blascovich and Tomaka \cite{biopsychosocial_model}, the BPSM offers a precise distinction between "Challenge" and "Threat" states during goal-relevant performance.
+Proposed by Blascovich and Tomaka \cite{biopsychosocial_model}, the BPSM offers a precise distinction between "Challenge" and "Threat" states 
+during goal-relevant performance.
 \begin{itemize}
-    \item \textbf{Challenge}: Occurs when an individual appraises their coping resources (skills, support, time) as exceeding the situational demands. Physiologically, this is characterized by high cardiac output (CO) but low total peripheral resistance (TPR)—a state of vasodilation that mimics aerobic exercise. The subjective experience is one of engagement, focus, and eagerly approaching the task.
-    \item \textbf{Threat}: Occurs when demands are appraised as exceeding resources. This state is characterized by high cardiac output \textit{and} high total peripheral resistance (vasoconstriction)—a "fight-or-flight" response geared towards damage minimization and blood retention. The subjective experience is one of anxiety, doubt, and avoidance.
+    \item \textbf{Challenge}: Occurs when an individual appraises their coping resources (skills, support, time) as exceeding the situational demands. 
+    Physiologically, this is characterized by high cardiac output (CO) but low total peripheral resistance (TPR)—a state of vasodilation 
+    that mimics aerobic exercise. The subjective experience is one of engagement, focus, and eagerly approaching the task.
+    \item \textbf{Threat}: Occurs when demands are appraised as exceeding resources. This state is characterized by high cardiac output 
+    \textit{and} high total peripheral resistance (vasoconstriction)—a "fight-or-flight" response geared towards damage minimization and blood retention. 
+    The subjective experience is one of anxiety, doubt, and avoidance.
 \end{itemize}
-Crucially, both states are "high arousal." A simple arousal detector cannot distinguish them. The distinction lies in the \textit{cognitive appraisal}, which is heavily influenced by the environment. If the environment is supportive, a demand becomes a challenge. If the environment is hostile, the same demand becomes a threat.
+Crucially, both states are "high arousal." A simple arousal detector cannot distinguish them. 
+The distinction lies in the \textit{cognitive appraisal}, which is heavily influenced by the environment. 
+If the environment is supportive, a demand becomes a challenge. If the environment is hostile, the same demand becomes a threat.
 
 \subsubsection{Polyvagal Theory and the "Safe Haven"}
-Porges' Polyvagal Theory \cite{polyvagal, porges_safe_haven} adds a layer of autonomic regulation based on "Neuroception"—the subconscious detection of safety or danger in the environment. Porges argues that our autonomic nervous system (ANS) is hierarchically organized:
+Porges' Polyvagal Theory \cite{polyvagal, porges_safe_haven} adds a layer of autonomic regulation based on "Neuroception"—
+the subconscious detection of safety or danger in the environment. Porges argues that our autonomic nervous system (ANS) is hierarchically organized:
 \begin{itemize}
-    \item \textbf{Safe Environments} (e.g., Home, with trusted peers): Activate the ventral vagal complex (Social Engagement System), which acts as a "vagal brake," dampening sympathetic reactivity and promoting calm, restorative states.
-    \item \textbf{Unsafe/Evaluative Environments} (e.g., Laboratories, Public stages): Withdraw the vagal brake, disinhibiting the sympathetic nervous system and priming the individual for defensive mobilization.
+    \item \textbf{Safe Environments} (e.g., Home, with trusted peers): Activate the ventral vagal complex (Social Engagement System), 
+    which acts as a "vagal brake," dampening sympathetic reactivity and promoting calm, restorative states.
+    \item \textbf{Unsafe/Evaluative Environments} (e.g., Laboratories, Public stages): Withdraw the vagal brake, 
+    disinhibiting the sympathetic nervous system and priming the individual for defensive mobilization.
 \end{itemize}
-This theory predicts a **"Safe Haven" effect**: a home environment, characterized by privacy, familiarity, and control, should fundamentally alter the gain of the physiological stress response. A stressor that triggers a massive threat response in a sterile, unfamiliar university lab (which triggers neuroception of danger) might trigger only a mild, manageable arousal response at home, simply because the background "safety signal" allows the vagal brake to remain engaged.
+This theory predicts a **"Safe Haven" effect**: a home environment, characterized by privacy, familiarity, and control, 
+should fundamentally alter the gain of the physiological stress response. A stressor that triggers a massive threat response 
+in a sterile, unfamiliar university lab (which triggers neuroception of danger) might trigger only a mild, manageable arousal response at home, 
+simply because the background "safety signal" allows the vagal brake to remain engaged.
 
 \subsection{Research Questions and Contributions}
 This paper investigates the "Safe Haven" effect through a rigorous longitudinal study, bridging the gap between advanced psychophysiological theory and modern web engineering.
 We pose two primary Research Questions (RQs):
 \begin{itemize}
-    \item \textbf{RQ1 (Invariance Breaking)}: Does the physiological signature of "Threat" (e.g., freezing, cardiac reactivity) differ significantly between a high-stakes Laboratory setting and a private Home setting, when the task difficulty is held constant?
-    \item \textbf{RQ2 (Feasibility of Web-Based SCED)}: Can a purely client-side, privacy-preserving web framework capture these subtle physiological differences with sufficient fidelity to replace traditional lab equipment?
+    \item \textbf{RQ1 (Invariance Breaking)}: Does the physiological signature of "Threat" (e.g., freezing, cardiac reactivity) 
+    differ significantly between a high-stakes Laboratory setting and a private Home setting, when the task difficulty is held constant?
+    \item \textbf{RQ2 (Feasibility of Web-Based SCED)}: Can a purely client-side, privacy-preserving web framework 
+    capture these subtle physiological differences with sufficient fidelity to replace traditional lab equipment?
 \end{itemize}
 
-To answer these questions, we developed \textbf{Camerala}, a purpose-built framework for longitudinal, context-aware affective experimentation. Our contributions are threefold:
+To answer these questions, we developed \textbf{Camerala}, a purpose-built framework for longitudinal, context-aware affective experimentation. 
+Our contributions are threefold:
 
 \begin{enumerate}
-    \item \textbf{Camerala Framework}: We present a robust, open-source architecture for client-side physiological sensing. By processing all video data locally within the browser (Edge Computing), Camerala solves the "Privacy Bottleneck" that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking using WebAssembly for real-time performance.
+    \item \textbf{Camerala Framework}: We present a robust, open-source architecture for client-side physiological sensing. 
+    By processing all video data locally within the browser (Edge Computing), Camerala solves the "Privacy Bottleneck" 
+    that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking 
+    using WebAssembly for real-time performance.
     
-    \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. We argue that SCED is superior to large-N group designs for investigating context-sensitivity, as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
+    \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. 
+    We argue that SCED is superior to large-N group designs for investigating context-sensitivity, 
+    as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
     
-    \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." We show that the behavioral and physiological signatures of "Threat" (Reaction Time acceleration, Freezing behavior) are robust in the Lab but vanish at Home, confirming the Invariance Breaking hypothesis.
+    \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, 
+    we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." 
+    We show that the behavioral and physiological signatures of "Threat" (Reaction Time acceleration, Freezing behavior) 
+    are robust in the Lab but vanish at Home, confirming the Invariance Breaking hypothesis.
 \end{enumerate}
 
-The remainder of this paper is organized as follows: Section II reviews the state-of-the-art in remote sensing and context-awareness. Section III details the technical implementation of Camerala. Section IV describes our SCED methodology. Section V presents detailed statistical results. Section VI discusses the theoretical implications for ubiquitous computing, and Section VII concludes.
+The remainder of this paper is organized as follows: Section II reviews the state-of-the-art in remote sensing and context-awareness. 
+Section III details the technical implementation of Camerala. Section IV describes our SCED methodology. 
+Section V presents detailed statistical results. Section VI discusses the theoretical implications for ubiquitous computing, and Section VII concludes.
 
+% =================================================================================
+% SECTION 2: RELATED WORK
+% =================================================================================
 % =================================================================================
 % SECTION 2: RELATED WORK
 % =================================================================================
 \section{Related Work}
 
 \subsection{Remote Physiological Sensing (rPPG): A Technical Evolution}
-The non-contact measurement of physiological signals, specifically heart rate (HR) and heart rate variability (HRV), has evolved from a niche signal processing problem to a central pillar of computer vision. This evolution can be traced through three distinct algorithmic generations, each addressing specific limitations of its predecessors while introducing new challenges for ecological deployment.
+The non-contact measurement of physiological signals, specifically heart rate (HR) and heart rate variability (HRV),
+has evolved from a niche signal processing problem to a central pillar of computer vision.
+This evolution can be traced through three distinct algorithmic generations, each addressing specific limitations of its predecessors
+while introducing new challenges for ecological deployment.
 
 \subsubsection{Generation 1: Blind Source Separation (2008--2013)}
-The foundational work by Verkruysse \etal \cite{verkruysse2008} discovered that the minute color variations caused by blood volume pulses (BVP) on the skin surface could be detected by standard consumer cameras. However, these signals are roughly 1/100th the magnitude of noise caused by head motion and lighting flickering.
-Early approaches relied on Blind Source Separation (BSS). Poh \etal \cite{poh_ica} introduced a method using Independent Component Analysis (ICA) based on the JADE algorithm. By treating the RGB channels as mixtures of the underlying source signal (BVP) and noise, ICA could mathematically separate them. While revolutionary, ICA-based methods suffered from high computational cost and "permutation ambiguity" (not knowing which component was the pulse), requiring heuristic selection rules. Furthermore, they required a relatively long window (30s+) to converge, making them unsuitable for real-time reactivity analysis.
+The foundational work by Verkruysse \etal \cite{verkruysse2008} discovered that the minute color variations caused by blood volume pulses (BVP)
+on the skin surface could be detected by standard consumer cameras.
+However, these signals are roughly 1/100th the magnitude of noise caused by head motion and lighting flickering.
+Early approaches relied on Blind Source Separation (BSS). Poh \etal \cite{poh_ica} introduced a method using Independent Component Analysis (ICA)
+based on the JADE algorithm. By treating the RGB channels as mixtures of the underlying source signal (BVP) and noise,
+ICA could mathematically separate them. While revolutionary, ICA-based methods suffered from high computational cost and "permutation ambiguity"
+(not knowing which component was the pulse), requiring heuristic selection rules.
+Furthermore, they required a relatively long window (30s+) to converge, making them unsuitable for real-time reactivity analysis.
 
 \subsubsection{Generation 2: Model-Based Physics Methods (2013--2018)}
-To overcome the blind nature of ICA, researchers developed "Model-Based" approaches rooted in the optical physics of skin reflection. De Haan and Jeanne \cite{dehaan_chrom} introduced the Chrominance-based method (CHROM), which projects the RGB signals onto a subspace where specular reflection is orthogonal to the pulse signal. Wang \etal \cite{wang_pos} later refined this with the Plane-Orthogonal-to-Skin (POS) algorithm.
-The core insight of POS is that skin color variation due to pulsatile blood flow occurs along a specific vector in RGB space, while motion-induced intensity changes occur along the intensity axis. By projecting the temporal RGB trace onto a plane orthogonal to the constant skin-tone vector, POS achieves remarkable robustness to rigid head motion. Mathematically, the pulse $P(t)$ is extracted as:
+To overcome the blind nature of ICA, researchers developed "Model-Based" approaches rooted in the optical physics of skin reflection.
+De Haan and Jeanne \cite{dehaan_chrom} introduced the Chrominance-based method (CHROM), which projects the RGB signals onto a subspace
+where specular reflection is orthogonal to the pulse signal. Wang \etal \cite{wang_pos} later refined this with the Plane-Orthogonal-to-Skin (POS) algorithm.
+The core insight of POS is that skin color variation due to pulsatile blood flow occurs along a specific vector in RGB space,
+while motion-induced intensity changes occur along the intensity axis. By projecting the temporal RGB trace onto a plane orthogonal
+to the constant skin-tone vector, POS achieves remarkable robustness to rigid head motion. Mathematically, the pulse $P(t)$ is extracted as:
 \begin{equation}
     P(t) = C_g(t) - C_b(t) + \alpha \cdot (C_g(t) + C_b(t) - 2C_r(t))
 \end{equation}
-These methods are lightweight, interpretable, and run efficiently in real-time. Camerala adopts a variation of these physics-based methods because they do not require training data, ensuring they generalize better to unseen lighting conditions than overfitted neural networks.
+These methods are lightweight, interpretable, and run efficiently in real-time. Camerala adopts a variation of these physics-based methods
+because they do not require training data, ensuring they generalize better to unseen lighting conditions than overfitted neural networks.
 
 \subsubsection{Generation 3: Deep Learning (2018--Present)}
-The current state-of-the-art is dominated by Convolutional Neural Networks (CNNs). Chen and McDuff \cite{deepphys} proposed DeepPhys, an attention-based network that learns to weigh skin regions with high pulsatile strength. More recent 3D-CNNs like PhysNet [Yu \etal 2019] capture spatiotemporal features directly.
-However, a critical meta-analysis by McDuff \etal \cite{mcduff_rppg} reveals a "Replication Crisis" in rPPG. Most Deep Learning models are trained and evaluated on datasets (e.g., UBFC-rPPG, MMSE-HR) that are:
+The current state-of-the-art is dominated by Convolutional Neural Networks (CNNs). Chen and McDuff \cite{deepphys} proposed DeepPhys,
+an attention-based network that learns to weigh skin regions with high pulsatile strength. More recent 3D-CNNs like PhysNet [Yu \etal 2019]
+capture spatiotemporal features directly.
+However, a critical meta-analysis by McDuff \etal \cite{mcduff_rppg} reveals a "Replication Crisis" in rPPG.
+Most Deep Learning models are trained and evaluated on datasets (e.g., UBFC-rPPG, MMSE-HR) that are:
 \begin{enumerate}
     \item \textbf{Stationary}: Subjects sit perfectly still.
     \item \textbf{Well-Lit}: Studio lighting eliminates dynamic shadows.
     \item \textbf{Compressed}: Short duration clips (1-3 minutes).
 \end{enumerate}
-When these models are deployed "in-the-wild" (e.g., a webcam in a dark bedroom), their performance degrades catastrophically—a phenomenon known as "Domain Shift." Our work explicitly addresses this by validating our system in the noisy, naturalistic Home environment, rather than assuming lab performance transfers.
+When these models are deployed "in-the-wild" (e.g., a webcam in a dark bedroom), their performance degrades catastrophically—
+a phenomenon known as "Domain Shift." Our work explicitly addresses this by validating our system in the noisy, naturalistic Home environment,
+rather than assuming lab performance transfers.
 
 \subsection{Context-Awareness in Affective Computing}
-The concept of "Context" in computing was formalized by Dey (2001) as "any information that can be used to characterize the situation of an entity." In Affective Computing, however, the integration of context has been slow and superficial.
+The concept of "Context" in computing was formalized by Dey (2001) as "any information that can be used to characterize the situation of an entity."
+In Affective Computing, however, the integration of context has been slow and superficial.
 We categorize existing approaches into three levels of sophistication:
+
 \subsubsection{Level 0: Context-Agnostic}
-The majority of commercial "Stress Detection" algorithms fall here. They apply a static threshold: $HR > 90 \to Stress$. This fails in virtually all real-world scenarios due to the physiological confound of physical activity (metabolic demand vs. psychological stress).
+The majority of commercial "Stress Detection" algorithms fall here. They apply a static threshold: $HR > 90 \to Stress$.
+This fails in virtually all real-world scenarios due to the physiological confound of physical activity (metabolic demand vs. psychological stress).
+
 \subsubsection{Level 1: Context-as-Feature}
-Modern multimodal systems append context data to the feature vector. For example, a classifier might take inputs $[HR, GSR, Location_{GPS}, Noise_{dB}]$. The model learns to adjust its decision boundary based on location.
-While an improvement, this approach treats context as just another noisy sensor input. It assumes that the relationship between context and physiology is linear and additive.
+Modern multimodal systems append context data to the feature vector. For example, a classifier might take inputs $[HR, GSR, Location_{GPS}, Noise_{dB}]$.
+The model learns to adjust its decision boundary based on location.
+While an improvement, this approach treats context as just another noisy sensor input.
+It assumes that the relationship between context and physiology is linear and additive.
+
 \subsubsection{Level 2: Context-as-Moderator (Interactionist)}
-Our work advocates for this theoretical level. We argue that context is not a feature; it is a \textit{lens} that fundamentally alters the semantic meaning of physiological arousal.
-Based on the Interactionist Theory of Emotion, emotion is constructed from the collision of Core Affect (Arousal/Valence) and Conceptual Knowledge (Context). The \textit{same} core affect (high arousal) becomes "Fear" in a dark alley but "Excitement" on a roller coaster.
+Our work advocates for this theoretical level. We argue that context is not a feature; it is a \textit{lens} that fundamentally alters
+the semantic meaning of physiological arousal.
+Based on the Interactionist Theory of Emotion, emotion is constructed from the collision of Core Affect (Arousal/Valence) and Conceptual Knowledge (Context).
+The \textit{same} core affect (high arousal) becomes "Fear" in a dark alley but "Excitement" on a roller coaster.
 
 \subsection{Methodological Shifts: Large-N vs. SCED}
-The "Gold Standard" in HCI research has long been the Between-Subjects Randomized Controlled Trial (RCT), typically with $N=20 \sim 30$. This design assumes that by averaging across many individuals, individual differences will cancel out as "noise," revealing the "true" population effect.
+The "Gold Standard" in HCI research has long been the Between-Subjects Randomized Controlled Trial (RCT), typically with $N=20 \sim 30$.
+This design assumes that by averaging across many individuals, individual differences will cancel out as "noise," revealing the "true" population effect.
 However, in psychophysiology, individual differences are not noise; they are the dominant source of variance.
 \begin{enumerate}
     \item \textbf{The Baseline Problem}: Person A's resting HR might be 60 bpm; Person B's might be 90 bpm. Averaging them is meaningless.
     \item \textbf{The Reactivity Problem}: Person A might be a "Vascular Responder" (BP spikes), while Person B is a "Cardiac Responder" (HR spikes).
 \end{enumerate}
 Pooling these heterogeneous phenotypes often washes out significant effects, leading to Type II errors.
-Single-Case Experimental Design (SCED) \cite{barlow_sced} avoids this aggregation fallacy. By treating the individual as their own control and sampling them repeatedly (in our case, 600 trials), we achieve high statistical power to detect \textit{idiographic} causal relationships.
+Single-Case Experimental Design (SCED) \cite{barlow_sced} avoids this aggregation fallacy.
+By treating the individual as their own control and sampling them repeatedly (in our case, 600 trials),
+we achieve high statistical power to detect \textit{idiographic} causal relationships.
 
+\subsection{Privacy-Preserving Edge AI}
+A major barrier to longitudinal affective computing is the "Privacy Paradox": users desire personalized services but are increasingly wary of surveillance.
+Current commercial solutions (e.g., Affectiva, Amazon Halo) rely on cloud-based inference, streaming raw video or audio to centralized servers.
+This architecture poses unacceptable risks for monitoring in intimate spaces like the home (e.g., bedrooms).
+\begin{itemize}
+    \item \textbf{Cloud Architecture}: High latency, high privacy risk. Raw data leaves the device.
+    \item \textbf{Edge Architecture}: Zero latency, zero privacy risk. Raw data is processed locally; only anonymous features (HR, RT) are stored.
+\end{itemize}
+Recent advances in WebAssembly (Wasm) and WebGPU have made high-performance computer vision possible in the browser.
+By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can run state-of-the-art inference at native speeds (60 FPS)
+without a single byte of video data leaving the user's machine. Camerala leverages this paradigm to resolve the Privacy Paradox,
+enabling ethical, long-term monitoring of intimate states.
 % =================================================================================
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is a comprehensive, open-source web framework designed for high-temporal-resolution physiological experimentation. Unlike traditional cloud-based platforms (e.g., Pavlovia, Gorilla) that operate on a client-server architecture, Camerala employs a "Thick Client" (Edge Computing) philosophy. This architectural choice is driven by two critical non-functional requirements: \textbf{Privacy Preservation} and \textbf{Real-Time Latency}.
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is a comprehensive, open-source web framework designed
+for high-temporal-resolution physiological experimentation. Unlike traditional cloud-based platforms (e.g., Pavlovia, Gorilla)
+that operate on a client-server architecture, Camerala employs a "Thick Client" (Edge Computing) philosophy.
+This architectural choice is driven by two critical non-functional requirements: \textbf{Privacy Preservation} and \textbf{Real-Time Latency}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
+    \caption{Overview of the Camerala System Architecture. The system runs entirely client-side, processing webcam frames via MediaPipe Face Mesh (Wasm) to extract rPPG and Head Motion signals in real-time. Data is synchronized with the Psychophysics Task Engine (Canvas API) and stored locally, ensuring no raw video ever leaves the user's device.}
+    \label{fig:system_architecture}
+\end{figure}
 
 \subsection{High-Level Architecture}
-The system enables a complete experimental loop entirely within the browser sandbox. The architecture consists of three coupled modules running on the main JavaScript thread and dedicated WebWorkers:
+The system enables a complete experimental loop entirely within the browser sandbox (see Fig. \ref{fig:system_architecture}).
+The architecture consists of three coupled modules running on the main JavaScript thread and dedicated WebWorkers:
 \begin{enumerate}
     \item \textbf{The Task Engine}: Responsible for stimulus rendering, trial logic, and reaction time measurement.
     \item \textbf{The Vision Pipeline}: Responsible for ingesting the webcam stream, performing facial landmark inference, and extracting raw physiological signals.
@@ -173,21 +312,27 @@ The system enables a complete experimental loop entirely within the browser sand
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
-We utilize the MediaPipe Face Mesh \cite{mediapipe_paper} solution, which provides 468 3D facial landmarks in real-time. This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration.
+We utilize the MediaPipe Face Mesh \cite{mediapipe_paper} solution, which provides 468 3D facial landmarks in real-time.
+This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration.
 
 \subsubsection{Feature Extraction Logic}
 To quantify psychophysiological states, we extract two primary signals: \textit{Head Motion (Freezing)} and \textit{Exposure Fluctuation}.
 
 \textbf{1. Head Motion Index ($M_t$)}
-The physiological "Freeze Response" (a defensive reaction to threat) translates to a reduction in gross motor movement. We capture this by tracking the displacement of rigid cranial landmarks (Nose tip, Left/Right Tragus) that are unaffected by facial expressions.
-Let $L_i^t = (x_i^t, y_i^t, z_i^t)$ be the 3D coordinate of the $i$-th landmark at frame $t$. The instantaneous motion scalar $M_t$ is defined as the Euclidean distance summed over the set of rigid landmarks $S_{rigid} = \{1, 33, 263\}$ (Nose, L-Ear, R-Ear):
+The physiological "Freeze Response" (a defensive reaction to threat) translates to a reduction in gross motor movement.
+We capture this by tracking the displacement of rigid cranial landmarks (Nose tip, Left/Right Tragus) that are unaffected by facial expressions.
+Let $L_i^t = (x_i^t, y_i^t, z_i^t)$ be the 3D coordinate of the $i$-th landmark at frame $t$.
+The instantaneous motion scalar $M_t$ is defined as the Euclidean distance summed over the set of rigid landmarks $S_{rigid} = \{1, 33, 263\}$ (Nose, L-Ear, R-Ear):
 \begin{equation}
     M_t = \frac{1}{|S_{rigid}|} \sum_{i \in S_{rigid}} || L_i^t - L_i^{t-1} ||_2
 \end{equation}
-To ensure scale invariance (handling users sitting at different distances), the coordinates are normalized by the Inter-Ocular Distance (IOD), calculated as the Euclidean distance between the lateral canthi of the eyes.
+To ensure scale invariance (handling users sitting at different distances), the coordinates are normalized by the Inter-Ocular Distance (IOD),
+calculated as the Euclidean distance between the lateral canthi of the eyes.
 
 \textbf{2. Exposure Fluctuation ($E_{fluc}$)}
-Ecological validity introduces noise. In a home environment, lighting is uncontrolled. Clouds passing the sun, screens flickering, or 60Hz power cycles induce luminance changes that can mask the rPPG signal. Instead of filtering this out, we quantify it as an independent variable to represent "Contextual Noise."
+Ecological validity introduces noise. In a home environment, lighting is uncontrolled.
+Clouds passing the sun, screens flickering, or 60Hz power cycles induce luminance changes that can mask the rPPG signal.
+Instead of filtering this out, we quantify it as an independent variable to represent "Contextual Noise."
 We define a Region of Interest (ROI) on the forehead, $R_{fore}$. The average luminance $Y_t$ is computed from the RGB channels:
 \begin{equation}
     Y_t = \frac{1}{N_{px}} \sum_{(u,v) \in R_{fore}} (0.299R_{u,v} + 0.587G_{u,v} + 0.114B_{u,v})
@@ -201,7 +346,8 @@ The Exposure Fluctuation metric is then defined as the first derivative of lumin
 The experimental task is a **2-Alternative Forced Choice (2AFC) Orientation Discrimination Task**, a standard paradigm in psychophysics.
 
 \subsubsection{Stimulus Generation via Canvas API}
-Using the HTML5 Canvas API, we procedurally generate Gabor patches. A Gabor patch is defined as a sinusoidal grating multiplied by a Gaussian envelope. The luminance profile $L(x,y)$ is given by:
+Using the HTML5 Canvas API, we procedurally generate Gabor patches. A Gabor patch is defined as a sinusoidal grating multiplied by a Gaussian envelope.
+The luminance profile $L(x,y)$ is given by:
 \begin{equation}
     L(x,y) = L_0 + C \cdot \exp\left(-\frac{x'^2 + \gamma^2 y'^2}{2\sigma^2}\right) \cdot \cos\left(2\pi \frac{x'}{\lambda} + \phi\right)
 \end{equation}
@@ -213,13 +359,15 @@ Where:
     \item $\theta$: Orientation angle (the target variable: $+45^\circ$ or $-45^\circ$).
     \item $x', y'$: Coordinates rotated by $\theta$.
 \end{itemize}
-By generating stimuli procedurally rather than loading image files, we eliminate network latency and ensure pixel-perfect control over the spatial frequency and contrast.
+By generating stimuli procedurally rather than loading image files, we eliminate network latency and ensure pixel-perfect control
+over the spatial frequency and contrast.
 
 \subsubsection{Timing and Synchronization}
 Web-based reaction time measurement is notoriously jittery. To mitigate this, we employ:
 \begin{enumerate}
     \item \textbf{High-Res Time}: All timestamps use `performance.now()`, which provides sub-millisecond precision (typically $5\mu s$), independent of the system clock.
-    \item \textbf{Frame-Locked Rendering}: The stimulus onset is synchronized to the display refresh rate using `requestAnimationFrame`. We log the timestamp of the frame \textit{immediately} before the stimulus paint command.
+    \item \textbf{Frame-Locked Rendering}: The stimulus onset is synchronized to the display refresh rate using `requestAnimationFrame`.
+    We log the timestamp of the frame \textit{immediately} before the stimulus paint command.
 \end{enumerate}
 
 \begin{algorithm}
@@ -250,8 +398,10 @@ Web-based reaction time measurement is notoriously jittery. To mitigate this, we
 
 \subsection{Data Management and Privacy}
 Since no server is involved, data persistence is handled via the \textbf{File System Access API} (on supported browsers) or a fallback to `Blob` download.
-Data is serialized into JSON Lines (.jsonl) format. Each line represents one frame or one trial event. This allows for streaming writes, ensuring that even if the browser crashes mid-session, data up to that point is preserved.
-At the end of a session, the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk. This explicit user action reinforces the sense of agency and privacy control.
+Data is serialized into JSON Lines (.jsonl) format. Each line represents one frame or one trial event. This allows for streaming writes,
+ensuring that even if the browser crashes mid-session, data up to that point is preserved.
+At the end of a session, the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk.
+This explicit user action reinforces the sense of agency and privacy control.
 
 % =================================================================================
 % SECTION 4: METHODOLOGY
@@ -259,15 +409,29 @@ At the end of a session, the user initiates a "Download Data" action, which zips
 \section{Methodology}
 
 \subsection{Experimental Design}
-We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure. An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic. By collecting a massive density of data points from a single individual ($N=1$, Trials=600), we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
-The study followed an **A-B-C** logic within each session, varying the cognitive framing (Challenge vs. Threat vs. Neutral). Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects (e.g., A-B-C, B-C-A, C-A-B).
+We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure.
+An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic.
+By collecting a massive density of data points from a single individual ($N=1$, Trials=600),
+we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
+The study followed an **A-B-C** logic within each session (see Fig. \ref{fig:sced_design}), varying the cognitive framing (Challenge vs. Threat vs. Neutral).
+Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects (e.g., A-B-C, B-C-A, C-A-B).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{paper_figures/Figure4_Longitudinal.png}
+    \caption{Visual representation of the Single-Case Experimental Design (SCED). The study spanned 14 days, alternating between Home and Lab environments. Each session consisted of 3 blocks (Neutral, Threat, Challenge) with randomized order, totaling 600 trials. This rigorous dense-sampling approach allows for robust intrasubject statistical inference.}
+    \label{fig:sced_design}
+\end{figure}
 
 \subsection{Participant}
-The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype. The participant had normal-to-corrected vision and no history of cardiovascular or neurological disorders.
-\textit{Ethical Note}: As a self-experimentation study, formal IRB approval was waived, but the protocol adhered strictly to the Declaration of Helsinki regarding safety and data privacy.
+The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype.
+The participant had normal-to-corrected vision and no history of cardiovascular or neurological disorders.
+\textit{Ethical Note}: As a self-experimentation study, formal IRB approval was waived, but the protocol adhered strictly
+to the Declaration of Helsinki regarding safety and data privacy.
 
 \subsection{Apparatus and Physical Environment}
-The experiment was deployed on a Microsoft Surface Laptop 3 (13.5-inch PixelSense Display, $2256 \times 1504$ resolution). The screen refresh rate was locked at 60Hz. Gamma correction was applied to linearize the luminance output.
+The experiment was deployed on a Microsoft Surface Laptop 3 (13.5-inch PixelSense Display, $2256 \times 1504$ resolution).
+The screen refresh rate was locked at 60Hz. Gamma correction was applied to linearize the luminance output.
 To verify environmental differences, ambient illuminance was measured using a digital lux meter (HoldPeak HP-881E) at the eye level of the participant.
 \begin{itemize}
     \item \textbf{Lab Environment}: Mean illuminance $480 \pm 20$ lux (CCT 4000K Fluorescent).
@@ -277,14 +441,17 @@ Distance from the screen was maintained at approximately 50--60 cm, verified by 
 
 \subsection{Experimental Procedure}
 \subsubsection{Calibration Phase}
-At the start of each session, the participant launched the Camerala web app. A "Calibration" screen displayed the live video feed with an overlay mesh. The participant was instructed to center their face and ensure "green" status on three quality indicators:
+At the start of each session, the participant launched the Camerala web app. A "Calibration" screen displayed the live video feed with an overlay mesh.
+The participant was instructed to center their face and ensure "green" status on three quality indicators:
 1. \textbf{Lighting Check}: Mean face luminance $>$ 40 (0-255 scale).
 2. \textbf{Pose Check}: Yaw/Pitch/Roll angles  $< 15^\circ$.
 3. \textbf{Face Size Check}: Inter-ocular distance $> 50$ pixels.
 Once calibrated, the camera feed was hidden to prevent "Mirror Anxiety" (distraction caused by seeing oneself), and the main experiment began.
 
 \subsubsection{Instruction and Cognitive Framing Phase}
-Before each block of 20 trials, a full-screen instruction page was displayed for a minimum of 5 seconds. The participant had to press the Spacebar to proceed, ensuring self-paced comprehension. The background color and instruction text were manipulated to prime the cognitive appraisal, grounded in the Biopsychosocial Model and Value-Expectancy Theory.
+Before each block of 20 trials, a full-screen instruction page was displayed for a minimum of 5 seconds.
+The participant had to press the Spacebar to proceed, ensuring self-paced comprehension.
+The background color and instruction text were manipulated to prime the cognitive appraisal, grounded in the Biopsychosocial Model and Value-Expectancy Theory.
 
 \begin{enumerate}
     \item \textbf{Neutral Condition (Baseline)}
@@ -297,15 +464,19 @@ Before each block of 20 trials, a full-screen instruction page was displayed for
     \item \textbf{Threat Condition (Prevention Focus)}
     \begin{itemize}
         \item \textit{Visuals}: Dark Red background (\#4a0000), White text, Red borders.
-        \item \textit{Instruction}: "WARNING: BLOCK B - CRITICAL. Poor performance in this block is unacceptable. Data quality is strictly monitored. AVOID MISTAKES at all costs."
-        \item \textit{Theoretical Goal}: Induce "Threat" appraisal (Demands $>$ Resources). This framing emphasizes potential loss and negative evaluation, which typically triggers vascular constriction and freezing.
+        \item \textit{Instruction}: "WARNING: BLOCK B - CRITICAL. Poor performance in this block is unacceptable. Data quality is strictly monitored.
+        AVOID MISTAKES at all costs."
+        \item \textit{Theoretical Goal}: Induce "Threat" appraisal (Demands $>$ Resources). This framing emphasizes potential loss and negative evaluation,
+        which typically triggers vascular constriction and freezing.
     \end{itemize}
 
     \item \textbf{Challenge Condition (Promotion Focus)}
     \begin{itemize}
         \item \textit{Visuals}: Bright Blue background (\#0000aa), White text, Green borders.
-        \item \textit{Instruction}: "CHALLENGE MODE: BLOCK C - BONUS. Break your record! This is a chance to show your peak performance. Be fast, be sharp, push your limits!"
-        \item \textit{Theoretical Goal}: Induce "Challenge" appraisal (Resources $>$ Demands). This framing emphasizes potential gain and mastery, which typically triggers cardiac output increases and vasodilation (aerobic-like state).
+        \item \textit{Instruction}: "CHALLENGE MODE: BLOCK C - BONUS. Break your record! This is a chance to show your peak performance.
+        Be fast, be sharp, push your limits!"
+        \item \textit{Theoretical Goal}: Induce "Challenge" appraisal (Resources $>$ Demands). This framing emphasizes potential gain and mastery,
+        which typically triggers cardiac output increases and vasodilation (aerobic-like state).
     \end{itemize}
 \end{enumerate}
 
@@ -320,7 +491,8 @@ We implemented a **1-up 1-down Staircase Algorithm**:
 - **Step Size**: 5\% contrast.
 - **Starting Contrast**: 50\% (Michael's Contrast).
 - **Logic**: Correct $\to$ $Contrast_{t+1} = Contrast_t \times 0.95$. Incorrect $\to$ $Contrast_{t+1} = Contrast_t \times 1.05$.
-This simple up-down rule converges to the 50\% psychometric threshold (where accuracy is indeterminate), effectively pushing the participant to their sensory limit regardless of fatigue or environment.
+This simple up-down rule converges to the 50\% psychometric threshold (where accuracy is indeterminate),
+effectively pushing the participant to their sensory limit regardless of fatigue or environment.
 
 \subsection{Dependent Measures and Pre-processing}
 All data were exported as JSONL and processed in Python (NumPy/Pandas).
@@ -332,7 +504,8 @@ All data were exported as JSONL and processed in Python (NumPy/Pandas).
 \subsubsection{Physiological Metrics}
 - \textbf{Freezing Index ($M_t$)}: Calculated as the frame-by-frame velocity of the nose tip, smoothed with a 500ms moving average window.
 - \textbf{Eye Aspect Ratio (EAR)}: Defined as $EAR = \frac{||p_2 - p_6|| + ||p_3 - p_5||}{2||p_1 - p_4||}$ where $p$ are the 6 landmarks describing the eye contour.
-- \textbf{rPPG Heart Rate}: The raw POS signal was bandpass filtered (0.7-3.0 Hz, corresponding to 42-180 bpm). Peak detection was performed using a prominence-based finder to calculate inter-beat intervals (IBI).
+- \textbf{rPPG Heart Rate}: The raw POS signal was bandpass filtered (0.7-3.0 Hz, corresponding to 42-180 bpm). 
+Peak detection was performed using a prominence-based finder to calculate inter-beat intervals (IBI).
 
 % =================================================================================
 % SECTION 5: RESULTS (Placeholder for next expansion)
