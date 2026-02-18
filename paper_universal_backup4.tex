@@ -33,7 +33,7 @@
 \maketitle
 
 % =================================================================================
-% ABSTRACT (UNCHANGED)
+% ABSTRACT
 % =================================================================================
 \begin{abstract}
 \textbf{\textit{Objective}}: As the field of Affective Computing rapidly transitions from controlled laboratory settings to continuous, in-the-wild monitoring, it faces a fundamental theoretical and practical challenge: the ambiguity of physiological signals across different environmental contexts. Traditional affective models predominantly rely on a static, context-agnostic mapping between physiological arousal and affective states, operating on the assumption that elevated biomarkers (e.g., heart rate, skin conductance) indiscriminately indicate stress or negative affect. This assumption fundamentally ignores the "Invariance Breaking" phenomenon, where identical physiological patterns can support divergent subjective states—such as Threat (maladaptive stress) versus Challenge (adaptive engagement)—depending on the individual's cognitive appraisal and the safety of the surrounding environment.
@@ -50,7 +50,7 @@ Web-based Sensing, Single-Case Experimental Design, Invariance Breaking, Remote 
 \end{IEEEkeywords}
 
 % =================================================================================
-% SECTION 1: INTRODUCTION (UNCHANGED)
+% SECTION 1: INTRODUCTION
 % =================================================================================
 \section{Introduction}
 
@@ -98,16 +98,14 @@ In this work, we bridge the gap between advanced psychophysiological theory and 
 Our contributions are threefold:
 \begin{enumerate}
     \item \textbf{Camerala Framework}: We present a robust, open-source architecture for client-side physiological sensing. By processing all video data locally within the browser, Camerala solves the "Privacy Bottleneck" that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking using WebAssembly for real-time performance.
-    
     \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. We argue that SCED is superior to large-N group designs for investigating context-sensitivity, as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
-    
     \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." We show that the behavioral and physiological signatures of "Threat" (Reaction Time acceleration, Freezing behavior) are robust in the Lab but vanish at Home, confirming the Invariance Breaking hypothesis.
 \end{enumerate}
 
 The remainder of this paper is organized as follows: Section II reviews the state-of-the-art in remote sensing and context-awareness. Section III details the technical implementation of Camerala. Section IV describes our SCED methodology. Section V presents detailed statistical results. Section VI discusses the theoretical implications for ubiquitous computing, and Section VII concludes.
 
 % =================================================================================
-% SECTION 2: RELATED WORK (UNCHANGED)
+% SECTION 2: RELATED WORK
 % =================================================================================
 \section{Related Work}
 
@@ -159,7 +157,7 @@ Pooling these heterogeneous phenotypes often washes out significant effects, lea
 Single-Case Experimental Design (SCED) \cite{barlow_sced} avoids this aggregation fallacy. By treating the individual as their own control and sampling them repeatedly (in our case, 600 trials), we achieve high statistical power to detect \textit{idiographic} causal relationships.
 
 % =================================================================================
-% SECTION 3: SYSTEM ARCHITECTURE (DETAILED EXPANSION)
+% SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
 \textbf{Camerala} (derived from "Camera" + "Laboratory") is a comprehensive, open-source web framework designed for high-temporal-resolution physiological experimentation. Unlike traditional cloud-based platforms (e.g., Pavlovia, Gorilla) that operate on a client-server architecture, Camerala employs a "Thick Client" (Edge Computing) philosophy. This architectural choice is driven by two critical non-functional requirements: \textbf{Privacy Preservation} and \textbf{Real-Time Latency}.
@@ -254,68 +252,86 @@ Data is serialized into JSON Lines (.jsonl) format. Each line represents one fra
 At the end of a session, the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk. This explicit user action reinforces the sense of agency and privacy control.
 
 % =================================================================================
-% SECTION 4: METHODOLOGY (DETAILED EXPANSION)
+% SECTION 4: METHODOLOGY
 % =================================================================================
 \section{Methodology}
 
 \subsection{Experimental Design}
 We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure. An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic. By collecting a massive density of data points from a single individual ($N=1$, Trials=600), we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
 
-The study followed an **A-B-C** logic within each session, varying the cognitive framing (Challenge vs. Threat vs. Neutral).
+The study followed an **A-B-C** logic within each session, varying the cognitive framing (Challenge vs. Threat vs. Neutral). Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects (e.g., A-B-C, B-C-A, C-A-B).
 
 \subsection{Participant}
-The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype. The participant had normal-to-corrected vision.
+The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype. The participant had normal-to-corrected vision and no history of cardiovascular or neurological disorders.
 \textit{Ethical Note}: As a self-experimentation study, formal IRB approval was waived, but the protocol adhered strictly to the Declaration of Helsinki regarding safety and data privacy.
 
-\subsection{Procedure and Timeline}
-The data collection spanned 14 days, comprising 10 total sessions.
+\subsection{Apparatus and Physical Environment}
+The experiment was deployed on a Microsoft Surface Laptop 3 (13.5-inch PixelSense Display, $2256 \times 1504$ resolution). The screen refresh rate was locked at 60Hz. Gamma correction was applied to linearize the luminance output.
+To verify environmental differences, ambient illuminance was measured using a digital lux meter (HoldPeak HP-881E) at the eye level of the participant.
 \begin{itemize}
-    \item **Phase 1 (Lab - "Danger")**: Sessions 1--5 were conducted in a University Laboratory.
-        \begin{itemize}
-            \item \textit{Phyiscal Context}: Windowless cubicle, artificial fluorescent lighting (approx 500 lux).
-            \item \textit{Social Context}: "Working hours" (09:00--17:00). High probability of interruption by colleagues. Formal dress code.
-            \item \textit{Neuroception}: High vigilance. The environment signifies "Evaluation" and "Work."
-        \end{itemize}
-    \item **Phase 2 (Home - "Safety")**: Sessions 6--10 were conducted in the participant's Bedroom.
-        \begin{itemize}
-            \item \textit{Physical Context}: Warm LED lighting (approx 150 lux), quiet.
-            \item \textit{Social Context}: "Private hours" (21:00--23:00). Zero probability of intrusion. Informal clothing.
-            \item \textit{Neuroception}: Low vigilance. The environment signifies "Rest" and "Privacy."
-        \end{itemize}
+    \item \textbf{Lab Environment}: Mean illuminance $480 \pm 20$ lux (CCT 4000K Fluorescent).
+    \item \textbf{Home Environment}: Mean illuminance $140 \pm 50$ lux (CCT 2700K LED + Variable monitor glow).
 \end{itemize}
+Distance from the screen was maintained at approximately 50--60 cm, verified by the FaceMesh iris diameter metric.
 
-\subsection{The Psychophysical Task: Gabor Orientation Discrimination}
-The participant viewed a Gabor patch appearing on the screen for 200ms. The patch was tilted either $45^\circ$ (Right) or $-45^\circ$ (Left). The task was to press the corresponding arrow key as quickly and accurately as possible.
+\subsection{Experimental Procedure}
+\subsubsection{Calibration Phase}
+At the start of each session, the participant launched the Camerala web app. A "Calibration" screen displayed the live video feed with an overlay mesh. The participant was instructed to center their face and ensure "green" status on three quality indicators:
+1. \textbf{Lighting Check}: Mean face luminance $>$ 40 (0-255 scale).
+2. \textbf{Pose Check}: Yaw/Pitch/Roll angles  $< 15^\circ$.
+3. \textbf{Face Size Check}: Inter-ocular distance $> 50$ pixels.
+Once calibrated, the camera feed was hidden to prevent "Mirror Anxiety" (distraction caused by seeing oneself), and the main experiment began.
 
-\subsubsection{Performance Clamping via Staircase}
-To ensure that physiological arousal reflected \textit{appraisal} (Fear/Engagement) rather than simple task difficulty, we clamped the task difficulty using a **1-up 1-down Staircase Procedure**.
-\begin{itemize}
-    \item If the participant responds Correctly: The contrast of the Gabor patch is \textit{decreased} by 5\% (making it harder).
-    \item If the participant responds Incorrectly: The contrast is \textit{increased} by 5\% (making it easier).
-\end{itemize}
-This establishes a homeostatic equilibrium where accuracy converges to roughly 75\%. This removes "Task Difficulty" as a confounding variable; the task is functionally "equally hard" in all conditions. Any difference in physiology must therefore be due to the \textit{context}, not the \textit{load}.
+\subsubsection{Instruction and Cognitive Framing Phase}
+Before each block of 20 trials, a full-screen instruction page was displayed for a minimum of 5 seconds. The participant had to press the Spacebar to proceed, ensuring self-paced comprehension. The background color and instruction text were manipulated to prime the cognitive appraisal, grounded in the Biopsychosocial Model and Value-Expectancy Theory.
 
-\subsection{Independent Variables: Cognitive Framing}
-Before each block of 20 trials, a full-screen instruction page primed the cognitive appraisal:
 \begin{enumerate}
-    \item \textbf{Neutral Condition}: Instruction: "Please perform the task. Focus on accuracy." (Target: Baseline Arousal).
-    \item \textbf{Threat Condition}: Instruction: "WARNING: Poor performance is unacceptable. Data quality is critical. Do not make mistakes." (Target: Avoidance Motivation, Fear of Failure).
-    \item \textbf{Challenge Condition}: Instruction: "CHALLENGE MODE: Try to beat your high score! Push your limits and react fast!" (Target: Approach Motivation, Eagerness).
+    \item \textbf{Neutral Condition (Baseline)}
+    \begin{itemize}
+        \item \textit{Visuals}: Gray background (\#e0e0e0), Black text.
+        \item \textit{Instruction}: "Block A: Accuracy. Please perform the task as accurately as possible. Take your time."
+        \item \textit{Theoretical Goal}: Minimize ego-involvement. Establish baseline physiological arousal adequate for metabolic demands.
+    \end{itemize}
+
+    \item \textbf{Threat Condition (Prevention Focus)}
+    \begin{itemize}
+        \item \textit{Visuals}: Dark Red background (\#4a0000), White text, Red borders.
+        \item \textit{Instruction}: "WARNING: BLOCK B - CRITICAL. Poor performance in this block is unacceptable. Data quality is strictly monitored. AVOID MISTAKES at all costs."
+        \item \textit{Theoretical Goal}: Induce "Threat" appraisal (Demands $>$ Resources). This framing emphasizes potential loss and negative evaluation, which typically triggers vascular constriction and freezing.
+    \end{itemize}
+
+    \item \textbf{Challenge Condition (Promotion Focus)}
+    \begin{itemize}
+        \item \textit{Visuals}: Bright Blue background (\#0000aa), White text, Green borders.
+        \item \textit{Instruction}: "CHALLENGE MODE: BLOCK C - BONUS. Break your record! This is a chance to show your peak performance. Be fast, be sharp, push your limits!"
+        \item \textit{Theoretical Goal}: Induce "Challenge" appraisal (Resources $>$ Demands). This framing emphasizes potential gain and mastery, which typically triggers cardiac output increases and vasodilation (aerobic-like state).
+    \end{itemize}
 \end{enumerate}
 
-\subsection{Dependent Measures}
+\subsection{The Psychophysical Task: Staircase Implementation}
+The task was a Gabor Orientation Discrimination task.
+1. \textbf{Fixation}: A central cross (+) appeared for a randomized duration (400-600ms) to reduce temporal anticipation.
+2. \textbf{Stimulus}: The Gabor patch (tilted $\pm 45^\circ$) appeared for exactly 200ms (12 frames).
+3. \textbf{Response}: The screen went blank. The system waited for a Left/Right arrow key press.
+4. \textbf{Feedback}: Immediately upon response, the screen flashed Green (Correct) or Red (Incorrect) for 100ms.
+
+We implemented a **1-up 1-down Staircase Algorithm**:
+- **Step Size**: 5\% contrast.
+- **Starting Contrast**: 50\% (Michael's Contrast).
+- **Logic**: Correct $\to$ $Contrast_{t+1} = Contrast_t \times 0.95$. Incorrect $\to$ $Contrast_{t+1} = Contrast_t \times 1.05$.
+This simple up-down rule converges to the 50\% psychometric threshold (where accuracy is indeterminate), effectively pushing the participant to their sensory limit regardless of fatigue or environment.
+
+\subsection{Dependent Measures and Pre-processing}
+All data were exported as JSONL and processed in Python (NumPy/Pandas).
+
 \subsubsection{Behavioral Metrics}
-\begin{itemize}
-    \item \textbf{Reaction Time (RT)}: Latency from stimulus onset to key press (ms). Values $<100$ms (anticipatory) or $>2000$ms (distraction) were excluded.
-    \item \textbf{Accuracy}: Percent correct. Used primarily to verify the Staircase convergence.
-\end{itemize}
+- \textbf{Reaction Time (RT)}: Filtered for anticipatory ($<100$ms) and distracted ($>1500$ms) responses.
+- \textbf{Accuracy}: Used only for validty checking of the staircase convergence.
 
 \subsubsection{Physiological Metrics}
-\begin{itemize}
-    \item \textbf{Freezing Index ($M_t$)}: As defined in Eq. 3.
-    \item \textbf{Blink Rate}: Eye Aspect Ratio (EAR) based on the height/width ratio of the eye landmarks.
-    \item \textbf{Heart Rate (HR)}: Extracted via rPPG (POS algorithm) post-hoc from the logged raw landmark data.
-\end{itemize}
+- \textbf{Freezing Index ($M_t$)}: Calculated as the frame-by-frame velocity of the nose tip, smoothed with a 500ms moving average window.
+- \textbf{Eye Aspect Ratio (EAR)}: Defined as $EAR = \frac{||p_2 - p_6|| + ||p_3 - p_5||}{2||p_1 - p_4||}$ where $p$ are the 6 landmarks describing the eye contour.
+- \textbf{rPPG Heart Rate}: The raw POS signal was bandpass filtered (0.7-3.0 Hz, corresponding to 42-180 bpm). Peak detection was performed using a prominence-based finder to calculate inter-beat intervals (IBI).
 
 % =================================================================================
 % SECTION 5: RESULTS (Placeholder for next expansion)
