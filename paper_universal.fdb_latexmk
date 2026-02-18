@@ -1,18 +1,16 @@
 # Fdb version 4
-["bibtex paper_universal"] 1771380479.60813 "paper_universal.aux" "paper_universal.bbl" "paper_universal" 1771380485.44876 0
+["bibtex paper_universal"] 1771382599.8033 "paper_universal.aux" "paper_universal.bbl" "paper_universal" 1771382606.34848 0
   "./references.bib" 1771375326 4435 314185a3f39296ecaf0ffbd69834b0b2 ""
   "c:/texlive/2025/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1770095493 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "paper_universal.aux" 1771380484 10870 94c26eb1263174324182e2e6ed68100f "pdflatex"
+  "paper_universal.aux" 1771382604 10870 94c26eb1263174324182e2e6ed68100f "pdflatex"
   (generated)
   "paper_universal.bbl"
   "paper_universal.blg"
   (rewritten before read)
-["pdflatex"] 1771380480.18475 "c:/Users/hatake/OneDrive/画像/デスクトップ/.vscode/camerala/paper_universal.tex" "paper_universal.pdf" "paper_universal" 1771380485.44953 2
-  "c:/Users/hatake/OneDrive/画像/デスクトップ/.vscode/camerala/paper_universal.tex" 1771380474 53529 9f6886aac310a305dede7b9d9f06074a ""
+["pdflatex"] 1771382600.36996 "c:/Users/hatake/OneDrive/画像/デスクトップ/.vscode/camerala/paper_universal.tex" "paper_universal.pdf" "paper_universal" 1771382606.34903 0
+  "c:/Users/hatake/OneDrive/画像/デスクトップ/.vscode/camerala/paper_universal.tex" 1771381162 53517 e3e4c91602384244dd0e06c882263b31 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1770093395 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1770094395 3524 cb3e574dea2d1052e39280babc910dc8 ""
-  "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1770092863 960 379cc0019370a9e0208a0a3f949f847a ""
-  "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1770092863 1292 bd42be2f344128bff6d35d98474adfe3 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1770102106 2172 fd0c924230362ff848a33632ed45dc23 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm" 1770102106 4524 6bce29db5bc272ba5f332261583fee9c ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmbi7t.tfm" 1770102106 2228 e564491c42a4540b5ebb710a75ff306c ""
@@ -58,12 +56,10 @@
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1770091463 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1770091463 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1770091463 32442 c975af247b6702f7ca0c299af3616b80 ""
-  "c:/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb" 1770092863 45758 19968a0990191524e34e1994d4a31cb6 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb" 1770102106 44729 fea0975e20ec51c992338362f05f1146 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb" 1770102106 44656 0cbca70e0534538582128f6b54593cca ""
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb" 1770102106 46026 687528a208fbfc1f00832bb96cccebbb ""
   "c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb" 1770102106 45458 504e2b06fa82109d168c7a0afb09e145 ""
-  "c:/texlive/2025/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf" 1770092863 1344 6ff472164bf9de0fb2e864b28ac156d9 ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf" 1770102106 1372 788387fea833ef5963f4c5bffe33eb89 ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmbi7t.vf" 1770102106 1384 6ac0f8b839230f5d9389287365b243c0 ""
   "c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf" 1770102106 1380 0ea3a3370054be6da6acd929ec569f06 ""
@@ -112,7 +108,6 @@
   "c:/texlive/2025/texmf-dist/tex/latex/listings/lstmisc.sty" 1770096525 77105 002e983b638eadbf04e580642335f689 ""
   "c:/texlive/2025/texmf-dist/tex/latex/listings/lstpatch.sty" 1770096525 353 9024412f43e92cd5b21fe9ded82d0610 ""
   "c:/texlive/2025/texmf-dist/tex/latex/multirow/multirow.sty" 1770097464 6696 886c9f3087d0b973ed2c19aa79cb3023 ""
-  "c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd" 1770098431 985 1ed784d7bfe47179f3550d2303b073f8 ""
   "c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd" 1770098431 961 15056f4a61917ceed3a44e4ac11fcc52 ""
   "c:/texlive/2025/texmf-dist/tex/latex/subfig/subfig.sty" 1770101534 21369 9ef165ca6df8815c92e693146a376c92 ""
   "c:/texlive/2025/texmf-dist/tex/latex/url/url.sty" 1770102727 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
@@ -125,10 +120,10 @@
   "paper_figures/Figure2_Quality.png" 1771322286 103080 aec3bec7ee5ffdc7ea6c801fcac40685 ""
   "paper_figures/Figure3_Interaction.png" 1771322286 210510 46389a4c27cea7e1388473200ce8f11e ""
   "paper_figures/Figure4_Longitudinal.png" 1771322287 681433 f0dacc7cf0f34c6351651961846e5eea ""
-  "paper_figures/author_placeholder.png" 0 -1 0 ""
-  "paper_universal.aux" 1771380484 10870 94c26eb1263174324182e2e6ed68100f "pdflatex"
-  "paper_universal.bbl" 1771380480 2269 df115ccfbfcf16ccd6390a2b7da8df1b "bibtex paper_universal"
-  "paper_universal.tex" 1771380474 53529 9f6886aac310a305dede7b9d9f06074a ""
+  "paper_figures/author.png" 1771374335 744977 52eeaaa954709c5d4f9895fb9e32230e ""
+  "paper_universal.aux" 1771382604 10870 94c26eb1263174324182e2e6ed68100f "pdflatex"
+  "paper_universal.bbl" 1771382600 2269 df115ccfbfcf16ccd6390a2b7da8df1b "bibtex paper_universal"
+  "paper_universal.tex" 1771381162 53517 e3e4c91602384244dd0e06c882263b31 ""
   (generated)
   "paper_universal.aux"
   "paper_universal.log"

@@ -194,8 +194,6 @@ INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
@@ -203,6 +201,8 @@ INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT ./paper_figures/Figure1_SystemPipeline.png
 INPUT ./paper_figures/Figure1_SystemPipeline.png
 INPUT ./paper_figures/Figure1_SystemPipeline.png
@@ -239,12 +239,15 @@ INPUT ./paper_universal.bbl
 INPUT paper_universal.bbl
 INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
-INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-INPUT c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm
-INPUT c:/texlive/2025/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf
-INPUT c:/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
+INPUT ./paper_figures/author.png
 INPUT paper_universal.aux
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -264,7 +267,6 @@ INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb
-INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
