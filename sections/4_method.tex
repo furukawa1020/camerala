@@ -1,0 +1,54 @@
+\section{Methodology}
+
+\subsection{Single-Case Experimental Design (SCED)}
+To investigate the intra-individual dynamics of context-dependent affect, we employed a **Single-Case Experimental Design (SCED)** \cite{barlow_sced}, specifically a **Randomized Block A-B-C Design**. Unlike traditional group designs that aggregate data across participants (treating individual variance as noise), SCED treats the single subject as the unit of analysis, utilizing repeated measures to establish internal validity.
+
+\begin{itemize}
+    \item \textbf{Participant}: Male, 20s. (Author self-experimentation to ensure strict protocol adherence for methodological validation).
+    \item \textbf{Duration}: A longitudinal period of 14 days.
+    \item \textbf{Sessions}: 10 discrete sessions (approx. 20 minutes each).
+    \item \textbf{Total Data Yield}: 30 Blocks, 600 Trials, approx. 300 minutes of valid physiological recording.
+\end{itemize}
+
+\subsection{Experimental Procedure}
+Each session consisted of 3 blocks of 20 trials each. The order of blocks (conditions) was randomized within each session to prevent order effects.
+
+\subsubsection{Task Paradigm}
+The core task was a 2-Alternative Forced Choice (2AFC) orientation discrimination task. A Gabor patch (sinusoidal grating with a Gaussian envelope) appeared on screen for 200ms, tilted either $45^{\circ}$ (Right) or $-45^{\circ}$ (Left). The participant was required to press the corresponding arrow key as quickly and accurately as possible. The opacity of the Gabor patch was controlled by the Staircase Algorithm described in Section III-C.
+
+\subsubsection{Cognitive Framing Manipulation}
+The critical experimental manipulation was the \textit{instructional framing} presented for 10 seconds before each block. The task mechanics remained identical, but the context was reframed:
+
+\begin{enumerate}
+    \item \textbf{Condition A: Neutral (Baseline)}
+    \textit{"Please perform the task as instructed. Focus on accuracy."}
+    \item \textbf{Condition B: Threat (Evaluative Stress)}
+    \textit{"WARNING: This task is extremely difficult. Most participants fail to meet the standard here. Your performance is being recorded and scored. Do not make mistakes."}
+    (Designed to induce "Goal-Incongruent" appraisal and fear of failure).
+    \item \textbf{Condition C: Challenge (Approach Motivation)}
+    \textit{"See how fast you can go! This is a chance to test your limits. Validated high-performers score well here. Give it your best shot!"}
+    (Designed to induce "Goal-Congruent" appraisal and eagerness).
+\end{enumerate}
+
+\subsection{Contextual Manipulation (The "Safe Haven" Variable)}
+To test the interaction between framing and environmental context, the study was divided into two distinct phases:
+
+\begin{itemize}
+    \item \textbf{Phase 1: University Laboratory (Sessions 1-5)}
+    Conducted in a university office cubicle during working hours (09:00 - 17:00).
+    \textbf{Characteristics}: Artificial fluorescent lighting, presence of lab equipment, background noise of colleagues, high formality, sense of being "observed." Represents a "Public/Evaluative" context.
+    
+    \item \textbf{Phase 2: Home Environment (Sessions 6-10)}
+    Conducted in the participant's private bedroom in the evening (19:00 - 23:00).
+    \textbf{Characteristics}: Warm ambient lighting, privacy, comfortable clothing, silence. Represents a "Private/Safety" context where the "Safe Haven" effect is theoretically active.
+\end{itemize}
+
+\subsection{Statistical Analysis Strategy}
+Analyzing SCED data requires a combination of visual and statistical approaches to account for autocorrelation and small sample sizes ($N_{blocks}=30$). We employed a four-tiered analysis pipeline:
+
+\begin{enumerate}
+    \item \textbf{Visual Analysis}: We visually inspected longitudinal line graphs of physiological and behavioral variables to identify trends, level changes, and variability shifts between phases.
+    \item \textbf{2-Way ANOVA}: To rigorously test the interaction hypothesis, we treated each block as a sampling unit and performed a 2 (Context: University/Home) $\times$ 2 (Condition: Threat/Challenge) Analysis of Variance.
+    \item \textbf{Effect Size Estimation}: We calculated Cohen's $d$ independently for the University and Home phases to quantify the magnitude of the Threat-Challenge difference in each context.
+    \item \textbf{Bayesian Inference}: We computed Bayes Factors (BF$_{10}$) using the BIC approximation to quantify the strength of evidence toward the alternative hypothesis ($H_1$: Difference exists) versus the null hypothesis ($H_0$: No difference). This is critical for interpreting null results in the Home condition (distinguishing "No Evidence" from "Evidence of No Effect").
+\end{enumerate}

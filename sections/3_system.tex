@@ -1,0 +1,68 @@
+\section{System Architecture: Camerala}
+
+We developed \textbf{Camerala} (Camera Laboratory), a lightweight, browser-based experimentation framework designed for unobtrusive longitudinal monitoring. A key design philosophy of Camerala is "Privacy by Design": the system runs entirely on the client side (Edge Computing), ensuring that raw video data is processed locally and never transmitted to a server. This architecture is critical for ethical deployment in private environments such as the user's home.
+
+\subsection{Frontend Architecture}
+The application is built using Vanilla JavaScript (ES6+) and HTML5 to minimize dependencies and ensure high performance on low-end consumer hardware. The architecture follows a modular Component-Based design:
+
+\begin{itemize}
+    \item \textbf{CameraManager}: Handles `getUserMedia` API calls, camera resolution negotiation (720p @ 30fps), and efficient canvas rendering. It manages the video stream buffer and synchronization.
+    \item \textbf{FeatureExtractor}: Integrates the Google MediaPipe Face Mesh \cite{mediapipe} library. It utilizes WebAssembly (WASM) and SIMD acceleration to perform real-time, 468-point 3D facial landmark tracking at 30+ FPS on a standard laptop CPU (e.g., Intel Core i5).
+    \item \textbf{TaskEngine}: The core logic controller that manages the psychophysical experimental loop. It handles stimulus rendering (Gabor patches), input capture, time-stamping with millisecond precision (`performance.now()`), and state management (e.g., staircase difficulty adjustment).
+    \item \textbf{DataLogger}: A dedicated module for data serialization. It buffers time-series physiological data and trial-level behavioral data, exporting them as CSV files via the File System Access API or Blob download at the end of each session.
+\end{itemize}
+
+\subsection{Physiological Signal Processing}
+
+\subsubsection{Facial Landmark Tracking}
+We utilize the MediaPipe Face Mesh solution, which employs a lightweight convolutional neural network to infer a dense physiological mesh from a single RGB frame. Compared to older methods (e.g., OpenFace), MediaPipe offers superior robustness to partial occlusions and extreme head poses, making it suitable for unconstrained home use.
+
+\subsubsection{Motion Energy (Freezing Index)}
+To quantify the "freezing" response—a behavioral marker of threat-induced vigilance—we compute the Global Head Motion. While eye blinks and micro-expressions are valuable, gross motor activity is the most robust indicator of the "fight-or-flight" vs. "freeze" response.
+
+We select a subset of distinct landmarks $\mathcal{K}$ corresponding to rigid facial features (the nose bridge and outer eye corners) to avoid confounding head motion with facial expressions (e.g., smiling or talking). The Frame-to-Frame Motion $M_t$ is calculated as the Euclidean distance ($L_2$ norm) of the displacement vectors:
+
+\begin{equation}
+M_t = \sum_{k \in \mathcal{K}} || \mathbf{p}_{k,t} - \mathbf{p}_{k,t-1} ||_2
+\end{equation}
+
+where $\mathbf{p}_{k,t} = (x_{k,t}, y_{k,t})$ represents the normalized coordinates of landmark $k$ at frame $t$. To reduce high-frequency jitter inherent in webcam tracking, we apply a temporal moving average filter ($W=3$ frames):
+
+\begin{equation}
+\bar{M}_t = \frac{1}{W} \sum_{i=0}^{W-1} M_{t-i}
+\end{equation}
+
+This index serves as our primary proxy for motor freezing.
+
+\subsubsection{Ecological Validity Metric: Exposure Fluctuation}
+In uncontrolled environments, lighting conditions are unpredictable. Clouds blocking the sun, flickering artificial lights, or the user shifting their posture relative to a light source can introduce significant artifacts into rPPG and camera-based signals. To quantify this noise, we introduce the Exposure Fluctuation Index ($E_{fluc}$).
+
+We first extract the Region of Interest (ROI) corresponding to the forehead. Let $\bar{L}_{ROI}(t)$ be the mean luminance (grayscale intensity) of the ROI pixels at time $t$. $E_{fluc}$ is defined as the absolute temporal derivative of luminance:
+
+\begin{equation}
+E_{fluc}(t) = | \bar{L}_{ROI}(t) - \bar{L}_{ROI}(t-1) |
+\end{equation}
+
+During the analysis phase, we calculate the windowed average of this metric. Windows where the mean $E_{fluc}$ exceeds a predefined threshold (calibrated during the first session) are flagged as "Low Quality" and excluded from physiological analysis, though behavioral data (RT) is retained. This allows us to rigorously assess the "noisiness" of the Home environment compared to the Lab.
+
+\subsection{Adaptive Psychophysics Engine}
+
+A critical confound in affective computing research is the entanglement of "Task Difficulty" and "Affective State." If a user is stressed, their performance may drop, making the task harder, which induces more stress (a feedback loop). To isolate the effects of \textit{appraisal} (Threat vs. Challenge) from \textit{task capacity}, we employed a performance clamping mechanism.
+
+We implemented a **1-up 1-down Staircase Algorithm**. The difficulty level $D$ of the task (operationalized as the opacity/contrast of the Gabor patch stimulus) is adjusted trial-by-trial based on the user's accuracy:
+
+\begin{algorithmic}
+\STATE $D_0 \leftarrow \text{Initial Difficulty}$
+\FOR{each trial $t$}
+    \STATE \textbf{Render} Stimulus($D_t$)
+    \STATE \textbf{Get} Response $R_t$
+    \IF{$R_t$ is Correct}
+        \STATE $D_{t+1} \leftarrow D_t + \delta$ \COMMENT{Increase Difficulty (Make harder)}
+    \ELSE
+        \STATE $D_{t+1} \leftarrow D_t - \delta$ \COMMENT{Decrease Difficulty (Make easier)}
+    \ENDIF
+    \STATE \textbf{Clamp} $D_{t+1}$ to $[0, 1]$
+\ENDFOR
+\end{algorithmic}
+
+This simple control loop theoretically converges the participant's accuracy to approximately 75\% (the psychometric threshold). By maintaining the user in a constant state of "optimal challenge" (neither too bored nor too overwhelmed), we ensure that any physiological differences observed between conditions are attributable to the cognitive framing (Threat vs. Challenge instructions) rather than the objective difficulty of the task.

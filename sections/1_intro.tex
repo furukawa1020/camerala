@@ -1,0 +1,31 @@
+\section{Introduction}
+
+\IEEEPARstart{T}{he} field of Affective Computing \cite{picard_affective_computing} stands at a critical juncture. For decades, the discipline has relied on high-fidelity, invasive sensors (e.g., electrocardiograms, electroencephalograms, electrodermal activity sensors) deployed in controlled laboratory environments to build models of human emotion. These gold-standard methods have been instrumental in establishing the physiological correlates of basic emotions, enabling the development of algorithms that can detect stress, joy, or frustration with high accuracy under idealized conditions.
+
+However, as the field transitions from the laboratory to ``in-the-wild'' applications \cite{ambulatory_assessment}, a fundamental limitation of the traditional paradigm has emerged: \textit{contextual rigidity}. Current affective models often assume physiological invariance—the notion that a specific physiological pattern (e.g., increased heart rate, skin conductance response) consistently maps to a specific affective state (e.g., stress) regardless of the external environment. This ``Context-Agnostic'' approach fails catastrophically when applied to real-world scenarios where the relationship between physiology and psychology is fluid and context-dependent.
+
+\subsection{The Problem of Invariance Breaking}
+We term the failure of physiological signals to uniquely identify affective states across contexts as the ``Invariance Breaking'' phenomenon. This concept is grounded in the Biopsychosocial Model of Challenge and Threat \cite{biopsychosocial_model}, which posits that high-arousal states can be experienced as either ``Threat'' (negative valence, avoidance motivation, vasoconstriction) or ``Challenge'' (positive valence, approach motivation, vasodilation). Crucially, the differentiation between these states depends entirely on the individual's cognitive appraisal of their resources versus the situational demands.
+
+In a laboratory setting, with its inherent social evaluative threat (e.g., the presence of an experimenter, cameras, clinical equipment), participants are primed for threat reactivity. Consequently, a stressor task triggers a predictable fight-or-flight response. However, in a naturalistic environment such as one's home, the context shifts. The Polyvagal Theory \cite{polyvagal, porges_safe_haven} suggests that safe environments provide ``neuroceptive'' cues that downregulate the sympathetic nervous system, creating a ``Safe Haven'' effect. In this state, an individual may appraise the exact same stressor as a manageable challenge, or simply disengage from it, resulting in a dampened or qualitatively different physiological response.
+
+Standard group-level experimental designs (e.g., Randomized Controlled Trials comparing a Lab Group vs. a Home Group) are ill-equipped to capture these dynamics. High inter-subject variability in baseline physiology often washes out the subtle intra-individual modulation caused by context. To understand Invariance Breaking, we must shift our lens from the \textit{population} to the \textit{individual}.
+
+\subsection{The Move to Web-Based Longitudinal Sensing}
+Simultaneously, the proliferation of high-quality webcams and browser-based technologies has opened new avenues for ubiquitous sensing. Remote photoplethysmography (rPPG) \cite{mcduff_rppg} and webcam eye tracking \cite{webgazer} allow for the extraction of rich physiological data without specialized hardware. Yet, the majority of research in this domain focuses on \textit{signal fidelity}—minimizing the mean absolute error of heart rate estimation compared to a pulse oximeter. While signal quality is necessary, it is not sufficient for affective understanding. A perfect heart rate signal is useless if the model interpreting it assumes a context-free mapping that does not exist.
+
+\subsection{Research Objectives and Contributions}
+In this paper, we propose a paradigm shift towards \textit{Context-Aware, Longitudinal Affective Computing}. We argue that to build robust affective models, we must explicitly measure and model the interaction between the user's physiology and their environment over time.
+
+To this end, we introduce \textbf{Camerala} (Camera Laboratory), a privacy-preserving, fully client-side web framework designed for longitudinal affective experimentation. Unlike typical web studies that collect a single ``snapshot'' of data, Camerala is built for Single-Case Experimental Design (SCED) \cite{barlow_sced}, allowing for high-frequency, repeated measurement of a single individual across varying contexts.
+
+We deploy this system in a rigorous 10-session validation study ($N=1$) comparing two distinct ecological contexts: a University Laboratory (University) and a Home environment (Home). By employing an A-B-C Randomized Block design, we systematically manipulate cognitive framing (Threat vs. Challenge) and observe how the environmental context moderates the psychophysiological response.
+
+Our primary contributions are threefold:
+\begin{enumerate}
+    \item \textbf{System Framework}: We present the architecture of Camerala, a lightweight, browser-based platform that processes facial landmarks and rPPG signals entirely on the client side, addressing the critical privacy concerns of in-home monitoring.
+    \item \textbf{Methodological Innovation}: We demonstrate the utility of SCED for Affective Computing. We show how evaluating a single subject over time provides statistical power for intra-individual effects that are invisible to cross-sectional group designs.
+    \item \textbf{Empirical Evidence for the "Safe Haven" Effect}: We provide robust statistical evidence (via ANOVA, Bayesian analysis, and Mixed-Effects modeling) that the home environment significantly dampens the behavioral and physiological response to threat, effectively neutralizing the "threat" appraisal that is reliable in the lab.
+\end{enumerate}
+
+This work serves as a foundational step toward "Personalized Affective Computing," where models are not trained on a generic population database, but are calibrated and contextualized for the specific individual in their natural ecology.
