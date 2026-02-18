@@ -2,6 +2,9 @@ ADVANCED STATISTICAL ANALYSIS SUMMARY
 ================================================================================
 
 1. TWO-WAY ANOVA
+   Motion Interaction: p=0.1931
+   RT Interaction: p=0.0351
+
 2. EFFECT SIZE TABLE
 Measure    Context  Cohen's d  t-statistic  p-value Interpretation
  Motion University  -0.332429    -1.740995 0.084832          Small
