@@ -11,7 +11,6 @@
 \usepackage{multirow}
 \usepackage{CJKutf8}
 \usepackage{listings}
-\usepackage{algorithm}
 
 % Helper macros for consistent notation
 \newcommand{\etal}{\textit{et al.}}
@@ -33,7 +32,7 @@
 \maketitle
 
 % =================================================================================
-% ABSTRACT (UNCHANGED)
+% ABSTRACT
 % =================================================================================
 \begin{abstract}
 \textbf{\textit{Objective}}: As the field of Affective Computing rapidly transitions from controlled laboratory settings to continuous, in-the-wild monitoring, it faces a fundamental theoretical and practical challenge: the ambiguity of physiological signals across different environmental contexts. Traditional affective models predominantly rely on a static, context-agnostic mapping between physiological arousal and affective states, operating on the assumption that elevated biomarkers (e.g., heart rate, skin conductance) indiscriminately indicate stress or negative affect. This assumption fundamentally ignores the "Invariance Breaking" phenomenon, where identical physiological patterns can support divergent subjective states—such as Threat (maladaptive stress) versus Challenge (adaptive engagement)—depending on the individual's cognitive appraisal and the safety of the surrounding environment.
@@ -50,7 +49,7 @@ Web-based Sensing, Single-Case Experimental Design, Invariance Breaking, Remote 
 \end{IEEEkeywords}
 
 % =================================================================================
-% SECTION 1: INTRODUCTION (UNCHANGED)
+% SECTION 1: INTRODUCTION
 % =================================================================================
 \section{Introduction}
 
@@ -107,7 +106,7 @@ Our contributions are threefold:
 The remainder of this paper is organized as follows: Section II reviews the state-of-the-art in remote sensing and context-awareness. Section III details the technical implementation of Camerala. Section IV describes our SCED methodology. Section V presents detailed statistical results. Section VI discusses the theoretical implications for ubiquitous computing, and Section VII concludes.
 
 % =================================================================================
-% SECTION 2: RELATED WORK (UNCHANGED)
+% SECTION 2: RELATED WORK
 % =================================================================================
 \section{Related Work}
 
@@ -139,14 +138,18 @@ When these models are deployed "in-the-wild" (e.g., a webcam in a dark bedroom),
 \subsection{Context-Awareness in Affective Computing}
 The concept of "Context" in computing was formalized by Dey (2001) as "any information that can be used to characterize the situation of an entity." In Affective Computing, however, the integration of context has been slow and superficial.
 We categorize existing approaches into three levels of sophistication:
+
 \subsubsection{Level 0: Context-Agnostic}
 The majority of commercial "Stress Detection" algorithms fall here. They apply a static threshold: $HR > 90 \to Stress$. This fails in virtually all real-world scenarios due to the physiological confound of physical activity (metabolic demand vs. psychological stress).
+
 \subsubsection{Level 1: Context-as-Feature}
 Modern multimodal systems append context data to the feature vector. For example, a classifier might take inputs $[HR, GSR, Location_{GPS}, Noise_{dB}]$. The model learns to adjust its decision boundary based on location.
 While an improvement, this approach treats context as just another noisy sensor input. It assumes that the relationship between context and physiology is linear and additive.
+
 \subsubsection{Level 2: Context-as-Moderator (Interactionist)}
 Our work advocates for this theoretical level. We argue that context is not a feature; it is a \textit{lens} that fundamentally alters the semantic meaning of physiological arousal.
 Based on the Interactionist Theory of Emotion, emotion is constructed from the collision of Core Affect (Arousal/Valence) and Conceptual Knowledge (Context). The \textit{same} core affect (high arousal) becomes "Fear" in a dark alley but "Excitement" on a roller coaster.
+By manipulating the context (Lab vs. Home) while holding the task constant, we empirically demonstrate this moderation effect. We show that the "transfer function" $f: Physiology \to Affect$ is distinct in different environments ($f_{Lab} \neq f_{Home}$).
 
 \subsection{Methodological Shifts: Large-N vs. SCED}
 The "Gold Standard" in HCI research has long been the Between-Subjects Randomized Controlled Trial (RCT), typically with $N=20 \sim 30$. This design assumes that by averaging across many individuals, individual differences will cancel out as "noise," revealing the "true" population effect.
@@ -157,171 +160,96 @@ However, in psychophysiology, individual differences are not noise; they are the
 \end{enumerate}
 Pooling these heterogeneous phenotypes often washes out significant effects, leading to Type II errors.
 Single-Case Experimental Design (SCED) \cite{barlow_sced} avoids this aggregation fallacy. By treating the individual as their own control and sampling them repeatedly (in our case, 600 trials), we achieve high statistical power to detect \textit{idiographic} causal relationships.
+As "Personalized AI" becomes the goal, the field must transition from "Nomothetic" (law-seeking) science to "Idiographic" (individual-profiling) science. Our study serves as a tutorial on applying rigorous SCED (Randomized Block Design) to engineering validation.
+
+\subsection{The Privacy Paradox in Vision-Based Sensing}
+The use of cameras for sensing introduces unique ethical risks. A camera is a "dual-use" sensor: it can measure heart rate (medical data), but it can also identify the user, see their bedroom, and spy on their family.
+Cloud-based architectures, where video is streamed to a server for processing (e.g., AWS Rekognition), create a massive "Honey Pot" risk. Even if the transmission is encrypted, the storage of raw biometric data on central servers violates the principle of Data Minimization.
+Camerala implements a strict **Edge Computing** paradigm. By executing complex computer vision models (MediaPipe) entirely within the browser's sandbox via WebAssembly (WASM), we ensure that:
+\begin{enumerate}
+    \item \textbf{Data Sovereignty}: Pixel data never leaves the user's RAM.
+    \item \textbf{Latency}: No network round-trip time, enabling real-time feedback.
+    \item \textbf{Trust}: Users are more willing to consent to monitoring if they know the "eye" is disconnected from the internet.
+\end{enumerate}
+This "Privacy-by-Architecture" is not just an ethical preference; it is a prerequisite for the "Safe Haven" effect. If users feel watched, the Home becomes a Lab. Only by guaranteeing local processing can we preserve the ecological validity of the home environment.
 
 % =================================================================================
-% SECTION 3: SYSTEM ARCHITECTURE (DETAILED EXPANSION)
+% SECTION 3: SYSTEM ARCHITECTURE (Placeholder for next expansion)
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is a comprehensive, open-source web framework designed for high-temporal-resolution physiological experimentation. Unlike traditional cloud-based platforms (e.g., Pavlovia, Gorilla) that operate on a client-server architecture, Camerala employs a "Thick Client" (Edge Computing) philosophy. This architectural choice is driven by two critical non-functional requirements: \textbf{Privacy Preservation} and \textbf{Real-Time Latency}.
+We developed \textbf{Camerala} (Camera Laboratory), a bespoke, web-based experimentation framework. While commercial platforms (e.g., Gorilla.sc, Pavlovia) exist, they often rely on server-side processing or proprietary algorithms that obscure the raw data. Camerala is open-source, lightweight, and designed specifically for privacy-preserving longitudinal research.
 
-\subsection{High-Level Architecture}
-The system enables a complete experimental loop entirely within the browser sandbox. The architecture consists of three coupled modules running on the main JavaScript thread and dedicated WebWorkers:
-\begin{enumerate}
-    \item \textbf{The Task Engine}: Responsible for stimulus rendering, trial logic, and reaction time measurement.
-    \item \textbf{The Vision Pipeline}: Responsible for ingesting the webcam stream, performing facial landmark inference, and extracting raw physiological signals.
-    \item \textbf{The Data Manager}: Responsible for fusing the asynchronous streams (Vision Frame Time vs. Task Event Time) and securing data persistence.
-\end{enumerate}
-
-\subsection{Technical Implementation: The Vision Pipeline}
-We utilize the MediaPipe Face Mesh \cite{mediapipe_paper} solution, which provides 468 3D facial landmarks in real-time. This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration.
-
-\subsubsection{Feature Extraction Logic}
-To quantify psychophysiological states, we extract two primary signals: \textit{Head Motion (Freezing)} and \textit{Exposure Fluctuation}.
-
-\textbf{1. Head Motion Index ($M_t$)}
-The physiological "Freeze Response" (a defensive reaction to threat) translates to a reduction in gross motor movement. We capture this by tracking the displacement of rigid cranial landmarks (Nose tip, Left/Right Tragus) that are unaffected by facial expressions.
-Let $L_i^t = (x_i^t, y_i^t, z_i^t)$ be the 3D coordinate of the $i$-th landmark at frame $t$. The instantaneous motion scalar $M_t$ is defined as the Euclidean distance summed over the set of rigid landmarks $S_{rigid} = \{1, 33, 263\}$ (Nose, L-Ear, R-Ear):
-\begin{equation}
-    M_t = \frac{1}{|S_{rigid}|} \sum_{i \in S_{rigid}} || L_i^t - L_i^{t-1} ||_2
-\end{equation}
-To ensure scale invariance (handling users sitting at different distances), the coordinates are normalized by the Inter-Ocular Distance (IOD), calculated as the Euclidean distance between the lateral canthi of the eyes.
-
-\textbf{2. Exposure Fluctuation ($E_{fluc}$)}
-Ecological validity introduces noise. In a home environment, lighting is uncontrolled. Clouds passing the sun, screens flickering, or 60Hz power cycles induce luminance changes that can mask the rPPG signal. Instead of filtering this out, we quantify it as an independent variable to represent "Contextual Noise."
-We define a Region of Interest (ROI) on the forehead, $R_{fore}$. The average luminance $Y_t$ is computed from the RGB channels:
-\begin{equation}
-    Y_t = \frac{1}{N_{px}} \sum_{(u,v) \in R_{fore}} (0.299R_{u,v} + 0.587G_{u,v} + 0.114B_{u,v})
-\end{equation}
-The Exposure Fluctuation metric is then defined as the first derivative of luminance:
-\begin{equation}
-    E_{fluc}(t) = | Y_t - Y_{t-1} |
-\end{equation}
-
-\subsection{Technical Implementation: The Task Engine}
-The experimental task is a **2-Alternative Forced Choice (2AFC) Orientation Discrimination Task**, a standard paradigm in psychophysics.
-
-\subsubsection{Stimulus Generation via Canvas API}
-Using the HTML5 Canvas API, we procedurally generate Gabor patches. A Gabor patch is defined as a sinusoidal grating multiplied by a Gaussian envelope. The luminance profile $L(x,y)$ is given by:
-\begin{equation}
-    L(x,y) = L_0 + C \cdot \exp\left(-\frac{x'^2 + \gamma^2 y'^2}{2\sigma^2}\right) \cdot \cos\left(2\pi \frac{x'}{\lambda} + \phi\right)
-\end{equation}
-Where:
+\subsection{Design Philosophy: Privacy by Design}
+A major barrier to in-home video collection is privacy. Users are justifiably reluctant to stream video of their bedrooms to a cloud server. Camerala adopts an \textbf{Edge Computing} architecture:
 \begin{itemize}
-    \item $L_0$: Background luminance (128/255 gray).
-    \item $C$: Contrast of the grating.
-    \item $\lambda$: Wavelength (spatial frequency).
-    \item $\theta$: Orientation angle (the target variable: $+45^\circ$ or $-45^\circ$).
-    \item $x', y'$: Coordinates rotated by $\theta$.
+    \item \textbf{Local Processing}: All computer vision (Face Mesh, rPPG extraction) occurs within the user's browser memory (Client-side JavaScript). The heavy lifting is done by the user's CPU/GPU.
+    \item \textbf{No Video Transmission}: The raw video stream from `getUserMedia` is piped directly to the processing canvas and then discarded. Only the extracted numerical features (landmark coordinates, motion vectors) are saved. At no point does pixel data leave the local machine.
+    \item \textbf{Transparent Data}: The user retains full control over their data, which is stored in the browser's IndexedDB or local file system via the File System Access API until they choose to export it.
 \end{itemize}
-By generating stimuli procedurally rather than loading image files, we eliminate network latency and ensure pixel-perfect control over the spatial frequency and contrast.
 
-\subsubsection{Timing and Synchronization}
-Web-based reaction time measurement is notoriously jittery. To mitigate this, we employ:
-\begin{enumerate}
-    \item \textbf{High-Res Time}: All timestamps use `performance.now()`, which provides sub-millisecond precision (typically $5\mu s$), independent of the system clock.
-    \item \textbf{Frame-Locked Rendering}: The stimulus onset is synchronized to the display refresh rate using `requestAnimationFrame`. We log the timestamp of the frame \textit{immediately} before the stimulus paint command.
-\end{enumerate}
+\subsection{Core Components}
 
-\begin{algorithm}
-\caption{Camerala Task Loop (Simplified)}
-\begin{algorithmic}
-\STATE \textbf{Initialize} Camera, FaceMesh, Canvas
-\WHILE{Session Active}
-    \STATE $Block \leftarrow$ GetCurrentBlock()
-    \STATE $Condition \leftarrow Block.condition$
-    \STATE ShowInstruction(Condition.text)
-    \FOR{trial $i = 1$ to 20}
-        \STATE \textbf{Fixation Phase}: Show Cross ($500ms + \mathcal{U}(0, 200)ms$)
-        \STATE $t_{onset} \leftarrow$ performance.now()
-        \STATE DrawGaborPatch($\theta_i$)
-        \WHILE{No KeyPress}
-            \STATE Poll Keyboard Input
-        \ENDWHILE
-        \STATE $t_{response} \leftarrow$ performance.now()
-        \STATE $RT \leftarrow t_{response} - t_{onset}$
-        \STATE $Accuracy \leftarrow (Key == Target)$
-        \STATE \textbf{Feedback}: Show Color (Green/Red)
-        \STATE UpdateStaircase(Accuracy)
-        \STATE $Log(RT, Accuracy, FaceMeshFeatures)$
-    \ENDFOR
-\ENDWHILE
-\end{algorithmic}
-\end{algorithm}
+\subsubsection{1. The Task Engine}
+The Task Engine is the central conductor of the experiment. It generates the visual stimuli using the HTML5 Canvas API for high-performance rendering.
+\begin{itemize}
+    \item \textbf{Stimulus Generation}: We programmatically generate Gabor patches—sinusoidal gratings windowed by a Gaussian envelope.
+    \item \textbf{Timing Precision}: We utilize `performance.now()` (Double-precision float, microsecond resolution) to capture reaction times.
+\end{itemize}
 
-\subsection{Data Management and Privacy}
-Since no server is involved, data persistence is handled via the \textbf{File System Access API} (on supported browsers) or a fallback to `Blob` download.
-Data is serialized into JSON Lines (.jsonl) format. Each line represents one frame or one trial event. This allows for streaming writes, ensuring that even if the browser crashes mid-session, data up to that point is preserved.
-At the end of a session, the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk. This explicit user action reinforces the sense of agency and privacy control.
+\subsubsection{2. The Feature Extractor (Vision Pipeline)}
+We integrate Google's MediaPipe Face Mesh \cite{mediapipe}, a state-of-the-art lightweight neural network.
+
+\subsubsection{3. Signal Processing Modules}
+\textbf{A. Head Motion (Freezing Index)}:
+We compute the frame-to-frame displacement of rigid facial landmarks.
+\begin{equation}
+    M_t = \sum_{k \in \{1, 33, 263\}} \sqrt{(x_{k,t} - x_{k,t-1})^2 + (y_{k,t} - y_{k,t-1})^2}
+\end{equation}
+
+\textbf{B. Exposure Fluctuation ($E_{fluc}$)}:
+We calculate the mean luminance of the forehead ROI $L_{ROI}(t)$.
+\begin{equation}
+    E_{fluc}(t) = | L_{ROI}(t) - L_{ROI}(t-1) |
+\end{equation}
+
+\subsection{Adaptive Psychophysics: The Staircase Algorithm}
+We implemented a **1-up 1-down Staircase Algorithm** to clamp performance accuracy.
 
 % =================================================================================
-% SECTION 4: METHODOLOGY (DETAILED EXPANSION)
+% SECTION 4: METHODOLOGY (Placeholder for next expansion)
 % =================================================================================
 \section{Methodology}
 
-\subsection{Experimental Design}
-We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure. An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic. By collecting a massive density of data points from a single individual ($N=1$, Trials=600), we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
-
-The study followed an **A-B-C** logic within each session, varying the cognitive framing (Challenge vs. Threat vs. Neutral).
-
-\subsection{Participant}
-The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype. The participant had normal-to-corrected vision.
-\textit{Ethical Note}: As a self-experimentation study, formal IRB approval was waived, but the protocol adhered strictly to the Declaration of Helsinki regarding safety and data privacy.
-
-\subsection{Procedure and Timeline}
-The data collection spanned 14 days, comprising 10 total sessions.
+\subsection{Design: Single-Case Experimental Design (SCED)}
+We deployed a **Randomized Block A-B-C Design**.
 \begin{itemize}
-    \item **Phase 1 (Lab - "Danger")**: Sessions 1--5 were conducted in a University Laboratory.
-        \begin{itemize}
-            \item \textit{Phyiscal Context}: Windowless cubicle, artificial fluorescent lighting (approx 500 lux).
-            \item \textit{Social Context}: "Working hours" (09:00--17:00). High probability of interruption by colleagues. Formal dress code.
-            \item \textit{Neuroception}: High vigilance. The environment signifies "Evaluation" and "Work."
-        \end{itemize}
-    \item **Phase 2 (Home - "Safety")**: Sessions 6--10 were conducted in the participant's Bedroom.
-        \begin{itemize}
-            \item \textit{Physical Context}: Warm LED lighting (approx 150 lux), quiet.
-            \item \textit{Social Context}: "Private hours" (21:00--23:00). Zero probability of intrusion. Informal clothing.
-            \item \textit{Neuroception}: Low vigilance. The environment signifies "Rest" and "Privacy."
-        \end{itemize}
+    \item \textbf{Participant}: Male, 25 years old. Author self-experimentation (N=1).
+    \item \textbf{Total Duration}: 14 Days.
+    \item \textbf{Schedule}: 10 Sessions total.
+    \item \textbf{Data Volume}: 30 Experimental Blocks, 600 individual Trials.
 \end{itemize}
 
-\subsection{The Psychophysical Task: Gabor Orientation Discrimination}
-The participant viewed a Gabor patch appearing on the screen for 200ms. The patch was tilted either $45^\circ$ (Right) or $-45^\circ$ (Left). The task was to press the corresponding arrow key as quickly and accurately as possible.
+\subsection{Apparatus and Environment}
+Microsoft Surface Laptop 3 (Intel Core i5, 8GB RAM). Distance approx. 50-60 cm.
 
-\subsubsection{Performance Clamping via Staircase}
-To ensure that physiological arousal reflected \textit{appraisal} (Fear/Engagement) rather than simple task difficulty, we clamped the task difficulty using a **1-up 1-down Staircase Procedure**.
-\begin{itemize}
-    \item If the participant responds Correctly: The contrast of the Gabor patch is \textit{decreased} by 5\% (making it harder).
-    \item If the participant responds Incorrectly: The contrast is \textit{increased} by 5\% (making it easier).
-\end{itemize}
-This establishes a homeostatic equilibrium where accuracy converges to roughly 75\%. This removes "Task Difficulty" as a confounding variable; the task is functionally "equally hard" in all conditions. Any difference in physiology must therefore be due to the \textit{context}, not the \textit{load}.
+\subsection{Contextual Manipulation}
+\subsubsection{Phase 1: University Laboratory (Sessions 1-5)}
+Working hours (09:00 - 17:00). Formal, High-stakes.
+\subsubsection{Phase 2: Home Environment (Sessions 6-10)}
+Evening hours (19:00 - 23:00). Private, Safe.
 
-\subsection{Independent Variables: Cognitive Framing}
-Before each block of 20 trials, a full-screen instruction page primed the cognitive appraisal:
+\subsection{Cognitive Framing Conditions}
 \begin{enumerate}
-    \item \textbf{Neutral Condition}: Instruction: "Please perform the task. Focus on accuracy." (Target: Baseline Arousal).
-    \item \textbf{Threat Condition}: Instruction: "WARNING: Poor performance is unacceptable. Data quality is critical. Do not make mistakes." (Target: Avoidance Motivation, Fear of Failure).
-    \item \textbf{Challenge Condition}: Instruction: "CHALLENGE MODE: Try to beat your high score! Push your limits and react fast!" (Target: Approach Motivation, Eagerness).
+    \item \textbf{Neutral (Baseline)}: "Focus on accuracy."
+    \item \textbf{Threat (Fear of Failure)}: "WARNING: Mistakes are unacceptable."
+    \item \textbf{Challenge (Approach Motivation)}: "CHALLENGE MODE: Push your limits!"
 \end{enumerate}
-
-\subsection{Dependent Measures}
-\subsubsection{Behavioral Metrics}
-\begin{itemize}
-    \item \textbf{Reaction Time (RT)}: Latency from stimulus onset to key press (ms). Values $<100$ms (anticipatory) or $>2000$ms (distraction) were excluded.
-    \item \textbf{Accuracy}: Percent correct. Used primarily to verify the Staircase convergence.
-\end{itemize}
-
-\subsubsection{Physiological Metrics}
-\begin{itemize}
-    \item \textbf{Freezing Index ($M_t$)}: As defined in Eq. 3.
-    \item \textbf{Blink Rate}: Eye Aspect Ratio (EAR) based on the height/width ratio of the eye landmarks.
-    \item \textbf{Heart Rate (HR)}: Extracted via rPPG (POS algorithm) post-hoc from the logged raw landmark data.
-\end{itemize}
 
 % =================================================================================
 % SECTION 5: RESULTS (Placeholder for next expansion)
 % =================================================================================
 \section{Results}
-[This section will be expanded in the next phase with full statistical tables]
+
 \subsection{Data Validity Check}
 Tracking Reliability: 98.4\% (Lab) vs 91.2\% (Home).
 Environmental Noise: $E_{fluc}$ at Home ($0.063$) was nearly double that of the Lab ($0.032$), $p < 0.001$.
@@ -329,12 +257,30 @@ Environmental Noise: $E_{fluc}$ at Home ($0.063$) was nearly double that of the 
 \subsection{Main Hypothesis: The Interaction Effect}
 \subsubsection{Behavioral Response: Reaction Time (RT)}
 ANOVA: Interaction Effect $F(1, 396) = 4.47, p = 0.035$.
+\begin{itemize}
+    \item \textbf{University}: Threat ($M=767$ms) significantly faster than Challenge ($M=1078$ms), $p = 0.004$, $d = -0.41$, $BF_{10} = 66.7$.
+    \item \textbf{Home}: No difference ($p = 0.30$, $d = -0.15$, $BF_{10} = 1.7$).
+\end{itemize}
+
+\subsubsection{Physiological Response: Head Motion (Freezing)}
+\begin{itemize}
+    \item \textbf{University}: Threat induced lower motion ($p = 0.08$, $d = -0.33$, $BF_{10} = 4.6$).
+    \item \textbf{Home}: No difference ($p = 0.86$, $d = -0.04$).
+\end{itemize}
+
+\subsection{Confirmation via Mixed-Effects Modeling}
+LMM confirmed Interaction ($p = 0.034$), ruling out habituation artifacts.
 
 % =================================================================================
 % SECTION 6: DISCUSSION (Placeholder for next expansion)
 % =================================================================================
 \section{Discussion}
-[This section will follow]
+\subsection{Invariance Breaking is Real}
+Context breaks invariance. Threat in Lab $\neq$ Threat at Home.
+\subsection{The Mechanism: Neuroception of Safety}
+Home environment buffers stress via the Safe Haven effect (Polyvagal Theory).
+\subsection{Implications for Ubiquitous Computing}
+Context-Specific Calibration and Privacy-by-Design are essential.
 
 % =================================================================================
 % SECTION 7: CONCLUSION
