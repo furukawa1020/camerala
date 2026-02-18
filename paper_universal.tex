@@ -98,7 +98,9 @@ In this work, we bridge the gap between advanced psychophysiological theory and 
 Our contributions are threefold:
 \begin{enumerate}
     \item \textbf{Camerala Framework}: We present a robust, open-source architecture for client-side physiological sensing. By processing all video data locally within the browser, Camerala solves the "Privacy Bottleneck" that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking using WebAssembly for real-time performance.
+    
     \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. We argue that SCED is superior to large-N group designs for investigating context-sensitivity, as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
+    
     \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." We show that the behavioral and physiological signatures of "Threat" (Reaction Time acceleration, Freezing behavior) are robust in the Lab but vanish at Home, confirming the Invariance Breaking hypothesis.
 \end{enumerate}
 
@@ -258,7 +260,6 @@ At the end of a session, the user initiates a "Download Data" action, which zips
 
 \subsection{Experimental Design}
 We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure. An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic. By collecting a massive density of data points from a single individual ($N=1$, Trials=600), we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
-
 The study followed an **A-B-C** logic within each session, varying the cognitive framing (Challenge vs. Threat vs. Neutral). Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects (e.g., A-B-C, B-C-A, C-A-B).
 
 \subsection{Participant}
