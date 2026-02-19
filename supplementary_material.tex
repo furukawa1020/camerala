@@ -1,0 +1,73 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\begin{document}
+
+\title{Supplementary Material for "Unobtrusive Web-Based Sensing Framework for Longitudinal Affective Monitoring"}
+
+\maketitle
+
+\section{FaceMesh Landmark Indices}
+The MediaPipe FaceMesh model returns 468 landmarks. For calculating the metrics used in this study, we utilized the specific indices listed in Table \ref{tab:landmarks}.
+The "Rigid Alignment" indices were selected based on their low variance during facial expression (i.e., they move with the head, not the skin).
+
+\begin{table}[h]
+\caption{Selected Facial Landmark Indices}
+\label{tab:landmarks}
+\centering
+\begin{tabular}{ll}
+\bottomrule
+\textbf{Region of Interest} & \textbf{Mesh Indices (MediaPipe)} \\ 
+\toprule
+\textbf{Nose Tip (tracking)} & 1 \\
+\textbf{Left Tragus (rigid)} & 234, 127, 162 \\
+\textbf{Right Tragus (rigid)} & 454, 356, 389 \\
+\textbf{Left Eye (EAR)} & 33, 160, 158, 133, 153, 144 \\
+\textbf{Right Eye (EAR)} & 362, 385, 387, 263, 373, 380 \\
+\textbf{Forehead (rPPG ROI)} & 10, 338, 297, 332, 284, 251, 389, 356 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Signal Processing Specifications}
+The raw physiological signals extracted from the vision pipeline are inherently noisy. 
+We applied the following digital signal processing (DSP) chain using the WebAudio API's `AudioContext` for real-time filtering, or `scipy.signal` for post-processing.
+
+\subsection{rPPG Bandpass Filter}
+To isolate the cardiac frequency band from motion artifacts and DC offsets:
+\begin{itemize}
+    \item \textbf{Type}: 4th-order Butterworth Filter (Infinite Impulse Response).
+    \item \textbf{High-Pass Cutoff}: 0.7 Hz (42 BPM). Removes slow drifts due to shadow movement.
+    \item \textbf{Low-Pass Cutoff}: 3.0 Hz (180 BPM). Removes 60Hz power line noise and sensor thermal noise.
+    \item \textbf{Zero-Phase Implementation}: Applied bidirectionally (`filtfilt`) to prevent phase distortion which would alter HRV timing.
+\end{itemize}
+
+\subsection{Motion Smoothing}
+The raw head coordinate $P_t$ was smoothed using an Exponential Moving Average (EMA) to reduce quantization noise from the webcam sensor:
+\begin{equation}
+    S_t = \alpha \cdot P_t + (1 - \alpha) \cdot S_{t-1}
+\end{equation}
+Where $\alpha = 0.2$, equivalent to a time constant of $\tau \approx 80ms$ at 60 FPS. 
+This preserves the sharp onset of a "Freeze" response while smoothing out jitter.
+
+\section{System Latency Analysis}
+A critical requirement for psychophysics is timing precision. 
+We profiled the "End-to-End" latency of the Camerala system using a high-speed camera (240 FPS) observing the screen-to-photodiode transition.
+
+\begin{enumerate}
+    \item \textbf{Input Latency}: $8.4ms \pm 2.1$ (USB Keyboard via `keydown` event).
+    \item \textbf{Display Latency}: $16.7ms$ (Fixed by 60Hz V-Sync).
+    \item \textbf{Processing Latency}: $12.3ms \pm 4.5$ (MediaPipe Inference Time on Intel Iris Plus Graphics).
+\end{enumerate}
+Total System Latency is approximately $37.4ms$. 
+Since the Reaction Time (RT) analysis searches for differences $>50ms$ between conditions, this latency floor is acceptable.
+
+\end{document}

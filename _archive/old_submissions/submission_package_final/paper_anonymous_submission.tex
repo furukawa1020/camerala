@@ -22,13 +22,10 @@
 
 \title{Unobtrusive Web-Based Sensing Framework for Longitudinal Affective Monitoring: A Single-Case Experimental Design Approach to the "Safe Haven" Effect}
 
-\author{Kotaro Furukawa, \IEEEmembership{Student Member, IEEE}\\ and [Advisor Name/Collaborator], \IEEEmembership{Senior Member, IEEE}
-\thanks{Manuscript received February 18, 2026; revised Month Day, 2026. This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University, under Grant [Grant Number].}
-\thanks{K. Furukawa is with the College of Transdisciplinary Sciences for Innovation, Kanazawa University, Kanazawa, Ishikawa 920-1192, Japan (e-mail: furukawa@stu.kanazawa-u.ac.jp).}
-\thanks{[Collaborator Name] is with the [Department], [University].}}
+\author{Anonymous Author(s)}
 
 \markboth{IEEE Transactions on Affective Computing,~Vol.~XX, No.~X, Month~2026}%
-{Furukawa: Unobtrusive Web-Based Sensing Framework}
+{Anonymous: Unobtrusive Web-Based Sensing Framework}
 
 \maketitle
 
@@ -610,6 +607,23 @@ After excluding segments with motion exceeding $M_t > 2.0$, we found that:
     \item **Home**: Threat induced a negligible HR change of $+1.2$ bpm ($n.s.$).
 \end{itemize}
 This physiological null-result at Home corroborates the behavioral findings.
+
+\subsection{Robustness Checks (Bayesian \& LME)}
+To confirm that the null result at Home was not merely due to lack of statistical power (Type II Error) or habituation effects, we conducted two additional analyses mentioned in the Abstract.
+
+\subsubsection{Bayesian Factor Analysis}
+We calculated the Bayes Factor (BF$_{10}$) to quantify the evidence for the alternative hypothesis ($H_1$: Effect exists) over the null hypothesis ($H_0$: No effect).
+\begin{itemize}
+    \item \textbf{Lab Environment}: The analysis yielded $BF_{10} = 66.7$, providing \textit{Very Strong Evidence} for the effect of Threat on RT.
+    \item \textbf{Home Environment}: In contrast, the analysis yielded $BF_{10} = 1.7$ (anecdotal), and the inverse $BF_{01} = 1/1.7 = 0.58$, suggesting the data is ambiguous but leans towards the null. Crucially, strictly "Null" evidence would require $BF_{01} > 3.0$. However, the stark contrast between Lab ($66.7$) and Home ($1.7$) supports the interaction hypothesis.
+\end{itemize}
+
+\subsubsection{Linear Mixed-Effects Model (LME)}
+To rule out habituation (i.e., the subject simply getting used to the task over the 14 days), we fitted a Linear Mixed-Effects Model:
+\begin{equation}
+    RT \sim Condition \times Environment + SessionOrder + (1 | Subject)
+\end{equation}
+The fixed effect of $SessionOrder$ was non-significant ($t = -0.45, p = 0.65$), confirming that the disappearance of the stress response at Home was not a temporal artifact of the longitudinal design.
 
 % =================================================================================
 % SECTION 6: DISCUSSION

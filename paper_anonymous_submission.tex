@@ -22,12 +22,10 @@
 
 \title{Unobtrusive Web-Based Sensing Framework for Longitudinal Affective Monitoring: A Single-Case Experimental Design Approach to the "Safe Haven" Effect}
 
-\author{Kotaro Furukawa, \IEEEmembership{Student Member, IEEE}
-\thanks{Manuscript received February 18, 2026; revised Month Day, 2026. This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.}
-\thanks{K. Furukawa is with the College of Transdisciplinary Sciences for Innovation, Kanazawa University, Kanazawa, Ishikawa 920-1192, Japan (e-mail: furukawa@stu.kanazawa-u.ac.jp).}}
+\author{Anonymous Author(s)}
 
 \markboth{IEEE Transactions on Affective Computing,~Vol.~XX, No.~X, Month~2026}%
-{Furukawa: Unobtrusive Web-Based Sensing Framework}
+{Anonymous: Unobtrusive Web-Based Sensing Framework}
 
 \maketitle
 
@@ -57,11 +55,11 @@ that clamped performance at a fixed accuracy threshold.
 \textbf{\textit{Results}}: Our results reveal a robust and significant interaction between environmental context and psychophysiological reactivity. 
 A 2-way Analysis of Variance (ANOVA) demonstrated that while "Threat" framing significantly enhanced behavioral performance 
 (Reaction Time acceleration, $p=0.002, d=-0.41$) and induced physiological freezing ($p=0.08, d=-0.33$) in the University setting, 
-these effects were completely abolished in the Home environment ($p>0.30$, negligible effect sizes). 
+these effects were statistically indistinguishable from baseline in the Home environment ($p>0.30$, negligible effect sizes). 
 Bayesian analysis provided strong evidence for this dissociation (BF$_{10}=66.7$ in Lab vs. BF$_{10}=1.7$ at Home). 
 Furthermore, a Linear Mixed-Effects Model confirmed that these effects were not attributable to habituation over time.
 
-\textbf{\textit{Conclusion}}: These findings provide empirical support for the "Safe Haven" hypothesis (Context-Dependent Attenuation), suggesting that familiar, 
+\textbf{\textit{Conclusion}}: These findings provide empirical support for the "Safe Haven" hypothesis, suggesting that familiar, 
 safe environments act as powerful moderators of the autonomic nervous system, effectively buffering the impact of cognitive stressors. 
 We discuss the profound implications of this "Invariance Breaking" for the design of next-generation ubiquitous computing systems, 
 arguing that future affective models must be dynamically parameterized by the user's environmental context 
@@ -76,6 +74,9 @@ Affective Computing, Ecological Validity, Context Dependency, Polyvagal Theory, 
 % =================================================================================
 % SECTION 1: INTRODUCTION
 % =================================================================================
+\section*{Declaration of Generative AI and AI-assisted Technologies in the Writing Process}
+During the preparation of this work, the authors used an advanced AI assistant (based on Large Language Models) to generate initial drafts of the text, refine the LaTeX code, and generate the pseudocode for Algorithm 2. The authors reviewed and edited the content and take full responsibility for the content of the publication.
+
 \section{Introduction}
 
 \IEEEPARstart{T}{he} vision of Affective Computing, as originally articulated by Picard within the MIT Media Lab in the late 1990s \cite{picard_affective_computing}, 
@@ -91,7 +92,7 @@ electroencephalograms (EEG) to monitor cortical asymmetry, and galvanic skin res
 These pioneering studies successfully established the somatic markers of basic emotions, enabling the development of classifiers 
 that could distinguish high-arousal states (e.g., anger, fear) from low-arousal states (e.g., sadness, relaxation) with remarkable accuracy. 
 Indeed, within the sanitized, noise-free confines of a sound-proofed laboratory, with a participant wired to a stationary rig, 
-we can predict acute stress with near-perfect fidelity.
+we can predict acute stress with high fidelity.
 
 However, as the field matures and transitions from the laboratory to "in-the-wild" applications \cite{ambulatory_assessment}, 
 a fundamental disconnect has emerged between the capabilities of these models and the complexity of real-world human experience. 
@@ -102,15 +103,23 @@ but we critically lack the \textit{contextual models} to interpret these signals
 \subsection{The Crisis of Contextual Rigidity and "Invariance Breaking"}
 Current affective computing systems, particularly those deployed in consumer wearables or smart environments, 
 often operate on the implicit assumption of \textit{Physiological Invariance}. 
-In machine learning terms, this assumes that the conditional probability of an affective state $Y$ given a physiological signal $X$, denoted as $P(Y|X)$, is stationary across all domains $D$.
-However, we argue that this mapping is fundamentally non-stationary and dependent on the environmental context $E$:
-\begin{equation}
-    P(Y|X, E_{lab}) \neq P(Y|X, E_{home})
-\end{equation}
-This discrepancy leads to what we define as **"Invariance Breaking"**—the systematic failure of affective models when transferred between environments.
-A model trained to detect stress in a driving simulator may completely fail when applied to a user sitting in their living room, 
-not because the sensor is broken, but because the underlying causal structure of the physiological response has shifted.
-The "stress" response in a laboratory—characterized by vigilance and sympathetic mobilization—may be physiologically distinct from "stress" at home, where safety cues damp the autonomic response.
+This is the notion that a specific physiological pattern—such as an abrupt increase in heart rate or a phasic spike in skin conductance—
+consistently and universally maps to a specific, unique affective state, such as "stress," regardless of the environmental or social context in which it occurs. 
+For example, a commercially available smartwatch detecting a heart rate of 100 bpm might alert the user to "Take a deep breath," assuming physiological stress, 
+without any awareness of the user's current activity or environment.
+
+This "Context-Agnostic" approach is fundamentally flawed. It fails to account for the rich, adaptive, and context-dependent nature of human physiology. 
+A heart rate of 100 bpm could indeed indicate distress (e.g., during a conflict), but it could equally indicate excitement (e.g., watching a sports game), 
+intense cognitive engagement (e.g., solving a complex puzzle), or simply physical exertion. 
+The physiological signal provides the \textit{intensity} (arousal), but the \textit{valence} and \textit{semantic meaning} 
+of that arousal are constructed from the interaction between the body and the environment.
+
+Failing to account for these contextual moderators leads to what we define as "Invariance Breaking"—
+the systematic failure of affective models when transferred between environments. 
+A model trained to detect stress in a driving simulator may fail to generalize when applied to a user sitting in their living room, 
+not because the sensor is broken, but because the mapping function $f: Physiology \rightarrow Affect$ has shifted. 
+The "stress" response in a laboratory—often characterized by vigilance, freezing, and rapid orienting—
+may be physiologically distinct from "stress" at home, where safety cues dampen the autonomic response.
 
 \subsection{Theoretical Framework: Integrating Biopsychosocial and Polyvagal Models}
 To address Invariance Breaking, we must ground our engineering efforts in robust psychophysiological theory. 
@@ -165,10 +174,9 @@ Our contributions are threefold:
     that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking 
     using WebAssembly for real-time performance.
     
-    \item \textbf{Methodological Shift to Idiographic Science}: We argue that the traditional large-N Randomized Controlled Trial (RCT) is ill-suited 
-    for Affective Computing due to the "Ergodicity Problem" \cite{molenaar_ergodicity}—the statistical fact that group-level means do not necessarily 
-    represent individual-level mechanisms. We demonstrate that SCED, by sampling a single individual densely ($N=1, T=600$), 
-    provides superior internal validity for detecting subtle context-dependent shifts that are wash-out by inter-subject noise in group designs.
+    \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. 
+    We argue that SCED is superior to large-N group designs for investigating context-sensitivity, 
+    as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
     
     \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, 
     we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." 
@@ -671,31 +679,9 @@ This study provided the first empirical evidence that the Home environment acts 
 observed in the Lab. By leveraging Edge AI and Single-Case Experimental Designs, we can begin to build a new generation of 
 Context-Aware Affective Computing systems that respect both the privacy and the complexity of the human experience.
 
-\section*{Declaration of Generative AI and AI-assisted Technologies in the Writing Process}
-During the preparation of this work, the authors used an advanced AI assistant (based on Large Language Models) to generate initial drafts of the text, refine the LaTeX code, and generate the pseudocode for Algorithm 2. The authors reviewed and edited the content and take full responsibility for the content of the publication.
 
-\appendices
-
-\section{FaceMesh Landmark Indices}
-The MediaPipe FaceMesh model returns 468 landmarks. For calculating the metrics used in this study, we utilized the specific indices listed in Table \ref{tab:landmarks}.
-The "Rigid Alignment" indices were selected based on their low variance during facial expression (i.e., they move with the head, not the skin).
-
-
-
-\ifCLASSOPTIONcaptionsoff
-  \newpage
-\fi
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{paper_figures/author.png}}]{First A. Author}
-received the B.S. and M.S. degrees in Computer Science from the University of Tokyo in 2020 and 2022, respectively. 
-He is currently pursuing the Ph.D. degree at the Interaction Laboratory. 
-His research interests include affective computing, remote physiological sensing, and single-case experimental designs.
-He differs from traditional researchers by advocating for "Subjective-First" AI, where the user's internal state—verified through longitudinal self-tracking—takes precedence over population-level averages.
-\end{IEEEbiography}
-
-\vfill
 
 \end{document}
