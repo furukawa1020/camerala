@@ -20,9 +20,10 @@
 
 \begin{document}
 
-\title{Unobtrusive Web-Based Sensing Framework for Longitudinal Affective Monitoring: A Single-Case Experimental Design Approach to the "Safe Haven" Effect}
+\title{Camerala: A Privacy-Preserving Web Framework for Unobtrusive Longitudinal Context-Aware Monitoring}
 
-\author{Anonymous Author(s)}
+\author{Anonymous Author(s) \\ Anonymous Affiliation(s)
+\thanks{Manuscript submitted for double-blind review.}}
 
 \markboth{IEEE Transactions on Affective Computing,~Vol.~XX, No.~X, Month~2026}%
 {Anonymous: Unobtrusive Web-Based Sensing Framework}
@@ -33,37 +34,13 @@
 % ABSTRACT
 % =================================================================================
 \begin{abstract}
-\textbf{\textit{Objective}}: As the field of Affective Computing rapidly transitions from controlled laboratory settings 
-to continuous, in-the-wild monitoring, it faces a fundamental theoretical and practical challenge: 
-the ambiguity of physiological signals across different environmental contexts. 
-Traditional affective models predominantly rely on a static, context-agnostic mapping between physiological arousal and affective states, 
-operating on the assumption that elevated biomarkers (e.g., heart rate, skin conductance) indiscriminately indicate stress or negative affect. 
-This assumption fundamentally ignores the "Invariance Breaking" phenomenon, where identical physiological patterns can support 
-divergent subjective states—such as Threat (maladaptive stress) versus Challenge (adaptive engagement)—depending on the 
-individual's cognitive appraisal and the safety of the surrounding environment.
+\textbf{\textit{Objective}}: As ubiquitous computing rapidly transitions to continuous, in-the-wild monitoring, it faces practical challenges regarding privacy and the interpretation of physiological signals across different environments. Traditional wearable models often rely on context-agnostic mappings, ignoring "Invariance Breaking"—where identical physiological patterns (e.g., elevated heart rate) represent divergent states depending on the environment (e.g., threat vs. engagement). 
 
-\textbf{\textit{Methods}}: To address this limitation, we propose a privacy-preserving, fully client-side web sensing framework, 
-termed \textbf{Camerala}, designed to capture these subtle context-dependencies through rigorous Single-Case Experimental Design (SCED). 
-By processing high-resolution facial landmarks and remote photoplethysmography (rPPG) signals entirely within the user's browser (Edge Computing), 
-Camerala enables longitudinal, ethically sound monitoring in private spaces without compromising user privacy. 
-We validated this system through a comprehensive 10-session longitudinal study ($N=1$, 30 blocks, 600 trials) conducted over two weeks, 
-comparing two distinct ecological environments: a controlled University Laboratory (representing an evaluative, high-pressure context) 
-and a naturalistic Home environment (representing a safe, private context). 
-To isolate the effect of appraisal from task difficulty, we implemented a psychophysical staircase algorithm (1-up 1-down) 
-that clamped performance at a fixed accuracy threshold.
+\textbf{\textit{Methods}}: We propose \textbf{Camerala}, a privacy-preserving, fully client-side web sensing framework designed for longitudinal affective monitoring. By processing high-resolution facial landmarks and remote photoplethysmography (rPPG) signals entirely within the browser via WebAssembly (Edge Computing), Camerala enables ethically sound monitoring in private spaces without transmitting raw video. To evaluate its deployability and demonstrate the critical necessity of context-aware modelling, we conducted a proof-of-concept autoethnographic feasibility study ($N=1$, 600 trials) comparing two environments: a University Laboratory and a naturalistic Home setting.
 
-\textbf{\textit{Results}}: Our results reveal a robust and significant interaction between environmental context and psychophysiological reactivity. 
-A 2-way Analysis of Variance (ANOVA) demonstrated that while "Threat" framing significantly enhanced behavioral performance 
-(Reaction Time acceleration, $p=0.002, d=-0.41$) and induced physiological freezing ($p=0.08, d=-0.33$) in the University setting, 
-these effects were statistically indistinguishable from baseline in the Home environment ($p>0.30$, negligible effect sizes). 
-Bayesian analysis provided strong evidence for this dissociation (BF$_{10}=66.7$ in Lab vs. BF$_{10}=1.7$ at Home). 
-Furthermore, a Linear Mixed-Effects Model confirmed that these effects were not attributable to habituation over time.
+\textbf{\textit{Results}}: The system successfully operated in both environments, validating the edge-computing pipeline. Furthermore, the deployment case study demonstrated the system's ability to capture "Invariance Breaking." While a cognitive stressor induced physiological freezing and accelerated reaction times in the Lab, these metrics were statistically indistinguishable from baseline in the Home environment, highlighting the home's role as a physiological buffer.
 
-\textbf{\textit{Conclusion}}: These findings provide empirical support for the "Safe Haven" hypothesis, suggesting that familiar, 
-safe environments act as powerful moderators of the autonomic nervous system, effectively buffering the impact of cognitive stressors. 
-We discuss the profound implications of this "Invariance Breaking" for the design of next-generation ubiquitous computing systems, 
-arguing that future affective models must be dynamically parameterized by the user's environmental context 
-to avoid catastrophic misinterpretation of physiological signals.
+\textbf{\textit{Conclusion}}: Camerala demonstrates the feasibility of high-fidelity, privacy-preserving web sensing for ubiquitous computing. Our proof-of-concept findings highlight that future affective models must be dynamically parameterized by the user's environmental context to properly interpret physiological signals in the wild.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -74,9 +51,6 @@ Affective Computing, Ecological Validity, Context Dependency, Polyvagal Theory, 
 % =================================================================================
 % SECTION 1: INTRODUCTION
 % =================================================================================
-\section*{Declaration of Generative AI and AI-assisted Technologies in the Writing Process}
-During the preparation of this work, the authors used an advanced AI assistant (based on Large Language Models) to generate initial drafts of the text, refine the LaTeX code, and generate the pseudocode for Algorithm 2. The authors reviewed and edited the content and take full responsibility for the content of the publication.
-
 \section{Introduction}
 
 \IEEEPARstart{T}{he} vision of Affective Computing, as originally articulated by Picard within the MIT Media Lab in the late 1990s \cite{picard_affective_computing}, 
@@ -92,7 +66,7 @@ electroencephalograms (EEG) to monitor cortical asymmetry, and galvanic skin res
 These pioneering studies successfully established the somatic markers of basic emotions, enabling the development of classifiers 
 that could distinguish high-arousal states (e.g., anger, fear) from low-arousal states (e.g., sadness, relaxation) with remarkable accuracy. 
 Indeed, within the sanitized, noise-free confines of a sound-proofed laboratory, with a participant wired to a stationary rig, 
-we can predict acute stress with high fidelity.
+we can predict acute stress with near-perfect fidelity.
 
 However, as the field matures and transitions from the laboratory to "in-the-wild" applications \cite{ambulatory_assessment}, 
 a fundamental disconnect has emerged between the capabilities of these models and the complexity of real-world human experience. 
@@ -103,23 +77,15 @@ but we critically lack the \textit{contextual models} to interpret these signals
 \subsection{The Crisis of Contextual Rigidity and "Invariance Breaking"}
 Current affective computing systems, particularly those deployed in consumer wearables or smart environments, 
 often operate on the implicit assumption of \textit{Physiological Invariance}. 
-This is the notion that a specific physiological pattern—such as an abrupt increase in heart rate or a phasic spike in skin conductance—
-consistently and universally maps to a specific, unique affective state, such as "stress," regardless of the environmental or social context in which it occurs. 
-For example, a commercially available smartwatch detecting a heart rate of 100 bpm might alert the user to "Take a deep breath," assuming physiological stress, 
-without any awareness of the user's current activity or environment.
-
-This "Context-Agnostic" approach is fundamentally flawed. It fails to account for the rich, adaptive, and context-dependent nature of human physiology. 
-A heart rate of 100 bpm could indeed indicate distress (e.g., during a conflict), but it could equally indicate excitement (e.g., watching a sports game), 
-intense cognitive engagement (e.g., solving a complex puzzle), or simply physical exertion. 
-The physiological signal provides the \textit{intensity} (arousal), but the \textit{valence} and \textit{semantic meaning} 
-of that arousal are constructed from the interaction between the body and the environment.
-
-Failing to account for these contextual moderators leads to what we define as "Invariance Breaking"—
-the systematic failure of affective models when transferred between environments. 
-A model trained to detect stress in a driving simulator may fail to generalize when applied to a user sitting in their living room, 
-not because the sensor is broken, but because the mapping function $f: Physiology \rightarrow Affect$ has shifted. 
-The "stress" response in a laboratory—often characterized by vigilance, freezing, and rapid orienting—
-may be physiologically distinct from "stress" at home, where safety cues dampen the autonomic response.
+In machine learning terms, this assumes that the conditional probability of an affective state $Y$ given a physiological signal $X$, denoted as $P(Y|X)$, is stationary across all domains $D$.
+However, we argue that this mapping is fundamentally non-stationary and dependent on the environmental context $E$:
+\begin{equation}
+    P(Y|X, E_{lab}) \neq P(Y|X, E_{home})
+\end{equation}
+This discrepancy leads to what we define as **"Invariance Breaking"**—the systematic failure of affective models when transferred between environments.
+A model trained to detect stress in a driving simulator may completely fail when applied to a user sitting in their living room, 
+not because the sensor is broken, but because the underlying causal structure of the physiological response has shifted.
+The "stress" response in a laboratory—characterized by vigilance and sympathetic mobilization—may be physiologically distinct from "stress" at home, where safety cues damp the autonomic response.
 
 \subsection{Theoretical Framework: Integrating Biopsychosocial and Polyvagal Models}
 To address Invariance Breaking, we must ground our engineering efforts in robust psychophysiological theory. 
@@ -156,13 +122,11 @@ in a sterile, unfamiliar university lab (which triggers neuroception of danger) 
 simply because the background "safety signal" allows the vagal brake to remain engaged.
 
 \subsection{Research Questions and Contributions}
-This paper investigates the "Safe Haven" effect through a rigorous longitudinal study, bridging the gap between advanced psychophysiological theory and modern web engineering.
+This paper introduces Camerala and investigates its feasibility for context-aware monitoring through an autoethnographic case study, bridging the gap between advanced psychophysiological theory and modern web engineering.
 We pose two primary Research Questions (RQs):
 \begin{itemize}
-    \item \textbf{RQ1 (Invariance Breaking)}: Does the physiological signature of "Threat" (e.g., freezing, cardiac reactivity) 
-    differ significantly between a high-stakes Laboratory setting and a private Home setting, when the task difficulty is held constant?
-    \item \textbf{RQ2 (Feasibility of Web-Based SCED)}: Can a purely client-side, privacy-preserving web framework 
-    capture these subtle physiological differences with sufficient fidelity to replace traditional lab equipment?
+    \item \textbf{RQ1 (Framework Feasibility)}: Can a purely client-side, privacy-preserving web framework (Camerala) be reliably deployed in contrasting real-world environments without requiring specialized hardware?
+    \item \textbf{RQ2 (Invariance Breaking Demonstration)}: As a proof-of-concept, can this framework capture the hypothesized context-dependent shifts in physiological reactivity ("Invariance Breaking") between an evaluative Laboratory setting and a private Home setting?
 \end{itemize}
 
 To answer these questions, we developed \textbf{Camerala}, a purpose-built framework for longitudinal, context-aware affective experimentation. 
@@ -174,14 +138,9 @@ Our contributions are threefold:
     that hinders longitudinal video collection in private homes. We detail the implementation of rPPG and facial landmark tracking 
     using WebAssembly for real-time performance.
     
-    \item \textbf{Application of SCED}: We demonstrate the power of Single-Case Experimental Design (SCED) \cite{barlow_sced} for Affective Computing. 
-    We argue that SCED is superior to large-N group designs for investigating context-sensitivity, 
-    as it controls for the massive inter-subject variability in physiological baselines that often washes out subtle effects in group means.
+    \item \textbf{Autoethnographic Deployment Strategy}: We demonstrate the utility of autoethnographic case studies (via Single-Case Experimental Design) for ubiquitous systems evaluation. While large-N group studies are necessary for broad psychological generalizations, dense longitudinal sampling ($N=1, T=600$) serves as a powerful feasibility stress-test for capturing delicate context-dependencies in real-world scenarios.
     
-    \item \textbf{Empirical Demonstration of the Safe Haven Effect}: Through a rigorous 10-session study involving 600 experimental trials, 
-    we provide the first quantitative evidence that the home environment acts as a "Physiological Buffer." 
-    We show that the behavioral and physiological signatures of "Threat" (Reaction Time acceleration, Freezing behavior) 
-    are robust in the Lab but vanish at Home, confirming the Invariance Breaking hypothesis.
+    \item \textbf{Proof-of-Concept Case Study on Contextual Buffering}: Through a 10-session deployment, we provide a concrete demonstration of "Invariance Breaking." We show that the system successfully detects behavioral and physiological signatures of "Threat" in the Lab, while capturing their attenuation at Home. This highlights the practical necessity for context-aware affective models in future scalable deployments.
 \end{enumerate}
 
 The remainder of this paper is organized as follows: Section II reviews the state-of-the-art in remote sensing and context-awareness. 
@@ -408,11 +367,9 @@ This explicit user action reinforces the sense of agency and privacy control.
 % =================================================================================
 \section{Methodology}
 
-\subsection{Experimental Design}
-We employed a longitudinal **Single-Case Experimental Design (SCED)** with a Randomized Block structure.
-An SCED was chosen over a traditional group design because psychophysiological reactivity is highly idiosyncratic.
-By collecting a massive density of data points from a single individual ($N=1$, Trials=600),
-we can detect subtle context-dependent shifts that would be drowned out by inter-subject variance in a group study.
+\subsection{Autoethnographic Experimental Design}
+To evaluate the deployability of Camerala and demonstrate its ability to capture context-dependent physiological shifts, we employed a longitudinal **Single-Case Experimental Design (SCED)** structured as an autoethnographic feasibility study.
+While traditional group designs ($Large$-$N$) are necessary for generalizable psychological claims, an intensive N=1 autoethnography (Trials=600) serves as a rigorous proof-of-concept for the \textit{system architecture}. This design allows us to stress-test the framework under contrasting ecological conditions without the compounding variance of diverse user hardware or phenotypes.
 The study followed an **A-B-C** logic within each session (see Fig. \ref{fig:sced_design}), varying the cognitive framing (Challenge vs. Threat vs. Neutral).
 Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects (e.g., A-B-C, B-C-A, C-A-B).
 
@@ -423,11 +380,9 @@ Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin
     \label{fig:sced_design}
 \end{figure}
 
-\subsection{Participant}
-The participant was a 25-year-old male (the author), serving as a "Healthy Control" phenotype.
-The participant had normal-to-corrected vision and no history of cardiovascular or neurological disorders.
-\textit{Ethical Note}: As a self-experimentation study, formal IRB approval was waived, but the protocol adhered strictly
-to the Declaration of Helsinki regarding safety and data privacy.
+\subsection{Participant (Autoethnography)}
+In line with standard autoethnographic systems evaluation, the participant was the primary author (25-year-old male).
+\textit{Ethical Note}: As a self-experimentation feasibility study deploying a novel sensing framework, formal Ethical Board approval was waived. We explicitly acknowledge that the author's prior knowledge of the experimental hypotheses (Expectancy Bias) precludes drawing definitive population-level psychological conclusions from this specific data. However, the use of the author as the test subject is methodologically appropriate for this initial proof-of-concept system validation.
 
 \subsection{Apparatus and Physical Environment}
 The experiment was deployed on a Microsoft Surface Laptop 3 (13.5-inch PixelSense Display, $2256 \times 1504$ resolution).
@@ -664,11 +619,9 @@ This validates SCED as a powerful alternative to Large-N RCTs for "in-the-wild" 
 We argue that 100 trials from 1 user are often more valuable than 1 trial from 100 users when studying context-dependency.
 
 \subsection{Limitations and Future Work}
-\textit{First}, this was an N=1 study. While SCED provides high internal validity for the individual, generalizing to the population requires replication (N=1 $\times$ M).
-\textit{Second}, the rPPG signal at Home was heavily contaminated by motion artifacts. 
-While we successfully used Head Motion as a proxy for Freezing, accurate HRV analysis will likely require sensor fusion (e.g., webcam + smart watch) in future iterations.
-\textit{Finally}, we only compared two contexts. Future work should explore the "spectrum of safety," including coffee shops, offices, and transit, 
-to map the continuous function of Environmental Safety.
+\textit{First and foremost}, this was an N=1 autoethnographic deployment where the participant was the system's architect. This introduces an undeniable expectancy confound concerning the psychological results. The attenuation of stress at Home reported here serves solely as a \textbf{Proof-of-Concept} demonstrating that the Camerala framework \textit{can} successfully capture context-dependent physiological invariance breaking in the wild. It does not constitute generalized psychological proof of the "Safe Haven" effect.
+\textit{Second}, the rPPG signal at Home was heavily contaminated by motion artifacts. While we successfully used Head Motion as a proxy for Freezing, accurate autonomic analysis will likely require sensor fusion (e.g., webcam + smart watch) in future iterations.
+\textit{Finally}, future work must involve a large-scale, independent-sample IRB-approved deployment. Our current contribution is the open-source \textit{framework} and the demonstration of its capability; the next step is utilizing this framework to conduct rigorous, multi-subject affective science in naturalistic environments.
 
 % =================================================================================
 % SECTION 7: CONCLUSION
@@ -679,9 +632,28 @@ This study provided the first empirical evidence that the Home environment acts 
 observed in the Lab. By leveraging Edge AI and Single-Case Experimental Designs, we can begin to build a new generation of 
 Context-Aware Affective Computing systems that respect both the privacy and the complexity of the human experience.
 
+\section*{Declaration of Generative AI and AI-assisted Technologies in the Writing Process}
+During the preparation of this work, the authors used an advanced AI assistant (based on Large Language Models) to generate initial drafts of the text, refine the LaTeX code, and generate the pseudocode for Algorithm 2. The authors reviewed and edited the content and take full responsibility for the content of the publication.
 
+\appendices
+
+\section{FaceMesh Landmark Indices}
+The MediaPipe FaceMesh model returns 468 landmarks. For calculating the metrics used in this study, we utilized the specific indices listed in Table \ref{tab:landmarks}.
+The "Rigid Alignment" indices were selected based on their low variance during facial expression (i.e., they move with the head, not the skin).
+
+
+
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+
+\begin{IEEEbiography}{Anonymous Author}
+Biography omitted for double-blind review.
+\end{IEEEbiography}
+
+\vfill
 
 \end{document}
