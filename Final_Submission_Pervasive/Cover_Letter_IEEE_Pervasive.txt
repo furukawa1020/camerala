@@ -1,0 +1,22 @@
+Dear Editor-in-Chief and Members of the Editorial Board,
+
+We are pleased to submit our original manuscript entitled "Camerala: A Privacy-Preserving Web Framework for Unobtrusive Longitudinal Context-Aware Monitoring" for consideration for publication as a Regular Paper in IEEE Pervasive Computing.
+
+This manuscript directly addresses a critical bottleneck in ubiquitous and affective computing: the deployment of longitudinal, non-contact physiological sensing in private, "in-the-wild" environments without compromising user privacy.
+
+Current state-of-the-art affective models predominantly rely on context-agnostic mappings or cloud-based processing of raw video, creating insurmountable privacy barriers for continuous home monitoring. Furthermore, transferring laboratory-trained affective models to the home often results in catastrophic failure due to the phenomenon of "Invariance Breaking"—where the identical cognitive stressor elicits vastly different physiological responses depending on the safety and familiarity of the environment.
+
+In this work, we propose a novel solution:
+1. Systems Architecture (Camerala): A fully client-side, browser-based web framework that leverages WebAssembly and Edge AI to compute remote photoplethysmography (rPPG) and facial landmark motion in real-time. This entirely eliminates the transmission of raw video, solving the privacy paradox of home monitoring.
+2. Autoethnographic Feasibility Deployment: To stress-test the framework's capability to capture delicate context-dependent physiological shifts amidst real-world noise, we conducted a rigorous 10-session Single-Case Experimental Design (SCED, N=1, T=600 trials) case study comparing an evaluative University Laboratory with a private Home environment.
+
+We explicitly recognize that while large-N randomized controlled trials are required for broad psychological generalizations, the intensive N=1 autoethnography presented here serves as a powerful, high-resolution proof-of-concept for the system's operational viability and its ability to capture environmentally moderated stress attenuation.
+
+We believe this work aligns perfectly with the scope of IEEE Pervasive Computing, as it bridges continuous sensing technologies, privacy-preserving ubiquitous systems, and the critical need for context-awareness in next-generation affective interfaces. 
+
+This manuscript is original, has not been published prior, and is not currently under consideration for publication elsewhere. We have no conflicts of interest to disclose.
+
+Thank you for your time and consideration. We look forward to your feedback.
+
+Sincerely,
+
