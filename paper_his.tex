@@ -1,0 +1,495 @@
+\documentclass[dvipdfmx]{ehis}
+\usepackage{graphicx}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage[caption=false]{subfig}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\lstdefinelanguage{JavaScript}{
+  keywords={const, let, var, function, return, if, else, for, while, switch, case, break, try, catch, finally, window, camerala_logger},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]\",
+  morestring=[b]\'
+}
+\lstdefinelanguage{json}{
+  morestring=[b]\",
+}
+
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+
+\etitle{Camerala: A Privacy-Preserving Browser-Native Framework for In-the-Wild Physiological Sensing and Task Measurement}
+
+\eauthor{
+Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kanazawa University, Japan}
+}
+
+\YEAR{}
+\VOL{}       
+\NO{}
+\TYPE{}
+
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true
+}
+\makeatletter
+\def\@oddhead{}
+\def\@evenhead{}
+\def\ps@vr{
+ \def\@oddhead{}
+ \def\@evenhead{}
+}
+\def\ps@his{
+ \def\@oddhead{}
+ \def\@evenhead{}
+}
+\makeatother
+
+\begin{document}
+
+\begin{abstract}
+Continuous physiological sensing and synchronized task measurement in naturalistic environments is challenging. Systems relying on cloud-based video transmission face privacy constraints, while uncontrolled conditions—such as variable lighting, posture, motion, and camera placement—can severely degrade measurement quality and cross-environment comparability. We present Camerala, a privacy-conscious, browser-native sensing framework designed to address these challenges. By utilizing WebAssembly (Wasm) and WebGL backends, the framework extracts remote photoplethysmography (rPPG) and facial landmarks entirely on the client device, avoiding raw video transmission. Furthermore, it integrates sensing, psychophysical task timing, and local data persistence within a unified client-side runtime. To evaluate the framework, we conducted an exploratory 10-session longitudinal deployment (N=1) across laboratory and home settings. The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals. These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous home and laboratory environments.
+\end{abstract}
+
+\begin{keyword}
+WebAssembly, Remote Photoplethysmography, Browser-Native Sensing, Privacy-Preserving Frameworks, In-the-Wild Deployment
+\end{keyword}
+
+\maketitle
+
+% =================================================================================
+% SECTION 1: INTRODUCTION
+% =================================================================================
+\section{Introduction}
+
+Continuous monitoring of physiological signals and task-derived metrics in naturalistic, "in-the-wild" environments provides critical insights for ubiquitous computing and human-computer interaction (HCI). While medical-grade sensors (e.g., electrocardiograms) succeed in controlled laboratories, deploying sensor systems in domestic environments introduces significant engineering challenges. 
+
+First, there are strict privacy constraints. In many practical pipelines, video-based physiological analysis relies on external processing or server-side components. This approach raises privacy concerns, particularly in private spaces like bedrooms or living rooms, which can limit user acceptance and longitudinal deployment.
+Second, heterogeneous physical environments introduce substantial variability in measurement quality. Uncontrolled lighting, variable camera placements, and unconstrained user postures routinely introduce measurement artifacts that corrupt signal extraction. Consequently, deploying sensors in the wild requires studying not just the user, but how the physical environment interacts with the sensor pipeline.
+
+To address these challenges, we present \textbf{Camerala}, a privacy-conscious, browser-native framework designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments.
+
+\subsection{Research Questions}
+We formulated two exploratory Research Questions (RQs) to guide our deployment:
+\begin{itemize}
+    \item \textbf{RQ1:} Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing?
+    \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
+\end{itemize}
+
+\subsection{Contributions}
+In this paper, we focus strictly on the system architecture and its deployment feasibility. Specific contributions include:
+
+\begin{enumerate}
+    \item \textbf{Privacy-Preserving Edge Architecture}: A browser-native sensing pipeline that performs real-time rPPG and facial landmark extraction entirely on-device, avoiding raw video transmission.
+    \item \textbf{System Design for Task-Aligned On-Device Sensing and Local Persistence}: An implementation that keeps psychophysical task execution, physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation.
+    \item \textbf{Exploratory In-the-Wild Deployment}: A longitudinal case deployment across laboratory and home settings, showing that heterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics.
+\end{enumerate}
+
+The remainder of this paper is organized as follows: Section II reviews prior work in remote sensing and deployment-oriented data collection. 
+Section III details the technical implementation of Camerala. Section IV describes the exploratory deployment design and procedures. 
+Section V presents descriptive deployment observations and signal characteristics. Section VI discusses implications for browser-native sensing deployments, and Section VII concludes.
+
+% =================================================================================
+% SECTION 2: RELATED WORK
+% =================================================================================
+% =================================================================================
+% SECTION 2: RELATED WORK
+% =================================================================================
+\section{Related Work}
+
+\subsection{Remote Physiological Sensing in the Wild}
+Non-contact physiological measurement, particularly remote photoplethysmography (rPPG), extracts pulse signals from facial micro-color variations. Methods range from classic signal processing like POS \cite{wang_pos} to recent Deep Learning architectures \cite{deepphys}. While state-of-the-art networks offer high accuracy in laboratory settings, they frequently suffer from performance degradation across diverse physical environments when deployed in-the-wild under unstructured lighting or motion \cite{mcduff_rppg}. In our framework, we prioritize computational efficiency and robustness against rigid head motion, aiming to extract baselines rather than medical-grade clinical diagnostics.
+
+\subsection{Systems for Task Measurement and Physiological Data Collection}
+The shift toward remote and ubiquitous computing has generated several platforms for data collection. However, current systems face trade-offs between execution environment, privacy, and synchronized sensing. We map this design trade-off space in Table \ref{tab:related_work}.
+
+\begin{table*}[t]
+    \begin{center}
+    \caption{Design Trade-off Mapping of Data Collection Platforms}
+\label{tab:related_work}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{System / Platform} & \textbf{On-device video processing} & \textbf{Synchronized sensing + task loop} & \textbf{Local-first data persistence} & \textbf{Raw video export required} & \textbf{Intended use} \\ \midrule
+Web Experiment Libraries & N/A (No cam sensing) & Partial (Task only) & Depends on setup & N/A & Behavioral Tasks \\
+Experiment runtimes (e.g., PsychoPy/PsychoJS/Pavlovia) & Depends (Browser/Desktop) & \textbf{Yes} & Depends on setup & Depends & Lab/Online Exp. \\
+Cloud Sensing APIs & $\times$ (Cloud API) & Low (Async) & $\times$ (Cloud) & \textbf{Yes} & Analytics \\
+\textbf{Camerala (Proposed)} & \textbf{\checkmark (Wasm/WebGL)} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{No} & In-the-Wild \\ \bottomrule
+\end{tabular}
+}
+\vspace{1mm}
+\footnotesize{\textit{Note: This table is intended to illustrate design trade-offs rather than claim categorical superiority, as capabilities depend on deployment configuration and implementation choices.}}
+\end{center}
+\end{table*}
+
+Well-established behavioral experiment libraries like jsPsych provide precise browser-based task timing but do not natively integrate continuous webcam-based physiological sensing. Conversely, rich Cloud sensing APIs provide deep analytics but fundamentally require transmitting video streams away from the client device, raising privacy barriers for domestic use. Camerala is designed to occupy a specific niche: merging the local execution of behavioral task timing with on-device physiological extraction (rPPG and facial landmarks), creating a unified runtime for exploratory "in-the-wild" deployments.
+
+Our contribution is not a new physiological estimator, but a browser-native integration that makes task-aligned, privacy-conscious physiological sensing deployable in domestic environments.
+
+To evaluate sensing systems under real-world environmental variability, longitudinal deployment is required. We structure this initial assessment as a Single-Case Exploratory Deployment ($N=1$) \cite{barlow_sced}. This approach focuses entirely on observing within-subject, between-environment (e.g., Lab vs. Home) variance in sensor behavior across numerous trials, avoiding cross-participant phenotypic variation in the initial deployment.
+
+Recent advances in WebAssembly (Wasm) and WebGPU have made high-performance computer vision possible in the browser.
+By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can enable browser-based inference without cloud offloading. This technical shift acts as the enabler for Camerala.
+
+% =================================================================================
+% SECTION 3: SYSTEM ARCHITECTURE
+% =================================================================================
+\section{System Architecture: Camerala}
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is a research prototype framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction. The contribution is not a new physiological estimator in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized task execution, and local-first persistence in a single browser-native runtime. Although the current deployment used a single psychophysical task to measure feasibility, the runtime isolates the stimulus presentation logic from the sensing pipeline (as depicted by the distinct modules in Fig. \ref{fig:system_architecture}). As a supporting example of this modularity beyond the primary task used in the deployment, we implemented a supplementary spatial-memory task using the same sensing and logging pipeline; an example configuration and resulting JSONL log are included in the Appendix.
+
+While asynchronous cloud analytics are awkward for tightly synchronized task deployments, and browser-native task runtimes currently do not provide built-in physiological extraction, Camerala bridges this gap via an Edge Computing philosophy. The combination of these features enables exploratory household deployments under privacy constraints. This architectural choice is driven by two critical non-functional requirements: \textbf{Privacy Preservation} and \textbf{Low-Latency Operation}.
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
+    \caption{Overview of the Camerala System Architecture. The system runs entirely client-side, processing webcam frames via MediaPipe Face Mesh (Wasm) to extract rPPG and Head Motion signals in real-time. Data is synchronized with the Psychophysics Task Engine (Canvas API) and stored locally, ensuring no raw video ever leaves the user's device.}
+    \label{fig:system_architecture}
+\end{center}
+\end{figure}
+
+\subsection{High-Level Architecture}
+The system enables a complete experimental loop entirely within the browser sandbox (see Fig. \ref{fig:system_architecture}).
+The architecture consists of three coupled modules running on the main JavaScript thread and dedicated WebWorkers:
+\begin{enumerate}
+    \item \textbf{The Task Engine}: Responsible for stimulus rendering, trial logic, and reaction time measurement.
+    \item \textbf{The Vision Pipeline}: Responsible for ingesting the webcam stream, performing facial landmark inference, and extracting raw physiological signals.
+    \item \textbf{The Data Manager}: Responsible for fusing the asynchronous streams (Vision Frame Time vs. Task Event Time) and securing data persistence.
+\end{enumerate}
+
+\subsection{Technical Implementation: The Vision Pipeline}
+We utilize the MediaPipe Face Mesh \cite{mediapipe_paper} solution, which provides 468 3D facial landmarks in real-time.
+This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration.
+
+\subsubsection{Feature Extraction Logic}
+To quantify behaviorally relevant and motion-related features, we extract two primary signals: \textit{Head Motion Index} and \textit{Exposure Fluctuation}.
+
+\textbf{1. Head Motion Index ($M_t$)}
+To estimate participant stability and gross motor movement, we track the displacement of rigid cranial landmarks (Nose tip, Left/Right Tragus) that are generally unaffected by facial expressions.
+Let $L_i^t = (x_i^t, y_i^t, z_i^t)$ be the 3D coordinate of the $i$-th landmark at frame $t$.
+The instantaneous motion scalar $M_t$ is defined as the Euclidean distance summed over the set of rigid landmarks $S_{rigid} = \{1, 33, 263\}$ (Nose, L-Ear, R-Ear):
+\begin{equation}
+    M_t = \frac{1}{|S_{rigid}|} \sum_{i \in S_{rigid}} || L_i^t - L_i^{t-1} ||_2
+\end{equation}
+To ensure scale invariance (handling users sitting at different distances), the coordinates are normalized by the Inter-Ocular Distance (IOD),
+calculated as the Euclidean distance between the lateral canthi of the eyes.
+
+\textbf{2. Exposure Fluctuation ($E_{fluc}$)}
+Deploying sensors outside the lab introduces variable lighting. In a home environment, clouds passing the sun, screens flickering, or power cycles induce luminance changes that can mask the rPPG signal.
+We quantify this frame-level luminance fluctuation as an environmental quality indicator.
+We define a Region of Interest (ROI) on the forehead, $R_{fore}$. The average luminance $Y_t$ is computed from the RGB channels:
+\begin{equation}
+    Y_t = \frac{1}{N_{px}} \sum_{(u,v) \in R_{fore}} (0.299R_{u,v} + 0.587G_{u,v} + 0.114B_{u,v})
+\end{equation}
+The Exposure Fluctuation metric is then defined as the first derivative of luminance:
+\begin{equation}
+    E_{fluc}(t) = | Y_t - Y_{t-1} |
+\end{equation}
+
+\subsection{Technical Implementation: The Task Engine}
+The experimental psychophysical probe is a \textbf{2-Alternative Forced Choice (2AFC) Orientation Discrimination Task}.
+
+\subsubsection{Stimulus Generation via Canvas API}
+Using the HTML5 Canvas API, we procedurally generate Gabor patches. A Gabor patch is defined as a sinusoidal grating multiplied by a Gaussian envelope.
+The luminance profile $L(x,y)$ is given by:
+\begin{equation}
+    L(x,y) = L_0 + C \cdot \exp\left(-\frac{x'^2 + \gamma^2 y'^2}{2\sigma^2}\right) \cdot \cos\left(2\pi \frac{x'}{\lambda} + \phi\right)
+\end{equation}
+Where:
+\begin{itemize}
+    \item $L_0$: Background luminance (128/255 gray).
+    \item $C$: Contrast of the grating.
+    \item $\lambda$: Wavelength (spatial frequency).
+    \item $\theta$: Orientation angle (the target variable: $+45^\circ$ or $-45^\circ$).
+    \item $x', y'$: Coordinates rotated by $\theta$.
+\end{itemize}
+By generating stimuli procedurally rather than loading image files, we eliminate network latency and ensure pixel-perfect control
+over the spatial frequency and contrast.
+
+\subsubsection{Timing and Synchronization}
+Web-based reaction time measurement is notoriously jittery. To mitigate this, we employ:
+\begin{enumerate}
+    \item \textbf{High-Res Time}: All timestamps use \texttt{performance.now()}, which provides high-resolution timestamps independent of the system clock.
+    \item \textbf{Frame-Locked Rendering}: Stimulus rendering is synchronized using \texttt{requestAnimationFrame}.
+    We log the timestamp of the frame \textit{immediately} before the stimulus paint command.
+    \item \textbf{Low-Latency Sync}: On-device processing avoids network transmission during task-aligned sensing and keeps task and sensing timestamps within the same local runtime in the present design.
+\end{enumerate}
+
+\begin{algorithm}
+\caption{Camerala Task Loop (Simplified)}
+\begin{algorithmic}
+\STATE \textbf{Initialize} Camera, FaceMesh, Canvas
+\WHILE{Session Active}
+    \STATE $Block \leftarrow$ GetCurrentBlock()
+    \STATE $Condition \leftarrow Block.condition$
+    \STATE ShowInstruction(Condition.text)
+    \FOR{trial $i = 1$ to 20}
+        \STATE \textbf{Fixation Phase}: Show Cross ($500ms + \mathcal{U}(0, 200)ms$)
+        \STATE $t_{onset} \leftarrow$ performance.now()
+        \STATE DrawGaborPatch($\theta_i$)
+        \WHILE{No KeyPress}
+            \STATE Poll Keyboard Input
+        \ENDWHILE
+        \STATE $t_{response} \leftarrow$ performance.now()
+        \STATE $RT \leftarrow t_{response} - t_{onset}$
+        \STATE $Accuracy \leftarrow (Key == Target)$
+        \STATE \textbf{Feedback}: Show Color (Green/Red)
+        \STATE UpdateStaircase(Accuracy)
+        \STATE $Log(RT, Accuracy, FaceMeshFeatures)$
+    \ENDFOR
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Data Management and Privacy}
+Since no server is involved, data persistence is handled via the \textbf{File System Access API} (on supported browsers) or a fallback to \texttt{Blob} download.
+Data is serialized into JSON Lines (.jsonl) format. Each line represents one frame or one trial event. This allows for streaming writes,
+ensuring that even if the browser crashes mid-session, data up to that point is preserved.
+At the end of a session, the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk.
+This explicit user action reinforces the sense of agency and privacy control.
+
+\section{Methodology}
+
+\subsection{Longitudinal Exploratory Deployment}
+To evaluate the operational deployability of Camerala across different physical environments, we conducted an exploratory longitudinal deployment (N=1). While traditional between-subjects group designs (Large-N) are strictly necessary for estimating generalizable psychological effects, an intensive N=1 autoethnography (Trials=600) serves as a technical proof-of-concept for the \textit{system architecture}. This design allows us to observe the system's operational continuity across contrasting ecological conditions without the compounding variance of diverse user demographics.
+The study followed an A-B-C logic within each session (see Fig. \ref{fig:sced_design}), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
+Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects.
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{paper_figures/Figure4_Longitudinal.png}
+    \caption{Visual representation of the deployment schedule. The study spanned 14 days, alternating between Home and Lab environments. Each session consisted of 3 blocks with randomized order, totaling 600 trials. This approach allows for robust observation of between-environment signal differences.}
+    \label{fig:sced_design}
+\end{center}
+\end{figure}
+
+\subsection{Participant (Autoethnography)}
+In line with standard systems feasibility evaluation, the participant was the primary author.
+\textit{Ethical Note}: This was a self-experimentation (autoethnographic) evaluation. No other participants were involved, no identifiable video was transmitted or shared, and the author provided informed consent for self-participation. We explicitly acknowledge that the author's prior knowledge of the experimental hypotheses precludes drawing population-level psychological conclusions. However, this deployment is methodologically appropriate for the initial technical validation of the sensing pipeline.
+
+\subsection{Apparatus and Physical Environment}
+The experiment was deployed on a standard 13.5-inch laptop display (approximate 60Hz target refresh rate).
+To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meter at the eye level of the participant.
+\begin{itemize}
+    \item \textbf{Lab Environment}: Mean illuminance $480 \pm 20$ lux (Standard fluorescent lighting).
+    \item \textbf{Home Environment}: Mean illuminance $140 \pm 50$ lux (Mixed LED and variable monitor glow).
+\end{itemize}
+Distance from the screen was approximately maintained at 50--60 cm, using the FaceMesh tracking standard distance as a rough proxy.
+
+\subsection{Experimental Procedure \& Cognitive Framing}
+Each session began with an automated pre-session check used to screen basic capture conditions, including luminance, pose, and face size prior to hiding the camera feed to prevent distraction. 
+We then presented distinct instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) via full-screen text before each 20-trial block. 
+The \textbf{Neutral} condition served as a baseline. The \textbf{Negative Evaluation} condition ("WARNING: CRITICAL. Poor performance is unacceptable") served as a negative task framing manipulation. The \textbf{Positive Evaluation} condition ("BONUS. Break your record!") served as a positive task framing manipulation.
+
+\subsection{The Psychophysical Task}
+The psychophysical probe was a Gabor Orientation Discrimination task. Each trial consisted of a randomized fixation cross (400--600ms), a brief Gabor stimulus ($\pm 45^\circ$, 200ms), a response window, and immediate visual feedback. 
+To maintain a consistent level of task difficulty, we implemented a standard 1-up 1-down staircase algorithm on stimulus contrast. By adjusting contrast dynamically ($\pm 5\%$ relative steps) based on the previous response, the task adaptively targeted the participant's 50\% psychometric threshold across all sessions.
+
+\subsection{Dependent Measures and Pre-processing}
+All data were exported as JSONL and processed sequentially.
+
+\subsubsection{Task Performance Metrics}
+\begin{itemize}
+    \item \textbf{Reaction Time (RT)}: Limited to an operational range ($100$ms to $1500$ms) to exclude task distractions.
+    \item \textbf{Accuracy}: Tracked to verify staircase convergence.
+\end{itemize}
+
+\subsubsection{Physiological Metrics}
+\begin{itemize}
+    \item \textbf{Head Motion Index ($M_t$)}: Calculated as the frame-by-frame Euclidean displacement of rigid facial landmarks.
+    \item \textbf{rPPG Heart Rate}: The raw POS signal trace was bandpass filtered (0.7-3.0 Hz). 
+Peak detection was applied to estimate inter-beat intervals (IBI).
+\end{itemize}
+
+% =================================================================================
+% SECTION 5: RESULTS
+% =================================================================================
+\section{Results}
+
+Our primary objective in this section is to evaluate the operational feasibility and signal quality of the framework across heterogeneous real-world settings: a controlled University Laboratory versus an uncontrolled private Home environment. 
+Data from 10 sessions (30 blocks, 600 trials) were successfully collected and persisted entirely via the local browser framework.
+We filtered trials with extreme reaction times ($RT < 100ms$ or $RT > 1500ms$) and low face tracking confidence ($Conf < 0.8$), resulting in 582 valid trials (97.0\% retention).
+
+\subsection{Environmental Noise and Signal Extraction Pipeline}
+Before observing behavioral differences, we assessed the stability of the client-side rPPG and FaceMesh pipeline across the two environments.
+As shown in Table \ref{tab:data_quality} and Fig. \ref{fig:data_quality}, the Home environment presented greater challenges for signal quality.
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{paper_figures/Figure2_Quality.png}
+    \caption{Data Quality Comparison. The Home environment (Orange) exhibits higher exposure fluctuation ($E_{fluc}$) and lower tracking confidence compared to the Laboratory (Blue), posing a challenge for rPPG signal extraction.}
+    \label{fig:data_quality}
+\end{center}
+\end{figure}
+
+\begin{table*}[t!]
+    \caption{Descriptive Data Quality Comparison (Trial-Level Aggregation)}
+\label{tab:data_quality}
+\begin{center}
+    \resizebox{0.65\textwidth}{!}{%
+    \begin{tabular}{lcc}
+\toprule
+\textbf{Metric (Mean $\pm$ SD)} & \textbf{Lab (292 trials)} & \textbf{Home (290 trials)} \\ 
+\midrule
+Frames per Second (FPS) & $59.8 \pm 0.4$ & $58.2 \pm 2.1$ \\
+Face Size (IOD in px) & $142 \pm 12$ & $135 \pm 18$ \\
+Mean Luminance (Y) & $180 \pm 15$ & $110 \pm 45$ \\
+Exposure Fluctuation ($E_{fluc}$) & $0.03 \pm 0.01$ & $0.09 \pm 0.04$ \\
+Tracking Conf. (\%) & $99.1\%$ & $96.5\%$ \\
+\bottomrule
+\end{tabular}
+    }
+\end{center}
+\end{table*}
+
+The "Exposure Fluctuation" ($E_{fluc}$) was noticeably higher in the Home environment on average, indicating a difference in environmental lighting artifacts.
+Despite this, the tracking confidence remained above 96\% at home, supporting the feasibility of using the MediaPipe + WebAssembly stack for this naturalistic deployment.
+
+\subsection{Observation of Task Performance Differences}
+To investigate RQ2 (between-environment differences), we aggregated Reaction Time (RT) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments. We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset.
+
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=\linewidth]{paper_figures/Figure3_Interaction.png}
+    \caption{Descriptive trends in Reaction Time (RT) grouped by framing condition. Under controlled Laboratory settings, the negative instructional framing exhibited descriptive deviations from the Neutral condition. At Home, variance across conditions appeared to mask task-induced deviations. Error bars represent Standard Error (SE).}
+    \label{fig:rt_results}
+\end{center}
+\end{figure}
+
+\subsubsection{Laboratory Environment}
+In the controlled Lab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$). This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in the laboratory setting.
+
+\subsubsection{Home Environment}
+Conversely, in the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$). The descriptive separation observed in the laboratory setting was not apparent in the home setting. This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors.
+
+\subsection{Between-Environment Differences in Physiological Features}
+We further investigated if differences extended to the collected physiological estimates.
+
+\subsubsection{Head Motion}
+We analyzed the descriptive Head Motion Index ($M_t$) during the instruction-reading phase.
+In the Lab, the Negative Evaluation condition showed a reduction in head motion compared to the Neutral condition. At Home, however, higher motion variability was observed during the same instruction.
+
+\subsubsection{Heart Rate Analysis (rPPG)}
+Due to the short trial duration (seconds per trial), we aggregated HR estimation across the entire block duration (approx. 2 minutes).
+While the rPPG signal quality in the Lab provided clean peaks, the Home data suffered from noise artifacts during high-motion segments.
+After excluding segments with high optical motion noise ($M_t > 2.0$), the observed block-level descriptive differences were:
+\begin{itemize}
+    \item \textbf{Lab}: The Negative Evaluation condition showed an average HR elevation of approximately $+8.5$ bpm relative to the Neutral condition.
+    \item \textbf{Home}: The same condition showed a mean HR change of $+1.2$ bpm.
+\end{itemize}
+These physiological observations were reported alongside the task-derived trends and showed descriptive differences across environments.
+
+% =================================================================================
+% SECTION 6: DISCUSSION
+% =================================================================================
+\section{Discussion}
+
+The central finding of this deployment is not a population-level effect of instructional framing, but that identical task procedures produced different observed task and physiological patterns across environments. For system evaluation, this suggests that laboratory-only validation may overestimate signal stability and condition separability under domestic use. This highlights an engineering constraint for continuous sensing: systems evaluated purely on Lab data may exhibit environment-associated changes in observed signals and measurement quality when moved from laboratory to domestic settings.
+
+\subsection{Prioritizing Browser-Native Architectures}
+Methodologically, we demonstrated that a browser-native framework (Camerala) can operationally collect synchronized behavioral and physiological data in domestic spaces without transmitting raw video. By retaining computation purely on the client side, the architecture minimizes the privacy barriers that often inhibit exploratory "in-the-wild" deployments involving video sensors.
+
+\subsection{Limitations}
+There are several strict limitations to this work. First, this is a single-case exploratory deployment (N=1); the results represent observational, deployment-oriented feasibility evidence rather than generalizable population inference. Second, the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lighting changes, subtle posture shifts, display luminescence, or camera placement artifacts inherent to unstructured deployments. Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitive shifts through sensor-fused studies. Even with these limitations, the present study establishes a concrete browser-native design pattern for privacy-conscious, task-aligned sensing under heterogeneous physical conditions.
+
+\section{Conclusion}
+Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. We presented Camerala, a privacy-conscious, browser-native framework that extracts rPPG and facial landmarks on-device. Our proof-of-concept deployment provided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environments are associated with changes in observed task and physiological signals. These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, local-first physiological sensing under heterogeneous physical environments.
+
+\section*{Data availability}
+The dataset containing facial landmarks, extracted rPPG signals, and behavioral responses associated with this study cannot be made publicly available due to privacy restrictions and potentially identifiable biological data originating from domestic (in-the-wild) recordings.
+
+\section*{CRediT authorship contribution statement}
+\textbf{Kotaro Furukawa}: Conceptualization, Methodology, Software, Investigation, Formal analysis, Writing - original draft.
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Funding}
+This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.
+
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work the author(s) used Google Gemini in order to refine the LaTeX code and format it according to the journal guidelines. After using this tool/service, the author(s) reviewed and edited the content as needed and take(s) full responsibility for the content of the published article.
+
+
+
+\begin{thebibliography}{1}
+
+\bibitem{wang_pos}
+Wenjin Wang, Albertus~C Den~Brinker, Sander Stuijk, and Gerard De~Haan.
+\newblock Algorithmic principles of remote ppg.
+\newblock {\em IEEE Transactions on Biomedical Engineering}, 64(7):1479--1491,
+  2016.
+
+\bibitem{deepphys}
+Weixuan Chen and Daniel McDuff.
+\newblock Deepphys: Video-based physiological measurement using convolutional
+  attention networks.
+\newblock In {\em Proceedings of the European Conference on Computer Vision
+  (ECCV)}, pages 349--365, 2018.
+
+\bibitem{mcduff_rppg}
+Daniel McDuff and E~Blackford.
+\newblock Remote measurement of physiological responses: A review of recent
+  advances.
+\newblock {\em ACM Transactions on Computing for Healthcare}, 1(1):1--24, 2020.
+
+\bibitem{barlow_sced}
+David~H Barlow, Matthew~K Nock, and Michel Hersen.
+\newblock {\em Single case experimental designs: Strategies for studying
+  behavior change}.
+\newblock Pearson, 3rd edition, 2009.
+
+\bibitem{mediapipe_paper}
+Camillo Lugaresi, Tang Jiu, Matthias Grundmann, Chris Rubinstein, Fan Jensen,
+  Vivek Kwatro, et~al.
+\newblock Mediapipe: A framework for building perception pipelines.
+\newblock {\em arXiv preprint arXiv:1906.08172}, 2019.
+
+\end{thebibliography}
+
+\appendix{}
+\subsection*{Supporting Example: Task Substitution}
+
+A core engineering feature of the framework is the separation between task logic and the physiological extraction engine. By standardizing the event logging interval around the \texttt{window.requestAnimationFrame} target cycle, the framework is designed so that cognitive task logic can be replaced without modifying the MediaPipe vision thread. \textbf{Listing 1} illustrates a pseudocode configuration for substituting the Gabor orientation task with a generalized Spatial Memory task block.
+
+\vspace{3mm}
+\noindent\footnotesize{\textbf{Listing 1:} Task substitution example}
+\vspace{-1mm}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize, frame=single, language=JavaScript]
+const task = {
+  stimulus: renderSpatialGrid(memory_load_target),
+  allowed_keys: ["Space"],
+  on_frame_sync: (timestamp_ms) => {
+    camerala_logger.logEvent("stimulus_onset", timestamp_ms);
+  }
+};
+\end{lstlisting}
+\vspace{2mm}
+
+To provide a supporting example of this separation, the structure ensures that time-critical physiological measurements continue asynchronously, while semantic trial events (e.g., \textit{stimulus\_onset}) are dynamically injected into the timeline. \textbf{Listing 2} shows the resulting unified data stream where event markers coexist with dense sensor vectors.
+
+\vspace{3mm}
+\noindent\footnotesize{\textbf{Listing 2:} JSONL log example}
+\vspace{-1mm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny, frame=single, language=json]
+{"time_ms": 4015.2, "event": "grid_on", "load": 4, "rppg_g": 110.4, "mot_x": 0.02}
+{"time_ms": 4016.8, "event": "frame_sync", "load": 4, "rppg_g": 109.8, "mot_x": 0.02}
+{"time_ms": 4032.5, "event": "frame_sync", "load": 4, "rppg_g": 111.1, "mot_x": 0.01}
+{"time_ms":4211.4,"event":"response","key":"Space","rt_ms":196.2,"rppg_g":112.0}
+\end{lstlisting}
+\vspace{2mm}
+
+\end{document}
