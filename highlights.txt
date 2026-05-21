@@ -1,0 +1,5 @@
+- Browser-native framework captures rPPG safely without raw video transmission.
+- Edge computing via WebAssembly and WebGL ensures high privacy and low latency.
+- System integrates sensing, psychophysical tasks, and local data persistence.
+- Exploratory 10-session deployment confirms operational feasibility in the wild.
+- Heterogeneous physical environments significantly alter raw physiological signals.
