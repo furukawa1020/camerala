@@ -1,0 +1,226 @@
+\documentclass[11pt]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\newcommand{\condition}[2]{\section*{Condition #1: #2}}
+\newcommand{\pending}[1]{\textcolor{red}{TODO: #1}}
+
+\begin{document}
+
+\begin{center}
+{\Large Response to Reviewers}\\[4pt]
+Paper No. S-28-4-002\\
+Title: Camerala\\
+\end{center}
+
+We thank the handling editor and the reviewers for their careful reading and
+constructive comments. In the revised manuscript, we substantially narrowed the
+claims and repositioned Camerala as a browser-native, local-first implementation
+example for task-aligned physiological feature logging under limited,
+task-constrained home/laboratory conditions. We address Reviewer 1's required
+Conditions 1--13 below. Reviewer 2 recommended acceptance without revision.
+
+\condition{1}{Title should be reconsidered}
+\textbf{Response.}
+\pending{State that the title was revised to avoid implying a dedicated
+privacy-preserving algorithm.}
+
+\textbf{Revision.}
+\pending{Describe title change.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised title.}
+
+\textbf{Location.}
+\pending{Title page.}
+
+\condition{2}{Necessity of real-time processing}
+\textbf{Response.}
+\pending{Explain that the manuscript now treats real-time processing as a
+local-first design choice for avoiding raw-video persistence, synchronizing task
+events with frame-level features, and enabling online quality indicators.}
+
+\textbf{Revision.}
+\pending{List sections where real-time processing was clarified.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised real-time processing paragraph.}
+
+\textbf{Location.}
+\pending{Introduction and System Architecture.}
+
+\condition{3}{Research Questions are not defined clearly enough}
+\textbf{Response.}
+\pending{State that RQ1 was revised and concrete observation/success criteria
+were added without claiming general feasibility.}
+
+\textbf{Revision.}
+\pending{List revised RQ1 and criteria.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised RQ1 and criteria.}
+
+\textbf{Location.}
+\pending{Introduction, Research Questions.}
+
+\condition{4}{Meaning of between-environment differences in RQ2}
+\textbf{Response.}
+\pending{State that RQ2 now refers only to descriptive differences in
+measurement-quality indicators and sensor-derived estimates, not validated
+physiological, cognitive, or psychological effects.}
+
+\textbf{Revision.}
+\pending{List revised RQ2 and interpretive limitations.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised RQ2 or cautionary statement.}
+
+\textbf{Location.}
+\pending{Research Questions, Results, Discussion.}
+
+\condition{5}{Novelty and positioning are insufficiently justified}
+\textbf{Response.}
+\pending{State that related work was expanded and novelty was repositioned as
+integration of psychophysical task execution, on-device feature extraction,
+timestamped local logging, and task-sensing synchronization in one browser
+runtime.}
+
+\textbf{Revision.}
+\pending{List added prior work and positioning edits.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised novelty paragraph.}
+
+\textbf{Location.}
+\pending{Related Work and Contributions.}
+
+\condition{6}{Unclear claim of robustness against rigid head motion}
+\textbf{Response.}
+\pending{State that robustness claims were removed or weakened. Camerala is now
+described as recording motion/luminance indicators rather than correcting rPPG
+degradation.}
+
+\textbf{Revision.}
+\pending{List replacements of robustness language.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised quality-aware logging sentence.}
+
+\textbf{Location.}
+\pending{Related Work and Feature Extraction.}
+
+\condition{7}{Concrete usage scenario is insufficiently described}
+\textbf{Response.}
+\pending{State that the target scenario was clarified as seated,
+task-constrained home/laboratory psychophysical experiments.}
+
+\textbf{Revision.}
+\pending{List usage-scenario edits.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote usage-scenario paragraph.}
+
+\textbf{Location.}
+\pending{Introduction and Methodology.}
+
+\condition{8}{Definitions of in-the-wild and naturalistic are unclear}
+\textbf{Response.}
+\pending{State that unqualified in-the-wild/naturalistic wording was replaced
+or qualified to avoid implying unconstrained daily-life sensing.}
+
+\textbf{Revision.}
+\pending{Summarize term replacements.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised scope limitation.}
+
+\textbf{Location.}
+\pending{Abstract, Introduction, Methodology, Discussion, Conclusion.}
+
+\condition{9}{System hardware description is insufficient}
+\textbf{Response.}
+\pending{State that a hardware/software configuration table was added.}
+
+\textbf{Revision.}
+\pending{List included fields and any TODO_FURUKAWA_* placeholders.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote table caption or representative rows.}
+
+\textbf{Location.}
+\pending{Methodology, Apparatus and Physical Environment.}
+
+\condition{10}{Experimental environment description is insufficient}
+\textbf{Response.}
+\pending{State that environment and lighting conditions were clarified and
+unknown facts were left as author-fill TODO placeholders rather than invented.}
+
+\textbf{Revision.}
+\pending{List environment table fields and protocol clarifications.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote table caption or representative rows.}
+
+\textbf{Location.}
+\pending{Methodology, Apparatus and Physical Environment.}
+
+\condition{11}{Validity of cognitive framing manipulation is questionable}
+\textbf{Response.}
+\pending{State that framing was repositioned as instructional task context and
+not interpreted as inducing evaluation pressure, reward motivation, cognitive
+effects, or motivational effects.}
+
+\textbf{Revision.}
+\pending{List terminology changes and added caution.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised framing paragraph.}
+
+\textbf{Location.}
+\pending{Methodology and Results.}
+
+\condition{12}{Central Discussion claim should be reconsidered}
+\textbf{Response.}
+\pending{State that Discussion was rebuilt around design requirements and
+safeguards rather than as a claim that laboratory validation overestimates home
+performance.}
+
+\textbf{Revision.}
+\pending{List new Discussion subsections or topic sentences.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised Discussion text.}
+
+\textbf{Location.}
+\pending{Discussion.}
+
+\condition{13}{Unsupported claims should be weakened}
+\textbf{Response.}
+\pending{State that unsupported claims about establishing a design pattern,
+feasibility, robustness, tracking confidence, and naturalistic deployment were
+weakened throughout the manuscript, including Abstract and Conclusion.}
+
+\textbf{Revision.}
+\pending{List changed terms and confidence-threshold explanation.}
+
+\textbf{Key revised manuscript text.}
+\pending{Quote revised Abstract, Limitations, or Conclusion.}
+
+\textbf{Location.}
+\pending{Abstract, Results, Discussion, Limitations, Conclusion.}
+
+\section*{Reviewer 1 Other Comments}
+\textbf{Response.}
+\pending{Address readability of Table 1, Figure 2, Figure 4, and the Figure 3
+caption inconsistency.}
+
+\textbf{Revision.}
+\pending{List visual and caption changes.}
+
+\textbf{Location.}
+\pending{Table 1, Figure 2, Figure 3, Figure 4.}
+
+\end{document}
