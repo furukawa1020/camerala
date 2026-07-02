@@ -1,226 +1,240 @@
 \documentclass[11pt]{article}
 \usepackage[margin=25mm]{geometry}
-\usepackage{enumitem}
 \usepackage{url}
+\usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{hyperref}
 
 \newcommand{\condition}[2]{\section*{Condition #1: #2}}
-\newcommand{\pending}[1]{\textcolor{red}{TODO: #1}}
 
 \begin{document}
 
 \begin{center}
 {\Large Response to Reviewers}\\[4pt]
 Paper No. S-28-4-002\\
-Title: Camerala\\
+Original title: Camerala: A Privacy-Preserving Browser-Native Framework for In-the-Wild Physiological Sensing and Task Measurement
 \end{center}
 
-We thank the handling editor and the reviewers for their careful reading and
-constructive comments. In the revised manuscript, we substantially narrowed the
-claims and repositioned Camerala as a browser-native, local-first implementation
-example for task-aligned physiological feature logging under limited,
-task-constrained home/laboratory conditions. We address Reviewer 1's required
-Conditions 1--13 below. Reviewer 2 recommended acceptance without revision.
+We thank the handling editor and the reviewers for their careful reading and constructive comments.
+The manuscript was revised according to Reviewer 1's required Conditions 1--13.
+The revision intentionally narrows the claims: Camerala is now positioned as a browser-native, local-first implementation example for task-aligned physiological feature logging under limited, task-constrained home/laboratory conditions.
+Reviewer 2 recommended acceptance without revision.
 
-\condition{1}{Title should be reconsidered}
+\condition{1}{The title of the manuscript should be reconsidered}
 \textbf{Response.}
-\pending{State that the title was revised to avoid implying a dedicated
-privacy-preserving algorithm.}
+Thank you for this comment.
+The manuscript was revised to avoid implying that Camerala proposes a dedicated privacy-preserving algorithm.
+Following the overall revision, the title was changed to a more conservative system-integration title.
 
 \textbf{Revision.}
-\pending{Describe title change.}
+The title no longer uses ``Privacy-Preserving'' or an unqualified ``In-the-Wild'' expression.
+Privacy is now discussed as an architectural privacy advantage of avoiding raw-video transmission, not as a dedicated privacy-preserving method.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised title.}
+\textbf{Key revised text.}
+``Camerala: A Browser-Native Framework for Task-Aligned Physiological Feature Logging in Home and Laboratory Settings''
 
 \textbf{Location.}
-\pending{Title page.}
+Title page; Introduction; Contributions.
 
-\condition{2}{Necessity of real-time processing}
+\condition{2}{The necessity of real-time processing is not sufficiently explained}
 \textbf{Response.}
-\pending{Explain that the manuscript now treats real-time processing as a
-local-first design choice for avoiding raw-video persistence, synchronizing task
-events with frame-level features, and enabling online quality indicators.}
+Thank you for pointing this out.
+The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging, rather than the only technically possible architecture.
 
 \textbf{Revision.}
-\pending{List sections where real-time processing was clarified.}
+A new paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but would require storing privacy-sensitive raw video.
+The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence, synchronize task events and frame features in the same browser runtime, and support online quality checks.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised real-time processing paragraph.}
+\textbf{Key revised text.}
+``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.''
 
 \textbf{Location.}
-\pending{Introduction and System Architecture.}
+Introduction; System Architecture; Data Management and Local-First Persistence.
 
-\condition{3}{Research Questions are not defined clearly enough}
+\condition{3}{The Research Questions are not defined clearly enough}
 \textbf{Response.}
-\pending{State that RQ1 was revised and concrete observation/success criteria
-were added without claiming general feasibility.}
+Thank you for this comment.
+The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-\pending{List revised RQ1 and criteria.}
+RQ1 now asks whether, in the tested setup, Camerala can complete the deployment while locally logging synchronized task events, sensor-derived features, and quality indicators.
+The criteria now include planned session/trial completion, local persistence, task-frame synchronization, post-exclusion retention, and availability of the listed quality indicators.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised RQ1 and criteria.}
+\textbf{Key revised text.}
+``These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.''
 
 \textbf{Location.}
-\pending{Introduction, Research Questions.}
+Introduction, Research Questions.
 
-\condition{4}{Meaning of between-environment differences in RQ2}
+\condition{4}{It is unclear what the ``between-environment differences'' in RQ2 refer to}
 \textbf{Response.}
-\pending{State that RQ2 now refers only to descriptive differences in
-measurement-quality indicators and sensor-derived estimates, not validated
-physiological, cognitive, or psychological effects.}
+Thank you for this important clarification.
+RQ2 was redefined to concern descriptive differences in measurement-quality indicators and sensor-derived estimates, not psychological, cognitive, motivational, or physiological effects.
 
 \textbf{Revision.}
-\pending{List revised RQ2 and interpretive limitations.}
+The Abstract, RQ2, Results, Discussion, and Conclusion were revised to state that the observed laboratory/home differences are deployment-specific sensor-derived observations.
+The manuscript now explicitly states that the study did not include a reference physiological sensor, multiple participants, or controlled separation of environmental and task-related factors.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised RQ2 or cautionary statement.}
+\textbf{Key revised text.}
+``What descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts?''
 
 \textbf{Location.}
-\pending{Research Questions, Results, Discussion.}
+Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
 
-\condition{5}{Novelty and positioning are insufficiently justified}
+\condition{5}{The novelty and positioning of the study are insufficiently justified}
 \textbf{Response.}
-\pending{State that related work was expanded and novelty was repositioned as
-integration of psychophysical task execution, on-device feature extraction,
-timestamped local logging, and task-sensing synchronization in one browser
-runtime.}
+Thank you for identifying the relevant prior work.
+The Related Work section was expanded, and the novelty claim was repositioned.
 
 \textbf{Revision.}
-\pending{List added prior work and positioning edits.}
+The manuscript now discusses browser-based, web-deployable, edge-based, and privacy-oriented rPPG systems using open-access scholarly or primary technical sources, including DeepPhys, Ayesha et al., RhythmEdge, and Gupta and Etemad.
+Reviewer-mentioned public tools such as LabVanced and FacePhys-Demo are acknowledged only cautiously as examples of publicly visible functionality, but are not used as bibliographic evidence for scholarly claims.
+The manuscript explicitly states that local rPPG processing alone and privacy-oriented edge processing alone are not the novelty of Camerala.
+Camerala's contribution is now framed as the integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence within one browser-native runtime.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised novelty paragraph.}
+\textbf{Key revised text.}
+``The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.''
 
 \textbf{Location.}
-\pending{Related Work and Contributions.}
+Related Work; Contributions; System Architecture; References.
 
 \condition{6}{Unclear claim of robustness against rigid head motion}
 \textbf{Response.}
-\pending{State that robustness claims were removed or weakened. Camerala is now
-described as recording motion/luminance indicators rather than correcting rPPG
-degradation.}
+Thank you for this comment.
+Unsupported robustness claims were removed.
 
 \textbf{Revision.}
-\pending{List replacements of robustness language.}
+The revised manuscript states that Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes.
+Head motion and luminance variation are now presented as logged quality indicators for inspection and filtering.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised quality-aware logging sentence.}
+\textbf{Key revised text.}
+``Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes. Instead, it records motion-related and luminance-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.''
 
 \textbf{Location.}
-\pending{Related Work and Feature Extraction.}
+System Architecture, Feature Extraction Logic; Discussion.
 
-\condition{7}{Concrete usage scenario is insufficiently described}
+\condition{7}{Insufficient description of the concrete usage scenario}
 \textbf{Response.}
-\pending{State that the target scenario was clarified as seated,
-task-constrained home/laboratory psychophysical experiments.}
+Thank you for the comment.
+The intended usage scenario is now stated at the beginning of the paper and again in the Methodology.
 
 \textbf{Revision.}
-\pending{List usage-scenario edits.}
+The manuscript now defines the target use case as a remote or home-based psychophysical task performed while seated in front of a laptop, with synchronized browser-based logging of behavioral events and webcam-derived features.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote usage-scenario paragraph.}
+\textbf{Key revised text.}
+``The target usage scenario is a remote or home-based psychophysical task performed while seated in front of a laptop, with browser-based logging of behavioral events and webcam-derived features.''
 
 \textbf{Location.}
-\pending{Introduction and Methodology.}
+Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
 
-\condition{8}{Definitions of in-the-wild and naturalistic are unclear}
+\condition{8}{Definition of ``in-the-wild'' and ``naturalistic physiological sensing'' are not clear}
 \textbf{Response.}
-\pending{State that unqualified in-the-wild/naturalistic wording was replaced
-or qualified to avoid implying unconstrained daily-life sensing.}
+Thank you for this point.
+The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life physiological sensing.
 
 \textbf{Revision.}
-\pending{Summarize term replacements.}
+Unqualified ``in-the-wild'' and ``naturalistic'' language was removed or replaced with ``task-constrained home/laboratory deployment.''
+The Methodology now explicitly states that the deployment does not represent continuous sensing during daily activities such as walking, cooking, conversation, or night-time use.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised scope limitation.}
+\textbf{Key revised text.}
+``This is a task-constrained home/laboratory deployment, not continuous physiological sensing during ordinary daily activities such as walking, cooking, conversation, or night-time use.''
 
 \textbf{Location.}
-\pending{Abstract, Introduction, Methodology, Discussion, Conclusion.}
+Abstract; Introduction; Methodology; Discussion; Conclusion.
 
-\condition{9}{System hardware description is insufficient}
+\condition{9}{The description of the system hardware is insufficient for reproducibility}
 \textbf{Response.}
-\pending{State that a hardware/software configuration table was added.}
+Thank you for this comment.
+A hardware and software configuration table was added.
 
 \textbf{Revision.}
-\pending{List included fields and any TODO_FURUKAWA_* placeholders.}
+The table reports the available information, including operating-system information from logged user agents, browsers used, requested camera constraints, measured processing FPS, approximate display refresh rate, viewing distance, and unlogged camera settings.
+Unknown deployment-time facts are not inferred; they are marked with \texttt{TODO\_FURUKAWA\_*} placeholders for author confirmation.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote table caption or representative rows.}
+\textbf{Key revised text.}
+``Unknown or unrecorded deployment-time details are explicitly marked rather than inferred from the current revision environment.''
 
 \textbf{Location.}
-\pending{Methodology, Apparatus and Physical Environment.}
+Methodology, Hardware and Software Configuration; Table 2.
 
-\condition{10}{Experimental environment description is insufficient}
+\condition{10}{The description of the experimental environments is insufficient}
 \textbf{Response.}
-\pending{State that environment and lighting conditions were clarified and
-unknown facts were left as author-fill TODO placeholders rather than invented.}
+Thank you for the detailed request.
+An environment and lighting conditions table was added.
 
 \textbf{Revision.}
-\pending{List environment table fields and protocol clarifications.}
+The table separates reported facts from information that was not systematically recorded.
+It reports the available lux values and clarifies lux-meter position, lighting descriptions, aggregation windows, and whether possible sources of luminance fluctuation were systematically recorded.
+Unknown details are left as \texttt{TODO\_FURUKAWA\_*} placeholders rather than invented.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote table caption or representative rows.}
+\textbf{Key revised text.}
+``Table 3 separates reported facts from information that was not systematically recorded.''
 
 \textbf{Location.}
-\pending{Methodology, Apparatus and Physical Environment.}
+Methodology, Deployment Environment and Lighting Conditions; Table 3.
 
-\condition{11}{Validity of cognitive framing manipulation is questionable}
+\condition{11}{The validity of the cognitive framing manipulation is questionable}
 \textbf{Response.}
-\pending{State that framing was repositioned as instructional task context and
-not interpreted as inducing evaluation pressure, reward motivation, cognitive
-effects, or motivational effects.}
+Thank you for this important point.
+The manuscript no longer interprets the instruction blocks as inducing evaluation pressure, reward motivation, cognitive effects, or motivational effects.
 
 \textbf{Revision.}
-\pending{List terminology changes and added caution.}
+The terminology was changed from cognitive framing manipulation to instructional task contexts.
+The participant/autoethnography section now states that the author-participant knew the instructions were experimental.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised framing paragraph.}
+\textbf{Key revised text.}
+``They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.''
 
 \textbf{Location.}
-\pending{Methodology and Results.}
+Participant section; Experimental Procedure and Instructional Task Contexts; Results.
 
-\condition{12}{Central Discussion claim should be reconsidered}
+\condition{12}{The central claim in the Discussion should be reconsidered}
 \textbf{Response.}
-\pending{State that Discussion was rebuilt around design requirements and
-safeguards rather than as a claim that laboratory validation overestimates home
-performance.}
+Thank you for this comment.
+The Discussion was rewritten around design requirements and safeguards for future Camerala deployments.
 
 \textbf{Revision.}
-\pending{List new Discussion subsections or topic sentences.}
+The revised Discussion focuses on browser-native local-first logging, quality indicators for task-constrained home/laboratory deployment, interpretation under environmental heterogeneity, and design safeguards.
+The previous central claim about laboratory-only validation overestimating home-use signal stability was removed as the organizing claim.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised Discussion text.}
+\textbf{Key revised text.}
+``The results do not establish general deployability, robustness, or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
 
 \textbf{Location.}
-\pending{Discussion.}
+Discussion.
 
-\condition{13}{Unsupported claims should be weakened}
+\condition{13}{Several claims are not sufficiently supported and should be weakened}
 \textbf{Response.}
-\pending{State that unsupported claims about establishing a design pattern,
-feasibility, robustness, tracking confidence, and naturalistic deployment were
-weakened throughout the manuscript, including Abstract and Conclusion.}
+Thank you for this guidance.
+The Abstract, Results, Discussion, Limitations, and Conclusion were revised to substantially weaken unsupported claims.
 
 \textbf{Revision.}
-\pending{List changed terms and confidence-threshold explanation.}
+The manuscript no longer states that the study ``establishes'' a design pattern.
+The claims about feasibility, naturalistic deployment, tracking confidence, and psychological and physiological interpretation were narrowed.
+Tracking confidence is now described as a FaceMesh/logging quality indicator, not as validation of rPPG quality or deployment feasibility.
+The confidence threshold is marked for author confirmation if the original rationale cannot be recovered.
 
-\textbf{Key revised manuscript text.}
-\pending{Quote revised Abstract, Limitations, or Conclusion.}
+\textbf{Key revised text.}
+``The present study presents an implementation example of browser-native, task-aligned, local-first feature logging under limited home/laboratory conditions.''
 
 \textbf{Location.}
-\pending{Abstract, Results, Discussion, Limitations, Conclusion.}
+Abstract; Results; Discussion; Limitations; Conclusion.
 
 \section*{Reviewer 1 Other Comments}
 \textbf{Response.}
-\pending{Address readability of Table 1, Figure 2, Figure 4, and the Figure 3
-caption inconsistency.}
+Thank you for the additional comments on figure and table readability.
 
 \textbf{Revision.}
-\pending{List visual and caption changes.}
+Table 1 was reformatted with clearer column widths.
+The longitudinal figure and task-result figure were changed to wide figure placement to improve readability.
+Figure captions were rewritten to state that the results are descriptive.
+The Figure 3 caption was corrected so that it no longer refers to tracking confidence, because tracking confidence is not shown in that figure.
 
 \textbf{Location.}
-\pending{Table 1, Figure 2, Figure 3, Figure 4.}
+Table 1; Figure 2; Figure 3; Figure 4 captions and layout.
+
+\section*{Author Confirmation Needed Before Final Submission}
+The revised manuscript intentionally contains \texttt{TODO\_FURUKAWA\_*} placeholders for deployment-time facts that should not be inferred or invented.
+These must be filled by the author where recoverable, or converted to ``not logged'' / ``not systematically recorded'' where unrecoverable.
 
 \end{document}

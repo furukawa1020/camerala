@@ -89,6 +89,18 @@ If information is missing, insert a visible placeholder of the form:
 Before finishing a revision pass, list all remaining `TODO_FURUKAWA_*`
 placeholders for the author.
 
+## Reference Rule
+
+Use only open-access and reliable references. Prefer peer-reviewed open-access
+articles, official open preprints such as arXiv versions of peer-reviewed or
+conference work, and official primary technical papers. Do not cite commercial
+marketing pages, informal web pages, or unverified demos as bibliographic
+evidence. If a reviewer-mentioned tool is not suitable as a reliable
+open-access reference, acknowledge the category cautiously in prose without
+using it as evidence for a scholarly claim. Do not use arXiv-only demos or
+preprints as support for central empirical claims; if retained, use them only
+as narrowly scoped technical/system context and phrase the claim cautiously.
+
 ## Response Discipline
 
 Every Reviewer 1 condition must be answerable one by one. Maintain:
