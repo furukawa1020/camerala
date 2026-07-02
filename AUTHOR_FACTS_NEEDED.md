@@ -1,44 +1,26 @@
-# Author Facts Needed Before Final Submission
+# Author Facts Needed / Reporting Choices
 
-The revised manuscript deliberately avoids inventing deployment-time facts.
-Please fill the following placeholders in `paper_his_revision.tex`, or confirm
-that the information was not logged / not systematically recorded.
+No author-fill placeholders remain in the submission manuscript. Facts that were not recoverable from repository logs or explicit author input were reported conservatively as not logged or not systematically recorded.
 
-## Hardware / Software
+## Hardware/software facts reported as unavailable
 
-- `TODO_FURUKAWA_PC_MODEL`: laptop/PC model used during the deployment.
-- `TODO_FURUKAWA_CPU`: CPU model.
-- `TODO_FURUKAWA_GPU`: GPU model or integrated graphics.
-- `TODO_FURUKAWA_RAM`: installed RAM.
-- `TODO_FURUKAWA_OS_BUILD`: exact OS build/version, if recoverable.
-- `TODO_FURUKAWA_WEBCAM`: webcam type/model.
-- `TODO_FURUKAWA_CAMERA_RESOLUTION`: actual deployment-time camera resolution, if recoverable.
+- Laptop/PC model: reported as `Not logged`.
+- CPU: reported as `Not logged`.
+- GPU: reported as `Not logged`.
+- RAM: reported as `Not logged`.
+- Exact OS build/version: reported as `not logged`; available metadata only supports Windows NT 10.0 from the Firefox user agent.
+- Chrome deployment-time version: reported as not logged; author input states Chrome was used, but repository metadata available here records Firefox user agents.
+- Webcam type/model: reported as `Not logged`.
+- Actual camera resolution and actual camera frame rate: reported as not programmatically logged; the manuscript separately reports requested `getUserMedia` constraints and measured processing FPS.
+- Auto-exposure and auto-white-balance: reported as device/browser default, exact deployment-time state not programmatically logged.
 
-## Lighting / Environment
+## Environment facts reported as unavailable
 
-- `TODO_FURUKAWA_LUX_METER_MODEL`: lux meter model.
-- `TODO_FURUKAWA_LUX_MEASUREMENT_WINDOW`: whether lux values were point measurements, session summaries, or another measurement window.
-- `TODO_FURUKAWA_LAB_WINDOWS`: window presence in the laboratory setting.
-- `TODO_FURUKAWA_HOME_WINDOWS`: window presence in the home setting.
-- `TODO_FURUKAWA_LAB_NATURAL_LIGHT`: natural-light contribution in the laboratory.
-- `TODO_FURUKAWA_HOME_NATURAL_LIGHT`: natural-light contribution at home.
-- `TODO_FURUKAWA_LAB_CURTAIN`: curtain/blind condition in the laboratory.
-- `TODO_FURUKAWA_HOME_CURTAIN`: curtain/blind condition at home.
-- `TODO_FURUKAWA_SCREEN_BRIGHTNESS`: screen brightness setting during sessions, if recoverable.
+- Lux meter model: reported as `Not logged`.
+- Lux measurement timing/window: reported as `Not systematically recorded`.
+- Window presence, natural-light contribution, curtain/blind condition, weather, time of day, and screen brightness: reported as `Not systematically recorded`.
+- Clouds, screen flicker, and power cycles: reported only as possible sources of luminance fluctuation, not as observed session events.
 
-## Analysis Threshold
+## FaceMesh confidence threshold
 
-- `TODO_FURUKAWA_CONF_THRESHOLD_RATIONALE`: rationale for using `Conf < 0.8` as the operational face-tracking exclusion threshold. If no rationale was documented, we should state that it was an operational threshold selected during exploratory analysis.
-
-## Browser Note
-
-The available exported metadata in this repository records Firefox user agents
-for the session files checked during revision. The author-provided note says
-Mozilla Firefox and Google Chrome were used. Do not report current browser
-versions as deployment-time versions unless deployment-time logs prove them.
-
-## Reference Rule
-
-The revised manuscript bibliography is restricted to open-access and reliable
-sources. Commercial product pages and informal demo pages should not be used as
-bibliographic evidence for scholarly claims.
+The `Conf < 0.8` threshold is reported as an operational exclusion threshold for low FaceMesh tracking confidence in the exploratory analysis. The manuscript states that it was not independently validated as an rPPG-quality threshold.

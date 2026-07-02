@@ -1,49 +1,21 @@
 # Review Response Tracker
 
-Working manuscript: `paper_his_revision.tex`
+Paper No. S-28-4-002. This tracker maps Reviewer 1 Conditions 1--13 to the revised manuscript and response letter.
 
-Protected submitted manuscript: `paper_his.tex` and `paper_his.pdf`
+| Condition | Revision focus | Manuscript action | Response status |
+|---:|---|---|---|
+| 1 | Clarify contribution | Repositioned Camerala as a browser-native local-first implementation example, not a new rPPG estimator or broad sensing system. | Addressed |
+| 2 | Weaken privacy claims | Removed `Privacy-Preserving` from title and replaced formal privacy claims with local-first/raw-video-avoidance wording. | Addressed |
+| 3 | Reformulate RQs | RQ1 limited to tested configuration; RQ2 limited to descriptive measurement-quality indicators and sensor-derived estimates. | Addressed |
+| 4 | Revise contributions | Contributions now focus on architecture, task-aligned local persistence, and exploratory deployment. | Addressed |
+| 5 | Related work additions | Added Gupta and Etemad; Ayesha, Qiao, and Zulkernine; LabVanced rPPG; FacePhys-Demo; RhythmEdge; and Di Lernia et al. | Addressed |
+| 6 | Avoid effect claims | Instruction blocks described as instructional task contexts; no validated cognitive, motivational, psychological, or physiological effects claimed. | Addressed |
+| 7 | Conservative rPPG interpretation | No ECG/contact PPG reference; bpm-style summaries not interpreted as validated heart-rate changes. | Addressed |
+| 8 | Figures/captions | Replaced overstrong figure labels with descriptive labels and removed p-values/significance marks from manuscript figure content. | Addressed |
+| 9 | Hardware/software details | Added table; unrecoverable facts reported as not logged or not programmatically logged. | Addressed |
+| 10 | Environment details | Added table; unrecoverable environment details reported as not systematically recorded. | Addressed |
+| 11 | FaceMesh confidence | Clarified 0.8 threshold as operational FaceMesh/logging exclusion threshold, not rPPG-quality validation. | Addressed |
+| 12 | Limitations | Expanded limitations to include N=1, author-participant, no reference sensor, no multiple participants/devices/home environments, no system comparison, and no broad claims. | Addressed |
+| 13 | Discussion safeguards | Refocused discussion on design requirements and safeguards for future deployments. | Addressed |
 
-This tracker exists so that every required condition can later be answered in a
-one-question-one-answer response letter. Do not mark a condition as complete
-until the manuscript edit and the response text both exist.
-
-## Required Conditions
-
-| No. | Reviewer 1 condition | Manuscript response needed | Response-letter evidence | Status |
-| --- | --- | --- | --- | --- |
-| 1 | Reconsider title | Remove title-level "Privacy-Preserving"; use a modest browser-native/task-aligned title. | Quote old/new title and explain that privacy is framed as local-first architecture, not a dedicated privacy method. | Drafted |
-| 2 | Explain necessity of real-time processing | Add early explanation that real-time processing avoids raw-video persistence, supports same-runtime task/frame synchronization, and enables quality flags; acknowledge offline local video processing is possible. | Quote new paragraph on real-time processing and local-first feature logging. | Drafted |
-| 3 | Clarify RQ1 and success criteria | Replace RQ1 with tested-configuration wording; define completion, local persistence, synchronized logs, retention after criteria, and availability of quality indicators. | Quote revised RQ1 and success/observation criteria. | Drafted |
-| 4 | Define "between-environment differences" in RQ2 | Reframe RQ2 as descriptive differences in measurement-quality indicators and sensor-derived estimates, not psychological/physiological effects. | Quote revised RQ2 and interpretive caution. | Drafted |
-| 5 | Justify novelty and positioning | Use only peer-reviewed OA rPPG references; mention reviewer-noted public tools/demos cautiously without citing them; explicitly state novelty is integrated task execution + on-device features + timestamped local logging, not browser rPPG or local rPPG alone. | List retained OA references and quote positioning paragraph. | Drafted; no arXiv references |
-| 6 | Clarify rigid head-motion robustness claim | Remove robustness claim or convert to quality-aware logging; state Camerala records motion/luminance indicators but does not correct rPPG degradation. | Quote revised wording replacing robustness. | Drafted |
-| 7 | Clarify concrete usage scenario | State target use case: seated, task-constrained, home/lab psychophysical experiments with browser-based behavioral and webcam-derived feature logging. | Quote new usage-scenario paragraph. | Drafted |
-| 8 | Define/qualify "in-the-wild" and "naturalistic" | Replace unqualified terms with task-constrained home/lab deployment; avoid implying unconstrained daily-life sensing. | Show risky-term search and quote revised scope statement. | Drafted |
-| 9 | Add hardware/software reproducibility details | Add hardware/software table with PC, CPU/GPU, RAM, OS, browser, webcam, resolution, fps, display refresh, auto-exposure, auto-white-balance. Unknown facts must be `TODO_FURUKAWA_*`. | Quote/table reference and list remaining author-fill TODOs. | Drafted; author facts needed |
-| 10 | Add experimental environment details | Add environment/lighting table including windows, natural light, artificial light, time, weather, curtains, screen brightness, lux-meter protocol, aggregation windows, and whether proposed noise sources were observed. Unknown facts must be `TODO_FURUKAWA_*`. | Quote/table reference and list remaining author-fill TODOs. | Drafted; author facts needed |
-| 11 | Reposition cognitive framing manipulation | Replace cognitive/motivational interpretation with "instructional task contexts"; state author-participant knowledge prevents claims about induced pressure/reward. | Quote revised participant/framing paragraph. | Drafted |
-| 12 | Reconsider central Discussion claim | Shift Discussion from "lab-only validation overestimates..." to design requirements and safeguards for future Camerala deployments. | Quote revised Discussion topic sentences and safeguards. | Drafted |
-| 13 | Weaken unsupported claims | Replace "establishes"; weaken feasibility/naturalistic claims; clarify confidence threshold, tracking confidence limitations, and scope of findings. Revise Abstract and Conclusion accordingly. | Quote revised Abstract/Conclusion/Limitations and confidence-threshold explanation. | Drafted; author facts needed |
-
-## Reviewer 1 Other Comments
-
-| Item | Needed action | Status |
-| --- | --- | --- |
-| Table 1 readability | Increase readability and/or simplify table layout. | Drafted |
-| Figure 2 readability and explanation | Enlarge text if regenerating; improve caption and main-text explanation. | Drafted |
-| Figure 4 readability | Enlarge text if regenerating; improve layout or caption. | Drafted |
-| Figure 3 caption inconsistency | Do not mention tracking confidence unless shown in the figure. | Drafted |
-
-## Response Letter Rule
-
-For each condition in `response_to_reviewers.tex`, fill:
-
-1. Response
-2. Revision
-3. Key revised manuscript text
-4. Location
-
-If a condition requires information only the author can know, use
-`TODO_FURUKAWA_*` in the manuscript and record the same placeholder in the
-response letter until filled.
+No final-manuscript author-fill placeholders remain. Unknown deployment-time facts are reported directly as unavailable rather than inferred.

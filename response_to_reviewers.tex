@@ -1,241 +1,90 @@
 \documentclass[11pt]{article}
 \usepackage[margin=25mm]{geometry}
 \usepackage{url}
-\usepackage{enumitem}
-\usepackage{xcolor}
-\usepackage{hyperref}
-
-\newcommand{\condition}[2]{\section*{Condition #1: #2}}
-
 \begin{document}
-
 \begin{center}
-{\Large Response to Reviewers}\\[4pt]
-Paper No. S-28-4-002\\
-Original title: Camerala: A Privacy-Preserving Browser-Native Framework for In-the-Wild Physiological Sensing and Task Measurement
+{\Large Response to Reviewer 1 Conditions}\\
+Paper No. S-28-4-002
 \end{center}
 
-We thank the handling editor and the reviewers for their careful reading and constructive comments.
-The manuscript was revised according to Reviewer 1's required Conditions 1--13.
-The revision intentionally narrows the claims: Camerala is now positioned as a browser-native, local-first implementation example for task-aligned physiological feature logging under limited, task-constrained home/laboratory conditions.
-Reviewer 2 recommended acceptance without revision.
+We thank the reviewer and editor for the constructive conditional-acceptance comments. We revised the manuscript conservatively and addressed Reviewer 1 Conditions 1--13 one by one. In particular, we weakened the framing from a privacy-preserving in-the-wild physiological sensing system to a browser-native, local-first, task-aligned physiological feature logging framework evaluated in an exploratory N=1 author-participant home/laboratory deployment.
 
-\condition{1}{The title of the manuscript should be reconsidered}
-\textbf{Response.}
-Thank you for this comment.
-The manuscript was revised to avoid implying that Camerala proposes a dedicated privacy-preserving algorithm.
-Following the overall revision, the title was changed to a more conservative system-integration title.
+\section*{Condition 1: Clarify the contribution}
+\textbf{Response:} Thank you for the comment. We revised the manuscript to state that Camerala is not a new rPPG estimator, not a dedicated privacy-preserving algorithm, and not a general in-the-wild sensing system.\par
+\textbf{Revision:} The title, abstract, introduction, contribution list, related work, discussion, and conclusion now present Camerala as a browser-native local-first implementation example.\par
+\textbf{Location:} Title; Abstract; Sections 1--3; Discussion; Conclusion.\par
+\textbf{Key revised text:} ``The contribution of Camerala is therefore not a new rPPG estimator or a dedicated privacy-preserving algorithm.''
 
-\textbf{Revision.}
-The title no longer uses ``Privacy-Preserving'' or an unqualified ``In-the-Wild'' expression.
-Privacy is now discussed as an architectural privacy advantage of avoiding raw-video transmission, not as a dedicated privacy-preserving method.
+\section*{Condition 2: Weaken privacy claims}
+\textbf{Response:} Thank you for the comment. We removed the title phrase ``Privacy-Preserving'' and replaced the claim with local-first and privacy-conscious architectural wording.\par
+\textbf{Revision:} The manuscript now says raw video is not transmitted or stored by Camerala under the tested implementation, but does not claim formal privacy preservation.\par
+\textbf{Location:} Title; Abstract; Introduction; System Architecture.\par
+\textbf{Key revised text:} ``This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.''
 
-\textbf{Key revised text.}
-``Camerala: A Browser-Native Framework for Task-Aligned Physiological Feature Logging in Home and Laboratory Settings''
+\section*{Condition 3: Reformulate research questions}
+\textbf{Response:} Thank you for the comment. We revised the RQs to focus on operational completion and descriptive measurement-quality observations.\par
+\textbf{Revision:} RQ1 is limited to the tested laptop, browser, camera, and task configuration. RQ2 asks about descriptive differences in measurement-quality indicators and sensor-derived estimates.\par
+\textbf{Location:} Section 1.1.\par
+\textbf{Key revised text:} ``These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.''
 
-\textbf{Location.}
-Title page; Introduction; Contributions.
+\section*{Condition 4: Revise contributions}
+\textbf{Response:} Thank you for the comment. We replaced stronger novelty claims with three conservative contributions.\par
+\textbf{Revision:} The contributions are now browser-native local-first sensing architecture, task-aligned on-device sensing and local persistence, and an exploratory task-constrained home/laboratory deployment.\par
+\textbf{Location:} Section 1.2.\par
+\textbf{Key revised text:} ``In this paper, we focus on system integration and conservative deployment observations.''
 
-\condition{2}{The necessity of real-time processing is not sufficiently explained}
-\textbf{Response.}
-Thank you for pointing this out.
-The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging, rather than the only technically possible architecture.
+\section*{Condition 5: Add reviewer-mentioned related works and reposition novelty}
+\textbf{Response:} Thank you for the comment. We added and discussed the reviewer-mentioned works/systems.\par
+\textbf{Revision:} We added Gupta and Etemad (2023), Ayesha, Qiao, and Zulkernine (2022), LabVanced rPPG, FacePhys-Demo, RhythmEdge, and Di Lernia et al. (2024). We explicitly state that browser-based, web-deployable, and edge-based rPPG systems already exist.\par
+\textbf{Location:} Section 2.2; reference list.\par
+\textbf{Key revised text:} ``Accordingly, local rPPG processing alone is not Camerala's novelty, and privacy-oriented edge processing alone is not Camerala's novelty.''
 
-\textbf{Revision.}
-A new paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but would require storing privacy-sensitive raw video.
-The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence, synchronize task events and frame features in the same browser runtime, and support online quality checks.
+\section*{Condition 6: Avoid claims of physiological, cognitive, or motivational effects}
+\textbf{Response:} Thank you for the comment. We revised Results and Discussion to use descriptive language.\par
+\textbf{Revision:} The instruction blocks are now described as instructional task contexts rather than validated manipulations.\par
+\textbf{Location:} Abstract; Methods; Results; Discussion; Limitations.\par
+\textbf{Key revised text:} ``They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.''
 
-\textbf{Key revised text.}
-``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.''
+\section*{Condition 7: Treat rPPG-derived outputs conservatively}
+\textbf{Response:} Thank you for the comment. We removed revision-history wording and avoided interpreting bpm-style summaries as validated heart-rate changes.\par
+\textbf{Revision:} The manuscript now states that no ECG or contact PPG reference was collected.\par
+\textbf{Location:} Results, rPPG-oriented ROI estimates.\par
+\textbf{Key revised text:} ``Because no ECG or contact PPG reference was collected, block-level bpm-style summaries are not interpreted as validated heart-rate changes in this paper.''
 
-\textbf{Location.}
-Introduction; System Architecture; Data Management and Local-First Persistence.
+\section*{Condition 8: Revise figures and captions}
+\textbf{Response:} Thank you for the comment. We removed overstrong labels and inferential markings from the revised figures.\par
+\textbf{Revision:} Figure labels now use neutral wording such as head-motion estimates, reaction time, instructional task contexts, laboratory, and home. P-values and significance marks are not shown.\par
+\textbf{Location:} Figures 2--4 and captions.\par
+\textbf{Key revised text:} ``No p-values, significance marks, or psychological/physiological effect labels are shown.''
 
-\condition{3}{The Research Questions are not defined clearly enough}
-\textbf{Response.}
-Thank you for this comment.
-The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
+\section*{Condition 9: Add hardware/software reproducibility details}
+\textbf{Response:} Thank you for the comment. We added a hardware/software table and distinguished logged facts from unavailable facts.\par
+\textbf{Revision:} Available user-agent evidence, browser information, requested camera constraints, processing FPS reporting, and unlogged hardware/camera fields are now explicitly separated.\par
+\textbf{Location:} Section 4.3, Table 2.\par
+\textbf{Key revised text:} ``Unknown or unrecorded deployment-time details are explicitly marked rather than inferred from the current revision environment.''
 
-\textbf{Revision.}
-RQ1 now asks whether, in the tested setup, Camerala can complete the deployment while locally logging synchronized task events, sensor-derived features, and quality indicators.
-The criteria now include planned session/trial completion, local persistence, task-frame synchronization, post-exclusion retention, and availability of the listed quality indicators.
+\section*{Condition 10: Add environment details}
+\textbf{Response:} Thank you for the comment. We added an environment and lighting table.\par
+\textbf{Revision:} Known lux values and lighting descriptions are reported. Unrecoverable details are marked as not logged or not systematically recorded rather than inferred.\par
+\textbf{Location:} Section 4.4, Table 3.\par
+\textbf{Key revised text:} ``Table 3 separates reported facts from information that was not systematically recorded.''
 
-\textbf{Key revised text.}
-``These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.''
+\section*{Condition 11: Clarify FaceMesh confidence threshold}
+\textbf{Response:} Thank you for the comment. We revised the confidence-threshold wording.\par
+\textbf{Revision:} The threshold is now described as an operational exclusion threshold for FaceMesh tracking confidence, not as an rPPG-quality threshold.\par
+\textbf{Location:} Section 4.7; Results.\par
+\textbf{Key revised text:} ``This threshold was not independently validated as an rPPG-quality threshold; therefore, the resulting face-tracking availability is treated only as a FaceMesh/logging quality indicator.''
 
-\textbf{Location.}
-Introduction, Research Questions.
+\section*{Condition 12: Expand limitations}
+\textbf{Response:} Thank you for the comment. We expanded the limitations.\par
+\textbf{Revision:} The limitations now include N=1, author-participant, no ECG/contact PPG, no reference physiological sensor, no multiple participants, no multiple devices, no multiple home environments, no controlled separation of environmental and task factors, and no comparison with existing systems.\par
+\textbf{Location:} Section 6.5.\par
+\textbf{Key revised text:} ``The study does not claim clinical or medical accuracy, general deployability, broad operational generality, cross-device stability, or validated cognitive, motivational, psychological, or physiological effects.''
 
-\condition{4}{It is unclear what the ``between-environment differences'' in RQ2 refer to}
-\textbf{Response.}
-Thank you for this important clarification.
-RQ2 was redefined to concern descriptive differences in measurement-quality indicators and sensor-derived estimates, not psychological, cognitive, motivational, or physiological effects.
-
-\textbf{Revision.}
-The Abstract, RQ2, Results, Discussion, and Conclusion were revised to state that the observed laboratory/home differences are deployment-specific sensor-derived observations.
-The manuscript now explicitly states that the study did not include a reference physiological sensor, multiple participants, or controlled separation of environmental and task-related factors.
-
-\textbf{Key revised text.}
-``What descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts?''
-
-\textbf{Location.}
-Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
-
-\condition{5}{The novelty and positioning of the study are insufficiently justified}
-\textbf{Response.}
-Thank you for identifying the relevant prior work.
-The Related Work section was expanded, and the novelty claim was repositioned.
-
-\textbf{Revision.}
-The manuscript now uses only peer-reviewed open-access journal articles and an open-access conference repository entry as references in the Related Work section.
-Preprint-only sources, public product pages, and public demonstrations are not used as bibliographic evidence.
-Reviewer-mentioned public tools such as LabVanced and FacePhys-Demo are acknowledged only cautiously as examples of publicly visible functionality, but are not cited as scholarly evidence.
-The manuscript explicitly states that browser-based rPPG functionality, local rPPG processing, and privacy preservation as an algorithm are not the novelty of Camerala.
-Camerala's contribution is now framed as the integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence within one browser-native runtime.
-
-\textbf{Key revised text.}
-``The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.''
-
-\textbf{Location.}
-Related Work; Contributions; System Architecture; References.
-
-\condition{6}{Unclear claim of robustness against rigid head motion}
-\textbf{Response.}
-Thank you for this comment.
-Unsupported robustness claims were removed.
-
-\textbf{Revision.}
-The revised manuscript states that Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes.
-Head motion and luminance variation are now presented as logged quality indicators for inspection and filtering.
-
-\textbf{Key revised text.}
-``Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes. Instead, it records motion-related and luminance-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.''
-
-\textbf{Location.}
-System Architecture, Feature Extraction Logic; Discussion.
-
-\condition{7}{Insufficient description of the concrete usage scenario}
-\textbf{Response.}
-Thank you for the comment.
-The intended usage scenario is now stated at the beginning of the paper and again in the Methodology.
-
-\textbf{Revision.}
-The manuscript now defines the target use case as a remote or home-based psychophysical task performed while seated in front of a laptop, with synchronized browser-based logging of behavioral events and webcam-derived features.
-
-\textbf{Key revised text.}
-``The target usage scenario is a remote or home-based psychophysical task performed while seated in front of a laptop, with browser-based logging of behavioral events and webcam-derived features.''
-
-\textbf{Location.}
-Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
-
-\condition{8}{Definition of ``in-the-wild'' and ``naturalistic physiological sensing'' are not clear}
-\textbf{Response.}
-Thank you for this point.
-The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life physiological sensing.
-
-\textbf{Revision.}
-Unqualified ``in-the-wild'' and ``naturalistic'' language was removed or replaced with ``task-constrained home/laboratory deployment.''
-The Methodology now explicitly states that the deployment does not represent continuous sensing during daily activities such as walking, cooking, conversation, or night-time use.
-
-\textbf{Key revised text.}
-``This is a task-constrained home/laboratory deployment, not continuous physiological sensing during ordinary daily activities such as walking, cooking, conversation, or night-time use.''
-
-\textbf{Location.}
-Abstract; Introduction; Methodology; Discussion; Conclusion.
-
-\condition{9}{The description of the system hardware is insufficient for reproducibility}
-\textbf{Response.}
-Thank you for this comment.
-A hardware and software configuration table was added.
-
-\textbf{Revision.}
-The table reports the available information, including operating-system information from logged user agents, browsers used, requested camera constraints, measured processing FPS, approximate display refresh rate, viewing distance, and unlogged camera settings.
-Unknown deployment-time facts are not inferred; they are marked with \texttt{TODO\_FURUKAWA\_*} placeholders for author confirmation.
-
-\textbf{Key revised text.}
-``Unknown or unrecorded deployment-time details are explicitly marked rather than inferred from the current revision environment.''
-
-\textbf{Location.}
-Methodology, Hardware and Software Configuration; Table 2.
-
-\condition{10}{The description of the experimental environments is insufficient}
-\textbf{Response.}
-Thank you for the detailed request.
-An environment and lighting conditions table was added.
-
-\textbf{Revision.}
-The table separates reported facts from information that was not systematically recorded.
-It reports the available lux values and clarifies lux-meter position, lighting descriptions, aggregation windows, and whether possible sources of luminance fluctuation were systematically recorded.
-Unknown details are left as \texttt{TODO\_FURUKAWA\_*} placeholders rather than invented.
-
-\textbf{Key revised text.}
-``Table 3 separates reported facts from information that was not systematically recorded.''
-
-\textbf{Location.}
-Methodology, Deployment Environment and Lighting Conditions; Table 3.
-
-\condition{11}{The validity of the cognitive framing manipulation is questionable}
-\textbf{Response.}
-Thank you for this important point.
-The manuscript no longer interprets the instruction blocks as inducing evaluation pressure, reward motivation, cognitive effects, or motivational effects.
-
-\textbf{Revision.}
-The terminology was changed from cognitive framing manipulation to instructional task contexts.
-The participant/autoethnography section now states that the author-participant knew the instructions were experimental.
-
-\textbf{Key revised text.}
-``They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.''
-
-\textbf{Location.}
-Participant section; Experimental Procedure and Instructional Task Contexts; Results.
-
-\condition{12}{The central claim in the Discussion should be reconsidered}
-\textbf{Response.}
-Thank you for this comment.
-The Discussion was rewritten around design requirements and safeguards for future Camerala deployments.
-
-\textbf{Revision.}
-The revised Discussion focuses on browser-native local-first logging, quality indicators for task-constrained home/laboratory deployment, interpretation under environmental heterogeneity, and design safeguards.
-The previous central claim about laboratory-only validation overestimating home-use signal stability was removed as the organizing claim.
-
-\textbf{Key revised text.}
-``The results do not establish general deployability, robustness, or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
-
-\textbf{Location.}
-Discussion.
-
-\condition{13}{Several claims are not sufficiently supported and should be weakened}
-\textbf{Response.}
-Thank you for this guidance.
-The Abstract, Results, Discussion, Limitations, and Conclusion were revised to substantially weaken unsupported claims.
-
-\textbf{Revision.}
-The manuscript no longer states that the study ``establishes'' a design pattern.
-The claims about feasibility, naturalistic deployment, tracking confidence, and psychological and physiological interpretation were narrowed.
-Tracking confidence is now described as a FaceMesh/logging quality indicator, not as validation of rPPG quality or deployment feasibility.
-The confidence threshold is marked for author confirmation if the original rationale cannot be recovered.
-
-\textbf{Key revised text.}
-``The present study presents an implementation example of browser-native, task-aligned, local-first feature logging under limited home/laboratory conditions.''
-
-\textbf{Location.}
-Abstract; Results; Discussion; Limitations; Conclusion.
-
-\section*{Reviewer 1 Other Comments}
-\textbf{Response.}
-Thank you for the additional comments on figure and table readability.
-
-\textbf{Revision.}
-Table 1 was reformatted with clearer column widths.
-The longitudinal figure and task-result figure were changed to wide figure placement to improve readability.
-Figure captions were rewritten to state that the results are descriptive.
-The Figure 3 caption was corrected so that it no longer refers to tracking confidence, because tracking confidence is not shown in that figure.
-
-\textbf{Location.}
-Table 1; Figure 2; Figure 3; Figure 4 captions and layout.
-
-\section*{Author Confirmation Needed Before Final Submission}
-The revised manuscript intentionally contains \texttt{TODO\_FURUKAWA\_*} placeholders for deployment-time facts that should not be inferred or invented.
-These must be filled by the author where recoverable, or converted to ``not logged'' / ``not systematically recorded'' where unrecoverable.
+\section*{Condition 13: Focus discussion on safeguards for future deployment}
+\textbf{Response:} Thank you for the comment. We revised the Discussion to focus on design requirements and safeguards.\par
+\textbf{Revision:} The Discussion now emphasizes local-first logging, measurement-quality indicators, interpretation under environmental heterogeneity, and safeguards for future Camerala deployments.\par
+\textbf{Location:} Section 6.\par
+\textbf{Key revised text:} ``Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, pre-session lighting checks, face-size and tracking warnings, luminance and exposure-fluctuation flags, and predefined quality-gated analysis rules.''
 
 \end{document}
