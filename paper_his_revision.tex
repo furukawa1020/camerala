@@ -133,20 +133,14 @@ Section VI discusses design requirements and safeguards for future deployments, 
 \subsection{Remote Physiological Measurement and rPPG}
 Remote photoplethysmography (rPPG) estimates pulse-related color changes from facial video.
 Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while recent methods include deep-learning-based estimators \cite{deepphys}.
-These methods have demonstrated promise, but prior work continues to treat illumination, motion, camera placement, compression, and skin-region selection as important sources of degradation in video-based physiological measurement \cite{deepphys,ayesha_web_vital}.
-Recent web-oriented work has also examined remote vital-sign measurement using ordinary cameras in browser-accessible settings \cite{ayesha_web_vital}.
+These methods have demonstrated promise, but prior work continues to treat illumination, motion, camera placement, and skin-region selection as important sources of degradation in video-based physiological measurement \cite{deepphys}.
 Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 
 \subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems}
-Several systems already address web-deployable, browser-based, edge-based, or privacy-oriented physiological measurement.
-Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \cite{ayesha_web_vital}.
-RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhythmedge}.
-Gupta and Etemad specifically investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
-Reviewer-mentioned public tools and demonstrations also indicate that browser-based rPPG functionality is available outside this work; however, such public pages are not used here as bibliographic evidence unless supported by open-access scholarly or primary technical sources.
-
-These systems show that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-Therefore, Camerala does not claim novelty in local rPPG processing alone, nor does it claim to be a dedicated privacy-preserving method.
+Reviewer-mentioned public tools and demonstrations indicate that browser-based rPPG functionality is available outside this work.
+However, public product pages, informal demonstrations, and preprint-only sources are not used here as bibliographic evidence because they do not meet the present reference criterion.
+We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
@@ -208,7 +202,7 @@ The architecture consists of three coupled modules:
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
-The current implementation uses MediaPipe Face Mesh \cite{mediapipe_paper}, loaded through the browser, to obtain facial landmarks in real time.
+The current implementation uses MediaPipe Face Mesh, loaded through the browser, to obtain facial landmarks in real time.
 The camera stream is requested through \texttt{getUserMedia} with ideal constraints of 640$\times$480 pixels and 30 fps.
 Because actual camera settings can depend on the browser and device, these constraints should be interpreted as requested settings rather than verified hardware settings.
 
@@ -543,26 +537,6 @@ Ming-Zher Poh, Daniel~J. McDuff, and Rosalind~W. Picard.
 Weixuan Chen and Daniel McDuff.
 \newblock Deepphys: Video-based physiological measurement using convolutional attention networks.
 \newblock In {\em Proceedings of the European Conference on Computer Vision (ECCV)}, pages 349--365, 2018.
-
-\bibitem{ayesha_web_vital}
-A.~H. Ayesha, D. Qiao, and F. Zulkernine.
-\newblock A web application for experimenting and validating remote measurement of vital signs.
-\newblock {\em arXiv preprint arXiv:2208.09916}, 2022.
-
-\bibitem{rhythmedge}
-Z. Hasan, E. Dey, S.~R. Ramamurthy, N. Roy, and A. Misra.
-\newblock Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge.
-\newblock {\em arXiv preprint arXiv:2208.06572}, 2022.
-
-\bibitem{gupta_privacy}
-D. Gupta and A. Etemad.
-\newblock Privacy-preserving remote heart rate estimation from facial videos.
-\newblock {\em arXiv preprint arXiv:2306.01141}, 2023.
-
-\bibitem{mediapipe_paper}
-Camillo Lugaresi, Jiuqiang Tang, Hadon Nash, Chris McClanahan, Esha Uboweja, Michael Hays, Fan Zhang, Chuo-Ling Chang, Ming Guang Yong, Juhyun Lee, et~al.
-\newblock MediaPipe: A framework for building perception pipelines.
-\newblock {\em arXiv preprint arXiv:1906.08172}, 2019.
 
 \end{thebibliography}
 

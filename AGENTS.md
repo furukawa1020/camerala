@@ -91,15 +91,13 @@ placeholders for the author.
 
 ## Reference Rule
 
-Use only open-access and reliable references. Prefer peer-reviewed open-access
-articles, official open preprints such as arXiv versions of peer-reviewed or
-conference work, and official primary technical papers. Do not cite commercial
-marketing pages, informal web pages, or unverified demos as bibliographic
-evidence. If a reviewer-mentioned tool is not suitable as a reliable
-open-access reference, acknowledge the category cautiously in prose without
-using it as evidence for a scholarly claim. Do not use arXiv-only demos or
-preprints as support for central empirical claims; if retained, use them only
-as narrowly scoped technical/system context and phrase the claim cautiously.
+Use only open-access and reliable references. Prefer peer-reviewed
+open-access journal articles, open-access conference repositories, and official
+primary standards or technical specifications. Do not cite arXiv preprints in
+this revision. Do not cite commercial marketing pages, informal web pages, or
+unverified demos as bibliographic evidence. If a reviewer-mentioned tool is
+not suitable as a reliable open-access reference, acknowledge the category
+cautiously in prose without using it as evidence for a scholarly claim.
 
 ## Response Discipline
 
