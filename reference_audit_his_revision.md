@@ -12,10 +12,15 @@ journal version exists. Use arXiv only when no peer-reviewed version is
 available and the citation is needed as a technical software/framework
 reference. The only current arXiv citation is MediaPipe, which is used as a
 technical implementation reference for a tool used by Camerala, not as
-peer-reviewed empirical evidence. Public product pages and GitHub repositories,
-including Labvanced and FacePhys-Demo, are mentioned only as public
-tools/demonstrations for positioning and are not included as manuscript
-references in the current strict peer-reviewed/OA bibliography.
+peer-reviewed empirical evidence.
+
+Reviewer 1 explicitly identified several related studies and systems. All
+reviewer-specified items are retained in the manuscript body and reference list:
+Gupta and Etemad, Ayesha et al., LabVanced rPPG, FacePhys-Demo, RhythmEdge, and
+Di Lernia et al. LabVanced and FacePhys-Demo are treated only as public
+tools/demonstrations, not as peer-reviewed empirical studies or validation
+evidence. Additional peer-reviewed open-access sources provide supporting
+context but do not replace the reviewer-specified items.
 
 ## References Used in `paper_his_revision.tex`
 
@@ -24,6 +29,11 @@ references in the current strict peer-reviewed/OA bibliography.
 | `verkruysse2008` | Peer-reviewed OA journal article | Classic ambient-light rPPG background | Optics Express, DOI: `10.1364/OE.16.021434` |
 | `poh_ica` | Peer-reviewed OA journal article | Classic blind-source video rPPG background | Optics Express, DOI: `10.1364/OE.18.010762` |
 | `deepphys` | Open-access conference repository | Deep-learning rPPG estimator and degradation context | ECCV 2018, CVF Open Access |
+| `ayesha_web_vital` | Peer-reviewed conference/book chapter | Web application for remote measurement of vital signs | Reviewer-specified scholarly related work, DOI: `10.1007/978-3-031-21047-1_21` |
+| `labvanced_rppg` | Public tool/system page | Online experiment platform with remote heart-rate detection/rPPG functionality | Reviewer-specified public tool/demonstration; not empirical validation evidence |
+| `facephys_demo` | Public web demo/repository | Browser-based rPPG monitoring with local inference | Reviewer-specified public tool/demonstration; not empirical validation evidence |
+| `rhythmedge` | Peer-reviewed conference demo paper | Contactless heart-rate estimation on edge devices | Reviewer-specified scholarly related work |
+| `gupta_privacy` | Peer-reviewed conference paper | Privacy-preserving remote heart-rate estimation from facial videos | Reviewer-specified scholarly related work, DOI: `10.1109/SMC53992.2023.10394350` |
 | `kooij_naber_open_rppg` | Peer-reviewed OA journal article | Open-source remote heart-rate imaging | Behavior Research Methods, DOI: `10.3758/s13428-019-01256-8` |
 | `efficientphys` | Peer-reviewed open-access conference repository | Efficient camera-based cardiac measurement | WACV 2023, CVF Open Access |
 | `mobilephys` | Peer-reviewed journal/proceedings article | Mobile camera-based contactless physiological sensing | IMWUT 2022, DOI: `10.1145/3517225` |
@@ -40,9 +50,9 @@ references in the current strict peer-reviewed/OA bibliography.
   than an arXiv preprint.
 - The only arXiv entry is MediaPipe, used only as a technical implementation
   reference.
-- Labvanced and FacePhys-Demo are mentioned only as public
-  tools/demonstrations and are not cited as manuscript references in the
-  current strict peer-reviewed/OA bibliography.
+- The reviewer-specified items remain in the manuscript and reference list.
+- LabVanced and FacePhys-Demo are cited only as public tools/demonstrations,
+  not as peer-reviewed studies or empirical validation evidence.
 - AI tools are not cited as references.
 - Camerala does not claim novelty in browser rPPG, local rPPG processing,
   open-source rPPG implementations, edge/mobile camera-based physiological

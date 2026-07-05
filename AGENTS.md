@@ -99,12 +99,12 @@ peer-reviewed version is available and the citation is needed as a technical
 software/framework reference, such as MediaPipe. Do not use arXiv preprints as
 empirical evidence or as support for the manuscript's main claims. Do not cite
 commercial marketing pages, informal web pages, or unverified demos as
-empirical evidence. In the manuscript bibliography, avoid public product pages
-and GitHub demos when peer-reviewed open-access alternatives can support the
-same positioning. If a public tool or demo is directly relevant to Reviewer 1's
-requested positioning, discuss it only cautiously as a public tool or
-demonstration, preferably in the response letter, and not as validation of
-Camerala's measurements or empirical claims.
+empirical evidence. However, do not remove related works or systems explicitly
+named by Reviewer 1. Reviewer-specified public tools or demos, such as
+LabVanced rPPG and FacePhys-Demo, must remain in the manuscript body and
+reference list when they are part of the requested positioning response. Treat
+them only as public tools/demonstrations, not as peer-reviewed studies,
+validation evidence, or support for Camerala's empirical claims.
 
 ## Response Discipline
 
