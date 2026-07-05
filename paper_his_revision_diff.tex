@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 11:14:08 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 11:18:44 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -250,46 +250,45 @@ to recent Deep Learning architectures \mbox{%DIFAUXCMD
 .
 While state-of-the-art networks offer high accuracy in laboratory settings, they frequently suffer from performance degradation across diverse physical environments when deployed in-the-wild under unstructured lighting or motion \mbox{%DIFAUXCMD
 \cite{mcduff_rppg}}\hskip0pt%DIFAUXCMD
-. In our framework, we prioritize computational efficiency and robustness against rigid head motion, aiming to extract baselines rather than medical-grade clinical diagnostics.
+.
+In our framework, we prioritize computational efficiency and robustness against rigid head motion, aiming to extract baselines rather than medical-grade clinical diagnostics.
 }\DIFdelend \DIFaddbegin \DIFadd{estimates pulse-related color changes from facial video.
 Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \mbox{%DIFAUXCMD
 \cite{verkruysse2008,poh_ica}}\hskip0pt%DIFAUXCMD
-, while recent methods include deep-learning-based estimators \mbox{%DIFAUXCMD
-\cite{deepphys}}\hskip0pt%DIFAUXCMD
+, while more recent work includes deep-learning-based and efficient camera-based estimators \mbox{%DIFAUXCMD
+\cite{deepphys,efficientphys}}\hskip0pt%DIFAUXCMD
 .
-Prior work has also examined web-deployable, privacy-oriented, and edge-oriented rPPG systems and tools \mbox{%DIFAUXCMD
-\cite{ayesha_web_vital,gupta_privacy,rhythmedge,labvanced_rppg,facephys_demo}}\hskip0pt%DIFAUXCMD
+Peer-reviewed open-access work has also examined open-source rPPG implementations, online webcam rPPG, mobile camera-based contactless physiological sensing, and reproducible rPPG toolboxes \mbox{%DIFAUXCMD
+\cite{kooij_naber_open_rppg,di_lernia_rppg_wild,mobilephys,rppg_toolbox}}\hskip0pt%DIFAUXCMD
 .
-These systems and tools show that browser-based and edge-based rPPG functionality already exists.
-Recent work on online webcam rPPG further shows that uncontrolled capture conditions can affect remote heart-rate imaging \mbox{%DIFAUXCMD
-\cite{di_lernia_rppg_wild}}\hskip0pt%DIFAUXCMD
-.
+These studies show that camera-based and webcam-based rPPG functionality already exists.
+They also show that uncontrolled capture conditions, implementation choices, and evaluation pipelines are important factors in remote heart-rate imaging.
 Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 }\DIFaddend 
 
-\subsection{\DIFaddbegin \DIFadd{Browser-Based, Edge-Based, and Privacy-Oriented rPPG }\DIFaddend Systems \DIFdelbegin \DIFdel{for Task Measurement }\DIFdelend and \DIFdelbegin \DIFdel{Physiological Data Collection}\DIFdelend \DIFaddbegin \DIFadd{Public Tools}\DIFaddend }
+\subsection{\DIFdelbegin \DIFdel{Systems for Task Measurement }\DIFdelend \DIFaddbegin \DIFadd{Browser-Based, Open-Source, }\DIFaddend and \DIFdelbegin \DIFdel{Physiological Data Collection}\DIFdelend \DIFaddbegin \DIFadd{Edge-Oriented rPPG Systems}\DIFaddend }
 \DIFdelbegin \DIFdel{The shift toward remote and ubiquitous computing has generated several platforms for data collection.
 However, current systems face trade-offs between execution environment, privacy, and synchronized sensing.
 We map this design trade-off space in Table \ref{tab:related_work}.
-}\DIFdelend \DIFaddbegin \DIFadd{Several prior systems and public tools are directly relevant to Camerala's positioning.
-Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \mbox{%DIFAUXCMD
-\cite{ayesha_web_vital}}\hskip0pt%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{Several peer-reviewed open-access studies and systems have already examined online webcam rPPG, open-source rPPG implementations, and efficient on-device camera-based physiological measurement.
+Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \mbox{%DIFAUXCMD
+\cite{di_lernia_rppg_wild}}\hskip0pt%DIFAUXCMD
 .
-Labvanced provides remote heart-rate detection/rPPG functionality within an online experiment platform \mbox{%DIFAUXCMD
-\cite{labvanced_rppg}}\hskip0pt%DIFAUXCMD
+van der Kooij and Naber presented an open-source remote heart-rate imaging method with practical apparatus and algorithms \mbox{%DIFAUXCMD
+\cite{kooij_naber_open_rppg}}\hskip0pt%DIFAUXCMD
 .
-FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in a public web demo/repository \mbox{%DIFAUXCMD
-\cite{facephys_demo}}\hskip0pt%DIFAUXCMD
+rPPG-Toolbox provides a reproducible benchmark and implementation framework for deep remote PPG methods \mbox{%DIFAUXCMD
+\cite{rppg_toolbox}}\hskip0pt%DIFAUXCMD
 .
-RhythmEdge addresses contactless heart-rate estimation on edge devices \mbox{%DIFAUXCMD
-\cite{rhythmedge}}\hskip0pt%DIFAUXCMD
+EfficientPhys and MobilePhys address efficient or mobile camera-based physiological sensing \mbox{%DIFAUXCMD
+\cite{efficientphys,mobilephys}}\hskip0pt%DIFAUXCMD
 .
-Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \mbox{%DIFAUXCMD
-\cite{gupta_privacy}}\hskip0pt%DIFAUXCMD
+Recent privacy-related work has also examined remote physiological signal removal from video \mbox{%DIFAUXCMD
+\cite{bhutani_privacy_rppg}}\hskip0pt%DIFAUXCMD
 .
-These related systems and public tools indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, or privacy preservation as an algorithm.
+These studies indicate that browser/webcam rPPG, open-source rPPG processing, on-device camera-based physiological sensing, and privacy-oriented processing have already been explored.
+We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 }\DIFaddend 
 
@@ -320,7 +319,7 @@ The contribution of Camerala is instead the system-level integration of psychoph
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \subsection{\DIFadd{Task Measurement and Physiological Data Collection Platforms}}
 \DIFaddend Well-established \DIFdelbegin \DIFdel{behavioral experiment libraries like jsPsych provide precise }\DIFdelend \DIFaddbegin \DIFadd{web experiment libraries and experiment runtimes, such as jsPsych \mbox{%DIFAUXCMD
-\cite{jspsych} }\hskip0pt%DIFAUXCMD
+\cite{jspsych_joss} }\hskip0pt%DIFAUXCMD
 and PsychoPy/PsychoJS/Pavlovia \mbox{%DIFAUXCMD
 \cite{psychopy2}}\hskip0pt%DIFAUXCMD
 , support }\DIFaddend browser-based task \DIFdelbegin \DIFdel{timing but do not natively integrate continuous webcam-based physiological sensing}\DIFdelend \DIFaddbegin \DIFadd{execution and online experiments.
@@ -1011,62 +1010,68 @@ Weixuan Chen and Daniel McDuff.
 \newblock In {\em Proceedings of the European Conference on Computer Vision (ECCV)}, pages 349--365, 2018.
 
 \DIFdelbegin \bibitem{mcduff_rppg}
-\DIFdel{Daniel McDuff and E~Blackford. }\DIFdelend \DIFaddbegin \bibitem{ayesha_web_vital}
-\DIFadd{A.~H. Ayesha, D. Qiao, and F. Zulkernine.
-}\DIFaddend \newblock \DIFdelbegin \DIFdel{Remote measurement of physiological responses: Areview of recent
-  advances. }\DIFdelend \DIFaddbegin \DIFadd{A web application for experimenting and validating remote measurement of vital signs.
-}\DIFaddend \newblock \DIFaddbegin \DIFadd{In }\DIFaddend {\em \DIFdelbegin \DIFdel{ACM Transactions on Computing for Healthcare}\DIFdelend \DIFaddbegin \DIFadd{Information Integration and Web Intelligence (iiWAS 2022)}\DIFaddend }\DIFaddbegin \DIFadd{, Lecture Notes in Computer Science, vol. 13635}\DIFaddend , \DIFdelbegin \DIFdel{1(1)}\DIFdelend \DIFaddbegin \DIFadd{2022.
+\DIFdel{Daniel McDuff and E~Blackford. }\DIFdelend \DIFaddbegin \bibitem{kooij_naber_open_rppg}
+\DIFadd{K.~M. van der Kooij and M. Naber.
+}\DIFaddend \newblock \DIFdelbegin \DIFdel{Remote measurementof physiological responses: A review of recent
+  advances. }\DIFdelend \DIFaddbegin \DIFadd{An open-source remote heart rate imaging method with practical apparatus and algorithms.
+}\DIFaddend \newblock {\em \DIFdelbegin \DIFdel{ACM Transactions on Computing for Healthcare}\DIFdelend \DIFaddbegin \DIFadd{Behavior Research Methods}\DIFaddend }, \DIFdelbegin \DIFdel{1}\DIFdelend \DIFaddbegin \DIFadd{51:2106--2119, 2019.
+}\newblock \DIFadd{doi:10.3758/s13428-019-01256-8.
 }
 
-\bibitem{gupta_privacy}
-\DIFadd{D. Gupta and A. Etemad.
-}\newblock \DIFadd{Privacy-preserving remote heart rate estimation from facial videos.
-}\newblock \DIFadd{In }{\em \DIFadd{2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)}}\DIFadd{, pages 706--712, 2023.
+\bibitem{efficientphys}
+\DIFadd{X. Liu, B. Hill, Z. Jiang, S. Patel, and D. McDuff.
+}\newblock \DIFadd{EfficientPhys: Enabling simple, fast and accurate camera-based cardiac measurement.
+}\newblock \DIFadd{In }{\em \DIFadd{Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}}\DIFadd{, pages 5008--5017, 2023.
 }
 
-\bibitem{rhythmedge}
-\DIFadd{Z. Hasan, E. Dey, S.~R. Ramamurthy, N. Roy, and A. Misra.
-}\newblock \DIFadd{Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge.
-}\newblock \DIFadd{In }{\em \DIFadd{2022 IEEE International Conference on Smart Computing (SMARTCOMP)}}\DIFadd{, pages 177--179, 2022.
+\bibitem{mobilephys}
+\DIFadd{X. Liu, Y. Wang, S. Xie, X. Zhang, Z. Ma, D. McDuff, and S. Patel.
+}\newblock \DIFadd{MobilePhys: Personalized mobile camera-based contactless physiological sensing.
+}\newblock {\em \DIFadd{Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies}}\DIFadd{, 6}\DIFaddend (1)\DIFaddbegin \DIFadd{, 2022.
+}\newblock \DIFadd{doi:10.1145/3517225.
 }
 
 \bibitem{di_lernia_rppg_wild}
-\DIFadd{D. Di~Lernia, G. Finotti, M. Tsakiris, et~al.
+\DIFadd{D. Di~Lernia, G. Finotti, M. Tsakiris, G. Riva, and M. Naber.
 }\newblock \DIFadd{Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams.
 }\newblock {\em \DIFadd{Behavior Research Methods}}\DIFadd{, 56}\DIFaddend :\DIFdelbegin \DIFdel{1--24, 2020.
 }\DIFdelend \DIFaddbegin \DIFadd{6904--6914, 2024.
+}\newblock \DIFadd{doi:10.3758/s13428-024-02398-0.
 }\DIFaddend 
 
 \DIFdelbegin \bibitem{barlow_sced}
-\DIFdel{David~H Barlow, Matthew~K Nock, and Michel Hersen.}\DIFdelend \DIFaddbegin \bibitem{labvanced_rppg}
-\DIFadd{Labvanced.
-}\DIFaddend \newblock \DIFaddbegin \DIFadd{Remote heart rate detection | rPPG.
-}\newblock \url{https://www.labvanced.com/content/technology/en/remote-heart-rate-detection-rPPG/}\DIFadd{, accessed July 5, 2026.
+\DIFdel{David~H Barlow, Matthew~K Nock, and Michel Hersen. }\DIFdelend \DIFaddbegin \bibitem{rppg_toolbox}
+\DIFadd{X. Liu, G. Narayanswamy, A. Paruchuri, X. Zhang, J. Tang, Y. Zhang, R. Sengupta, S. Patel, Y. Wang, and D. McDuff.
+}\DIFaddend \newblock \DIFaddbegin \DIFadd{rPPG-Toolbox: Deep remote PPG toolbox.
+}\newblock \DIFaddend {\em \DIFdelbegin \DIFdel{Single case experimental designs:Strategies for studying
+  behavior change}\DIFdelend \DIFaddbegin \DIFadd{Advances in Neural Information Processing Systems}\DIFaddend }\DIFaddbegin \DIFadd{, 36, Datasets and Benchmarks Track, 2023.
 }
 
-\bibitem{facephys_demo}
-\DIFadd{K. Wang.
-}\newblock \DIFadd{FacePhys-Demo: FacePhys web demo.
-}\newblock \url{https://github.com/KegangWangCCNU/FacePhys-Demo}\DIFadd{, accessed July 5, 2026.
-}
+\bibitem{bhutani_privacy_rppg}
+\DIFadd{S. Bhutani, M. Elgendi, and C. Menon.
+}\newblock \DIFadd{Preserving privacy and video quality through remote physiological signal removal.
+}\newblock {\em \DIFadd{Communications Engineering}}\DIFadd{, 4:66, 2025.
+}\newblock \DIFadd{doi:10.1038/s44172-025-00363-z}\DIFaddend .
+\DIFaddbegin 
 
-\bibitem{jspsych}
-\DIFadd{J.~R. de Leeuw.
-}\newblock \DIFadd{jsPsych: A JavaScript library for creating behavioral experiments in a Web browser.
-}\newblock \DIFaddend {\em \DIFdelbegin \DIFdel{Single case experimental designs: Strategies for studying
-  behavior change}\DIFdelend \DIFaddbegin \DIFadd{Behavior Research Methods}\DIFaddend }\DIFaddbegin \DIFadd{, 47(1):1--12, 2015.
-}
-
-\bibitem{psychopy2}
-\DIFadd{J.~W. Peirce, J.~R. Gray, S. Simpson, M. MacAskill, R. Hoechenberger, H. Sogo, E. Kastman, and J.~K. Lindelov.
-}\newblock \DIFadd{PsychoPy2: Experiments in behavior made easy}\DIFaddend .
-\newblock \DIFdelbegin \DIFdel{Pearson, 3rd edition, 2009.
-}\DIFdelend \DIFaddbegin {\em \DIFadd{Behavior Research Methods}}\DIFadd{, 51:195--203, 2019.
+\bibitem{jspsych_joss}
+\DIFadd{J.~R. de Leeuw, R.~A. Gilbert, and B. Luchterhandt.
+}\DIFaddend \newblock \DIFdelbegin \DIFdel{Pearson, 3rd edition, 2009.
+}\DIFdelend \DIFaddbegin \DIFadd{jsPsych: Enabling an open-source collaborative ecosystem of behavioral experiments.
+}\newblock {\em \DIFadd{Journal of Open Source Software}}\DIFadd{, 8(85):5351, 2023.
+}\newblock \DIFadd{doi:10.21105/joss.05351.
 }\DIFaddend 
 
 \DIFdelbegin \bibitem{mediapipe_paper}
 \DIFdel{Camillo Lugaresi, Tang Jiu, Matthias Grundmann, Chris Rubinstein, Fan Jensen,
-  Vivek Kwatro, }\DIFdelend \DIFaddbegin \bibitem{mediapipe_framework}
+  Vivek Kwatro, }\DIFdelend \DIFaddbegin \bibitem{psychopy2}
+\DIFadd{J.~W. Peirce, J.~R. Gray, S. Simpson, M. MacAskill, R. Hoechenberger, H. Sogo, E. Kastman, and J.~K. Lindelov.
+}\newblock \DIFadd{PsychoPy2: Experiments in behavior made easy.
+}\newblock {\em \DIFadd{Behavior Research Methods}}\DIFadd{, 51:195--203, 2019.
+}\newblock \DIFadd{doi:10.3758/s13428-018-01193-y.
+}
+
+\bibitem{mediapipe_framework}
 \DIFadd{C. Lugaresi, J. Tang, H. Nash, }\DIFaddend et~al.
 \newblock \DIFdelbegin \DIFdel{Mediapipe}\DIFdelend \DIFaddbegin \DIFadd{MediaPipe}\DIFaddend : A framework for building perception pipelines.
 \newblock \DIFdelbegin %DIFDELCMD < {\em %%%

@@ -99,10 +99,12 @@ peer-reviewed version is available and the citation is needed as a technical
 software/framework reference, such as MediaPipe. Do not use arXiv preprints as
 empirical evidence or as support for the manuscript's main claims. Do not cite
 commercial marketing pages, informal web pages, or unverified demos as
-empirical evidence. If a public tool or demo is directly relevant to Reviewer
-1's requested positioning, it may be discussed and cited as a related system or
-public tool, but not as validation of Camerala's measurements or empirical
-claims.
+empirical evidence. In the manuscript bibliography, avoid public product pages
+and GitHub demos when peer-reviewed open-access alternatives can support the
+same positioning. If a public tool or demo is directly relevant to Reviewer 1's
+requested positioning, discuss it only cautiously as a public tool or
+demonstration, preferably in the response letter, and not as validation of
+Camerala's measurements or empirical claims.
 
 ## Response Discipline
 
