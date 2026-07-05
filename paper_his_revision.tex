@@ -132,26 +132,26 @@ Section VI discusses design requirements and safeguards for future deployments, 
 
 \subsection{Remote Physiological Measurement and rPPG}
 Remote photoplethysmography (rPPG) estimates pulse-related color changes from facial video.
-Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while recent methods include deep-learning-based estimators \cite{deepphys}.
-Prior work has also examined web-deployable, privacy-oriented, and edge-oriented rPPG systems and tools \cite{ayesha_web_vital,gupta_privacy,rhythmedge,labvanced_rppg,facephys_demo}.
-These systems and tools show that browser-based and edge-based rPPG functionality already exists.
-Recent work on online webcam rPPG further shows that uncontrolled capture conditions can affect remote heart-rate imaging \cite{di_lernia_rppg_wild}.
+Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while more recent work includes deep-learning-based and efficient camera-based estimators \cite{deepphys,efficientphys}.
+Peer-reviewed open-access work has also examined open-source rPPG implementations, online webcam rPPG, mobile camera-based contactless physiological sensing, and reproducible rPPG toolboxes \cite{kooij_naber_open_rppg,di_lernia_rppg_wild,mobilephys,rppg_toolbox}.
+These studies show that camera-based and webcam-based rPPG functionality already exists.
+They also show that uncontrolled capture conditions, implementation choices, and evaluation pipelines are important factors in remote heart-rate imaging.
 Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 
-\subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems and Public Tools}
-Several prior systems and public tools are directly relevant to Camerala's positioning.
-Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \cite{ayesha_web_vital}.
-Labvanced provides remote heart-rate detection/rPPG functionality within an online experiment platform \cite{labvanced_rppg}.
-FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in a public web demo/repository \cite{facephys_demo}.
-RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhythmedge}.
-Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
-These related systems and public tools indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, or privacy preservation as an algorithm.
+\subsection{Browser-Based, Open-Source, and Edge-Oriented rPPG Systems}
+Several peer-reviewed open-access studies and systems have already examined online webcam rPPG, open-source rPPG implementations, and efficient on-device camera-based physiological measurement.
+Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \cite{di_lernia_rppg_wild}.
+van der Kooij and Naber presented an open-source remote heart-rate imaging method with practical apparatus and algorithms \cite{kooij_naber_open_rppg}.
+rPPG-Toolbox provides a reproducible benchmark and implementation framework for deep remote PPG methods \cite{rppg_toolbox}.
+EfficientPhys and MobilePhys address efficient or mobile camera-based physiological sensing \cite{efficientphys,mobilephys}.
+Recent privacy-related work has also examined remote physiological signal removal from video \cite{bhutani_privacy_rppg}.
+These studies indicate that browser/webcam rPPG, open-source rPPG processing, on-device camera-based physiological sensing, and privacy-oriented processing have already been explored.
+We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
-Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
+Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych_joss} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
 However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and local-first feature logging as a single browser runtime.
 Conversely, cloud analytics APIs can provide rich video-based analysis but often require transmitting video streams away from the participant's device.
 Table \ref{tab:related_work} maps this design trade-off space.
@@ -527,45 +527,51 @@ Weixuan Chen and Daniel McDuff.
 \newblock Deepphys: Video-based physiological measurement using convolutional attention networks.
 \newblock In {\em Proceedings of the European Conference on Computer Vision (ECCV)}, pages 349--365, 2018.
 
-\bibitem{ayesha_web_vital}
-A.~H. Ayesha, D. Qiao, and F. Zulkernine.
-\newblock A web application for experimenting and validating remote measurement of vital signs.
-\newblock In {\em Information Integration and Web Intelligence (iiWAS 2022)}, Lecture Notes in Computer Science, vol. 13635, 2022.
+\bibitem{kooij_naber_open_rppg}
+K.~M. van der Kooij and M. Naber.
+\newblock An open-source remote heart rate imaging method with practical apparatus and algorithms.
+\newblock {\em Behavior Research Methods}, 51:2106--2119, 2019.
+\newblock doi:10.3758/s13428-019-01256-8.
 
-\bibitem{gupta_privacy}
-D. Gupta and A. Etemad.
-\newblock Privacy-preserving remote heart rate estimation from facial videos.
-\newblock In {\em 2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)}, pages 706--712, 2023.
+\bibitem{efficientphys}
+X. Liu, B. Hill, Z. Jiang, S. Patel, and D. McDuff.
+\newblock EfficientPhys: Enabling simple, fast and accurate camera-based cardiac measurement.
+\newblock In {\em Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, pages 5008--5017, 2023.
 
-\bibitem{rhythmedge}
-Z. Hasan, E. Dey, S.~R. Ramamurthy, N. Roy, and A. Misra.
-\newblock Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge.
-\newblock In {\em 2022 IEEE International Conference on Smart Computing (SMARTCOMP)}, pages 177--179, 2022.
+\bibitem{mobilephys}
+X. Liu, Y. Wang, S. Xie, X. Zhang, Z. Ma, D. McDuff, and S. Patel.
+\newblock MobilePhys: Personalized mobile camera-based contactless physiological sensing.
+\newblock {\em Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies}, 6(1), 2022.
+\newblock doi:10.1145/3517225.
 
 \bibitem{di_lernia_rppg_wild}
-D. Di~Lernia, G. Finotti, M. Tsakiris, et~al.
+D. Di~Lernia, G. Finotti, M. Tsakiris, G. Riva, and M. Naber.
 \newblock Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams.
 \newblock {\em Behavior Research Methods}, 56:6904--6914, 2024.
+\newblock doi:10.3758/s13428-024-02398-0.
 
-\bibitem{labvanced_rppg}
-Labvanced.
-\newblock Remote heart rate detection | rPPG.
-\newblock \url{https://www.labvanced.com/content/technology/en/remote-heart-rate-detection-rPPG/}, accessed July 5, 2026.
+\bibitem{rppg_toolbox}
+X. Liu, G. Narayanswamy, A. Paruchuri, X. Zhang, J. Tang, Y. Zhang, R. Sengupta, S. Patel, Y. Wang, and D. McDuff.
+\newblock rPPG-Toolbox: Deep remote PPG toolbox.
+\newblock {\em Advances in Neural Information Processing Systems}, 36, Datasets and Benchmarks Track, 2023.
 
-\bibitem{facephys_demo}
-K. Wang.
-\newblock FacePhys-Demo: FacePhys web demo.
-\newblock \url{https://github.com/KegangWangCCNU/FacePhys-Demo}, accessed July 5, 2026.
+\bibitem{bhutani_privacy_rppg}
+S. Bhutani, M. Elgendi, and C. Menon.
+\newblock Preserving privacy and video quality through remote physiological signal removal.
+\newblock {\em Communications Engineering}, 4:66, 2025.
+\newblock doi:10.1038/s44172-025-00363-z.
 
-\bibitem{jspsych}
-J.~R. de Leeuw.
-\newblock jsPsych: A JavaScript library for creating behavioral experiments in a Web browser.
-\newblock {\em Behavior Research Methods}, 47(1):1--12, 2015.
+\bibitem{jspsych_joss}
+J.~R. de Leeuw, R.~A. Gilbert, and B. Luchterhandt.
+\newblock jsPsych: Enabling an open-source collaborative ecosystem of behavioral experiments.
+\newblock {\em Journal of Open Source Software}, 8(85):5351, 2023.
+\newblock doi:10.21105/joss.05351.
 
 \bibitem{psychopy2}
 J.~W. Peirce, J.~R. Gray, S. Simpson, M. MacAskill, R. Hoechenberger, H. Sogo, E. Kastman, and J.~K. Lindelov.
 \newblock PsychoPy2: Experiments in behavior made easy.
 \newblock {\em Behavior Research Methods}, 51:195--203, 2019.
+\newblock doi:10.3758/s13428-018-01193-y.
 
 \bibitem{mediapipe_framework}
 C. Lugaresi, J. Tang, H. Nash, et~al.
