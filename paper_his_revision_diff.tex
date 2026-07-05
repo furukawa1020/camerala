@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 10:47:35 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 10:56:46 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -319,7 +319,11 @@ The contribution of Camerala is instead the system-level integration of psychoph
 
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \subsection{\DIFadd{Task Measurement and Physiological Data Collection Platforms}}
-\DIFaddend Well-established \DIFdelbegin \DIFdel{behavioral experiment libraries like jsPsychprovide precise }\DIFdelend \DIFaddbegin \DIFadd{web experiment libraries and experiment runtimes, such as jsPsych, PsychoPy/PsychoJS, and Pavlovia, support }\DIFaddend browser-based task \DIFdelbegin \DIFdel{timing but do not natively integrate continuous webcam-based physiological sensing}\DIFdelend \DIFaddbegin \DIFadd{execution and online experiments.
+\DIFaddend Well-established \DIFdelbegin \DIFdel{behavioral experiment libraries like jsPsych provide precise }\DIFdelend \DIFaddbegin \DIFadd{web experiment libraries and experiment runtimes, such as jsPsych \mbox{%DIFAUXCMD
+\cite{jspsych} }\hskip0pt%DIFAUXCMD
+and PsychoPy/PsychoJS/Pavlovia \mbox{%DIFAUXCMD
+\cite{psychopy2}}\hskip0pt%DIFAUXCMD
+, support }\DIFaddend browser-based task \DIFdelbegin \DIFdel{timing but do not natively integrate continuous webcam-based physiological sensing}\DIFdelend \DIFaddbegin \DIFadd{execution and online experiments.
 However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and local-first feature logging as a single browser runtime}\DIFaddend .
 Conversely, \DIFdelbegin \DIFdel{rich Cloud sensing APIs provide deep analytics but fundamentally }\DIFdelend \DIFaddbegin \DIFadd{cloud analytics APIs can provide rich video-based analysis but often }\DIFaddend require transmitting video streams away from the \DIFdelbegin \DIFdel{client device, raising privacy barriers for domestic use.
 Camerala is designed to occupy a specific niche: merging the local execution of behavioral task timing with on-device physiological extraction (rPPG and facial landmarks) , creating a unified runtime for exploratory "in-the-wild" deployments.
@@ -404,7 +408,9 @@ The architecture consists of three coupled modules\DIFdelbegin \DIFdel{running o
 \DIFdelbegin \DIFdel{We utilize the }\DIFdelend \DIFaddbegin \DIFadd{The current implementation uses }\DIFaddend MediaPipe Face Mesh\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \cite{mediapipe_paper} }\hskip0pt%DIFAUXCMD
 solution, which provides 468 3D }\DIFdelend \DIFaddbegin \DIFadd{, loaded through the browser, to obtain }\DIFaddend facial landmarks in \DIFdelbegin \DIFdel{real-time.
-This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration}\DIFdelend \DIFaddbegin \DIFadd{real time.
+This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration}\DIFdelend \DIFaddbegin \DIFadd{real time \mbox{%DIFAUXCMD
+\cite{mediapipe_framework}}\hskip0pt%DIFAUXCMD
+.
 The camera stream is requested through }\texttt{\DIFadd{getUserMedia}} \DIFadd{with ideal constraints of 640$\times$480 pixels and 30 fps.
 Because actual camera settings can depend on the browser and device, these constraints should be interpreted as requested settings rather than verified hardware settings}\DIFaddend .
 
@@ -977,26 +983,24 @@ The \DIFdelbegin \DIFdel{authors declare that they have }\DIFdelend \DIFaddbegin
 \section*{Funding}
 This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.
 
-\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
-During the preparation \DIFdelbegin \DIFdel{of this work the author (s) used Google Gemini in order to refine the LaTeX code and format it according to the journal guidelines. After using this tool}\DIFdelend \DIFaddbegin \DIFadd{and revision of this manuscript, the author used generative AI tools, including Google Gemini and OpenAI ChatGPT}\DIFaddend /\DIFdelbegin \DIFdel{service, the author (s) }\DIFdelend \DIFaddbegin \DIFadd{Codex, to assist with LaTeX formatting, wording refinement, and response-draft preparation. The author }\DIFaddend reviewed and edited the content as needed and \DIFdelbegin \DIFdel{take(s) }\DIFdelend \DIFaddbegin \DIFadd{takes }\DIFaddend full responsibility for the content of the \DIFdelbegin \DIFdel{published article}\DIFdelend \DIFaddbegin \DIFadd{manuscript}\DIFaddend .
-
-
+\DIFdelbegin \section*{\DIFdel{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}}
+%DIFAUXCMD
+\DIFdel{During the preparation of this work the author(s) used Google Gemini in order to refine the LaTeX code and format it according to the journal guidelines. After using this tool/service, the author(s)reviewed and edited the content as needed and take(s) full responsibility for the content of the published article.
+}\DIFdelend \DIFaddbegin \begin{thebibliography}{99}
+\DIFaddend 
 
 \DIFdelbegin %DIFDELCMD < \begin{thebibliography}{1}
 %DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \begin{thebibliography}{99}
-\DIFaddend 
+\DIFdelend \DIFaddbegin \bibitem{verkruysse2008}
+\DIFadd{Wim Verkruysse, Lars~O. Svaasand, and J. Stuart Nelson.
+}\newblock \DIFadd{Remote plethysmographic imaging using ambient light.
+}\newblock {\em \DIFadd{Optics Express}}\DIFadd{, 16(26):21434--21445, 2008.
+}\DIFaddend 
 
 \DIFdelbegin \bibitem{wang_pos}
-\DIFdel{Wenjin Wang, Albertus~C Den~Brinker, Sander Stuijk, and Gerard De~Haan. }\DIFdelend \DIFaddbegin \bibitem{verkruysse2008}
-\DIFadd{Wim Verkruysse, Lars~O. Svaasand, and J. Stuart Nelson.
-}\DIFaddend \newblock \DIFdelbegin \DIFdel{Algorithmic principles of remote ppg}\DIFdelend \DIFaddbegin \DIFadd{Remote plethysmographic imaging using ambient light.
-}\newblock {\em \DIFadd{Optics Express}}\DIFadd{, 16(26):21434--21445, 2008.
-}
-
-\bibitem{poh_ica}
+\DIFdel{Wenjin Wang, Albertus~C Den~Brinker, Sander Stuijk, and Gerard De~Haan. }\DIFdelend \DIFaddbegin \bibitem{poh_ica}
 \DIFadd{Ming-Zher Poh, Daniel~J. McDuff, and Rosalind~W. Picard.
-}\newblock \DIFadd{Non-contact, automated cardiac pulse measurements using video imaging and blind source separation}\DIFaddend .
+}\DIFaddend \newblock \DIFdelbegin \DIFdel{Algorithmic principles of remote ppg}\DIFdelend \DIFaddbegin \DIFadd{Non-contact, automated cardiac pulse measurements using video imaging and blind source separation}\DIFaddend .
 \newblock {\em \DIFdelbegin \DIFdel{IEEE Transactions on Biomedical Engineering}\DIFdelend \DIFaddbegin \DIFadd{Optics Express}\DIFaddend }, \DIFdelbegin \DIFdel{64(7):1479--1491, 2016.
 }\DIFdelend \DIFaddbegin \DIFadd{18(10):10762--10774, 2010.
 }\DIFaddend 
@@ -1011,39 +1015,32 @@ Weixuan Chen and Daniel McDuff.
 \DIFadd{A.~H. Ayesha, D. Qiao, and F. Zulkernine.
 }\DIFaddend \newblock \DIFdelbegin \DIFdel{Remote measurement of physiological responses: Areview of recent
   advances. }\DIFdelend \DIFaddbegin \DIFadd{A web application for experimenting and validating remote measurement of vital signs.
-}\DIFaddend \newblock \DIFaddbegin \DIFadd{In }\DIFaddend {\em \DIFdelbegin \DIFdel{ACM Transactions on Computing for Healthcare}%DIFDELCMD < }%%%
-\DIFdel{, 1(1):1--24, 2020.
-}\DIFdelend \DIFaddbegin \DIFadd{Information Integration and Web Intelligence (iiWAS 2022)}}\DIFadd{, Lecture Notes in Computer Science, vol. 13635, 2022.
-}\DIFaddend 
+}\DIFaddend \newblock \DIFaddbegin \DIFadd{In }\DIFaddend {\em \DIFdelbegin \DIFdel{ACM Transactions on Computing for Healthcare}\DIFdelend \DIFaddbegin \DIFadd{Information Integration and Web Intelligence (iiWAS 2022)}\DIFaddend }\DIFaddbegin \DIFadd{, Lecture Notes in Computer Science, vol. 13635}\DIFaddend , \DIFdelbegin \DIFdel{1(1)}\DIFdelend \DIFaddbegin \DIFadd{2022.
+}
 
-\DIFdelbegin \bibitem{barlow_sced}
-\DIFdel{David~H Barlow, Matthew~K Nock, and Michel Hersen. }\DIFdelend \DIFaddbegin \bibitem{gupta_privacy}
+\bibitem{gupta_privacy}
 \DIFadd{D. Gupta and A. Etemad.
-}\DIFaddend \newblock \DIFaddbegin \DIFadd{Privacy-preserving remote heart rate estimation from facial videos.
-}\newblock \DIFadd{In }\DIFaddend {\em \DIFdelbegin \DIFdel{Single case experimental designs: Strategies for studying
-  behavior change}%DIFDELCMD < }%%%
-\DIFdelend \DIFaddbegin \DIFadd{2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)}}\DIFadd{, pages 706--712, 2023.
+}\newblock \DIFadd{Privacy-preserving remote heart rate estimation from facial videos.
+}\newblock \DIFadd{In }{\em \DIFadd{2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)}}\DIFadd{, pages 706--712, 2023.
 }
 
 \bibitem{rhythmedge}
 \DIFadd{Z. Hasan, E. Dey, S.~R. Ramamurthy, N. Roy, and A. Misra.
-}\newblock \DIFadd{Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge}\DIFaddend .
-\newblock \DIFdelbegin \DIFdel{Pearson, 3rd edition, 2009.
-}\DIFdelend \DIFaddbegin \DIFadd{In }{\em \DIFadd{2022 IEEE International Conference on Smart Computing (SMARTCOMP)}}\DIFadd{, pages 177--179, 2022.
+}\newblock \DIFadd{Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge.
+}\newblock \DIFadd{In }{\em \DIFadd{2022 IEEE International Conference on Smart Computing (SMARTCOMP)}}\DIFadd{, pages 177--179, 2022.
+}
+
+\bibitem{di_lernia_rppg_wild}
+\DIFadd{D. Di~Lernia, G. Finotti, M. Tsakiris, et~al.
+}\newblock \DIFadd{Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams.
+}\newblock {\em \DIFadd{Behavior Research Methods}}\DIFadd{, 56}\DIFaddend :\DIFdelbegin \DIFdel{1--24, 2020.
+}\DIFdelend \DIFaddbegin \DIFadd{6904--6914, 2024.
 }\DIFaddend 
 
-\DIFdelbegin \bibitem{mediapipe_paper}
-\DIFdel{Camillo Lugaresi, Tang Jiu, Matthias Grundmann, Chris Rubinstein, Fan Jensen,
-  Vivek Kwatro, }\DIFdelend \DIFaddbegin \bibitem{di_lernia_rppg_wild}
-\DIFadd{D. Di~Lernia, G. Finotti, M. Tsakiris, }\DIFaddend et~al.
-\newblock \DIFdelbegin \DIFdel{Mediapipe: A framework for building perception pipelines}\DIFdelend \DIFaddbegin \DIFadd{Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams}\DIFaddend .
-\newblock {\em \DIFdelbegin \DIFdel{arXiv preprint arXiv:1906.08172}\DIFdelend \DIFaddbegin \DIFadd{Behavior Research Methods}\DIFaddend }, \DIFdelbegin \DIFdel{2019.
-}\DIFdelend \DIFaddbegin \DIFadd{56:6904--6914, 2024.
-}\DIFaddend 
-
-\DIFaddbegin \bibitem{labvanced_rppg}
+\DIFdelbegin \bibitem{barlow_sced}
+\DIFdel{David~H Barlow, Matthew~K Nock, and Michel Hersen.}\DIFdelend \DIFaddbegin \bibitem{labvanced_rppg}
 \DIFadd{Labvanced.
-}\newblock \DIFadd{Remote heart rate detection | rPPG.
+}\DIFaddend \newblock \DIFaddbegin \DIFadd{Remote heart rate detection | rPPG.
 }\newblock \url{https://www.labvanced.com/content/technology/en/remote-heart-rate-detection-rPPG/}\DIFadd{, accessed July 5, 2026.
 }
 
@@ -1053,7 +1050,30 @@ Weixuan Chen and Daniel McDuff.
 }\newblock \url{https://github.com/KegangWangCCNU/FacePhys-Demo}\DIFadd{, accessed July 5, 2026.
 }
 
-\DIFaddend \end{thebibliography}
+\bibitem{jspsych}
+\DIFadd{J.~R. de Leeuw.
+}\newblock \DIFadd{jsPsych: A JavaScript library for creating behavioral experiments in a Web browser.
+}\newblock \DIFaddend {\em \DIFdelbegin \DIFdel{Single case experimental designs: Strategies for studying
+  behavior change}\DIFdelend \DIFaddbegin \DIFadd{Behavior Research Methods}\DIFaddend }\DIFaddbegin \DIFadd{, 47(1):1--12, 2015.
+}
+
+\bibitem{psychopy2}
+\DIFadd{J.~W. Peirce, J.~R. Gray, S. Simpson, M. MacAskill, R. Hoechenberger, H. Sogo, E. Kastman, and J.~K. Lindelov.
+}\newblock \DIFadd{PsychoPy2: Experiments in behavior made easy}\DIFaddend .
+\newblock \DIFdelbegin \DIFdel{Pearson, 3rd edition, 2009.
+}\DIFdelend \DIFaddbegin {\em \DIFadd{Behavior Research Methods}}\DIFadd{, 51:195--203, 2019.
+}\DIFaddend 
+
+\DIFdelbegin \bibitem{mediapipe_paper}
+\DIFdel{Camillo Lugaresi, Tang Jiu, Matthias Grundmann, Chris Rubinstein, Fan Jensen,
+  Vivek Kwatro, }\DIFdelend \DIFaddbegin \bibitem{mediapipe_framework}
+\DIFadd{C. Lugaresi, J. Tang, H. Nash, }\DIFaddend et~al.
+\newblock \DIFdelbegin \DIFdel{Mediapipe}\DIFdelend \DIFaddbegin \DIFadd{MediaPipe}\DIFaddend : A framework for building perception pipelines.
+\newblock \DIFdelbegin %DIFDELCMD < {\em %%%
+\DIFdel{arXivpreprint arXiv}\DIFdelend \DIFaddbegin \DIFadd{arXiv}\DIFaddend :1906.08172\DIFdelbegin %DIFDELCMD < }%%%
+\DIFdelend , 2019.
+
+\end{thebibliography}
 
 \appendix{}
 \subsection*{Supporting Example: Task Substitution}
