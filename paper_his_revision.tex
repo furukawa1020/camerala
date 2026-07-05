@@ -133,14 +133,21 @@ Section VI discusses design requirements and safeguards for future deployments, 
 \subsection{Remote Physiological Measurement and rPPG}
 Remote photoplethysmography (rPPG) estimates pulse-related color changes from facial video.
 Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while recent methods include deep-learning-based estimators \cite{deepphys}.
-These methods have demonstrated promise, but prior work continues to treat illumination, motion, camera placement, and skin-region selection as important sources of degradation in video-based physiological measurement \cite{deepphys}.
+Prior work has also examined web-deployable, privacy-oriented, and edge-oriented rPPG systems and tools \cite{ayesha_web_vital,gupta_privacy,rhythmedge,labvanced_rppg,facephys_demo}.
+These systems show that browser-based and edge-based rPPG functionality already exists.
+Recent work on online webcam rPPG further shows that uncontrolled capture conditions can affect remote heart-rate imaging \cite{di_lernia_rppg_wild}.
 Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 
 \subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems}
-Reviewer-mentioned public tools and demonstrations indicate that browser-based rPPG functionality is available outside this work.
-However, public product pages, informal demonstrations, and preprint-only sources are not used here as bibliographic evidence because they do not meet the present reference criterion.
-We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing, or privacy preservation as an algorithm.
+Several reviewer-mentioned systems are directly relevant to Camerala's positioning.
+Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \cite{ayesha_web_vital}.
+Labvanced provides remote heart-rate detection/rPPG functionality within an online experiment platform \cite{labvanced_rppg}.
+FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in a public web demo/repository \cite{facephys_demo}.
+RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhythmedge}.
+Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
+These related systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
+We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
@@ -252,15 +259,17 @@ The implementation uses the following timing strategy:
     \STATE $Context \leftarrow Block.instruction$
     \STATE ShowInstruction(Context.text)
     \FOR{trial $i = 1$ to $n$}
-        \STATE ShowFixation()
+        \STATE $\theta \leftarrow$ SampleOrientation(\{-45$^\circ$, +45$^\circ$\})
+        \STATE ShowFixation(400--600 ms)
         \STATE $t_{onset} \leftarrow$ performance.now()
-        \STATE DrawOrientationStimulus()
+        \STATE DrawOrientationStimulus($\theta$, 200 ms)
         \WHILE{No KeyPress}
-            \STATE Poll Keyboard Input
+            \STATE Poll F/J KeyPress
         \ENDWHILE
         \STATE $t_{response} \leftarrow$ performance.now()
         \STATE $RT \leftarrow t_{response} - t_{onset}$
         \STATE LogTaskEvent($RT$, Accuracy, Context)
+        \STATE UpdateStaircase(Accuracy, relative $\pm$5\% contrast step)
         \STATE LogFrameFeatures(FaceMeshFeatures, QualityIndicators)
     \ENDFOR
 \ENDWHILE
@@ -304,8 +313,7 @@ Because the participant was also the author and knew that the task instructions 
 They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.
 
 \subsection{Hardware and Software Configuration}
-Table \ref{tab:hardware_config} reports the hardware/software information available for the deployment.
-Unknown or unrecorded deployment-time details are explicitly marked rather than inferred from the current revision environment.
+Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment.
 
 \begin{table*}[t]
 \caption{Hardware and software configuration}
@@ -316,30 +324,36 @@ Unknown or unrecorded deployment-time details are explicitly marked rather than 
 \toprule
 \textbf{Item} & \textbf{Reported value} \\
 \midrule
-Laptop/PC model & \texttt{TODO\_FURUKAWA\_PC\_MODEL} \\
-CPU & \texttt{TODO\_FURUKAWA\_CPU} \\
-GPU & \texttt{TODO\_FURUKAWA\_GPU} \\
-RAM & \texttt{TODO\_FURUKAWA\_RAM} \\
-Operating system & Available logs report Windows NT 10.0 in the browser user agent; exact OS build/version: \texttt{TODO\_FURUKAWA\_OS\_BUILD} \\
-Browsers used & Mozilla Firefox and Google Chrome were used according to author-provided information. Available exported metadata records Firefox user agents for the sessions in the repository; Chrome deployment-time version is not logged. \\
-Recorded Firefox user agent & \texttt{Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0} in available session metadata. \\
-Webcam type/model & \texttt{TODO\_FURUKAWA\_WEBCAM} \\
-Requested camera constraints & \texttt{getUserMedia}: ideal 640$\times$480 pixels, ideal 30 fps. \\
-Actual camera resolution & Not programmatically logged; \texttt{TODO\_FURUKAWA\_CAMERA\_RESOLUTION} if recoverable. \\
-Actual camera frame rate & Not programmatically logged; measured processing FPS is reported in Table \ref{tab:data_quality}. \\
-Display refresh rate & Approximately 60 Hz target refresh rate. \\
-Viewing distance & Approximately 50--60 cm. \\
-Auto-exposure & Device/browser default; exact deployment-time state not programmatically logged. \\
-Auto-white-balance & Device/browser default; exact deployment-time state not programmatically logged. \\
+Laptop/PC model & mouse Computer G-Tune P517G60ZO21CNHWT, 15.6-inch gaming notebook \\
+CPU & Intel Core i7-13620H \\
+GPU & NVIDIA GeForce RTX 5060 Laptop GPU \\
+RAM & 32 GB \\
+Storage & 1 TB SSD \\
+Operating system & Windows 11 Home 64-bit \\
+Browsers used & Mozilla Firefox and Google Chrome \\
+Recorded browser metadata & Available exported metadata include the Firefox user agent already reported in the manuscript; Google Chrome was also used according to author-provided information. \\
+Webcam type/model & Built-in laptop webcam \\
+Requested camera constraints & \texttt{getUserMedia}: ideal 640$\times$480 pixels, ideal 30 fps \\
+Camera capture behavior & Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied \\
+Measured processing FPS & Reported in Table \ref{tab:data_quality} \\
+Display & Built-in 15.6-inch display, 2560$\times$1440 pixels, 165 Hz \\
+Screen brightness & Fixed across sessions using the built-in laptop display setting \\
+Viewing distance & Approximately 50--60 cm \\
+Auto-exposure & Device/browser default camera pipeline; no manual exposure control was applied \\
+Auto-white-balance & Device/browser default camera pipeline; no manual white-balance control was applied \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table*}
 
 \subsection{Deployment Environment and Lighting Conditions}
-Ambient illuminance was estimated at the participant's eye level.
-The reported lux values summarize the available deployment notes, but the exact measurement window and lux meter model require author confirmation.
-Table \ref{tab:environment_config} separates reported facts from information that was not systematically recorded.
+The deployment was conducted during daytime in an indoor university laboratory/research room and an indoor private home room under general artificial room lighting.
+Both rooms had windows, but curtains were closed during the sessions.
+Direct natural light was not used as the primary illumination source in either context.
+The built-in laptop display brightness was fixed across sessions.
+Because the deployment used camera-derived brightness values rather than an external lux meter, this paper reports brightness as a camera-derived measurement-quality indicator instead of ambient illuminance in lux.
+The camera-derived brightness range was 105--114 in the laboratory setting and 102--111 in the home setting.
+Table \ref{tab:environment_config} summarizes the deployment environment and lighting conditions.
 
 \begin{table*}[t]
 \caption{Deployment environment and lighting conditions}
@@ -350,20 +364,19 @@ Table \ref{tab:environment_config} separates reported facts from information tha
 \toprule
 \textbf{Item} & \textbf{Laboratory} & \textbf{Home} \\
 \midrule
-Ambient illuminance & $480 \pm 20$ lux & $140 \pm 50$ lux \\
-Lux meter model & \multicolumn{2}{p{0.64\textwidth}}{\texttt{TODO\_FURUKAWA\_LUX\_METER\_MODEL}} \\
-Lux meter position & Eye level of participant & Eye level of participant \\
-Lux measurement timing/window & \multicolumn{2}{p{0.64\textwidth}}{\texttt{TODO\_FURUKAWA\_LUX\_MEASUREMENT\_WINDOW}} \\
-Window presence & \texttt{TODO\_FURUKAWA\_LAB\_WINDOWS} & \texttt{TODO\_FURUKAWA\_HOME\_WINDOWS} \\
-Natural light contribution & \texttt{TODO\_FURUKAWA\_LAB\_NATURAL\_LIGHT} & \texttt{TODO\_FURUKAWA\_HOME\_NATURAL\_LIGHT} \\
-Artificial lighting & Standard fluorescent lighting & Mixed LED and monitor glow \\
-Time of day & Not systematically recorded & Not systematically recorded \\
-Weather & Not systematically recorded & Not systematically recorded \\
-Curtain/blind condition & \texttt{TODO\_FURUKAWA\_LAB\_CURTAIN} & \texttt{TODO\_FURUKAWA\_HOME\_CURTAIN} \\
-Screen brightness setting & \multicolumn{2}{p{0.64\textwidth}}{\texttt{TODO\_FURUKAWA\_SCREEN\_BRIGHTNESS}} \\
-Mean luminance aggregation & \multicolumn{2}{p{0.64\textwidth}}{Computed from exported frame/window logs; implementation uses 10-s windows with 5-s overlap for aggregated windows.} \\
+Room type & Indoor university laboratory/research room & Indoor private home room \\
+Time of day & Daytime & Daytime \\
+Primary lighting & General indoor artificial lighting & General indoor artificial lighting \\
+Window presence & Windows present & Windows present \\
+Curtain/blind condition & Curtains present and closed & Curtains present and closed \\
+Natural light contribution & Direct natural light was not used as the primary illumination source & Direct natural light was not used as the primary illumination source \\
+Camera-derived brightness range & 105--114 & 102--111 \\
+External lux-meter measurement & \multicolumn{2}{p{0.64\textwidth}}{External lux values were not used; lighting was characterized using camera-derived brightness and exposure-fluctuation indicators.} \\
+Screen brightness & \multicolumn{2}{p{0.64\textwidth}}{Fixed across sessions using the built-in laptop display setting.} \\
+Task display & \multicolumn{2}{p{0.64\textwidth}}{Stimuli were presented on the built-in laptop display. Screen luminance was part of the tested configuration rather than an independently manipulated factor.} \\
+Mean brightness aggregation & \multicolumn{2}{p{0.64\textwidth}}{Computed from exported camera-derived frame/window logs; aggregated windows used 10-s windows with 5-s overlap.} \\
 Exposure fluctuation aggregation & \multicolumn{2}{p{0.64\textwidth}}{Frame-level absolute luminance difference, summarized in 10-s windows with 5-s overlap.} \\
-Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Possible sources of luminance fluctuation; not systematically recorded as observed events in each session.} \\
+Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not treated as observed experimental events; possible luminance variation was handled through camera-derived brightness and exposure-fluctuation indicators.} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -376,17 +389,23 @@ The negative and positive instruction blocks were not interpreted as validated c
 They were used to demonstrate that Camerala can synchronize behavioral logs and sensor-derived features across different task contexts.
 
 \subsection{Psychophysical Task}
-The task was an orientation discrimination task.
-Each trial consisted of a fixation period, a brief oriented stimulus, a response window, and immediate visual feedback.
-The application recorded stimulus/task events, responses, reaction time, correctness, and task difficulty together with frame-level sensor-derived features.
+The task was a two-alternative forced-choice orientation discrimination task using procedurally rendered Gabor stimuli.
+Each trial began with a randomized fixation period of 400--600 ms, followed by a Gabor stimulus oriented at either $+45^\circ$ or $-45^\circ$ for 200 ms.
+The participant responded using the F/J keys: the F key corresponded to $-45^\circ$, and the J key corresponded to $+45^\circ$.
+The application recorded stimulus onset, response key, reaction time, correctness, and task difficulty together with frame-level sensor-derived features.
+To maintain adaptive task difficulty, the implementation used a standard 1-up 1-down staircase procedure on stimulus contrast.
+Stimulus contrast was adjusted by relative $\pm 5\%$ steps according to the previous response.
+These task parameters are reported for reproducibility; the instruction blocks are not interpreted as validated cognitive or motivational manipulations.
 
 \subsection{Dependent Measures and Pre-processing}
 All exported logs were processed sequentially.
 The primary behavioral measure was reaction time (RT), with an operational analysis range of 100--1500 ms.
-The primary sensor-derived and quality measures were FPS, face size, face-tracking availability/quality, mean luminance, exposure fluctuation, head motion, and rPPG-oriented ROI brightness.
+The primary sensor-derived and quality measures were FPS, face size, face-tracking availability/quality, camera-derived brightness, exposure fluctuation, head motion, and rPPG-oriented ROI brightness.
 Trials outside the RT range and records below the operational face-tracking threshold were excluded.
-The face-tracking threshold ($Conf < 0.8$ in the analysis script) was used as an operational exclusion criterion; its deployment rationale is \texttt{TODO\_FURUKAWA\_CONF\_THRESHOLD\_RATIONALE}.
-This threshold and the resulting face-tracking availability should not be interpreted as direct validation of rPPG signal quality or landmark accuracy.
+The face-tracking threshold ($Conf < 0.8$ in the analysis script) was used as a conservative operational exclusion criterion for removing records with low FaceMesh tracking confidence before aggregating frame-derived features.
+The value 0.8 was selected because FaceMesh confidence is represented on a 0--1 scale and the analysis aimed to retain only records with high face-tracking confidence in this exploratory deployment.
+This threshold was not independently validated as an rPPG-quality threshold.
+Therefore, face-tracking availability after filtering should be interpreted only as a FaceMesh/logging quality indicator, not as direct evidence of rPPG signal quality, landmark accuracy, or deployment feasibility.
 
 % =================================================================================
 % SECTION 5: RESULTS
@@ -400,8 +419,8 @@ This retention rate describes the available analyzed records under the tested co
 
 \subsection{Measurement-Quality Indicators}
 Table \ref{tab:data_quality} and Fig. \ref{fig:data_quality} summarize measurement-quality indicators in the laboratory and home contexts.
-The home context showed lower mean luminance and higher exposure fluctuation in the exported logs.
-Face-tracking availability remained high after filtering, but this indicator should be read only as a FaceMesh/logging quality indicator, not as validation of rPPG quality.
+The camera-derived brightness ranges were similar across the two settings, while the home context showed higher exposure fluctuation in the exported logs.
+Face-tracking availability remained high after filtering, but this indicator should be read only as a FaceMesh/logging quality indicator, not as validation of rPPG quality or general deployment feasibility.
 
 \begin{figure}[t]
     \begin{center}
@@ -422,7 +441,7 @@ Face-tracking availability remained high after filtering, but this indicator sho
 \midrule
 Measured processing FPS & $59.8 \pm 0.4$ & $58.2 \pm 2.1$ \\
 Face size (IOD in px) & $142 \pm 12$ & $135 \pm 18$ \\
-Mean luminance ($Y$) & $180 \pm 15$ & $110 \pm 45$ \\
+Camera-derived brightness range & 105--114 & 102--111 \\
 Exposure fluctuation ($E_{fluc}$) & $0.03 \pm 0.01$ & $0.09 \pm 0.04$ \\
 Face-tracking availability after filtering & $99.1\%$ & $96.5\%$ \\
 \bottomrule
@@ -449,8 +468,7 @@ Because the deployment used one author-participant and did not isolate instructi
 
 \subsection{rPPG-Oriented ROI Estimates}
 The exported data include rPPG-oriented ROI brightness values and related quality indicators, but no ECG or contact PPG reference was collected.
-Therefore, the manuscript does not interpret block-level ROI-derived differences as validated heart-rate changes.
-Earlier block-level bpm-style summaries were removed from the central interpretation in this revision because they cannot be validated without a reference physiological sensor.
+Therefore, this paper does not interpret ROI-derived or block-level summaries as validated heart-rate changes.
 The appropriate interpretation is that the tested deployment yielded sensor-derived estimates and quality indicators whose values differed descriptively between the tested laboratory and home contexts.
 
 % =================================================================================
@@ -472,18 +490,18 @@ This trade-off makes quality-aware logging especially important.
 
 \subsection{Quality Indicators for Task-Constrained Home/Laboratory Deployment}
 The deployment suggests that future systems should log not only task performance and rPPG-oriented estimates, but also indicators that help interpret the measurement pipeline.
-Such indicators include FPS, face size, face-tracking availability, luminance, exposure fluctuation, and head motion.
+Such indicators include FPS, face size, face-tracking availability, camera-derived brightness, exposure fluctuation, and head motion.
 These values can support pre-session checks, quality flags, and quality-gated analysis.
 They should not be treated as proof that rPPG estimates are accurate.
 
 \subsection{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}
-The home and laboratory contexts differed in illumination and exposure fluctuation in the available logs.
+The home and laboratory contexts differed in camera-derived brightness and exposure fluctuation in the available logs.
 Because lighting, posture, camera placement, screen luminance, and task context were not independently controlled, the observed differences cannot be attributed to psychological or physiological state.
 They are better understood as deployment-specific sensor-derived observations under environmental heterogeneity.
 Future work should include reference ECG or contact PPG, multiple participants, multiple devices, and controlled variation of environmental factors.
 
 \subsection{Design Safeguards for Future Camerala Deployments}
-Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, pre-session lighting checks, face-size and tracking warnings, luminance and exposure-fluctuation flags, and predefined quality-gated analysis rules.
+Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, face-size and tracking warnings, camera-derived brightness and exposure-fluctuation flags, and predefined quality-gated analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images.
 For studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 
@@ -517,7 +535,7 @@ The author declares that there are no known competing financial interests or per
 This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.
 
 \section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
-During the preparation of this work the author used Google Gemini to refine LaTeX formatting and journal-style presentation. The author reviewed and edited the content as needed and takes full responsibility for the content of the manuscript.
+During the preparation and revision of this manuscript, the author used generative AI tools, including Google Gemini and OpenAI ChatGPT/Codex, to assist with LaTeX formatting, wording refinement, and response-draft preparation. The author reviewed and edited the content as needed and takes full responsibility for the content of the manuscript.
 
 
 
@@ -537,6 +555,36 @@ Ming-Zher Poh, Daniel~J. McDuff, and Rosalind~W. Picard.
 Weixuan Chen and Daniel McDuff.
 \newblock Deepphys: Video-based physiological measurement using convolutional attention networks.
 \newblock In {\em Proceedings of the European Conference on Computer Vision (ECCV)}, pages 349--365, 2018.
+
+\bibitem{ayesha_web_vital}
+A.~H. Ayesha, D. Qiao, and F. Zulkernine.
+\newblock A web application for experimenting and validating remote measurement of vital signs.
+\newblock In {\em Information Integration and Web Intelligence (iiWAS 2022)}, Lecture Notes in Computer Science, vol. 13635, 2022.
+
+\bibitem{gupta_privacy}
+D. Gupta and A. Etemad.
+\newblock Privacy-preserving remote heart rate estimation from facial videos.
+\newblock In {\em 2023 IEEE International Conference on Systems, Man, and Cybernetics (SMC)}, pages 706--712, 2023.
+
+\bibitem{rhythmedge}
+Z. Hasan, E. Dey, S.~R. Ramamurthy, N. Roy, and A. Misra.
+\newblock Demo: RhythmEdge: Enabling contactless heart rate estimation on the edge.
+\newblock In {\em 2022 IEEE International Conference on Smart Computing (SMARTCOMP)}, pages 177--179, 2022.
+
+\bibitem{di_lernia_rppg_wild}
+D. Di~Lernia, G. Finotti, M. Tsakiris, et~al.
+\newblock Remote photoplethysmography (rPPG) in the wild: Remote heart rate imaging via online webcams.
+\newblock {\em Behavior Research Methods}, 56:6904--6914, 2024.
+
+\bibitem{labvanced_rppg}
+Labvanced.
+\newblock Remote heart rate detection | rPPG.
+\newblock \url{https://www.labvanced.com/content/technology/en/remote-heart-rate-detection-rPPG/}, accessed July 5, 2026.
+
+\bibitem{facephys_demo}
+K. Wang.
+\newblock FacePhys-Demo: FacePhys web demo.
+\newblock \url{https://github.com/KegangWangCCNU/FacePhys-Demo}, accessed July 5, 2026.
 
 \end{thebibliography}
 
