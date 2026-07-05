@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 10:56:46 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 11:14:08 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -260,7 +260,7 @@ Classic approaches include ambient-light remote plethysmographic imaging and bli
 Prior work has also examined web-deployable, privacy-oriented, and edge-oriented rPPG systems and tools \mbox{%DIFAUXCMD
 \cite{ayesha_web_vital,gupta_privacy,rhythmedge,labvanced_rppg,facephys_demo}}\hskip0pt%DIFAUXCMD
 .
-These systems show that browser-based and edge-based rPPG functionality already exists.
+These systems and tools show that browser-based and edge-based rPPG functionality already exists.
 Recent work on online webcam rPPG further shows that uncontrolled capture conditions can affect remote heart-rate imaging \mbox{%DIFAUXCMD
 \cite{di_lernia_rppg_wild}}\hskip0pt%DIFAUXCMD
 .
@@ -268,11 +268,11 @@ Accordingly, Camerala does not claim to introduce a new rPPG estimator or to sol
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 }\DIFaddend 
 
-\subsection{\DIFdelbegin \DIFdel{Systems for Task Measurement }\DIFdelend \DIFaddbegin \DIFadd{Browser-Based, Edge-Based, }\DIFaddend and \DIFdelbegin \DIFdel{Physiological Data Collection}\DIFdelend \DIFaddbegin \DIFadd{Privacy-Oriented rPPG Systems}\DIFaddend }
+\subsection{\DIFaddbegin \DIFadd{Browser-Based, Edge-Based, and Privacy-Oriented rPPG }\DIFaddend Systems \DIFdelbegin \DIFdel{for Task Measurement }\DIFdelend and \DIFdelbegin \DIFdel{Physiological Data Collection}\DIFdelend \DIFaddbegin \DIFadd{Public Tools}\DIFaddend }
 \DIFdelbegin \DIFdel{The shift toward remote and ubiquitous computing has generated several platforms for data collection.
 However, current systems face trade-offs between execution environment, privacy, and synchronized sensing.
 We map this design trade-off space in Table \ref{tab:related_work}.
-}\DIFdelend \DIFaddbegin \DIFadd{Several prior systems are directly relevant to Camerala's positioning.
+}\DIFdelend \DIFaddbegin \DIFadd{Several prior systems and public tools are directly relevant to Camerala's positioning.
 Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \mbox{%DIFAUXCMD
 \cite{ayesha_web_vital}}\hskip0pt%DIFAUXCMD
 .
@@ -288,7 +288,7 @@ RhythmEdge addresses contactless heart-rate estimation on edge devices \mbox{%DI
 Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \mbox{%DIFAUXCMD
 \cite{gupta_privacy}}\hskip0pt%DIFAUXCMD
 .
-These related systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
+These related systems and public tools indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 }\DIFaddend 

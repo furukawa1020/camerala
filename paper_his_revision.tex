@@ -134,19 +134,19 @@ Section VI discusses design requirements and safeguards for future deployments, 
 Remote photoplethysmography (rPPG) estimates pulse-related color changes from facial video.
 Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while recent methods include deep-learning-based estimators \cite{deepphys}.
 Prior work has also examined web-deployable, privacy-oriented, and edge-oriented rPPG systems and tools \cite{ayesha_web_vital,gupta_privacy,rhythmedge,labvanced_rppg,facephys_demo}.
-These systems show that browser-based and edge-based rPPG functionality already exists.
+These systems and tools show that browser-based and edge-based rPPG functionality already exists.
 Recent work on online webcam rPPG further shows that uncontrolled capture conditions can affect remote heart-rate imaging \cite{di_lernia_rppg_wild}.
 Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 
-\subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems}
-Several prior systems are directly relevant to Camerala's positioning.
+\subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems and Public Tools}
+Several prior systems and public tools are directly relevant to Camerala's positioning.
 Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \cite{ayesha_web_vital}.
 Labvanced provides remote heart-rate detection/rPPG functionality within an online experiment platform \cite{labvanced_rppg}.
 FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in a public web demo/repository \cite{facephys_demo}.
 RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhythmedge}.
 Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
-These related systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
+These related systems and public tools indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
