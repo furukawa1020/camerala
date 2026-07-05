@@ -93,12 +93,14 @@ placeholders for the author.
 
 Use only open-access and reliable references. Prefer peer-reviewed
 open-access journal articles, open-access conference repositories, and official
-primary standards or technical specifications. Do not cite arXiv preprints in
-this revision. Do not cite commercial marketing pages, informal web pages, or
-unverified demos as empirical evidence. If a reviewer-mentioned tool or public
-demo is directly relevant to Reviewer 1's requested positioning, it may be
-discussed and cited as a related system, but not as validation of Camerala's
-measurements or empirical claims.
+primary standards or technical specifications. Do not use arXiv preprints as
+empirical evidence or as support for the manuscript's claims. A user-directed
+exception is allowed for implementation-framework technical references, such as
+MediaPipe, when used only to document a tool that the implementation depends
+on. Do not cite commercial marketing pages, informal web pages, or unverified
+demos as empirical evidence. If a public tool or demo is directly relevant to
+Reviewer 1's requested positioning, it may be discussed and cited as a related
+system, but not as validation of Camerala's measurements or empirical claims.
 
 ## Response Discipline
 

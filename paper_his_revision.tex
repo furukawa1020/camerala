@@ -151,7 +151,7 @@ We therefore avoid claiming novelty in browser-based rPPG functionality, local r
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
-Well-established web experiment libraries and experiment runtimes, such as jsPsych, PsychoPy/PsychoJS, and Pavlovia, support browser-based task execution and online experiments.
+Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
 However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and local-first feature logging as a single browser runtime.
 Conversely, cloud analytics APIs can provide rich video-based analysis but often require transmitting video streams away from the participant's device.
 Table \ref{tab:related_work} maps this design trade-off space.
@@ -209,7 +209,7 @@ The architecture consists of three coupled modules:
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
-The current implementation uses MediaPipe Face Mesh, loaded through the browser, to obtain facial landmarks in real time.
+The current implementation uses MediaPipe Face Mesh, loaded through the browser, to obtain facial landmarks in real time \cite{mediapipe_framework}.
 The camera stream is requested through \texttt{getUserMedia} with ideal constraints of 640$\times$480 pixels and 30 fps.
 Because actual camera settings can depend on the browser and device, these constraints should be interpreted as requested settings rather than verified hardware settings.
 
@@ -510,11 +510,6 @@ The author declares that there are no known competing financial interests or per
 \section*{Funding}
 This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.
 
-\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
-During the preparation and revision of this manuscript, the author used generative AI tools, including Google Gemini and OpenAI ChatGPT/Codex, to assist with LaTeX formatting, wording refinement, and response-draft preparation. The author reviewed and edited the content as needed and takes full responsibility for the content of the manuscript.
-
-
-
 \begin{thebibliography}{99}
 
 \bibitem{verkruysse2008}
@@ -561,6 +556,21 @@ Labvanced.
 K. Wang.
 \newblock FacePhys-Demo: FacePhys web demo.
 \newblock \url{https://github.com/KegangWangCCNU/FacePhys-Demo}, accessed July 5, 2026.
+
+\bibitem{jspsych}
+J.~R. de Leeuw.
+\newblock jsPsych: A JavaScript library for creating behavioral experiments in a Web browser.
+\newblock {\em Behavior Research Methods}, 47(1):1--12, 2015.
+
+\bibitem{psychopy2}
+J.~W. Peirce, J.~R. Gray, S. Simpson, M. MacAskill, R. Hoechenberger, H. Sogo, E. Kastman, and J.~K. Lindelov.
+\newblock PsychoPy2: Experiments in behavior made easy.
+\newblock {\em Behavior Research Methods}, 51:195--203, 2019.
+
+\bibitem{mediapipe_framework}
+C. Lugaresi, J. Tang, H. Nash, et~al.
+\newblock MediaPipe: A framework for building perception pipelines.
+\newblock arXiv:1906.08172, 2019.
 
 \end{thebibliography}
 

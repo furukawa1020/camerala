@@ -6,10 +6,11 @@ truth for this revision.
 
 ## Current Rule
 
-Do not use arXiv preprints as references for this revision. Reviewer-mentioned
-systems should still be discussed when they are directly relevant to Reviewer
-1's requested positioning. Public product pages and GitHub repositories are
-used only as related-system evidence, not as empirical validation.
+Do not use arXiv preprints as empirical evidence or as support for the
+manuscript's claims. The only current exception is the user-directed MediaPipe
+framework citation, which is used as a technical implementation reference for a
+tool used by Camerala. Public product pages and GitHub repositories are used
+only as related-system evidence, not as empirical validation.
 
 ## References Used in `paper_his_revision.tex`
 
@@ -24,10 +25,15 @@ used only as related-system evidence, not as empirical validation.
 | `di_lernia_rppg_wild` | Behavior Research Methods entry supplied for reviewer positioning | Online webcam/in-the-wild rPPG degradation context | Used to acknowledge known uncontrolled-webcam issues |
 | `labvanced_rppg` | Official public system page | Browser/web-deployable rPPG functionality | Related-system evidence only |
 | `facephys_demo` | Public GitHub repository | Browser-based rPPG demo | Related-system evidence only |
+| `jspsych` | Peer-reviewed journal article | Browser-based task execution background | Behavior Research Methods, DOI: `10.3758/s13428-014-0458-y` |
+| `psychopy2` | Peer-reviewed journal article | PsychoPy/PsychoJS/Pavlovia experiment-runtime background | Behavior Research Methods, DOI: `10.3758/s13428-018-01193-y` |
+| `mediapipe_framework` | Open-access technical preprint | MediaPipe implementation-framework citation | Technical reference only; not empirical evidence |
 
 ## Explicit Limits
 
-- No arXiv entries are used in the manuscript.
+- The only arXiv entry is MediaPipe, used only as a technical implementation
+  reference.
 - Labvanced and FacePhys-Demo are not used as empirical validation sources.
+- AI tools are not cited as references.
 - Camerala does not claim novelty in browser rPPG, local rPPG processing, edge
   rPPG, or privacy-oriented heart-rate estimation alone.
