@@ -87,10 +87,8 @@ Thank you for identifying the relevant prior work.
 The Related Work section was expanded, and the novelty claim was repositioned.
 
 \textbf{Revision.}
-The manuscript now uses only peer-reviewed open-access journal articles and an open-access conference repository entry as references in the Related Work section.
-Preprint-only sources, public product pages, and public demonstrations are not used as bibliographic evidence.
-Reviewer-mentioned public tools such as LabVanced and FacePhys-Demo are acknowledged only cautiously as examples of publicly visible functionality, but are not cited as scholarly evidence.
-The manuscript explicitly states that browser-based rPPG functionality, local rPPG processing, and privacy preservation as an algorithm are not the novelty of Camerala.
+The Related Work section now discusses the reviewer-mentioned web, edge, and privacy-oriented rPPG systems, including Gupta and Etemad, Ayesha et al., RhythmEdge, Labvanced rPPG, FacePhys-Demo, and Di Lernia et al.
+The manuscript explicitly states that browser-based rPPG functionality, local rPPG processing alone, edge-based rPPG, and privacy preservation as an algorithm are not the novelty of Camerala.
 Camerala's contribution is now framed as the integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence within one browser-native runtime.
 
 \textbf{Key revised text.}
@@ -149,11 +147,10 @@ Thank you for this comment.
 A hardware and software configuration table was added.
 
 \textbf{Revision.}
-The table reports the available information, including operating-system information from logged user agents, browsers used, requested camera constraints, measured processing FPS, approximate display refresh rate, viewing distance, and unlogged camera settings.
-Unknown deployment-time facts are not inferred; they are marked with \texttt{TODO\_FURUKAWA\_*} placeholders for author confirmation.
+The hardware/software table was revised using author-confirmed information: PC model, CPU, GPU, RAM, storage, OS, browsers, built-in webcam, requested camera constraints, browser-negotiated capture behavior, display resolution/refresh rate, fixed screen brightness, viewing distance, and default camera-control behavior.
 
 \textbf{Key revised text.}
-``Unknown or unrecorded deployment-time details are explicitly marked rather than inferred from the current revision environment.''
+``Camera capture behavior: Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied.''
 
 \textbf{Location.}
 Methodology, Hardware and Software Configuration; Table 2.
@@ -164,12 +161,11 @@ Thank you for the detailed request.
 An environment and lighting conditions table was added.
 
 \textbf{Revision.}
-The table separates reported facts from information that was not systematically recorded.
-It reports the available lux values and clarifies lux-meter position, lighting descriptions, aggregation windows, and whether possible sources of luminance fluctuation were systematically recorded.
-Unknown details are left as \texttt{TODO\_FURUKAWA\_*} placeholders rather than invented.
+The previous lux-based description was removed because lighting is reported as camera-derived brightness rather than external lux.
+The revised section reports laboratory/home room type, daytime sessions, windows, closed curtains, general artificial indoor lighting, fixed screen brightness, and camera-derived brightness ranges.
 
 \textbf{Key revised text.}
-``Table 3 separates reported facts from information that was not systematically recorded.''
+``Because the deployment used camera-derived brightness values rather than an external lux meter, this paper reports brightness as a camera-derived measurement-quality indicator instead of ambient illuminance in lux.''
 
 \textbf{Location.}
 Methodology, Deployment Environment and Lighting Conditions; Table 3.
@@ -212,11 +208,11 @@ The Abstract, Results, Discussion, Limitations, and Conclusion were revised to s
 \textbf{Revision.}
 The manuscript no longer states that the study ``establishes'' a design pattern.
 The claims about feasibility, naturalistic deployment, tracking confidence, and psychological and physiological interpretation were narrowed.
-Tracking confidence is now described as a FaceMesh/logging quality indicator, not as validation of rPPG quality or deployment feasibility.
-The confidence threshold is marked for author confirmation if the original rationale cannot be recovered.
+The face-tracking threshold ($Conf < 0.8$) is explained as a conservative operational FaceMesh threshold, not an rPPG quality threshold.
+Face-tracking availability, including the 96.5\% home value after filtering, is no longer used as strong evidence of rPPG quality or general deployment feasibility.
 
 \textbf{Key revised text.}
-``The present study presents an implementation example of browser-native, task-aligned, local-first feature logging under limited home/laboratory conditions.''
+``Therefore, face-tracking availability after filtering should be interpreted only as a FaceMesh/logging quality indicator, not as direct evidence of rPPG signal quality, landmark accuracy, or deployment feasibility.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.
@@ -227,15 +223,10 @@ Thank you for the additional comments on figure and table readability.
 
 \textbf{Revision.}
 Table 1 was reformatted with clearer column widths.
-The longitudinal figure and task-result figure were changed to wide figure placement to improve readability.
-Figure captions were rewritten to state that the results are descriptive.
-The Figure 3 caption was corrected so that it no longer refers to tracking confidence, because tracking confidence is not shown in that figure.
+The previous longitudinal and task-result figures contained overstrong embedded labels, so they were removed from the revised manuscript rather than retained.
+The remaining results presentation relies on conservative text and tables without p-values, significance marks, or causal wording.
 
 \textbf{Location.}
-Table 1; Figure 2; Figure 3; Figure 4 captions and layout.
-
-\section*{Author Confirmation Needed Before Final Submission}
-The revised manuscript intentionally contains \texttt{TODO\_FURUKAWA\_*} placeholders for deployment-time facts that should not be inferred or invented.
-These must be filled by the author where recoverable, or converted to ``not logged'' / ``not systematically recorded'' where unrecoverable.
+Table 1; Results; removed previous Figure 2, Figure 3, and Figure 4 from the revised manuscript.
 
 \end{document}

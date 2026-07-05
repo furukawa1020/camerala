@@ -1,44 +1,42 @@
-# Author Facts Needed Before Final Submission
+# Author-Confirmed Facts Used in Revision
 
-The revised manuscript deliberately avoids inventing deployment-time facts.
-Please fill the following placeholders in `paper_his_revision.tex`, or confirm
-that the information was not logged / not systematically recorded.
+All previously listed author facts for hardware, environment, and the
+face-tracking threshold have been resolved in `paper_his_revision.tex`.
 
 ## Hardware / Software
 
-- `TODO_FURUKAWA_PC_MODEL`: laptop/PC model used during the deployment.
-- `TODO_FURUKAWA_CPU`: CPU model.
-- `TODO_FURUKAWA_GPU`: GPU model or integrated graphics.
-- `TODO_FURUKAWA_RAM`: installed RAM.
-- `TODO_FURUKAWA_OS_BUILD`: exact OS build/version, if recoverable.
-- `TODO_FURUKAWA_WEBCAM`: webcam type/model.
-- `TODO_FURUKAWA_CAMERA_RESOLUTION`: actual deployment-time camera resolution, if recoverable.
+- PC model: mouse Computer G-Tune P517G60ZO21CNHWT.
+- CPU: Intel Core i7-13620H.
+- GPU: NVIDIA GeForce RTX 5060 Laptop GPU.
+- RAM: 32 GB.
+- Storage: 1 TB SSD.
+- OS: Windows 11 Home 64-bit.
+- Webcam: built-in laptop webcam.
+- Browsers: Mozilla Firefox and Google Chrome.
+- Display: built-in 15.6-inch display, 2560 x 1440 pixels, 165 Hz.
+- Requested camera constraints: `getUserMedia` ideal 640 x 480 pixels, ideal
+  30 fps.
+- Data output: CSV files packaged in a ZIP archive using JSZip.
 
-## Lighting / Environment
+## Environment
 
-- `TODO_FURUKAWA_LUX_METER_MODEL`: lux meter model.
-- `TODO_FURUKAWA_LUX_MEASUREMENT_WINDOW`: whether lux values were point measurements, session summaries, or another measurement window.
-- `TODO_FURUKAWA_LAB_WINDOWS`: window presence in the laboratory setting.
-- `TODO_FURUKAWA_HOME_WINDOWS`: window presence in the home setting.
-- `TODO_FURUKAWA_LAB_NATURAL_LIGHT`: natural-light contribution in the laboratory.
-- `TODO_FURUKAWA_HOME_NATURAL_LIGHT`: natural-light contribution at home.
-- `TODO_FURUKAWA_LAB_CURTAIN`: curtain/blind condition in the laboratory.
-- `TODO_FURUKAWA_HOME_CURTAIN`: curtain/blind condition at home.
-- `TODO_FURUKAWA_SCREEN_BRIGHTNESS`: screen brightness setting during sessions, if recoverable.
+- Laboratory: indoor university laboratory/research room.
+- Home: indoor private home room.
+- Sessions were conducted during daytime in both contexts.
+- Both rooms had windows and closed curtains.
+- Both contexts used general indoor artificial lighting.
+- Direct natural light was not the primary illumination source.
+- Screen brightness was fixed across sessions.
+- Brightness is reported as camera-derived brightness, not external lux.
+- Camera-derived brightness range: laboratory 105--114, home 102--111.
 
-## Analysis Threshold
+## Task / Threshold
 
-- `TODO_FURUKAWA_CONF_THRESHOLD_RATIONALE`: rationale for using `Conf < 0.8` as the operational face-tracking exclusion threshold. If no rationale was documented, we should state that it was an operational threshold selected during exploratory analysis.
-
-## Browser Note
-
-The available exported metadata in this repository records Firefox user agents
-for the session files checked during revision. The author-provided note says
-Mozilla Firefox and Google Chrome were used. Do not report current browser
-versions as deployment-time versions unless deployment-time logs prove them.
-
-## Reference Rule
-
-The revised manuscript bibliography is restricted to open-access and reliable
-sources. Commercial product pages and informal demo pages should not be used as
-bibliographic evidence for scholarly claims.
+- Task: two-alternative forced-choice Gabor orientation discrimination.
+- Orientations: -45 degrees and +45 degrees.
+- Stimulus duration: 200 ms.
+- Fixation duration: randomized 400--600 ms.
+- Response mapping: F = -45 degrees, J = +45 degrees.
+- Staircase: standard 1-up 1-down, relative +/-5% contrast steps.
+- Face-tracking threshold: `Conf < 0.8` is an operational FaceMesh exclusion
+  threshold, not an rPPG-quality validation threshold.
