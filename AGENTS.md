@@ -95,9 +95,10 @@ Use only open-access and reliable references. Prefer peer-reviewed
 open-access journal articles, open-access conference repositories, and official
 primary standards or technical specifications. Do not cite arXiv preprints in
 this revision. Do not cite commercial marketing pages, informal web pages, or
-unverified demos as bibliographic evidence. If a reviewer-mentioned tool is
-not suitable as a reliable open-access reference, acknowledge the category
-cautiously in prose without using it as evidence for a scholarly claim.
+unverified demos as empirical evidence. If a reviewer-mentioned tool or public
+demo is directly relevant to Reviewer 1's requested positioning, it may be
+discussed and cited as a related system, but not as validation of Camerala's
+measurements or empirical claims.
 
 ## Response Discipline
 
