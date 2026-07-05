@@ -67,7 +67,7 @@ We present Camerala, a browser-native, local-first framework that integrates psy
 The framework avoids raw video transmission and, in the present implementation, stores extracted features and task events locally as CSV files packaged in a ZIP archive.
 We evaluated Camerala in an exploratory 10-session deployment with one author-participant across one laboratory setting and one home setting.
 The deployment completed under the tested configuration and produced synchronized task events, sensor-derived features, and measurement-quality indicators.
-Descriptive results showed differences between the laboratory and home contexts in camera-derived brightness, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
+Descriptive results showed similar camera-derived brightness ranges across the two settings, together with differences in exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
 Because the study did not include reference physiological measurements, multiple participants, multiple devices, or controlled separation of environmental and task-related factors, these differences should be interpreted as deployment-specific sensor-derived observations rather than evidence of physiological, cognitive, psychological, or motivational effects.
 The paper contributes a browser-native implementation example and design considerations for task-aligned, local-first physiological feature logging under limited home/laboratory conditions.
 \end{abstract}
@@ -147,6 +147,8 @@ rPPG-Toolbox provides a reproducible benchmark and implementation framework for 
 EfficientPhys and MobilePhys address efficient or mobile camera-based physiological sensing \cite{efficientphys,mobilephys}.
 Recent privacy-related work has also examined remote physiological signal removal from video \cite{bhutani_privacy_rppg}.
 These studies indicate that browser/webcam rPPG, open-source rPPG processing, on-device camera-based physiological sensing, and privacy-oriented processing have already been explored.
+In addition to peer-reviewed studies, public tools and demonstrations such as Labvanced rPPG and FacePhys-Demo illustrate that browser-accessible rPPG functionality is already available in practical systems.
+These public tools are not treated as peer-reviewed validation evidence here, but they further support the point that Camerala should not claim novelty in browser rPPG itself.
 We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 
@@ -209,7 +211,7 @@ The architecture consists of three coupled modules:
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
-The current implementation uses MediaPipe Face Mesh, loaded through the browser, to obtain facial landmarks in real time \cite{mediapipe_framework}.
+The current implementation uses MediaPipe Face Mesh as a software framework for browser-based facial landmark extraction \cite{mediapipe_framework}.
 The camera stream is requested through \texttt{getUserMedia} with ideal constraints of 640$\times$480 pixels and 30 fps.
 Because actual camera settings can depend on the browser and device, these constraints should be interpreted as requested settings rather than verified hardware settings.
 

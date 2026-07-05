@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 11:18:44 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 12:03:54 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -165,7 +165,7 @@ We present Camerala, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend brows
 We evaluated Camerala in }\DIFaddend an exploratory 10-session \DIFdelbegin \DIFdel{longitudinal deployment (N=1) across laboratory and home settings}\DIFdelend \DIFaddbegin \DIFadd{deployment with one author-participant across one laboratory setting and one home setting}\DIFaddend .
 The deployment \DIFdelbegin \DIFdel{showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
 These results suggest that }\DIFdelend \DIFaddbegin \DIFadd{completed under the tested configuration and produced synchronized task events, sensor-derived features, and measurement-quality indicators.
-Descriptive results showed differences between the laboratory and home contexts in camera-derived brightness, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
+Descriptive results showed similar camera-derived brightness ranges across the two settings, together with differences in exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
 Because the study did not include reference physiological measurements, multiple participants, multiple devices, or controlled separation of environmental and task-related factors, these differences should be interpreted as deployment-specific sensor-derived observations rather than evidence of physiological, cognitive, psychological, or motivational effects.
 The paper contributes a }\DIFaddend browser-native \DIFdelbegin \DIFdel{edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous homeand laboratory environments}\DIFdelend \DIFaddbegin \DIFadd{implementation example and design considerations for task-aligned, local-first physiological feature logging under limited home/laboratory conditions}\DIFaddend .
 \end{abstract}
@@ -288,6 +288,8 @@ Recent privacy-related work has also examined remote physiological signal remova
 \cite{bhutani_privacy_rppg}}\hskip0pt%DIFAUXCMD
 .
 These studies indicate that browser/webcam rPPG, open-source rPPG processing, on-device camera-based physiological sensing, and privacy-oriented processing have already been explored.
+In addition to peer-reviewed studies, public tools and demonstrations such as Labvanced rPPG and FacePhys-Demo illustrate that browser-accessible rPPG functionality is already available in practical systems.
+These public tools are not treated as peer-reviewed validation evidence here, but they further support the point that Camerala should not claim novelty in browser rPPG itself.
 We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
 The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
 }\DIFaddend 
@@ -404,10 +406,10 @@ The architecture consists of three coupled modules\DIFdelbegin \DIFdel{running o
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
-\DIFdelbegin \DIFdel{We utilize the }\DIFdelend \DIFaddbegin \DIFadd{The current implementation uses }\DIFaddend MediaPipe Face Mesh\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\DIFdelbegin \DIFdel{We utilize the }\DIFdelend \DIFaddbegin \DIFadd{The current implementation uses }\DIFaddend MediaPipe Face Mesh \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \cite{mediapipe_paper} }\hskip0pt%DIFAUXCMD
-solution, which provides 468 3D }\DIFdelend \DIFaddbegin \DIFadd{, loaded through the browser, to obtain }\DIFaddend facial landmarks in \DIFdelbegin \DIFdel{real-time.
-This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration}\DIFdelend \DIFaddbegin \DIFadd{real time \mbox{%DIFAUXCMD
+solution, which provides 468 3D facial landmarks in real-time.
+This model is executed via TensorFlow.js with the WebGL backend to leverage the client's GPU acceleration}\DIFdelend \DIFaddbegin \DIFadd{as a software framework for browser-based facial landmark extraction \mbox{%DIFAUXCMD
 \cite{mediapipe_framework}}\hskip0pt%DIFAUXCMD
 .
 The camera stream is requested through }\texttt{\DIFadd{getUserMedia}} \DIFadd{with ideal constraints of 640$\times$480 pixels and 30 fps.

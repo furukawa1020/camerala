@@ -13,8 +13,9 @@ available and the citation is needed as a technical software/framework
 reference. The only current arXiv citation is MediaPipe, which is used as a
 technical implementation reference for a tool used by Camerala, not as
 peer-reviewed empirical evidence. Public product pages and GitHub repositories,
-including Labvanced and FacePhys-Demo, are not used as manuscript references in
-the current strict peer-reviewed/OA bibliography.
+including Labvanced and FacePhys-Demo, are mentioned only as public
+tools/demonstrations for positioning and are not included as manuscript
+references in the current strict peer-reviewed/OA bibliography.
 
 ## References Used in `paper_his_revision.tex`
 
@@ -39,9 +40,9 @@ the current strict peer-reviewed/OA bibliography.
   than an arXiv preprint.
 - The only arXiv entry is MediaPipe, used only as a technical implementation
   reference.
-- Labvanced and FacePhys-Demo are not cited as manuscript references in the
-  current strict peer-reviewed/OA bibliography; if discussed, they should be
-  described only as public tools/demonstrations.
+- Labvanced and FacePhys-Demo are mentioned only as public
+  tools/demonstrations and are not cited as manuscript references in the
+  current strict peer-reviewed/OA bibliography.
 - AI tools are not cited as references.
 - Camerala does not claim novelty in browser rPPG, local rPPG processing,
   open-source rPPG implementations, edge/mobile camera-based physiological
