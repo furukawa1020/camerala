@@ -67,7 +67,7 @@ We present Camerala, a browser-native, local-first framework that integrates psy
 The framework avoids raw video transmission and, in the present implementation, stores extracted features and task events locally as CSV files packaged in a ZIP archive.
 We evaluated Camerala in an exploratory 10-session deployment with one author-participant across one laboratory setting and one home setting.
 The deployment completed under the tested configuration and produced synchronized task events, sensor-derived features, and measurement-quality indicators.
-Descriptive results showed differences between the laboratory and home contexts in luminance, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
+Descriptive results showed differences between the laboratory and home contexts in camera-derived brightness, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
 Because the study did not include reference physiological measurements, multiple participants, multiple devices, or controlled separation of environmental and task-related factors, these differences should be interpreted as deployment-specific sensor-derived observations rather than evidence of physiological, cognitive, psychological, or motivational effects.
 The paper contributes a browser-native implementation example and design considerations for task-aligned, local-first physiological feature logging under limited home/laboratory conditions.
 \end{abstract}
@@ -95,7 +95,7 @@ This does not constitute a dedicated privacy-preserving algorithm; rather, it is
 Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
 Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.
 Camerala instead extracts features and quality indicators during task execution, allowing task events and sensing frames to be logged within the same client-side runtime without raw video persistence.
-This design also supports online quality checks, such as detecting face-tracking failure, approximate face-size changes, and luminance instability during data collection.
+This design also supports online quality checks, such as detecting face-tracking failure, approximate face-size changes, and camera-derived brightness instability during data collection.
 
 To address this deployment scenario, we present \textbf{Camerala}, a browser-native framework for task-aligned physiological feature logging in task-constrained home/laboratory experiments.
 
@@ -106,7 +106,7 @@ We reformulated the exploratory Research Questions (RQs) to focus on operational
     \item \textbf{RQ2:} What descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts?
 \end{itemize}
 
-For RQ1, we used the following observation criteria: completion of the planned sessions and trials, local persistence of exported logs, synchronization of task events and frame-level feature logs, retention rate after predefined exclusion criteria, and availability of FPS, face size, face-tracking availability, luminance, exposure fluctuation, head motion, and rPPG-oriented ROI estimates.
+For RQ1, we used the following observation criteria: completion of the planned sessions and trials, local persistence of exported logs, synchronization of task events and frame-level feature logs, retention rate after predefined exclusion criteria, and availability of FPS, face size, face-tracking availability, camera-derived brightness, exposure fluctuation, head motion, and rPPG-oriented ROI estimates.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 
 \subsection{Contributions}
@@ -140,7 +140,7 @@ Accordingly, Camerala does not claim to introduce a new rPPG estimator or to sol
 It records rPPG-oriented ROI values and quality indicators so that task-aligned observations can be inspected and filtered.
 
 \subsection{Browser-Based, Edge-Based, and Privacy-Oriented rPPG Systems}
-Several reviewer-mentioned systems are directly relevant to Camerala's positioning.
+Several prior systems are directly relevant to Camerala's positioning.
 Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \cite{ayesha_web_vital}.
 Labvanced provides remote heart-rate detection/rPPG functionality within an online experiment platform \cite{labvanced_rppg}.
 FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in a public web demo/repository \cite{facephys_demo}.
@@ -235,7 +235,7 @@ It also computes a frame-level luminance-change indicator:
 \end{equation}
 where $Y_t$ is the downsampled frame-luminance average at frame $t$.
 Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes.
-Instead, it records motion-related and luminance-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.
+Instead, it records motion-related and brightness-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.
 
 \subsection{Technical Implementation: The Task Engine}
 The experimental psychophysical probe is a two-alternative forced-choice orientation discrimination task.
@@ -282,7 +282,7 @@ The archive contains \texttt{metadata.json}, \texttt{trials.csv}, \texttt{featur
 The metadata file stores the session ID, start time, user agent, and block plan.
 The user initiates the download at the end of the session.
 This design avoids Camerala-side raw-video storage and avoids raw-video transmission, but it also reduces the ability to inspect image artifacts retrospectively.
-For this reason, Camerala logs quality indicators such as FPS, approximate face size, face-tracking availability, luminance, exposure fluctuation, and head motion.
+For this reason, Camerala logs quality indicators such as FPS, approximate face size, face-tracking availability, camera-derived brightness, exposure fluctuation, and head motion.
 
 % =================================================================================
 % SECTION 4: METHODOLOGY
@@ -323,7 +323,7 @@ RAM & 32 GB \\
 Storage & 1 TB SSD \\
 Operating system & Windows 11 Home 64-bit \\
 Browsers used & Mozilla Firefox and Google Chrome \\
-Recorded browser metadata & Available exported metadata include the Firefox user agent already reported in the manuscript; Google Chrome was also used according to author-provided information. \\
+Recorded browser metadata & Available exported metadata include the Firefox user agent already reported in the manuscript. Mozilla Firefox and Google Chrome were used in the deployment. \\
 Webcam type/model & Built-in laptop webcam \\
 Requested camera constraints & \texttt{getUserMedia}: ideal 640$\times$480 pixels, ideal 30 fps \\
 Camera capture behavior & Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied \\
@@ -343,7 +343,7 @@ The deployment was conducted during daytime in an indoor university laboratory/r
 Both rooms had windows, but curtains were closed during the sessions.
 Direct natural light was not used as the primary illumination source in either context.
 The built-in laptop display brightness was fixed across sessions.
-Because the deployment used camera-derived brightness values rather than an external lux meter, this paper reports brightness as a camera-derived measurement-quality indicator instead of ambient illuminance in lux.
+Because the deployment used camera-derived brightness values rather than external light-meter measurements, this paper reports brightness as a camera-derived measurement-quality indicator.
 The camera-derived brightness range was 105--114 in the laboratory setting and 102--111 in the home setting.
 Table \ref{tab:environment_config} summarizes the deployment environment and lighting conditions.
 
@@ -363,19 +363,19 @@ Window presence & Windows present & Windows present \\
 Curtain/blind condition & Curtains present and closed & Curtains present and closed \\
 Natural light contribution & Direct natural light was not used as the primary illumination source & Direct natural light was not used as the primary illumination source \\
 Camera-derived brightness range & 105--114 & 102--111 \\
-External lux-meter measurement & \multicolumn{2}{p{0.64\textwidth}}{External lux values were not used; lighting was characterized using camera-derived brightness and exposure-fluctuation indicators.} \\
+External light-meter measurement & \multicolumn{2}{p{0.64\textwidth}}{External light-meter values were not used; lighting was characterized using camera-derived brightness and exposure-fluctuation indicators.} \\
 Screen brightness & \multicolumn{2}{p{0.64\textwidth}}{Fixed across sessions using the built-in laptop display setting.} \\
 Task display & \multicolumn{2}{p{0.64\textwidth}}{Stimuli were presented on the built-in laptop display. Screen luminance was part of the tested configuration rather than an independently manipulated factor.} \\
 Mean brightness aggregation & \multicolumn{2}{p{0.64\textwidth}}{Computed from exported camera-derived frame/window logs; aggregated windows used 10-s windows with 5-s overlap.} \\
 Exposure fluctuation aggregation & \multicolumn{2}{p{0.64\textwidth}}{Frame-level absolute luminance difference, summarized in 10-s windows with 5-s overlap.} \\
-Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not treated as observed experimental events; possible luminance variation was handled through camera-derived brightness and exposure-fluctuation indicators.} \\
+Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not treated as observed experimental events; possible brightness variation was handled through camera-derived brightness and exposure-fluctuation indicators.} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table*}
 
 \subsection{Experimental Procedure and Instructional Task Contexts}
-Each session began with a pre-session capture check for basic camera conditions, including approximate luminance, pose, and face size, before the camera feed was hidden to reduce distraction.
+Each session began with a pre-session capture check for basic camera conditions, including approximate camera-derived brightness, pose, and face size, before the camera feed was hidden to reduce distraction.
 Before each block, the system presented one of three instructional task contexts: neutral instruction, negative instruction, or positive instruction.
 The negative and positive instruction blocks were not interpreted as validated cognitive or motivational manipulations.
 They were used to demonstrate that Camerala can synchronize behavioral logs and sensor-derived features across different task contexts.
@@ -471,7 +471,7 @@ These values can support pre-session checks, quality flags, and quality-gated an
 They should not be treated as proof that rPPG estimates are accurate.
 
 \subsection{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}
-The home and laboratory contexts differed in camera-derived brightness and exposure fluctuation in the available logs.
+The laboratory and home contexts showed similar camera-derived brightness ranges, while exposure fluctuation was higher in the home context in the available logs.
 Because lighting, posture, camera placement, screen luminance, and task context were not independently controlled, the observed differences cannot be attributed to psychological or physiological state.
 They are better understood as deployment-specific sensor-derived observations under environmental heterogeneity.
 Future work should include reference ECG or contact PPG, multiple participants, multiple devices, and controlled variation of environmental factors.

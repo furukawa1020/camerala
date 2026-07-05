@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 10:18:18 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 10:47:35 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -165,7 +165,7 @@ We present Camerala, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend brows
 We evaluated Camerala in }\DIFaddend an exploratory 10-session \DIFdelbegin \DIFdel{longitudinal deployment (N=1) across laboratory and home settings}\DIFdelend \DIFaddbegin \DIFadd{deployment with one author-participant across one laboratory setting and one home setting}\DIFaddend .
 The deployment \DIFdelbegin \DIFdel{showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
 These results suggest that }\DIFdelend \DIFaddbegin \DIFadd{completed under the tested configuration and produced synchronized task events, sensor-derived features, and measurement-quality indicators.
-Descriptive results showed differences between the laboratory and home contexts in luminance, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
+Descriptive results showed differences between the laboratory and home contexts in camera-derived brightness, exposure fluctuation, face-tracking availability, head motion, and rPPG-oriented ROI estimates.
 Because the study did not include reference physiological measurements, multiple participants, multiple devices, or controlled separation of environmental and task-related factors, these differences should be interpreted as deployment-specific sensor-derived observations rather than evidence of physiological, cognitive, psychological, or motivational effects.
 The paper contributes a }\DIFaddend browser-native \DIFdelbegin \DIFdel{edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous homeand laboratory environments}\DIFdelend \DIFaddbegin \DIFadd{implementation example and design considerations for task-aligned, local-first physiological feature logging under limited home/laboratory conditions}\DIFaddend .
 \end{abstract}
@@ -201,7 +201,7 @@ This does not constitute a dedicated privacy-preserving algorithm; rather, it is
 \DIFaddbegin \DIFadd{Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
 Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.
 Camerala instead extracts features and quality indicators during task execution, allowing task events and sensing frames to be logged within the same client-side runtime without raw video persistence.
-This design also supports online quality checks, such as detecting face-tracking failure, approximate face-size changes, and luminance instability during data collection.
+This design also supports online quality checks, such as detecting face-tracking failure, approximate face-size changes, and camera-derived brightness instability during data collection.
 }
 
 \DIFaddend To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in task-constrained home/laboratory experiments}\DIFaddend .
@@ -213,7 +213,7 @@ We \DIFdelbegin \DIFdel{formulated two }\DIFdelend \DIFaddbegin \DIFadd{reformul
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts}\DIFaddend ?
 \end{itemize}
 
-\DIFaddbegin \DIFadd{For RQ1, we used the following observation criteria: completion of the planned sessions and trials, local persistence of exported logs, synchronization of task events and frame-level feature logs, retention rate after predefined exclusion criteria, and availability of FPS, face size, face-tracking availability, luminance, exposure fluctuation, head motion, and rPPG-oriented ROI estimates.
+\DIFaddbegin \DIFadd{For RQ1, we used the following observation criteria: completion of the planned sessions and trials, local persistence of exported logs, synchronization of task events and frame-level feature logs, retention rate after predefined exclusion criteria, and availability of FPS, face size, face-tracking availability, camera-derived brightness, exposure fluctuation, head motion, and rPPG-oriented ROI estimates.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 }
 
@@ -272,7 +272,7 @@ It records rPPG-oriented ROI values and quality indicators so that task-aligned 
 \DIFdelbegin \DIFdel{The shift toward remote and ubiquitous computing has generated several platforms for data collection.
 However, current systems face trade-offs between execution environment, privacy, and synchronized sensing.
 We map this design trade-off space in Table \ref{tab:related_work}.
-}\DIFdelend \DIFaddbegin \DIFadd{Several reviewer-mentioned systems are directly relevant to Camerala's positioning.
+}\DIFdelend \DIFaddbegin \DIFadd{Several prior systems are directly relevant to Camerala's positioning.
 Ayesha \etal\ proposed a web application for experimenting with and validating remote measurement of vital signs \mbox{%DIFAUXCMD
 \cite{ayesha_web_vital}}\hskip0pt%DIFAUXCMD
 .
@@ -450,7 +450,7 @@ The average luminance $Y_t$ is computed from the RGB channels:
 }\end{displaymath}%DIFAUXCMD
 \DIFdelend \DIFaddbegin \DIFadd{where $Y_t$ is the downsampled frame-luminance average at frame $t$.
 Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes.
-Instead, it records motion-related and luminance-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.
+Instead, it records motion-related and brightness-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.
 }\DIFaddend 
 
 \subsection{Technical Implementation: The Task Engine}
@@ -545,7 +545,7 @@ This explicit user action reinforces the sense of agency and privacy control.
 The metadata file stores the session ID, start time, user agent, and block plan.
 The user initiates the download at the end of the session.
 This design avoids Camerala-side raw-video storage and avoids raw-video transmission, but it also reduces the ability to inspect image artifacts retrospectively.
-For this reason, Camerala logs quality indicators such as FPS, approximate face size, face-tracking availability, luminance, exposure fluctuation, and head motion.
+For this reason, Camerala logs quality indicators such as FPS, approximate face size, face-tracking availability, camera-derived brightness, exposure fluctuation, and head motion.
 }\DIFaddend 
 
 %DIF >  =================================================================================
@@ -589,17 +589,15 @@ The order of blocks was randomized by the web application}\DIFaddend .
 \DIFdelbegin \textit{\DIFdel{Ethical Note}}%DIFAUXCMD
 \DIFdel{: }\DIFdelend This was a self-experimentation \DIFdelbegin \DIFdel{(autoethnographic) evaluation. No }\DIFdelend \DIFaddbegin \DIFadd{evaluation: no }\DIFaddend other participants were involved, no identifiable \DIFaddbegin \DIFadd{raw }\DIFaddend video was transmitted \DIFdelbegin \DIFdel{or shared}\DIFdelend \DIFaddbegin \DIFadd{by Camerala}\DIFaddend , and the author provided informed consent for self-participation.
 \DIFdelbegin \DIFdel{We explicitly acknowledge that the author's prior knowledge of the experimental hypotheses precludes drawing population-level psychological conclusions.
-However, this deployment is methodologically appropriate for the initial technical validation of the sensing pipeline}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
+However, this deploymentis methodologically appropriate for the initial technical validation of the sensing pipeline}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
 They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.
 }
 
 \subsection{\DIFadd{Hardware and Software Configuration}}
-\DIFadd{Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment}\DIFaddend .
+\DIFadd{Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment.
+}
 
-\DIFdelbegin \subsection{\DIFdel{Apparatus and Physical Environment}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{The experiment was deployed on a standard 13.5}\DIFdelend \DIFaddbegin \begin{table*}[t]
+\begin{table*}[t]
 \caption{\DIFaddFL{Hardware and software configuration}}
 \label{tab:hardware_config}
 \begin{center}
@@ -608,38 +606,21 @@ They are used only as different instructional task contexts for demonstrating sy
 \toprule
 \textbf{\DIFaddFL{Item}} & \textbf{\DIFaddFL{Reported value}} \\
 \midrule
-\DIFaddFL{Laptop/PC model }& \DIFaddFL{mouse Computer G-Tune P517G60ZO21CNHWT, 15.6}\DIFaddendFL -inch \DIFdelbeginFL \DIFdelFL{laptop display (approximate 60Hz target refresh rate).
-To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meterat the eye level of the participant.
-}%DIFDELCMD < \begin{itemize}
-\begin{itemize}%DIFAUXCMD
-%DIFDELCMD <     \item %%%
-\item%DIFAUXCMD
-\textbf{\DIFdelFL{Lab Environment}}%DIFAUXCMD
-\DIFdelFL{: Mean illuminance $480 \pm 20$ lux(Standard fluorescent lighting).
-}%DIFDELCMD < \item %%%
-\item%DIFAUXCMD
-\textbf{\DIFdelFL{Home Environment}}%DIFAUXCMD
-\DIFdelFL{: Mean illuminance $140 \pm 50$ lux (Mixed LED and variable monitor glow).
-}
-\end{itemize}%DIFAUXCMD
-%DIFDELCMD < \end{itemize}
-%DIFDELCMD < %%%
-\DIFdelFL{Distance from the screen was approximately maintained at }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{gaming notebook }\\
+\DIFaddFL{Laptop/PC model }& \DIFaddFL{mouse Computer G-Tune P517G60ZO21CNHWT, 15.6-inch gaming notebook }\\
 \DIFaddFL{CPU }& \DIFaddFL{Intel Core i7-13620H }\\
 \DIFaddFL{GPU }& \DIFaddFL{NVIDIA GeForce RTX 5060 Laptop GPU }\\
 \DIFaddFL{RAM }& \DIFaddFL{32 GB }\\
 \DIFaddFL{Storage }& \DIFaddFL{1 TB SSD }\\
 \DIFaddFL{Operating system }& \DIFaddFL{Windows 11 Home 64-bit }\\
 \DIFaddFL{Browsers used }& \DIFaddFL{Mozilla Firefox and Google Chrome }\\
-\DIFaddFL{Recorded browser metadata }& \DIFaddFL{Available exported metadata include the Firefox user agent already reported in the manuscript; Google Chrome was also used according to author-provided information. }\\
+\DIFaddFL{Recorded browser metadata }& \DIFaddFL{Available exported metadata include the Firefox user agent already reported in the manuscript. Mozilla Firefox and Google Chrome were used in the deployment}\DIFaddendFL . \DIFaddbeginFL \\
 \DIFaddFL{Webcam type/model }& \DIFaddFL{Built-in laptop webcam }\\
 \DIFaddFL{Requested camera constraints }& \texttt{\DIFaddFL{getUserMedia}}\DIFaddFL{: ideal 640$\times$480 pixels, ideal 30 fps }\\
 \DIFaddFL{Camera capture behavior }& \DIFaddFL{Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied }\\
 \DIFaddFL{Measured processing FPS }& \DIFaddFL{Reported in Table \ref{tab:data_quality} }\\
 \DIFaddFL{Display }& \DIFaddFL{Built-in 15.6-inch display, 2560$\times$1440 pixels, 165 Hz }\\
 \DIFaddFL{Screen brightness }& \DIFaddFL{Fixed across sessions using the built-in laptop display setting }\\
-\DIFaddFL{Viewing distance }& \DIFaddFL{Approximately }\DIFaddendFL 50--60 \DIFdelbeginFL \DIFdelFL{cm, using the FaceMesh tracking standard distance as a rough proxy.
-}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{cm }\\
+\DIFaddFL{Viewing distance }& \DIFaddFL{Approximately 50--60 cm }\\
 \DIFaddFL{Auto-exposure }& \DIFaddFL{Device/browser default camera pipeline; no manual exposure control was applied }\\
 \DIFaddFL{Auto-white-balance }& \DIFaddFL{Device/browser default camera pipeline; no manual white-balance control was applied }\\
 \bottomrule
@@ -648,12 +629,19 @@ To contextualize the environmental differences, ambient illuminance was estimate
 \end{table*}
 \DIFaddend 
 
-\DIFaddbegin \subsection{\DIFadd{Deployment Environment and Lighting Conditions}}
-\DIFadd{The deployment was conducted during daytime in an indoor university laboratory/research room and an indoor private home room under general artificial room lighting.
+\subsection{\DIFdelbegin \DIFdel{Apparatus and Physical }\DIFdelend \DIFaddbegin \DIFadd{Deployment }\DIFaddend Environment \DIFaddbegin \DIFadd{and Lighting Conditions}\DIFaddend }
+The \DIFdelbegin \DIFdel{experiment was deployed on a standard 13.5-inch laptop display (approximate 60Hz target refresh rate).
+To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meter at the eye level of the participant.
+}%DIFDELCMD < \begin{itemize}
+%DIFDELCMD <     \item %%%
+\textbf{\DIFdel{Lab Environment}}%DIFAUXCMD
+\DIFdel{: Mean illuminance $480 \pm 20$ lux (Standard fluorescent lighting ).
+}%DIFDELCMD < \item %%%
+\DIFdelend \DIFaddbegin \DIFadd{deployment was conducted during daytime in an indoor university laboratory/research room and an indoor private home room under general artificial room lighting.
 Both rooms had windows, but curtains were closed during the sessions.
 Direct natural light was not used as the primary illumination source in either context.
 The built-in laptop display brightness was fixed across sessions.
-Because the deployment used camera-derived brightness values rather than an external lux meter, this paper reports brightness as a camera-derived measurement-quality indicator instead of ambient illuminance in lux.
+Because the deployment used camera-derived brightness values rather than external light-meter measurements, this paper reports brightness as a camera-derived measurement-quality indicator.
 The camera-derived brightness range was 105--114 in the laboratory setting and 102--111 in the home setting.
 Table \ref{tab:environment_config} summarizes the deployment environment and lighting conditions.
 }
@@ -665,7 +653,11 @@ Table \ref{tab:environment_config} summarizes the deployment environment and lig
 \small
 \begin{tabular}{p{0.24\textwidth}p{0.32\textwidth}p{0.32\textwidth}}
 \toprule
-\textbf{\DIFaddFL{Item}} & \textbf{\DIFaddFL{Laboratory}} & \textbf{\DIFaddFL{Home}} \\
+\textbf{\DIFaddFL{Item}} & \textbf{\DIFaddFL{Laboratory}} & \DIFaddendFL \textbf{Home\DIFdelbeginFL \DIFdelFL{Environment}\DIFdelendFL } \DIFdelbeginFL \DIFdelFL{: Mean illuminance $140 \pm 50$ lux (Mixed LED and variable monitor glow).
+}%DIFDELCMD < \end{itemize}
+%DIFDELCMD < %%%
+\DIFdelFL{Distance from the screen was approximately maintained at 50--60 cm, using the FaceMesh tracking standard distance as a rough proxy.
+}\DIFdelendFL \DIFaddbeginFL \\
 \midrule
 \DIFaddFL{Room type }& \DIFaddFL{Indoor university laboratory/research room }& \DIFaddFL{Indoor private home room }\\
 \DIFaddFL{Time of day }& \DIFaddFL{Daytime }& \DIFaddFL{Daytime }\\
@@ -674,19 +666,20 @@ Table \ref{tab:environment_config} summarizes the deployment environment and lig
 \DIFaddFL{Curtain/blind condition }& \DIFaddFL{Curtains present and closed }& \DIFaddFL{Curtains present and closed }\\
 \DIFaddFL{Natural light contribution }& \DIFaddFL{Direct natural light was not used as the primary illumination source }& \DIFaddFL{Direct natural light was not used as the primary illumination source }\\
 \DIFaddFL{Camera-derived brightness range }& \DIFaddFL{105--114 }& \DIFaddFL{102--111 }\\
-\DIFaddFL{External lux-meter measurement }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{External lux values were not used; lighting was characterized using camera-derived brightness and exposure-fluctuation indicators.}} \\
+\DIFaddFL{External light-meter measurement }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{External light-meter values were not used; lighting was characterized using camera-derived brightness and exposure-fluctuation indicators.}} \\
 \DIFaddFL{Screen brightness }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Fixed across sessions using the built-in laptop display setting.}} \\
 \DIFaddFL{Task display }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Stimuli were presented on the built-in laptop display. Screen luminance was part of the tested configuration rather than an independently manipulated factor.}} \\
 \DIFaddFL{Mean brightness aggregation }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Computed from exported camera-derived frame/window logs; aggregated windows used 10-s windows with 5-s overlap.}} \\
 \DIFaddFL{Exposure fluctuation aggregation }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Frame-level absolute luminance difference, summarized in 10-s windows with 5-s overlap.}} \\
-\DIFaddFL{Clouds/screen flicker/power cycles }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Not treated as observed experimental events; possible luminance variation was handled through camera-derived brightness and exposure-fluctuation indicators.}} \\
+\DIFaddFL{Clouds/screen flicker/power cycles }& \multicolumn{2}{p{0.64\textwidth}}{\DIFaddFL{Not treated as observed experimental events; possible brightness variation was handled through camera-derived brightness and exposure-fluctuation indicators.}} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table*}
+\DIFaddend 
 
-\DIFaddend \subsection{Experimental Procedure \DIFdelbegin \DIFdel{\& Cognitive Framing}\DIFdelend \DIFaddbegin \DIFadd{and Instructional Task Contexts}\DIFaddend }
-Each session began with \DIFdelbegin \DIFdel{an automated }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend pre-session \DIFdelbegin \DIFdel{check used to screen basic capture }\DIFdelend \DIFaddbegin \DIFadd{capture check for basic camera }\DIFaddend conditions, including \DIFaddbegin \DIFadd{approximate }\DIFaddend luminance, pose, and face size\DIFdelbegin \DIFdel{prior to hiding }\DIFdelend \DIFaddbegin \DIFadd{, before }\DIFaddend the camera feed \DIFdelbegin \DIFdel{to prevent distraction.
+\subsection{Experimental Procedure \DIFdelbegin \DIFdel{\& Cognitive Framing}\DIFdelend \DIFaddbegin \DIFadd{and Instructional Task Contexts}\DIFaddend }
+Each session began with \DIFdelbegin \DIFdel{an automated }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend pre-session \DIFdelbegin \DIFdel{check used to screen basic capture }\DIFdelend \DIFaddbegin \DIFadd{capture check for basic camera }\DIFaddend conditions, including \DIFdelbegin \DIFdel{luminance}\DIFdelend \DIFaddbegin \DIFadd{approximate camera-derived brightness}\DIFaddend , pose, and face size\DIFdelbegin \DIFdel{prior to hiding }\DIFdelend \DIFaddbegin \DIFadd{, before }\DIFaddend the camera feed \DIFdelbegin \DIFdel{to prevent distraction.
 We then presented distinct instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) via full-screen text before each 20-trial block.
 The }\textbf{\DIFdel{Neutral}} %DIFAUXCMD
 \DIFdel{condition served as a baseline.
@@ -941,7 +934,7 @@ They should not be treated as proof that rPPG estimates are accurate.
 }\DIFaddend 
 
 \DIFaddbegin \subsection{\DIFadd{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}}
-\DIFadd{The home and laboratory contexts differed in camera-derived brightness and exposure fluctuation in the available logs.
+\DIFadd{The laboratory and home contexts showed similar camera-derived brightness ranges, while exposure fluctuation was higher in the home context in the available logs.
 Because lighting, posture, camera placement, screen luminance, and task context were not independently controlled, the observed differences cannot be attributed to psychological or physiological state.
 They are better understood as deployment-specific sensor-derived observations under environmental heterogeneity.
 Future work should include reference ECG or contact PPG, multiple participants, multiple devices, and controlled variation of environmental factors.
