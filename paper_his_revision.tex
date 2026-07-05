@@ -100,7 +100,7 @@ This design also supports online quality checks, such as detecting face-tracking
 To address this deployment scenario, we present \textbf{Camerala}, a browser-native framework for task-aligned physiological feature logging in task-constrained home/laboratory experiments.
 
 \subsection{Research Questions}
-We reformulated the exploratory Research Questions (RQs) to focus on operational completion and measurement-quality observations under the tested configuration:
+The exploratory Research Questions (RQs) focus on operational completion and measurement-quality observations under the tested configuration:
 \begin{itemize}
     \item \textbf{RQ1:} Under the tested laptop, browser, camera, and task configuration, can Camerala complete a task-constrained home/laboratory deployment while locally logging synchronized task events, sensor-derived features, and measurement-quality indicators without raw video transmission?
     \item \textbf{RQ2:} What descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts?
@@ -255,6 +255,7 @@ The implementation uses the following timing strategy:
 \caption{Camerala Task Loop (Simplified)}
 \begin{algorithmic}
 \STATE \textbf{Initialize} Camera, FaceMesh, Canvas
+\STATE StartContinuousVisionFrameLoop()
 \WHILE{Session Active}
     \STATE $Block \leftarrow$ GetCurrentBlock()
     \STATE $Context \leftarrow Block.instruction$
@@ -271,7 +272,7 @@ The implementation uses the following timing strategy:
         \STATE $RT \leftarrow t_{response} - t_{onset}$
         \STATE LogTaskEvent($RT$, Accuracy, Context)
         \STATE UpdateStaircase(Accuracy, relative $\pm$5\% contrast step)
-        \STATE LogFrameFeatures(FaceMeshFeatures, QualityIndicators)
+        \STATE LinkTaskEventToFrameTimestamps($t_{onset}$, $t_{response}$, Context)
     \ENDFOR
 \ENDWHILE
 \end{algorithmic}
@@ -324,7 +325,7 @@ RAM & 32 GB \\
 Storage & 1 TB SSD \\
 Operating system & Windows 11 Home 64-bit \\
 Browsers used & Mozilla Firefox and Google Chrome \\
-Recorded browser metadata & Available exported metadata include the Firefox user agent already reported in the manuscript. Mozilla Firefox and Google Chrome were used in the deployment. \\
+Recorded browser metadata & Session metadata stored browser user-agent strings. Mozilla Firefox and Google Chrome were used in the deployment, but browser effects were not independently manipulated or analyzed. \\
 Webcam type/model & Built-in laptop webcam \\
 Requested camera constraints & \texttt{getUserMedia}: ideal 640$\times$480 pixels, ideal 30 fps \\
 Camera capture behavior & Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied \\
@@ -453,7 +454,7 @@ The appropriate interpretation is that the tested deployment yielded sensor-deri
 % =================================================================================
 \section{Discussion}
 
-The main implication of this revision is system-design oriented.
+The main implication of this work is system-design oriented.
 Camerala illustrates how a browser-native runtime can combine task events, webcam-derived features, quality indicators, and local persistence without raw-video transmission in a task-constrained home/laboratory setting.
 The results do not establish general deployability, robustness, or physiological/cognitive effects.
 Instead, they motivate design requirements and safeguards for future local-first deployments.

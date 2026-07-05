@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul  5 14:29:15 2026
+%DIF ADD paper_his_revision.tex             Sun Jul  5 19:06:26 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -207,7 +207,7 @@ This design also supports online quality checks, such as detecting face-tracking
 \DIFaddend To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in task-constrained home/laboratory experiments}\DIFaddend .
 
 \subsection{Research Questions}
-We \DIFdelbegin \DIFdel{formulated two }\DIFdelend \DIFaddbegin \DIFadd{reformulated the }\DIFaddend exploratory Research Questions (RQs) to \DIFdelbegin \DIFdel{guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on operational completion and measurement-quality observations under the tested configuration}\DIFaddend :
+\DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on operational completion and measurement-quality observations under the tested configuration}\DIFaddend :
 \begin{itemize}
     \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{Under the tested laptop, browser, camera, and task configuration, can Camerala complete a task-constrained home/laboratory deployment while locally logging synchronized task events, sensor-derived features, and measurement-quality indicators without raw video transmission}\DIFaddend ?
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts}\DIFaddend ?
@@ -508,7 +508,8 @@ over the spatial frequency and contrast.
 \caption{Camerala Task Loop (Simplified)}
 \begin{algorithmic}
 \STATE \textbf{Initialize} Camera, FaceMesh, Canvas
-\WHILE{Session Active}
+\DIFaddbegin \STATE \DIFadd{StartContinuousVisionFrameLoop()
+}\DIFaddend \WHILE{Session Active}
     \STATE $Block \leftarrow$ GetCurrentBlock()
     \STATE \DIFdelbegin \DIFdel{$Condition \leftarrow Block.condition$
     }\DIFdelend \DIFaddbegin \DIFadd{$Context \leftarrow Block.instruction$
@@ -533,7 +534,7 @@ over the spatial frequency and contrast.
 \DIFdel{: Show Color (Green/Red}\DIFdelend \DIFaddbegin \DIFadd{LogTaskEvent($RT$, Accuracy, Context}\DIFaddend )
         \STATE UpdateStaircase(Accuracy\DIFaddbegin \DIFadd{, relative $\pm$5\% contrast step}\DIFaddend )
         \STATE \DIFdelbegin \DIFdel{$Log(RT, Accuracy, FaceMeshFeatures)$
-    }\DIFdelend \DIFaddbegin \DIFadd{LogFrameFeatures(FaceMeshFeatures, QualityIndicators)
+    }\DIFdelend \DIFaddbegin \DIFadd{LinkTaskEventToFrameTimestamps($t_{onset}$, $t_{response}$, Context)
     }\DIFaddend \ENDFOR
 \ENDWHILE
 \end{algorithmic}
@@ -595,11 +596,12 @@ The order of blocks was randomized by the web application}\DIFaddend .
 \DIFdelbegin \textit{\DIFdel{Ethical Note}}%DIFAUXCMD
 \DIFdel{: }\DIFdelend This was a self-experimentation \DIFdelbegin \DIFdel{(autoethnographic) evaluation. No }\DIFdelend \DIFaddbegin \DIFadd{evaluation: no }\DIFaddend other participants were involved, no identifiable \DIFaddbegin \DIFadd{raw }\DIFaddend video was transmitted \DIFdelbegin \DIFdel{or shared}\DIFdelend \DIFaddbegin \DIFadd{by Camerala}\DIFaddend , and the author provided informed consent for self-participation.
 \DIFdelbegin \DIFdel{We explicitly acknowledge that the author's prior knowledge of the experimental hypotheses precludes drawing population-level psychological conclusions.
-However, this deploymentis methodologically appropriate for the initial technical validation of the sensing pipeline}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
+However, this deploymentis methodologically appropriate for the initial technical validation of the sensing pipeline.
+}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
 They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.
-}
+}\DIFaddend 
 
-\subsection{\DIFadd{Hardware and Software Configuration}}
+\DIFaddbegin \subsection{\DIFadd{Hardware and Software Configuration}}
 \DIFadd{Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment.
 }
 
@@ -619,7 +621,7 @@ They are used only as different instructional task contexts for demonstrating sy
 \DIFaddFL{Storage }& \DIFaddFL{1 TB SSD }\\
 \DIFaddFL{Operating system }& \DIFaddFL{Windows 11 Home 64-bit }\\
 \DIFaddFL{Browsers used }& \DIFaddFL{Mozilla Firefox and Google Chrome }\\
-\DIFaddFL{Recorded browser metadata }& \DIFaddFL{Available exported metadata include the Firefox user agent already reported in the manuscript. Mozilla Firefox and Google Chrome were used in the deployment}\DIFaddendFL . \DIFaddbeginFL \\
+\DIFaddFL{Recorded browser metadata }& \DIFaddFL{Session metadata stored browser user-agent strings. Mozilla Firefox and Google Chrome were used in the deployment, but browser effects were not independently manipulated or analyzed. }\\
 \DIFaddFL{Webcam type/model }& \DIFaddFL{Built-in laptop webcam }\\
 \DIFaddFL{Requested camera constraints }& \texttt{\DIFaddFL{getUserMedia}}\DIFaddFL{: ideal 640$\times$480 pixels, ideal 30 fps }\\
 \DIFaddFL{Camera capture behavior }& \DIFaddFL{Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied }\\
@@ -633,9 +635,8 @@ They are used only as different instructional task contexts for demonstrating sy
 \end{tabular}
 \end{center}
 \end{table*}
-\DIFaddend 
 
-\subsection{\DIFdelbegin \DIFdel{Apparatus and Physical }\DIFdelend \DIFaddbegin \DIFadd{Deployment }\DIFaddend Environment \DIFaddbegin \DIFadd{and Lighting Conditions}\DIFaddend }
+\DIFaddend \subsection{\DIFdelbegin \DIFdel{Apparatus and Physical }\DIFdelend \DIFaddbegin \DIFadd{Deployment }\DIFaddend Environment \DIFaddbegin \DIFadd{and Lighting Conditions}\DIFaddend }
 The \DIFdelbegin \DIFdel{experiment was deployed on a standard 13.5-inch laptop display (approximate 60Hz target refresh rate).
 To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meter at the eye level of the participant.
 }%DIFDELCMD < \begin{itemize}
@@ -916,7 +917,7 @@ The appropriate interpretation is that the tested deployment yielded sensor-deri
 The \DIFdelbegin \DIFdel{central finding of this deployment is not a population-level effect of instructional framing, but that identical task procedures produced different observed task and physiological patterns across environments.
 For system evaluation, this suggests that laboratory-only validation may overestimate signal stability and condition separability under domestic use.
 This highlights an engineering constraint for continuous sensing: systems evaluated purely on Lab data may exhibit environment-associated changes in observed signals and measurement quality when moved from laboratory to domestic settings.
-}\DIFdelend \DIFaddbegin \DIFadd{main implication of this revision is system-design oriented.
+}\DIFdelend \DIFaddbegin \DIFadd{main implication of this work is system-design oriented.
 Camerala illustrates how a browser-native runtime can combine task events, webcam-derived features, quality indicators, and local persistence without raw-video transmission in a task-constrained home/laboratory setting.
 The results do not establish general deployability, robustness, or physiological/cognitive effects.
 Instead, they motivate design requirements and safeguards for future local-first deployments.
