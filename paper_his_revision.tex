@@ -66,7 +66,7 @@ Camerala is a local-first, browser-native framework for remote psychological and
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
 In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
-The exported records included rPPG-oriented ROI green-channel values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+The exported logs contained timestamped task events and reproducible face-image-derived fields.
 Differences between laboratory and home records are reported as deployment-specific sensor-derived observations, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects.
 \end{abstract}
 
@@ -91,9 +91,9 @@ A local-first browser architecture offers an architectural privacy advantage: ra
 This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.
 
 Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
-Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.
-Camerala instead extracts features and quality indicators during task execution, allowing task events and sensing frames to be logged within the same client-side runtime without raw video persistence.
-This design also supports online quality checks, such as landmark availability, motion-related changes, and camera-derived brightness changes during data collection.
+Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts features during task execution and stores only extracted records, task events, and auxiliary quality/context fields.
+This design supports timestamp alignment within the same browser runtime without raw-video persistence.
 
 To address this deployment scenario, we present \textbf{Camerala}, a browser-native framework for task-aligned physiological feature logging in remote task experiments conducted in laboratory and home settings.
 
@@ -399,7 +399,7 @@ The primary sensor-derived measures were rPPG-oriented ROI green-channel values,
 Behavioral trials were retained when reaction times fell within 100--1500 ms.
 Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
 Saved frame records were generated when landmarks were available and were synchronized with task events.
-The logged \texttt{quality} field was treated as a landmark-availability flag for saved records, not as a continuous face-detection or tracking-confidence value.
+The logged \texttt{quality} field was treated as a landmark-availability flag for saved records, not as a continuous confidence value from the face-processing pipeline.
 Because continuous confidence values were not stored for all camera frames, including failed detections, failed landmark-detection rates and overall tracking-success rates cannot be reconstructed from the present logs.
 The FaceMesh \texttt{minDetectionConfidence} and \texttt{minTrackingConfidence} parameters were both set to 0.5 as implementation settings.
 They were not used as post-hoc analysis thresholds.
@@ -496,7 +496,7 @@ Second, there was no reference physiological sensor, ECG, or contact PPG.
 Third, the deployment used one primary laptop/camera configuration and did not test multiple devices, multiple participants, or multiple home environments.
 Fourth, lighting, posture, camera placement, and task context were not experimentally separated.
 Fifth, no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
-Sixth, the current logs do not store continuous face-detection or tracking-confidence values for all frames.
+Sixth, the current logs do not store continuous confidence values from the face-processing pipeline for all frames.
 Therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
 Future versions should log continuous confidence values for all frames and apply specified operational thresholds during analysis.
 Seventh, the study does not claim clinical or medical accuracy, general deployability, general feasibility, robustness, or validated cognitive, motivational, psychological, or physiological effects.

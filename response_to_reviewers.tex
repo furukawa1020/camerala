@@ -39,14 +39,14 @@ Title page; Introduction; Contributions.
 \condition{2}{The necessity of real-time processing is not sufficiently explained}
 \textbf{Response.}
 Thank you for pointing this out.
-The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging, rather than the only technically possible architecture.
+The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging in private remote task experiments, rather than as the only technically possible architecture.
 
 \textbf{Revision.}
-A paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but would require storing privacy-sensitive raw video.
-The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence and to store synchronized task events, feature records, and quality-related indicators in the same browser runtime.
+A paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but remote psychological or psychophysiological task experiments may occur in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
+The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence and to store synchronized task events, feature records, and auxiliary quality/context fields in the same browser runtime.
 
 \textbf{Key revised text.}
-``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.''
+``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.''
 
 \textbf{Location.}
 Introduction; System Architecture; Data Management and Local-First Persistence.
@@ -212,12 +212,12 @@ The Abstract, Results, Discussion, Limitations, and Conclusion were revised to s
 \textbf{Revision.}
 We rechecked the logs and analysis description and limited the revised results to indicators directly recomputable from the exported CSV files.
 The manuscript no longer states that the study ``establishes'' a design pattern.
-We removed confidence-threshold filtering, tracking-confidence percentages, and face-tracking availability claims from the current results.
-The quality field is now described as a landmark-availability flag for saved records, not as continuous tracking confidence.
+We removed confidence-threshold filtering, confidence percentages from the face-processing pipeline, and face-tracking availability claims from the current results.
+The quality field is now described as a landmark-availability flag for saved records, not as continuous confidence from the face-processing pipeline.
 The RT-based retained-trial count was updated to 541/600 after applying the 100--1500 ms reaction-time criterion.
 
 \textbf{Key revised text.}
-``The logged quality field was treated as a landmark-availability flag for saved records, not as a continuous face-detection or tracking-confidence value.''
+``The logged quality field was treated as a landmark-availability flag for saved records, not as a continuous confidence value from the face-processing pipeline.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.
