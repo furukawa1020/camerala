@@ -1,0 +1,33 @@
+metric,source_csv,source_columns,filter,context,condition,n,mean,sd,proportion,value,note
+Retained trials after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Laboratory,All,256,,,0.8533,256/300 (85.3%),RT-only retention; no Conf < 0.8 filtering was applied.
+Mean RT after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Laboratory,All,256,721.0742,257.6692,,,Milliseconds.
+Accuracy after RT exclusion,trials.csv,"correct, rt",100 <= rt <= 1500 ms,Laboratory,All,256,,,0.8555,85.5%,
+Retained trials after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Home,All,285,,,0.9500,285/300 (95.0%),RT-only retention; no Conf < 0.8 filtering was applied.
+Mean RT after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Home,All,285,676.4632,249.4630,,,Milliseconds.
+Accuracy after RT exclusion,trials.csv,"correct, rt",100 <= rt <= 1500 ms,Home,All,285,,,0.8211,82.1%,
+Retained trials after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Total,All,541,,,0.9017,541/600 (90.2%),RT-only retention; no Conf < 0.8 filtering was applied.
+Mean RT after RT exclusion,trials.csv,rt,100 <= rt <= 1500 ms,Total,All,541,697.5730,254.1235,,,Milliseconds.
+Accuracy after RT exclusion,trials.csv,"correct, rt",100 <= rt <= 1500 ms,Total,All,541,,,0.8373,83.7%,
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Laboratory,CHALLENGE,77,,,0.7700,77/100 (77.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Laboratory,NEUTRAL,81,,,0.8100,81/100 (81.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Laboratory,THREAT,98,,,0.9800,98/100 (98.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Home,CHALLENGE,92,,,0.9200,92/100 (92.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Home,NEUTRAL,95,,,0.9500,95/100 (95.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Home,THREAT,98,,,0.9800,98/100 (98.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Total,CHALLENGE,169,,,0.8450,169/200 (84.5%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Total,NEUTRAL,176,,,0.8800,176/200 (88.0%),
+Condition-level RT retention,trials.csv,"condition, rt",100 <= rt <= 1500 ms,Total,THREAT,196,,,0.9800,196/200 (98.0%),
+rPPG-oriented ROI green-channel value,windows.csv,mean_roival,condition in NEUTRAL/THREAT/CHALLENGE,Laboratory,All,154,46.6916,6.7972,,,Use only if manuscript states this metric is computed from window logs.
+rPPG-oriented ROI green-channel value,windows.csv,mean_roival,condition in NEUTRAL/THREAT/CHALLENGE,Home,All,145,34.3161,2.7248,,,Use only if manuscript states this metric is computed from window logs.
+rPPG-oriented ROI green-channel value,windows.csv,mean_roival,condition in NEUTRAL/THREAT/CHALLENGE,Total,All,299,40.6901,8.1050,,,Use only if manuscript states this metric is computed from window logs.
+Motion estimate,windows.csv,mean_motion,condition in NEUTRAL/THREAT/CHALLENGE,Laboratory,All,154,0.0011,0.0005,,,Use only if manuscript states this metric is computed from window logs.
+Motion estimate,windows.csv,mean_motion,condition in NEUTRAL/THREAT/CHALLENGE,Home,All,145,0.0010,0.0004,,,Use only if manuscript states this metric is computed from window logs.
+Motion estimate,windows.csv,mean_motion,condition in NEUTRAL/THREAT/CHALLENGE,Total,All,299,0.0011,0.0005,,,Use only if manuscript states this metric is computed from window logs.
+Frame-to-frame green-channel brightness-change indicator,windows.csv,mean_exposure_fluc,condition in NEUTRAL/THREAT/CHALLENGE,Laboratory,All,154,0.0504,0.0509,,,Use only if manuscript states this metric is computed from window logs.
+Frame-to-frame green-channel brightness-change indicator,windows.csv,mean_exposure_fluc,condition in NEUTRAL/THREAT/CHALLENGE,Home,All,145,0.0707,0.0337,,,Use only if manuscript states this metric is computed from window logs.
+Frame-to-frame green-channel brightness-change indicator,windows.csv,mean_exposure_fluc,condition in NEUTRAL/THREAT/CHALLENGE,Total,All,299,0.0602,0.0445,,,Use only if manuscript states this metric is computed from window logs.
+Window FPS proxy,windows.csv,"frame_count, start_time, end_time",condition in NEUTRAL/THREAT/CHALLENGE,Laboratory,All,154,41.4299,3.8693,,,Use only if manuscript states this metric is computed from window logs.
+Window FPS proxy,windows.csv,"frame_count, start_time, end_time",condition in NEUTRAL/THREAT/CHALLENGE,Home,All,145,47.1434,7.6826,,,Use only if manuscript states this metric is computed from window logs.
+Window FPS proxy,windows.csv,"frame_count, start_time, end_time",condition in NEUTRAL/THREAT/CHALLENGE,Total,All,299,44.2007,6.6625,,,Use only if manuscript states this metric is computed from window logs.
+features_raw quality unique values,features_raw.csv,quality,all saved frame records,Total,All,68845,,,,1: 68845,All saved frame records have quality=1; this is not continuous tracking confidence.
+windows mean_quality unique values,windows.csv,mean_quality,all saved window records,Total,All,299,,,,1: 299,All saved windows have mean_quality=1; do not report as tracking availability.
