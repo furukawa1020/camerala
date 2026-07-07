@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Tue Jul  7 22:44:06 2026
+%DIF ADD paper_his_revision.tex             Tue Jul  7 23:13:05 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -165,7 +165,7 @@ To evaluate the framework, we conducted an exploratory 10-session longitudinal d
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
 In an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment, ten sessions were conducted in }\DIFaddend laboratory and home settings\DIFaddbegin \DIFadd{, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
-The exported records included rPPG-oriented ROI green-channel values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+The exported logs contained timestamped task events and reproducible face-image-derived fields.
 Differences between laboratory and home records are reported as deployment-specific sensor-derived observations, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects}\DIFaddend .
 \DIFdelbegin \DIFdel{The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
 These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiologicalsensing across heterogeneous home and laboratory environments.
@@ -194,19 +194,17 @@ Even in this task-constrained setting, deployment outside a controlled laborator
 This approach raises privacy concerns, particularly }\DIFdelend \DIFaddbegin \DIFadd{processing.
 Such approaches can be difficult to deploy }\DIFaddend in private spaces \DIFdelbegin \DIFdel{like bedrooms or living rooms, which can limit user acceptance and longitudinal deployment.
 Second, heterogeneous physical environments introduce substantial variability in measurement quality. Uncontrolled lighting, variable camera placements, and unconstrained user postures routinely introduce measurement artifacts that corrupt signal extraction.
-Consequently, deploying sensors in the wild requires studying not just the user, but how the physical environment interacts with the sensor pipeline.
-}\DIFdelend \DIFaddbegin \DIFadd{because raw facial video is privacy-sensitive and may be identifiable.
+Consequently, deploying sensors in the wild requires studying not just the user, but how the physical environment interacts with the sensor pipeline}\DIFdelend \DIFaddbegin \DIFadd{because raw facial video is privacy-sensitive and may be identifiable.
 A local-first browser architecture offers an architectural privacy advantage: raw frames can be processed on the client device, while only extracted features, task events, and quality indicators are stored.
 This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.
-}\DIFaddend 
-
-\DIFaddbegin \DIFadd{Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
-Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.
-Camerala instead extracts features and quality indicators during task execution, allowing task events and sensing frames to be logged within the same client-side runtime without raw video persistence.
-This design also supports online quality checks, such as landmark availability, motion-related changes, and camera-derived brightness changes during data collection.
 }
 
-\DIFaddend To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments conducted in laboratory and home settings}\DIFaddend .
+\DIFadd{Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
+Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts features during task execution and stores only extracted records, task events, and auxiliary quality/context fields.
+This design supports timestamp alignment within the same browser runtime without raw-video persistence}\DIFaddend .
+
+To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments conducted in laboratory and home settings}\DIFaddend .
 
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on operational completion and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
@@ -756,7 +754,7 @@ Peak detection was applied to estimate inter-beat intervals (IBI).
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \DIFadd{Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
 Saved frame records were generated when landmarks were available and were synchronized with task events.
-The logged }\texttt{\DIFadd{quality}} \DIFadd{field was treated as a landmark-availability flag for saved records, not as a continuous face-detection or tracking-confidence value.
+The logged }\texttt{\DIFadd{quality}} \DIFadd{field was treated as a landmark-availability flag for saved records, not as a continuous confidence value from the face-processing pipeline.
 Because continuous confidence values were not stored for all camera frames, including failed detections, failed landmark-detection rates and overall tracking-success rates cannot be reconstructed from the present logs.
 The FaceMesh }\texttt{\DIFadd{minDetectionConfidence}} \DIFadd{and }\texttt{\DIFadd{minTrackingConfidence}} \DIFadd{parameters were both set to 0.5 as implementation settings.
 They were not used as post-hoc analysis thresholds.
@@ -976,12 +974,12 @@ For studies that aim to make claims about physiological responses, a reference p
 \DIFaddend \subsection{Limitations}
 \DIFdelbegin \DIFdel{There are several strict limitationsto this work}\DIFdelend \DIFaddbegin \DIFadd{This study has strict limitations}\DIFaddend .
 First, \DIFdelbegin \DIFdel{this is a single-case exploratory deployment (}\DIFdelend \DIFaddbegin \DIFadd{it was an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{); the results represent observational, deployment-oriented feasibility evidence rather than generalizable population inference}\DIFdelend \DIFaddbegin \DIFadd{deployment with the author as participant}\DIFaddend .
-Second, \DIFdelbegin \DIFdel{the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lightingchanges, subtle postureshifts, display luminescence, or camera placementartifacts inherent to unstructured deployments. Furthermore, the current work does not establish comparative superiority over existing runtimes }\DIFdelend \DIFaddbegin \DIFadd{there was no reference physiological sensor, ECG, or contact PPG.
+Second, \DIFdelbegin \DIFdel{the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lightingchanges, subtle postureshifts, display luminescence, or camera placementartifacts inherent to unstructured deployments. Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitive shifts through sensor-fused studies.
+Even with these limitations, }\DIFdelend \DIFaddbegin \DIFadd{there was no reference physiological sensor, ECG, or contact PPG.
 Third, the deployment used one primary laptop/camera configuration and did not test multiple devices, multiple participants, or multiple home environments.
 Fourth, lighting, posture, camera placement, and task context were not experimentally separated.
 Fifth, no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
-Sixth, the current logs do not store continuous face-detection }\DIFaddend or \DIFdelbegin \DIFdel{APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitive shifts through sensor-fused studies.
-Even with these limitations, the present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{tracking-confidence values for all frames.
+Sixth, the current logs do not store continuous confidence values from }\DIFaddend the \DIFdelbegin \DIFdel{present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{face-processing pipeline for all frames.
 Therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
 Future versions should log continuous confidence values for all frames and apply specified operational thresholds during analysis.
 Seventh, the study does not claim clinical or medical accuracy, general deployability, general feasibility, robustness, or validated cognitive, motivational, psychological, or physiological effects.
