@@ -58,12 +58,14 @@ Thank you for this comment.
 The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-We revised RQ1 and its assessment criteria to focus on completion of the planned 10 sessions and 600 trials, local CSV/ZIP export, timestamp linkage, RT-based trial retention, and exported fields directly reproducible from the output CSV files.
+We revised RQ1 and its assessment criteria to specify concrete operational criteria for the tested deployment.
+RQ1 now asks whether Camerala can complete the planned 10-session, 600-trial remote task deployment and export timestamp-linked local records that satisfy the reaction-time criterion of 100--1500 ms and the window-level landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8.
 The completed deployment consisted of 600 trials in total.
 After applying the reaction-time criterion of 100--1500 ms, 541/600 trials were retained for descriptive analysis.
+In addition, all 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion.
 
 \textbf{Key revised text.}
-``RQ1 was assessed by completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, reaction-time based trial retention, and the presence of reproducible exported fields including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.''
+``For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention after applying the reaction-time criterion of 100--1500 ms, and window-level landmark availability.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -216,15 +218,18 @@ The Abstract, Results, Discussion, Limitations, and Conclusion were revised to s
 \textbf{Revision.}
 We rechecked the logs and analysis description and limited the revised results to indicators directly recomputable from the exported CSV files.
 The manuscript no longer states that the study ``establishes'' a design pattern.
-We removed confidence-threshold filtering, confidence percentages from the face-processing pipeline, and claims about whether face tracking was available in each frame from the current results.
-The quality field is now described as a landmark-availability flag for saved records, not as continuous confidence from the face-processing pipeline.
+We replaced the ambiguous ``Conf $<$ 0.8'' wording with an implementation-faithful description of \texttt{mean\_quality} as a window-level landmark-availability ratio.
+The \texttt{quality} field is a binary landmark-availability flag, and \texttt{mean\_quality} is the average of this flag within each 10-s window.
+Thus, \texttt{mean\_quality} $<$ 0.8 means that landmarks were available in less than 80\% of frames in that window.
+This value is not a continuous MediaPipe confidence score, an rPPG-quality threshold, or evidence of physiological measurement accuracy.
+In the present deployment, all 299 exported windows had \texttt{mean\_quality} = 1.0; therefore, no window was excluded by this criterion.
 The RT-based retained-trial count was updated to 541/600 after applying the 100--1500 ms reaction-time criterion.
 The revised manuscript states that 600 trials were completed in total and that 541/600 trials were retained after the reaction-time criterion.
 The previous exposure-related term was replaced with a frame-to-frame green-channel brightness-change indicator.
 The manuscript also clarifies that this indicator is not a measure of camera exposure settings, external illuminance, environmental events, psychological or physiological state, or rPPG accuracy.
 
 \textbf{Key revised text.}
-``The logged quality field was treated as a landmark-availability flag for saved records, not as a continuous confidence value from the face-processing pipeline.''
+``For each 10-s window, \texttt{mean\_quality} was computed as the mean of this binary flag. Thus, \texttt{mean\_quality} represents the proportion of frames in that window for which landmarks were available.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.

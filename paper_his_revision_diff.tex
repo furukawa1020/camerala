@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Tue Jul  7 23:13:05 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 12:33:46 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -209,11 +209,13 @@ To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on operational completion and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{Under the tested laptop, browser, camera, and task configuration, can Camerala complete the planned 10-session, 600-trial remote task deployment and export timestamp-linked local records that remain usable for descriptive analysis after a specified reaction-time criterion}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{Under the tested laptop, browser, camera, and task configuration, can Camerala complete the planned 10-session, 600-trial remote task deployment and export timestamp-linked local records that satisfy the reaction-time criterion of 100--1500 ms and the window-level landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 for descriptive analysis}\DIFaddend ?
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors}\DIFaddend ?
 \end{itemize}
 
-\DIFaddbegin \DIFadd{RQ1 was assessed by completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, reaction-time based trial retention, and the presence of reproducible exported fields including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+\DIFaddbegin \DIFadd{For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention after applying the reaction-time criterion of 100--1500 ms, and window-level landmark availability.
+The landmark-availability criterion was defined using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{below 0.8 were treated as below the operational landmark-availability criterion.
+We also examined whether the exported logs contained reproducible fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 }
@@ -449,7 +451,7 @@ The average luminance $Y_t$ is computed from the RGB channels:
 \DIFadd{The implementation samples a small forehead region around a FaceMesh landmark and records the green-channel brightness as an rPPG-oriented ROI value.
 It also computes a frame-to-frame green-channel brightness-change indicator:
 }\DIFaddend \begin{equation}
-    \DIFadd{B_{\Delta}(t) = | G_t - G_{t-1} | ,
+    \DIFdelbegin \DIFdel{Y_t = \frac{1}{N_{px}} \sum_{(u,v) \in R_{fore}} (0.299R_{u,v} + 0.587G_{u,v} + 0.114}\DIFdelend B\DIFdelbegin \DIFdel{_{u,v}}\DIFdelend \DIFaddbegin \DIFadd{_{\Delta}(t}\DIFaddend ) \DIFaddbegin \DIFadd{= | G_t - G_{t-1} | ,
 }\DIFaddend \end{equation}
 \DIFdelbegin \DIFdel{The Exposure Fluctuation metric is then defined as the first derivative of luminance:
 }\begin{displaymath}
@@ -576,7 +578,7 @@ While traditional between-subjects group designs (Large-N) are strictly necessar
 The deployment consisted of 10 sessions and }\DIFaddend 600 \DIFdelbegin \DIFdel{) serves as a technical proof-of-concept for the }\textit{\DIFdel{system architecture}}%DIFAUXCMD
 \DIFdel{.
 This design allows us to observe the system's operational continuity across contrasting ecological conditions without the compounding variance of diverse user demographics.
-The study followed an A-B-C logic within each session (see Fig. 4), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
+The study followed an A-B-C logic within each session (see Fig. \ref{fig:sced_design}), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
 Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects}\DIFdelend \DIFaddbegin \DIFadd{total trials.
 Each session consisted of six 10-trial blocks, with two blocks for each instructional task context (neutral instruction, negative instruction, and positive instruction), as reflected in the exported block plans.
 The order of blocks was randomized by the web application}\DIFaddend .
@@ -715,10 +717,20 @@ These task parameters are reported for reproducibility; the instruction blocks a
 
 \subsection{Dependent Measures and Pre-processing}
 All \DIFdelbegin \DIFdel{data were exported as JSONL and }\DIFdelend \DIFaddbegin \DIFadd{exported logs were }\DIFaddend processed sequentially.
-\DIFdelbegin %DIFDELCMD < 
+\DIFaddbegin \DIFadd{The primary behavioral measure was reaction time (RT), with an operational analysis range of 100--1500 ms.
+The primary sensor-derived measures were rPPG-oriented ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel brightness-change indicator.
+Behavioral trials were retained when reaction times fell within 100--1500 ms.
+Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
+Frame records were synchronized with task events during active sessions.
+For each processed frame, Camerala logged a binary landmark-availability flag, }\texttt{\DIFadd{quality}}\DIFadd{, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
+For each 10-s window, }\texttt{\DIFadd{mean\_quality}} \DIFadd{was computed as the mean of this binary flag.
+Thus, }\texttt{\DIFadd{mean\_quality}} \DIFadd{represents the proportion of frames in that window for which landmarks were available.
+This value is not a continuous MediaPipe confidence score, an rPPG-quality threshold, or evidence of physiological measurement accuracy.
+The FaceMesh }\texttt{\DIFadd{minDetectionConfidence}} \DIFadd{and }\texttt{\DIFadd{minTrackingConfidence}} \DIFadd{parameters were both set to 0.5 as implementation settings.
+They were not used as post-hoc analysis thresholds.
+}\DIFaddend 
 
-%DIFDELCMD < %%%
-\subsubsection{\DIFdel{Task Performance Metrics}}
+\DIFdelbegin \subsubsection{\DIFdel{Task Performance Metrics}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
 %DIFDELCMD < \begin{itemize}
@@ -741,26 +753,23 @@ All \DIFdelbegin \DIFdel{data were exported as JSONL and }\DIFdelend \DIFaddbegi
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
 %DIFDELCMD < \begin{itemize}
+\begin{itemize}%DIFAUXCMD
 %DIFDELCMD <     \item %%%
+\item%DIFAUXCMD
 \textbf{\DIFdel{Head Motion Index ($M_t$)}}%DIFAUXCMD
-\DIFdel{: Calculated as the frame-by-frame Euclidean displacement of rigid facial landmarks }\DIFdelend \DIFaddbegin \DIFadd{The primary behavioral measure was reaction time (RT), with an operational analysis range of 100--1500 ms.
-The primary sensor-derived measures were rPPG-oriented ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel brightness-change indicator.
-Behavioral trials were retained when reaction times fell within 100--1500 ms}\DIFaddend .
-\DIFdelbegin %DIFDELCMD < \item %%%
+\DIFdel{: Calculated as the frame-by-frame Euclidean displacement of rigid facial landmarks .
+    }%DIFDELCMD < \item %%%
+\item%DIFAUXCMD
 \textbf{\DIFdel{rPPG Heart Rate}}%DIFAUXCMD
 \DIFdel{: The raw POS signal trace was bandpass filtered (0.7-3.0 Hz).
 Peak detection was applied to estimate inter-beat intervals (IBI).
-}%DIFDELCMD < \end{itemize}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \DIFadd{Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
-Saved frame records were generated when landmarks were available and were synchronized with task events.
-The logged }\texttt{\DIFadd{quality}} \DIFadd{field was treated as a landmark-availability flag for saved records, not as a continuous confidence value from the face-processing pipeline.
-Because continuous confidence values were not stored for all camera frames, including failed detections, failed landmark-detection rates and overall tracking-success rates cannot be reconstructed from the present logs.
-The FaceMesh }\texttt{\DIFadd{minDetectionConfidence}} \DIFadd{and }\texttt{\DIFadd{minTrackingConfidence}} \DIFadd{parameters were both set to 0.5 as implementation settings.
-They were not used as post-hoc analysis thresholds.
-}\DIFaddend 
+}
+\end{itemize}%DIFAUXCMD
+%DIFDELCMD < \end{itemize}
+%DIFDELCMD < 
 
-% =================================================================================
+%DIFDELCMD < %%%
+\DIFdelend % =================================================================================
 % SECTION 5: RESULTS
 % =================================================================================
 \section{Results}
@@ -772,18 +781,19 @@ After applying the reaction-time criterion of 100--1500 ms, 541/600 }\DIFaddend 
 We filtered trials with extreme reaction times ($RT < 100ms$ or $RT > 1500ms$) and low face tracking confidence ($Conf < 0.8$), resulting in 582 valid trials (97.0\% retention).
 }\DIFdelend \DIFaddbegin \DIFadd{were retained for descriptive analysis.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
+All 299 exported windows had }\texttt{\DIFadd{mean\_quality}} \DIFadd{= 1.0 and therefore satisfied the operational landmark-availability criterion of 0.8; no window was excluded by this criterion.
 This retention count describes the available analyzed trials under the tested configuration and does not demonstrate general feasibility across devices, users, or environments.
 }\DIFaddend 
 
 \DIFdelbegin \subsection{\DIFdel{Environmental Noise and Signal Extraction Pipeline}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{Before observing behavioral differences, we assessed the stability of the client-side rPPG and FaceMesh pipeline across the two environments.
-As shown in Table \ref{tab:data_quality} }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task and Exported Feature Summaries}}
+\DIFdel{Before observing behavioral differences, we assessed the stability of }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task and Exported Feature Summaries}}
 \DIFadd{Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.
-After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in the home setting.
+After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in }\DIFaddend the \DIFdelbegin \DIFdel{client-side rPPG and FaceMesh pipeline across the two environments.
+As shown in Table \ref{tab:data_quality} }\DIFdelend \DIFaddbegin \DIFadd{home setting.
 Accuracy was 85.5\% and 82.1\%, respectively.
-Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, }\DIFaddend and \DIFdelbegin \DIFdel{Fig. 2, the Home environment presented greater challenges for signal quality.
+Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, }\DIFaddend and \DIFdelbegin \DIFdel{Fig. \ref{fig:data_quality}, the Home environment presented greater challenges for signal quality.
 }%DIFDELCMD < 
 
 %DIFDELCMD < \begin{figure}[t]
