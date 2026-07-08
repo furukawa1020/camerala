@@ -39,15 +39,18 @@ Title page; Introduction; Contributions.
 
 \condition{2}{The necessity of real-time processing is not sufficiently explained}
 \textbf{Response.}
-Thank you for pointing this out.
-The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging in private remote task experiments, rather than as the only technically possible architecture.
+Thank you for this important clarification.
+We revised the manuscript to explain that real-time processing is not claimed as the only technically possible architecture.
+We acknowledge that local video recording followed by offline processing could preserve timestamps if implemented carefully.
 
 \textbf{Revision.}
-A paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but remote psychological or psychophysiological task experiments may occur in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
-The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence and to store synchronized task events, feature records, and auxiliary quality/context fields in the same browser runtime.
+The revised manuscript clarifies that Camerala targets remote psychological and psychophysiological task experiments conducted in private spaces.
+In such settings, retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
+The role of real-time browser-side processing is thus feature-only local logging and timestamp alignment within the same client-side runtime, not online task adaptation or a claim that physiological estimates are more accurate.
 
 \textbf{Key revised text.}
-``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.''
+``Local video recording followed by offline processing could preserve timestamps if implemented carefully. However, the intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private space, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.''
 
 \textbf{Location.}
 Introduction; System Architecture; Data Management and Local-First Persistence.

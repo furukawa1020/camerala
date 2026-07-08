@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 13:25:16 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 13:45:33 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -199,10 +199,11 @@ A local-first browser architecture offers an architectural privacy advantage: ra
 This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.
 }
 
-\DIFadd{Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture.
-Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
-Camerala therefore extracts features during task execution and stores only extracted records, task events, and auxiliary quality/context fields.
-This design supports timestamp alignment within the same browser runtime without raw-video persistence}\DIFaddend .
+\DIFadd{Real-time processing is not treated as the only technically possible architecture.
+Local video recording followed by offline processing could preserve timestamps if implemented carefully.
+However, the intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private space, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
+In this sense, real-time browser-side processing is used to support feature-only local logging and timestamp alignment within the same client-side runtime, rather than to claim more accurate physiological estimates or online task adaptation}\DIFaddend .
 
 To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments conducted in laboratory and home settings}\DIFaddend .
 
