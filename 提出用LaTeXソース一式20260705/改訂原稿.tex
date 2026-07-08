@@ -120,7 +120,7 @@ These analyses are intended only to describe operational completion and exported
 In this paper, we focus on system integration and conservative deployment observations. The contributions are:
 
 \begin{enumerate}
-    \item \textbf{Local-first browser-native integration prototype}: A research prototype for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
+    \item \textbf{Local-first browser-native system-integration implementation}: An implementation for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
     \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
     \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment showing that, under the tested configuration, the exported records satisfied the specified reaction-time and landmark-availability criteria for descriptive analysis.
 \end{enumerate}
@@ -156,7 +156,7 @@ Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions
 Additional peer-reviewed work on open-source implementations, efficient/mobile sensing, rPPG benchmarking, and privacy-related signal removal provides supporting context \cite{kooij_naber_open_rppg,efficientphys,mobilephys,rppg_toolbox,bhutani_privacy_rppg}.
 These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
-Instead, Camerala is positioned as a system-integration prototype for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
 Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych_joss} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
@@ -194,7 +194,7 @@ Instead, it documents whether the integrated browser runtime can complete the pl
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is positioned as a local-first, browser-native research prototype for remote psychological and psychophysiological task experiments.
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is positioned as a local-first, browser-native research implementation for remote psychological and psychophysiological task experiments.
 Its contribution is not browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
 Rather, it integrates task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 Although the deployment in this paper used one Gabor-orientation task, the runtime separates task logic from the sensing pipeline so that other task procedures can be implemented without changing the feature-extraction loop.

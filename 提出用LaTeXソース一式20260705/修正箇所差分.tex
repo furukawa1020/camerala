@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 14:12:29 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 14:19:38 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -234,7 +234,7 @@ In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture
     }%DIFDELCMD < \item %%%
 \item%DIFAUXCMD
 \textbf{\DIFdel{System Design for Task-Aligned On-Device Sensing and Local Persistence}}%DIFAUXCMD
-\DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{integration prototype}}\DIFadd{: A research prototype for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
+\DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation}}\DIFadd{: An implementation for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
     \item \DIFaddbegin \textbf{\DIFadd{Task-synchronized feature logging pipeline}}\DIFadd{: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
     }\item \DIFaddend \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{deployment under limited conditions}\DIFaddend }: \DIFdelbegin \DIFdel{A longitudinal case deployment across laboratory and home settings, showing thatheterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{An N=1 author-participant deployment showing that, under the tested configuration, the exported records satisfied the specified reaction-time and landmark-availability criteria for descriptive analysis}\DIFaddend .
 \end{enumerate}
@@ -303,7 +303,7 @@ Additional peer-reviewed work on open-source implementations, efficient/mobile s
 .
 These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
-Instead, Camerala is positioned as a system-integration prototype for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 }\DIFaddend 
 
 \DIFdelbegin %DIFDELCMD < \begin{table*}[t]
@@ -388,7 +388,7 @@ By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can enable browser-ba
 % =================================================================================
 \section{System Architecture: Camerala}
 \textbf{Camerala} (derived from "Camera" + "Laboratory") is \DIFdelbegin \DIFdel{a research prototype framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction.
-The }\DIFdelend \DIFaddbegin \DIFadd{positioned as a local-first, browser-native research prototype for remote psychological and psychophysiological task experiments.
+The }\DIFdelend \DIFaddbegin \DIFadd{positioned as a local-first, browser-native research implementation for remote psychological and psychophysiological task experiments.
 Its }\DIFaddend contribution is not \DIFdelbegin \DIFdel{a new physiological estimator in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized }\DIFdelend \DIFaddbegin \DIFadd{browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
 Rather, it integrates }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first persistence in a single browser-native }\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser }\DIFaddend runtime.
 Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysical taskto measure feasibility}\DIFdelend \DIFaddbegin \DIFadd{deployment in this paper used one Gabor-orientation task}\DIFaddend , the runtime \DIFdelbegin \DIFdel{isolates the stimulus presentation }\DIFdelend \DIFaddbegin \DIFadd{separates task }\DIFaddend logic from the sensing pipeline \DIFdelbegin \DIFdel{(as depicted by the distinct modules in Fig. \ref{fig:system_architecture}). As a supporting example of this modularity beyond the primary task used in the deployment, we implemented a supplementary spatial-memory task using the same sensing and logging pipeline; an example configuration and resulting JSONL log are included in the Appendix}\DIFdelend \DIFaddbegin \DIFadd{so that other task procedures can be implemented without changing the feature-extraction loop}\DIFaddend .
