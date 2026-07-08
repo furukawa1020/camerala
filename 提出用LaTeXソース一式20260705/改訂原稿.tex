@@ -67,7 +67,7 @@ It synchronizes task events with face-image-derived feature records and exports 
 In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
 These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala operated as a local-first browser-native logging implementation and produced task-synchronized exported records that satisfied the study-specific operational criteria.
-They do not establish general feasibility, robustness, naturalistic deployment validity, rPPG accuracy, or psychological/physiological effects.
+They do not establish general feasibility, robustness, deployment validity outside the tested task settings, rPPG accuracy, or psychological/physiological effects.
 \end{abstract}
 
 \begin{keyword}
@@ -204,7 +204,7 @@ Although the deployment in this paper used one Gabor-orientation task, the runti
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=.95\linewidth]{paper_figures/Figure1_SystemPipeline.png}
-    \caption{Overview of the Camerala system architecture. The browser obtains webcam frames, extracts FaceMesh/rPPG-oriented features and quality indicators, synchronizes them with task events, and exports local logs. Under the tested implementation, only extracted features and task events are logged; raw video is neither transmitted nor stored by Camerala.}
+    \caption{Overview of the Camerala system architecture. The browser obtains webcam frames, extracts face-derived exported fields, aggregates 10-s window records, synchronizes them with task events, and exports local CSV/ZIP logs. Under the tested implementation, only extracted fields and task events are logged; raw facial video is neither transmitted nor stored by Camerala.}
     \label{fig:system_architecture}
 \end{center}
 \end{figure}
@@ -509,7 +509,7 @@ The study does not claim clinical or medical accuracy, general deployability, ge
 This paper presented Camerala as a local-first browser-native system-integration implementation for remote psychological and psychophysiological task experiments.
 In the present single-case author-participant deployment, Camerala completed the planned task procedure and exported task-synchronized face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
 The retained data included 541/600 trials after the reaction-time criterion, and all 299 exported windows satisfied the \texttt{mean\_quality} criterion.
-These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, naturalistic deployment validity, validated rPPG accuracy, or psychological/physiological effects.
+These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, deployment validity outside the tested task settings, validated rPPG accuracy, or psychological/physiological effects.
 
 \section*{Declarations}
 \textbf{Data availability.}

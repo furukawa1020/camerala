@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 15:24:23 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 16:01:32 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -167,7 +167,7 @@ In an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIF
 These results suggest that }\DIFdelend \DIFaddbegin \DIFadd{, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
 These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala operated as a local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous home and laboratory environments}\DIFdelend \DIFaddbegin \DIFadd{logging implementation and produced task-synchronized exported records that satisfied the study-specific operational criteria.
-They do not establish general feasibility, robustness, naturalistic deployment validity, rPPG accuracy, or psychological/physiological effects}\DIFaddend .
+They do not establish general feasibility, robustness, deployment validity outside the tested task settings, rPPG accuracy, or psychological/physiological effects}\DIFaddend .
 \end{abstract}
 
 \begin{keyword}
@@ -403,7 +403,7 @@ Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysica
     \DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
 %DIFDELCMD <     %%%
 \DIFdelendFL \DIFaddbeginFL \includegraphics[width=.95\linewidth]{paper_figures/Figure1_SystemPipeline.png}
-    \DIFaddendFL \caption{Overview of the Camerala \DIFdelbeginFL \DIFdelFL{System Architecture}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{system architecture}\DIFaddendFL . The \DIFdelbeginFL \DIFdelFL{system runs entirely client-side, processing }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{browser obtains }\DIFaddendFL webcam frames\DIFdelbeginFL \DIFdelFL{via MediaPipe Face Mesh (Wasm) to extract rPPG }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{, extracts FaceMesh/rPPG-oriented features }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{Head Motion signals in real-time. Data is synchronized }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{quality indicators, synchronizes them }\DIFaddendFL with \DIFdelbeginFL \DIFdelFL{the Psychophysics Task Engine (Canvas API) }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{task events, }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{stored locally}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{exports local logs. Under the tested implementation}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{ensuring no }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{only extracted features and task events are logged; }\DIFaddendFL raw video \DIFdelbeginFL \DIFdelFL{ever leaves the user's device}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{is neither transmitted nor stored by Camerala}\DIFaddendFL .}
+    \DIFaddendFL \caption{Overview of the Camerala \DIFdelbeginFL \DIFdelFL{System Architecture}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{system architecture}\DIFaddendFL . The \DIFdelbeginFL \DIFdelFL{system runs entirely client-side, processing }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{browser obtains }\DIFaddendFL webcam frames\DIFdelbeginFL \DIFdelFL{via MediaPipe Face Mesh (Wasm) to extract rPPG }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{, extracts face-derived exported fields, aggregates 10-s window records, synchronizes them with task events, }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{Head Motion signals in real-time}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{exports local CSV/ZIP logs}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{Data is synchronized with }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Under }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{Psychophysics Task Engine (Canvas API) and stored locally}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{tested implementation}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{ensuring no }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{only extracted fields and task events are logged; }\DIFaddendFL raw \DIFaddbeginFL \DIFaddFL{facial }\DIFaddendFL video \DIFdelbeginFL \DIFdelFL{ever leaves the user's device}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{is neither transmitted nor stored by Camerala}\DIFaddendFL .}
     \label{fig:system_architecture}
 \end{center}
 \end{figure}
@@ -1008,7 +1008,7 @@ Our proof-of-concept deploymentprovided initial evidence of the framework's brow
 These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, local-first physiological sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation for remote psychological and psychophysiological task experiments.
 In the present single-case author-participant deployment, Camerala completed the planned task procedure and exported task-synchronized face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
 The retained data included 541/600 trials after the reaction-time criterion, and all 299 exported windows satisfied the }\texttt{\DIFadd{mean\_quality}} \DIFadd{criterion.
-These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, naturalistic deployment validity, validated rPPG accuracy, or psychological/physiological effects}\DIFaddend .
+These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, deployment validity outside the tested task settings, validated rPPG accuracy, or psychological/physiological effects}\DIFaddend .
 
 \section*{\DIFdelbegin \DIFdel{Data availability}%DIFDELCMD < \MBLOCKRIGHTBRACE
 %DIFDELCMD < %%%
