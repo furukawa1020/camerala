@@ -451,7 +451,7 @@ The average luminance $Y_t$ is computed from the RGB channels:
 \DIFadd{The implementation samples a small forehead region around a FaceMesh landmark and records the green-channel brightness as an rPPG-oriented ROI value.
 It also computes a frame-to-frame green-channel brightness-change indicator:
 }\DIFaddend \begin{equation}
-    \DIFdelbegin \DIFdel{Y_t = \frac{1}{N_{px}} \sum_{(u,v) \in R_{fore}} (0.299R_{u,v} + 0.587G_{u,v} + 0.114}\DIFdelend B\DIFdelbegin \DIFdel{_{u,v}}\DIFdelend \DIFaddbegin \DIFadd{_{\Delta}(t}\DIFaddend ) \DIFaddbegin \DIFadd{= | G_t - G_{t-1} | ,
+    \DIFaddbegin \DIFadd{B_{\Delta}(t) = | G_t - G_{t-1} | ,
 }\DIFaddend \end{equation}
 \DIFdelbegin \DIFdel{The Exposure Fluctuation metric is then defined as the first derivative of luminance:
 }\begin{displaymath}
@@ -578,7 +578,7 @@ While traditional between-subjects group designs (Large-N) are strictly necessar
 The deployment consisted of 10 sessions and }\DIFaddend 600 \DIFdelbegin \DIFdel{) serves as a technical proof-of-concept for the }\textit{\DIFdel{system architecture}}%DIFAUXCMD
 \DIFdel{.
 This design allows us to observe the system's operational continuity across contrasting ecological conditions without the compounding variance of diverse user demographics.
-The study followed an A-B-C logic within each session (see Fig. \ref{fig:sced_design}), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
+The study followed an A-B-C logic within each session (see Fig. 4), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
 Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects}\DIFdelend \DIFaddbegin \DIFadd{total trials.
 Each session consisted of six 10-trial blocks, with two blocks for each instructional task context (neutral instruction, negative instruction, and positive instruction), as reflected in the exported block plans.
 The order of blocks was randomized by the web application}\DIFaddend .
@@ -793,7 +793,7 @@ This retention count describes the available analyzed trials under the tested co
 After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in }\DIFaddend the \DIFdelbegin \DIFdel{client-side rPPG and FaceMesh pipeline across the two environments.
 As shown in Table \ref{tab:data_quality} }\DIFdelend \DIFaddbegin \DIFadd{home setting.
 Accuracy was 85.5\% and 82.1\%, respectively.
-Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, }\DIFaddend and \DIFdelbegin \DIFdel{Fig. \ref{fig:data_quality}, the Home environment presented greater challenges for signal quality.
+Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, }\DIFaddend and \DIFdelbegin \DIFdel{Fig. 2, the Home environment presented greater challenges for signal quality.
 }%DIFDELCMD < 
 
 %DIFDELCMD < \begin{figure}[t]
