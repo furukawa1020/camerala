@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 15:01:04 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 15:05:50 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -968,13 +968,15 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 % =================================================================================
 \section{Discussion}
 
-The \DIFdelbegin \DIFdel{central finding of this deployment is not a population-level effect of instructional framing, but that identical task procedures produced different observed task and physiological patterns across environments.
+The \DIFdelbegin \DIFdel{central finding }\DIFdelend \DIFaddbegin \DIFadd{main implication }\DIFaddend of this deployment is not \DIFdelbegin \DIFdel{a population-level effect of instructional framing, but that identical task procedures produced different observed task and physiological patterns across environments.
 For system evaluation, this suggests that laboratory-only validation may overestimate signal stability and condition separability under domestic use.
 This highlights an engineering constraint for continuous sensing: systems evaluated purely on Lab data may exhibit environment-associated changes in observed signals and measurement quality when moved from laboratory to domestic settings.
-}\DIFdelend \DIFaddbegin \DIFadd{main implication of this work is system-design oriented.
-Camerala illustrates how a browser-native runtime can combine task events, webcam-derived features, quality indicators, and local persistence without raw-video transmission in a remote task experiment conducted in laboratory and home settings.
-The results do not establish general deployability or physiological/cognitive effects.
-Instead, they motivate design requirements and safeguards for future local-first deployments.
+}\DIFdelend \DIFaddbegin \DIFadd{that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
+Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.
+In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.
+Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records for descriptive analysis.
+However, the laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
+Future versions should include pre-session camera and lighting checks, explicit operational criteria, reference physiological sensors, multiple participants, multiple devices, and controlled lighting, posture, and camera conditions.
 }\DIFaddend 
 
 \DIFaddbegin \subsection{\DIFadd{Browser-Native Local-First Logging as a Design Pattern}}
@@ -1005,7 +1007,7 @@ Future work should evaluate psychological task conditions under more controlled 
 }
 
 \subsection{\DIFadd{Design Safeguards for Future Camerala Deployments}}
-\DIFadd{Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, camera-derived brightness-change records, and specified quality-aware analysis rules.
+\DIFadd{Future deployments should incorporate clearer safeguards: task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images.
 For studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 }

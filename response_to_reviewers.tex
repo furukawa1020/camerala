@@ -223,15 +223,19 @@ Participant section; Experimental Procedure and Instructional Task Contexts; Res
 
 \condition{12}{The central claim in the Discussion should be reconsidered}
 \textbf{Response.}
-Thank you for this comment.
-The Discussion was rewritten around what the system demonstrated under the tested deployment and what remains unresolved.
+Thank you for this important suggestion.
+We revised the Discussion so that it no longer uses the known sensitivity of video-based physiological sensing to home/laboratory conditions as the central claim.
 
 \textbf{Revision.}
-The revised Discussion focuses on the fact that the system was built and ran under laboratory and home settings, while the observed differences remain deployment-context differences that cannot isolate psychological or physiological effects.
-Future validation requirements and design safeguards were added.
+The revised Discussion now focuses on what the present deployment newly contributes as a system study: design requirements and safeguards for a local-first, browser-native logging architecture for remote psychological/psychophysiological task experiments.
+Specifically, it discusses the need for task-event/frame-record timestamp alignment, operational landmark-availability criteria, motion and brightness-change records, hardware/browser/camera reporting, environment reporting, and cautious interpretation when raw facial video is not retained.
+The Discussion also states that the observed laboratory/home differences are deployment-context differences, not psychological, cognitive, motivational, or physiological effects.
 
 \textbf{Key revised text.}
-``The results do not establish general deployability or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
+``The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
+Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.''
+
+``In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.''
 
 \textbf{Location.}
 Discussion.

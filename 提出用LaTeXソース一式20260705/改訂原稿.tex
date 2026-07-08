@@ -483,10 +483,12 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 % =================================================================================
 \section{Discussion}
 
-The main implication of this work is system-design oriented.
-Camerala illustrates how a browser-native runtime can combine task events, webcam-derived features, quality indicators, and local persistence without raw-video transmission in a remote task experiment conducted in laboratory and home settings.
-The results do not establish general deployability or physiological/cognitive effects.
-Instead, they motivate design requirements and safeguards for future local-first deployments.
+The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
+Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.
+In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.
+Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records for descriptive analysis.
+However, the laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
+Future versions should include pre-session camera and lighting checks, explicit operational criteria, reference physiological sensors, multiple participants, multiple devices, and controlled lighting, posture, and camera conditions.
 
 \subsection{Browser-Native Local-First Logging as a Design Pattern}
 The useful system property demonstrated here is integration.
@@ -511,7 +513,7 @@ The author-participant knew that the instructions were experimentally constructe
 Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
 
 \subsection{Design Safeguards for Future Camerala Deployments}
-Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, camera-derived brightness-change records, and specified quality-aware analysis rules.
+Future deployments should incorporate clearer safeguards: task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images.
 For studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 

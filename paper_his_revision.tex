@@ -155,8 +155,7 @@ FacePhys-Demo demonstrates browser-based rPPG monitoring with local inference in
 RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhythmedge}.
 Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
 Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \cite{di_lernia_rppg_wild}.
-Additional peer-reviewed work on open-source implementations, efficient/mobile sensing, rPPG benchmarking, and privacy-related signal removal provides supporting context \cite{kooij_naber_open_rppg,efficientphys,mobilephys,rppg_toolbox,bhutani_privacy_rppg}.
-These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
+Together, these related studies and public systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
 Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 
@@ -170,7 +169,8 @@ Table \ref{tab:related_work} maps this design trade-off space.
     \begin{center}
     \caption{Design Trade-off Mapping of Data Collection Platforms}
 \label{tab:related_work}
-\footnotesize
+\scriptsize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{p{0.20\textwidth}p{0.14\textwidth}p{0.15\textwidth}p{0.14\textwidth}p{0.11\textwidth}p{0.11\textwidth}}
 \toprule
 \textbf{System / Platform} & \textbf{On-device video processing} & \textbf{Task-sensing synchronization} & \textbf{Local-first persistence} & \textbf{Raw video export} & \textbf{Typical use} \\
@@ -184,7 +184,7 @@ Cloud sensing APIs & No & Low or asynchronous & No & Often required & Video anal
 \end{tabular}
 \vspace{1mm}
 
-\footnotesize{\textit{Note: The table summarizes design emphasis rather than categorical superiority. Capabilities depend on implementation and deployment configuration.}}
+\scriptsize{\textit{Note: The table summarizes design emphasis rather than categorical superiority. Capabilities depend on implementation and deployment configuration.}}
 \end{center}
 \end{table*}
 
@@ -483,51 +483,30 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 % =================================================================================
 \section{Discussion}
 
-The main implication of this work is system-design oriented.
-Camerala illustrates how a browser-native runtime can combine task events, webcam-derived features, quality indicators, and local persistence without raw-video transmission in a remote task experiment conducted in laboratory and home settings.
-The results do not establish general deployability or physiological/cognitive effects.
-Instead, they motivate design requirements and safeguards for future local-first deployments.
+The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
+Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.
+In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.
+Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records for descriptive analysis.
+However, the laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
+Future versions should include pre-session camera and lighting checks, explicit operational criteria, reference physiological sensors, multiple participants, multiple devices, and controlled lighting, posture, and camera conditions.
 
-\subsection{Browser-Native Local-First Logging as a Design Pattern}
-The useful system property demonstrated here is integration.
-Task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
-This can reduce the need for raw-video handling and server-side timestamp reconciliation.
-However, because raw video is not stored, researchers lose the ability to visually inspect many artifacts after data collection.
-This trade-off makes quality-aware logging especially important.
+Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
+This can reduce raw-video handling and server-side timestamp reconciliation, but it also removes the possibility of visually inspecting many artifacts after data collection.
+The trade-off makes quality-aware logging important.
+The relevant indicators include landmark availability, rPPG-oriented ROI values, head-motion estimates, and camera-image-derived brightness-change records; these values can support pre-session checks and descriptive inspection, but they are not proof that rPPG estimates are accurate or that motion-induced rPPG degradation has been corrected.
 
-\subsection{Quality Indicators for Laboratory and Home Deployment Contexts}
-The deployment suggests that future systems should log not only task performance and rPPG-oriented estimates, but also indicators that help interpret the measurement pipeline.
-Such indicators include landmark availability, rPPG-oriented ROI values, head-motion estimates, and camera-image-derived brightness-change records.
-These values can support pre-session checks and descriptive inspection.
-They should not be treated as proof that rPPG estimates are accurate.
-Motion estimates are logged only as deployment-context records; they do not indicate correction of motion-induced rPPG degradation.
-
-\subsection{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}
-The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences.
-They may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
-The present study was not designed to isolate psychological or physiological state changes from these factors.
-The present deployment also cannot validate the psychological effectiveness of the negative or positive instruction contexts.
-The author-participant knew that the instructions were experimentally constructed, and no manipulation check was included.
-Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
-
-\subsection{Design Safeguards for Future Camerala Deployments}
-Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, camera-derived brightness-change records, and specified quality-aware analysis rules.
-If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images.
-For studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
+The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+The study was not designed to isolate psychological or physiological state changes from these factors, and it cannot validate the psychological effectiveness of the negative or positive instruction contexts.
+Future deployments should therefore incorporate task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
+If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images; for studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 
 \subsection{Limitations}
-This study has strict limitations.
-First, it was an exploratory N=1 deployment with the author as participant.
-Second, there was no reference physiological sensor, ECG, or contact PPG.
-Third, the deployment used one primary laptop/camera configuration and did not test multiple devices, multiple participants, or multiple home environments.
-Fourth, lighting, screen light, posture, camera placement, task timing, participant state, and task context were not experimentally separated.
-Fifth, no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
-Sixth, the current implementation does not correct motion-induced rPPG degradation.
-Future work should evaluate motion handling with reference physiological sensors, controlled posture/camera conditions, and predefined artifact-handling rules.
-Seventh, the current logs do not store continuous confidence values from the face-processing pipeline for all frames.
-Therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
+This study has strict limitations: it was an exploratory N=1 deployment with the author as participant; no reference physiological sensor, ECG, or contact PPG was collected; one primary laptop/camera configuration was used; and multiple devices, multiple participants, and multiple home environments were not tested.
+Lighting, screen light, posture, camera placement, task timing, participant state, and task context were not experimentally separated, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
+The current implementation does not correct motion-induced rPPG degradation, and future work should evaluate motion handling with reference physiological sensors, controlled posture/camera conditions, and predefined artifact-handling rules.
+The current logs also do not store continuous confidence values from the face-processing pipeline for all frames; therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
 Future versions should log continuous confidence values for all frames and apply specified operational thresholds during analysis.
-Eighth, the study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects.
+The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects.
 The present study presents an implementation example of browser-native, task-aligned, local-first feature logging under limited laboratory and home conditions.
 
 \section{Conclusion}
@@ -538,18 +517,20 @@ The deployment produced synchronized behavioral logs and face-derived and sensor
 These observations should not be interpreted as evidence of general deployability or physiological/cognitive effects.
 Instead, Camerala illustrates a task-aligned browser-native implementation and highlights design safeguards needed for future local-first physiological feature logging in home-based psychophysical experiments.
 
-\section*{Data availability}
+\section*{Declarations}
+\textbf{Data availability.}
 The dataset containing facial landmarks, sensor-derived features, and behavioral responses associated with this study cannot be made publicly available due to privacy restrictions and potentially identifiable face-derived data from a domestic deployment context.
 
-\section*{CRediT authorship contribution statement}
+\textbf{CRediT authorship contribution statement.}
 \textbf{Kotaro Furukawa}: Conceptualization, Methodology, Software, Investigation, Formal analysis, Writing - original draft.
 
-\section*{Declaration of competing interest}
+\textbf{Declaration of competing interest.}
 The author declares that there are no known competing financial interests or personal relationships that could have appeared to influence this work.
 
-\section*{Funding}
+\textbf{Funding.}
 This work was supported by the College of Transdisciplinary Sciences for Innovation, Kanazawa University.
 
+{\footnotesize
 \begin{thebibliography}{99}
 
 \bibitem{verkruysse2008}
@@ -600,34 +581,6 @@ D. Di~Lernia, G. Finotti, M. Tsakiris, G. Riva, and M. Naber.
 \newblock {\em Behavior Research Methods}, 56:6904--6914, 2024.
 \newblock doi:10.3758/s13428-024-02398-0.
 
-\bibitem{kooij_naber_open_rppg}
-K.~M. van der Kooij and M. Naber.
-\newblock An open-source remote heart rate imaging method with practical apparatus and algorithms.
-\newblock {\em Behavior Research Methods}, 51:2106--2119, 2019.
-\newblock doi:10.3758/s13428-019-01256-8.
-
-\bibitem{efficientphys}
-X. Liu, B. Hill, Z. Jiang, S. Patel, and D. McDuff.
-\newblock EfficientPhys: Enabling simple, fast and accurate camera-based cardiac measurement.
-\newblock In {\em Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)}, pages 5008--5017, 2023.
-
-\bibitem{mobilephys}
-X. Liu, Y. Wang, S. Xie, X. Zhang, Z. Ma, D. McDuff, and S. Patel.
-\newblock MobilePhys: Personalized mobile camera-based contactless physiological sensing.
-\newblock {\em Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies}, 6(1), 2022.
-\newblock doi:10.1145/3517225.
-
-\bibitem{rppg_toolbox}
-X. Liu, G. Narayanswamy, A. Paruchuri, X. Zhang, J. Tang, Y. Zhang, R. Sengupta, S. Patel, Y. Wang, and D. McDuff.
-\newblock rPPG-Toolbox: Deep remote PPG toolbox.
-\newblock {\em Advances in Neural Information Processing Systems}, 36, Datasets and Benchmarks Track, 2023.
-
-\bibitem{bhutani_privacy_rppg}
-S. Bhutani, M. Elgendi, and C. Menon.
-\newblock Preserving privacy and video quality through remote physiological signal removal.
-\newblock {\em Communications Engineering}, 4:66, 2025.
-\newblock doi:10.1038/s44172-025-00363-z.
-
 \bibitem{jspsych_joss}
 J.~R. de Leeuw, R.~A. Gilbert, and B. Luchterhandt.
 \newblock jsPsych: Enabling an open-source collaborative ecosystem of behavioral experiments.
@@ -646,40 +599,6 @@ Google AI Edge.
 \newblock \url{https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker}, accessed July 5, 2026.
 
 \end{thebibliography}
-
-\appendix{}
-\subsection*{Supporting Example: Task Substitution}
-
-A core engineering feature of the framework is the separation between task logic and the feature-extraction loop.
-Listing 1 illustrates a simplified configuration for replacing the orientation task with a spatial-memory task while preserving the same logging pathway.
-This example is intended to illustrate module separation rather than to provide additional validation data.
-
-\vspace{3mm}
-\noindent\footnotesize{\textbf{Listing 1:} Task substitution example}
-\vspace{-1mm}
-\begin{lstlisting}[basicstyle=\ttfamily\scriptsize, frame=single, language=JavaScript]
-const task = {
-  stimulus: renderSpatialGrid(memory_load_target),
-  allowed_keys: ["Space"],
-  on_frame_sync: (timestamp_ms) => {
-    camerala_logger.logEvent("stimulus_onset", timestamp_ms);
-  }
-};
-\end{lstlisting}
-\vspace{2mm}
-
-Listing 2 shows a schema-style example of a local tabular log in which task events and frame-derived features can coexist through timestamps.
-
-\vspace{3mm}
-\noindent\footnotesize{\textbf{Listing 2:} Example local log schema}
-\vspace{-1mm}
-\begin{lstlisting}[basicstyle=\ttfamily\tiny, frame=single, language=csv]
-time_ms,event,load,rppg_roi,head_motion
-4015.2,grid_on,4,110.4,0.02
-4016.8,frame_sync,4,109.8,0.02
-4032.5,frame_sync,4,111.1,0.01
-4211.4,response,4,112.0,0.01
-\end{lstlisting}
-\vspace{2mm}
+}
 
 \end{document}
