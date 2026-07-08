@@ -17,21 +17,22 @@ Original title: Camerala: A Privacy-Preserving Browser-Native Framework for In-t
 
 We thank the handling editor and the reviewers for their careful reading and constructive comments.
 The manuscript was revised according to Reviewer 1's required Conditions 1--13.
-The revision intentionally narrows the claims: Camerala is now positioned as a browser-native, local-first implementation example for task-aligned physiological feature logging under limited, task-constrained home/laboratory conditions.
+The revision narrows unsupported claims while preserving the intended contribution: a local-first browser-native framework for remote psychological/psychophysiological task sensing.
 We also thank Reviewer 2 for the positive evaluation.
 
 \condition{1}{The title of the manuscript should be reconsidered}
 \textbf{Response.}
 Thank you for this comment.
 The manuscript was revised to avoid implying that Camerala proposes a dedicated privacy-preserving algorithm.
-Following the overall revision, the title was changed to a more conservative system-integration title.
+Following the overall revision, the title was changed to a more conservative local-first system title for remote psychophysiological task sensing.
 
 \textbf{Revision.}
 The title no longer uses ``Privacy-Preserving'' or an unqualified ``In-the-Wild'' expression.
 Privacy is now discussed as an architectural privacy advantage of avoiding raw-video transmission, not as a dedicated privacy-preserving method.
+The new title also preserves the intended remote psychophysiological task-sensing use case.
 
 \textbf{Key revised text.}
-``Camerala: A Browser-Native Framework for Task-Aligned Physiological Feature Logging in Home and Laboratory Settings''
+``Camerala: A Local-First Browser-Native Framework for Remote Psychophysiological Task Sensing''
 
 \textbf{Location.}
 Title page; Introduction; Contributions.
@@ -39,14 +40,14 @@ Title page; Introduction; Contributions.
 \condition{2}{The necessity of real-time processing is not sufficiently explained}
 \textbf{Response.}
 Thank you for pointing this out.
-The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging, rather than the only technically possible architecture.
+The manuscript now clarifies that real-time processing is treated as a design choice for local-first feature logging in private remote task experiments, rather than as the only technically possible architecture.
 
 \textbf{Revision.}
-A new paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but would require storing privacy-sensitive raw video.
-The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence, synchronize task events and frame features in the same browser runtime, and support online quality checks.
+A paragraph was added in the Introduction explaining that local offline processing of recorded video would be possible, but remote psychological or psychophysiological task experiments may occur in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.
+The revised text explains that Camerala extracts features during task execution to avoid raw-video persistence and to store synchronized task events, feature records, and auxiliary quality/context fields in the same browser runtime.
 
 \textbf{Key revised text.}
-``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but it would require storing privacy-sensitive raw video.''
+``Real-time processing is treated here as a design choice for local-first feature logging rather than as the only technically possible architecture. Recording video locally and processing it offline could preserve timestamps, but remote psychological and psychophysiological task experiments may be conducted in private spaces, and storing raw facial video locally for later analysis can itself be a privacy and acceptability burden.''
 
 \textbf{Location.}
 Introduction; System Architecture; Data Management and Local-First Persistence.
@@ -57,11 +58,14 @@ Thank you for this comment.
 The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-RQ1 now asks whether, in the tested setup, Camerala can complete the deployment while locally logging synchronized task events, sensor-derived features, and quality indicators.
-The criteria now include planned session/trial completion, local persistence, task-frame synchronization, post-exclusion retention, and availability of the listed quality indicators.
+We revised RQ1 to ask whether Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria used for descriptive analysis in the intended remote psychological/psychophysiological task use case.
+The revised manuscript defines concrete operational criteria at the trial and exported-window levels: reaction times within 100--1500 ms for trial-level retention and \texttt{mean\_quality} $\geq$ 0.8 for exported-window-level landmark availability.
+The completed deployment consisted of 600 trials in total.
+After applying the RT criterion, 541/600 trials were retained for descriptive analysis.
+All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion.
 
 \textbf{Key revised text.}
-``These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.''
+``For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels. At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms. At the exported-window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -69,14 +73,16 @@ Introduction, Research Questions.
 \condition{4}{It is unclear what the ``between-environment differences'' in RQ2 refer to}
 \textbf{Response.}
 Thank you for this important clarification.
-RQ2 was redefined to concern descriptive differences in measurement-quality indicators and sensor-derived estimates, not psychological, cognitive, motivational, or physiological effects.
+We revised RQ2 as a descriptive comparison of task-synchronized sensor-derived records between laboratory and home deployment contexts.
+We explicitly state that these differences are not interpreted as psychological or physiological effects.
 
 \textbf{Revision.}
 The Abstract, RQ2, Results, Discussion, and Conclusion were revised to state that the observed laboratory/home differences are deployment-specific sensor-derived observations.
-The manuscript now explicitly states that the study did not include a reference physiological sensor, multiple participants, or controlled separation of environmental and task-related factors.
+The revised manuscript explicitly states that these differences may reflect deployment context, lighting, posture, camera geometry, task timing, measurement pipeline, and participant state.
+They are not interpreted as psychological or physiological effects.
 
 \textbf{Key revised text.}
-``What descriptive differences in measurement-quality indicators and sensor-derived estimates are observed between the laboratory and home deployment contexts?''
+``What differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors?''
 
 \textbf{Location.}
 Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
@@ -87,8 +93,8 @@ Thank you for identifying the relevant prior work.
 The Related Work section was expanded, and the novelty claim was repositioned.
 
 \textbf{Revision.}
-The Related Work section now includes all related studies and systems explicitly identified by the reviewer: Gupta and Etemad, Ayesha et al., LabVanced rPPG, FacePhys-Demo, RhythmEdge, and Di Lernia et al.
-LabVanced and FacePhys-Demo are described as public tools/demonstrations rather than peer-reviewed empirical studies.
+The Related Work section now includes all studies, systems, and public demonstrations explicitly identified by the reviewer: Gupta and Etemad, Ayesha et al., LabVanced rPPG, FacePhys-Demo, RhythmEdge, and Di Lernia et al.
+LabVanced and FacePhys-Demo are described as public tools/demonstrations rather than peer-reviewed empirical validation studies.
 The manuscript now states that browser-based, web-deployable, edge-based, and privacy-oriented rPPG systems have already been explored, and it withdraws novelty claims based on local rPPG processing or privacy preservation as an algorithm.
 The novelty claim is instead repositioned around the integrated browser-native runtime that combines psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
 
@@ -104,11 +110,12 @@ Thank you for this comment.
 Unsupported robustness claims were removed.
 
 \textbf{Revision.}
-The revised manuscript states that Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes.
-Head motion and luminance variation are now presented as logged quality indicators for inspection and filtering.
+We removed unsupported robustness claims.
+The revised manuscript does not claim that Camerala corrects motion-induced rPPG degradation.
+Motion estimates are reported only as exported sensor-derived records for descriptive inspection.
 
 \textbf{Key revised text.}
-``Camerala does not attempt to correct rPPG degradation caused by motion or illumination changes. Instead, it records motion-related and luminance-related indicators so that data quality can be inspected and, if necessary, filtered during analysis.''
+``This feature is used as a motion-related quality and behavior indicator. It is not an algorithmic correction for motion artifacts in rPPG.''
 
 \textbf{Location.}
 System Architecture, Feature Extraction Logic; Discussion.
@@ -119,10 +126,10 @@ Thank you for the comment.
 The intended usage scenario is now stated at the beginning of the paper and again in the Methodology.
 
 \textbf{Revision.}
-The manuscript now defines the target use case as a remote or home-based psychophysical task performed while seated in front of a laptop, with synchronized browser-based logging of behavioral events and webcam-derived features.
+The manuscript now defines the target use case as a remote psychological or psychophysiological task experiment conducted while the participant is seated in front of a laptop, views task stimuli, and responds through the browser, with synchronized browser-based logging of behavioral events and webcam-derived features.
 
 \textbf{Key revised text.}
-``The target usage scenario is a remote or home-based psychophysical task performed while seated in front of a laptop, with browser-based logging of behavioral events and webcam-derived features.''
+``The target use case is a remote psychological or psychophysiological task experiment conducted while the participant is seated in front of a laptop.''
 
 \textbf{Location.}
 Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
@@ -133,11 +140,12 @@ Thank you for this point.
 The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life physiological sensing.
 
 \textbf{Revision.}
-Unqualified ``in-the-wild'' and ``naturalistic'' language was removed or replaced with ``task-constrained home/laboratory deployment.''
-The Methodology now explicitly states that the deployment does not represent continuous sensing during daily activities such as walking, cooking, conversation, or night-time use.
+Unqualified ``in-the-wild'' and ``naturalistic'' expressions were removed from the manuscript.
+The revised manuscript describes the study as a remote psychological or psychophysiological task experiment conducted in laboratory and home settings.
+It also explicitly states that the deployment is not continuous daily-life sensing: the participant was seated in front of a laptop, viewed task stimuli, and responded through the browser.
 
 \textbf{Key revised text.}
-``This is a task-constrained home/laboratory deployment, not continuous physiological sensing during ordinary daily activities such as walking, cooking, conversation, or night-time use.''
+``This use case is not unconstrained daily-life sensing: the participant is seated in front of a laptop, views task stimuli, and responds through the browser.''
 
 \textbf{Location.}
 Abstract; Introduction; Methodology; Discussion; Conclusion.
@@ -162,11 +170,12 @@ Thank you for the detailed request.
 An environment and lighting conditions table was added.
 
 \textbf{Revision.}
-The previous lux-based description was removed because lighting is reported as camera-derived brightness rather than external lux.
-The revised section reports laboratory/home room type, daytime sessions, windows, closed curtains, general artificial indoor lighting, fixed screen brightness, and camera-derived brightness ranges.
+We limited the environmental description to setup/check information and camera-derived records.
+The brightness range is not reported as lux or externally measured illuminance.
+The revised section reports the laboratory/research room and private home room, daytime sessions, windows present, curtains closed, general artificial indoor lighting, fixed screen brightness, and camera-derived brightness ranges observed during setup/checks.
 
 \textbf{Key revised text.}
-``Because the deployment used camera-derived brightness values rather than external light-meter measurements, this paper reports brightness as a camera-derived measurement-quality indicator.''
+``Because the deployment used camera-derived setup checks rather than external light-meter measurements, this paper reports brightness ranges only as author-confirmed setup/check information.''
 
 \textbf{Location.}
 Methodology, Deployment Environment and Lighting Conditions; Table 3.
@@ -174,10 +183,10 @@ Methodology, Deployment Environment and Lighting Conditions; Table 3.
 \condition{11}{The validity of the cognitive framing manipulation is questionable}
 \textbf{Response.}
 Thank you for this important point.
-The manuscript no longer interprets the instruction blocks as inducing evaluation pressure, reward motivation, cognitive effects, or motivational effects.
+The manuscript no longer interprets the negative, neutral, and positive instruction blocks as inducing evaluation pressure, reward motivation, cognitive effects, motivational effects, or psychological effects.
 
 \textbf{Revision.}
-The terminology was changed from cognitive framing manipulation to instructional task contexts.
+The terminology was changed from cognitive framing manipulation to demonstration instructional task contexts.
 The participant/autoethnography section now states that the author-participant knew the instructions were experimental.
 
 \textbf{Key revised text.}
@@ -189,11 +198,11 @@ Participant section; Experimental Procedure and Instructional Task Contexts; Res
 \condition{12}{The central claim in the Discussion should be reconsidered}
 \textbf{Response.}
 Thank you for this comment.
-The Discussion was rewritten around design requirements and safeguards for future Camerala deployments.
+The Discussion was rewritten around what the system demonstrated under the tested deployment and what remains unresolved.
 
 \textbf{Revision.}
-The revised Discussion focuses on browser-native local-first logging, quality indicators for task-constrained home/laboratory deployment, interpretation under environmental heterogeneity, and design safeguards.
-The previous central claim about laboratory-only validation overestimating home-use signal stability was removed as the organizing claim.
+The revised Discussion focuses on the fact that the system was built and ran under laboratory and home settings, while the observed differences remain deployment-context differences that cannot isolate psychological or physiological effects.
+Future validation requirements and design safeguards were added.
 
 \textbf{Key revised text.}
 ``The results do not establish general deployability, robustness, or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
@@ -207,13 +216,21 @@ Thank you for this guidance.
 The Abstract, Results, Discussion, Limitations, and Conclusion were revised to substantially weaken unsupported claims.
 
 \textbf{Revision.}
+We rechecked the logs and analysis description and limited the revised results to indicators directly recomputable from the exported CSV files.
 The manuscript no longer states that the study ``establishes'' a design pattern.
-The claims about feasibility, naturalistic deployment, tracking confidence, and psychological and physiological interpretation were narrowed.
-The face-tracking threshold ($Conf < 0.8$) is explained as a conservative operational FaceMesh threshold, not an rPPG quality threshold.
-Face-tracking availability, including the 96.5\% home value after filtering, is no longer used as strong evidence of rPPG quality or general deployment feasibility.
+We replaced the ambiguous confidence-threshold wording with an implementation-faithful description of \texttt{mean\_quality} as an exported-window-level landmark-availability ratio.
+The \texttt{quality} field is defined as a binary landmark-availability flag, and \texttt{mean\_quality} is the average of this flag within each exported 10-s window.
+The current runtime forwards results to the logging callback only when FaceMesh landmarks are returned; therefore, the saved frame records in this deployment represent landmark-returned exported frames.
+Thus, \texttt{mean\_quality} $\geq$ 0.8 means that landmarks were available in at least 80\% of exported frame records in that window.
+This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
+In the present deployment, all 299 exported windows had \texttt{mean\_quality} = 1.0; therefore, no window was excluded by this criterion.
+The RT-based retained-trial count was updated to 541/600 after applying the 100--1500 ms reaction-time criterion.
+The revised manuscript states that 600 trials were completed in total and that 541/600 trials were retained after the reaction-time criterion.
+The previous exposure-related term was replaced with a frame-to-frame green-channel brightness-change indicator.
+The manuscript also clarifies that this indicator is not a measure of camera exposure settings, external illuminance, environmental events, psychological or physiological state, or rPPG accuracy.
 
 \textbf{Key revised text.}
-``Therefore, face-tracking availability after filtering should be interpreted only as a FaceMesh/logging quality indicator, not as direct evidence of rPPG signal quality, landmark accuracy, or deployment feasibility.''
+``For each exported 10-s window, \texttt{mean\_quality} was computed as the mean of the \texttt{quality} flag over the exported frame records in that window. Thus, \texttt{mean\_quality} describes landmark availability within exported frame/window records and not face-detection availability across all camera frames.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.
