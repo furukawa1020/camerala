@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 12:48:49 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 13:01:28 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -207,13 +207,16 @@ This design supports timestamp alignment within the same browser runtime without
 To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments conducted in laboratory and home settings}\DIFaddend .
 
 \subsection{Research Questions}
-\DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on operational completion and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
+\DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{Under the tested laptop, browser, camera, and task configuration, can Camerala complete the planned 10-session, 600-trial remote task deployment and produce timestamp-linked local logs with trials retained under the reaction-time criterion of 100--1500 ms and windows satisfying the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, can Camerala obtain task-synchronized face-derived records, including rPPG-oriented ROI values, that satisfy the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 and remain usable for descriptive analysis under the tested configuration}\DIFaddend ?
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors}\DIFaddend ?
 \end{itemize}
 
-\DIFaddbegin \DIFadd{For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention under the reaction-time criterion of 100--1500 ms, window-level landmark availability under the operational criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8, and the presence of reproducible exported fields including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+\DIFaddbegin \DIFadd{For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels.
+At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms.
+At the window level, landmark availability was evaluated using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
+We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 }
@@ -723,7 +726,7 @@ Frame records were synchronized with task events during active sessions.
 For each processed frame, Camerala logged a binary landmark-availability flag, }\texttt{\DIFadd{quality}}\DIFadd{, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
 For each 10-s window, }\texttt{\DIFadd{mean\_quality}} \DIFadd{was computed as the mean of this binary flag.
 Thus, }\texttt{\DIFadd{mean\_quality}} \DIFadd{represents the proportion of frames in that window for which landmarks were available.
-This value is not a continuous MediaPipe confidence score, an rPPG-quality threshold, or evidence of physiological measurement accuracy.
+This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
 The FaceMesh }\texttt{\DIFadd{minDetectionConfidence}} \DIFadd{and }\texttt{\DIFadd{minTrackingConfidence}} \DIFadd{parameters were both set to 0.5 as implementation settings.
 They were not used as post-hoc analysis thresholds.
 }\DIFaddend 
@@ -780,7 +783,8 @@ We filtered trials with extreme reaction times ($RT < 100ms$ or $RT > 1500ms$) a
 }\DIFdelend \DIFaddbegin \DIFadd{were retained for descriptive analysis.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
 All 299 exported windows had }\texttt{\DIFadd{mean\_quality}} \DIFadd{= 1.0 and therefore satisfied the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8; no window was excluded by this criterion.
-This retention count describes the available analyzed trials under the tested configuration and does not demonstrate general feasibility across devices, users, or environments.
+Thus, the reported retained-trial count reflects the reaction-time criterion, while the landmark-availability criterion was satisfied by all exported windows.
+These results describe the available analyzed trials and windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
 }\DIFaddend 
 
 \DIFdelbegin \subsection{\DIFdel{Environmental Noise and Signal Extraction Pipeline}}

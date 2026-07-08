@@ -58,14 +58,14 @@ Thank you for this comment.
 The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-We revised RQ1 and its assessment criteria to specify concrete operational criteria for the tested deployment.
-RQ1 now asks whether Camerala can complete the planned 10-session, 600-trial remote task deployment and produce timestamp-linked local logs with trials retained under the reaction-time criterion of 100--1500 ms and windows satisfying the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8.
+We revised RQ1 to focus on the intended remote psychological/psychophysiological task use case: whether Camerala can obtain task-synchronized face-derived records, including rPPG-oriented ROI values, that satisfy an operational landmark-availability criterion and remain usable for descriptive analysis under the tested configuration.
+The revised manuscript defines concrete operational criteria at the trial and window levels: RT 100--1500 ms for trial-level retention and \texttt{mean\_quality} $\geq$ 0.8 for window-level landmark availability.
 The completed deployment consisted of 600 trials in total.
-After applying the reaction-time criterion of 100--1500 ms, 541/600 trials were retained for descriptive analysis.
-In addition, all 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion.
+After applying the RT criterion, 541/600 trials were retained for descriptive analysis.
+All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion.
 
 \textbf{Key revised text.}
-``For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention under the reaction-time criterion of 100--1500 ms, window-level landmark availability under the operational criterion of \texttt{mean\_quality} $\geq$ 0.8, and the presence of reproducible exported fields including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.''
+``For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels. At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms. At the window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -220,8 +220,8 @@ We rechecked the logs and analysis description and limited the revised results t
 The manuscript no longer states that the study ``establishes'' a design pattern.
 We replaced the ambiguous ``Conf $<$ 0.8'' wording with an implementation-faithful description of \texttt{mean\_quality} as a window-level landmark-availability ratio.
 The \texttt{quality} field is a binary landmark-availability flag, and \texttt{mean\_quality} is the average of this flag within each 10-s window.
-Thus, \texttt{mean\_quality} $<$ 0.8 means that landmarks were available in less than 80\% of frames in that window.
-This value is not a continuous MediaPipe confidence score, an rPPG-quality threshold, or evidence of physiological measurement accuracy.
+Thus, \texttt{mean\_quality} $\geq$ 0.8 means that landmarks were available in at least 80\% of frames in that window.
+This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
 In the present deployment, all 299 exported windows had \texttt{mean\_quality} = 1.0; therefore, no window was excluded by this criterion.
 The RT-based retained-trial count was updated to 541/600 after applying the 100--1500 ms reaction-time criterion.
 The revised manuscript states that 600 trials were completed in total and that 541/600 trials were retained after the reaction-time criterion.
