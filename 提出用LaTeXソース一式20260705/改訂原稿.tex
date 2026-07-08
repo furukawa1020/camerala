@@ -120,9 +120,9 @@ These analyses are intended only to describe operational completion and exported
 In this paper, we focus on system integration and conservative deployment observations. The contributions are:
 
 \begin{enumerate}
-    \item \textbf{Browser-native local-first sensing architecture}: A client-side pipeline that extracts rPPG/FaceMesh-derived features and measurement-quality indicators without transmitting or storing raw video.
-    \item \textbf{Task-aligned on-device sensing and local persistence}: A unified browser runtime that synchronizes psychophysical task events with frame-level sensor-derived features and stores timestamped local logs.
-    \item \textbf{Exploratory remote task deployment in laboratory and home settings}: A limited N=1 author-participant deployment showing completion of a remote task procedure in laboratory and home settings, with local export of task-synchronized face-derived and sensor-derived records.
+    \item \textbf{Local-first browser-native integration prototype}: A research prototype for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
+    \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
+    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment showing that, under the tested configuration, the exported records satisfied the specified reaction-time and landmark-availability criteria for descriptive analysis.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
@@ -155,8 +155,8 @@ Gupta and Etemad investigated privacy-preserving remote heart-rate estimation fr
 Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \cite{di_lernia_rppg_wild}.
 Additional peer-reviewed work on open-source implementations, efficient/mobile sensing, rPPG benchmarking, and privacy-related signal removal provides supporting context \cite{kooij_naber_open_rppg,efficientphys,mobilephys,rppg_toolbox,bhutani_privacy_rppg}.
 These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
-The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
+Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
+Instead, Camerala is positioned as a system-integration prototype for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
 Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych_joss} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
@@ -194,9 +194,9 @@ Instead, it documents whether the integrated browser runtime can complete the pl
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is a research prototype for task-aligned physiological feature logging in the browser.
-The contribution is not a new physiological estimator, a method for improving rPPG signal quality, or a dedicated privacy-preserving algorithm.
-Rather, Camerala is a deployment and logging architecture that combines psychophysical task execution, on-device feature extraction, quality indicators, and local persistence in a single client-side runtime.
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is positioned as a local-first, browser-native research prototype for remote psychological and psychophysiological task experiments.
+Its contribution is not browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
+Rather, it integrates task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 Although the deployment in this paper used one Gabor-orientation task, the runtime separates task logic from the sensing pipeline so that other task procedures can be implemented without changing the feature-extraction loop.
 
 \begin{figure}[t]
@@ -516,7 +516,7 @@ Seventh, the study does not claim clinical or medical accuracy, general deployab
 The present study presents an implementation example of browser-native, task-aligned, local-first feature logging under limited laboratory and home conditions.
 
 \section{Conclusion}
-We presented Camerala, a browser-native, local-first framework that integrates psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
+We presented Camerala, a browser-native, local-first implementation example that integrates psychophysical task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention.
 In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, the system completed 600 trials under the tested configuration without raw video transmission by Camerala.
 After the specified reaction-time criterion, 541/600 trials remained for descriptive analysis.
 The deployment produced synchronized behavioral logs and face-derived and sensor-derived records, and it revealed descriptive deployment-context differences between the tested environments.

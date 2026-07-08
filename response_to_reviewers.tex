@@ -76,8 +76,9 @@ Introduction, Research Questions.
 \condition{4}{It is unclear what the ``between-environment differences'' in RQ2 refer to}
 \textbf{Response.}
 Thank you for this important clarification.
-We retained the RQ2 wording and clarified its interpretation as a descriptive comparison of task-synchronized face-derived and sensor-derived exported records between laboratory and home deployment contexts.
-The revised manuscript explicitly states that these differences may reflect environmental conditions, screen light, posture, camera geometry, task timing, the measurement pipeline, participant state, or their mixture, and are not interpreted as psychological or physiological effects.
+We retained the original intent of RQ2, which asks what kinds of between-environment differences are observable in the physiological signals collected through the deployment.
+However, the revised manuscript clarifies that the term ``physiological signals'' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, not validated physiological-state measurements.
+The Results and Discussion now interpret laboratory/home differences as deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, task timing, the measurement pipeline, participant state, or their mixture, and not as psychological or physiological effects.
 
 \textbf{Revision.}
 The Abstract, the explanatory text immediately following RQ2, Results, Discussion, and Conclusion were revised to state that the observed laboratory/home differences are deployment-context differences in exported records.
@@ -85,9 +86,9 @@ Because the present design did not include reference physiological sensors, mult
 Future work requirements were added, including reference ECG or contact PPG, multiple participants, multiple devices, controlled lighting/camera/posture conditions, and manipulation checks.
 
 \textbf{Key revised text.}
-``RQ2 was retained as a question about between-environment differences, but it was treated as a descriptive question about deployment-context differences in exported records. In the revised interpretation, the phrase `physiological signals' refers conservatively to task-synchronized face-derived and sensor-derived exported records rather than validated physiological state measurements.''
+``In RQ2, the term `physiological signals' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, including rPPG-oriented ROI values and related exported fields. These records are not treated as validated physiological-state measurements.''
 
-``The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture. Therefore, these differences were not interpreted as psychological, cognitive, motivational, or physiological effects.''
+``The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture. Therefore, laboratory/home differences were interpreted as deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.''
 
 \textbf{Location.}
 Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
@@ -95,16 +96,19 @@ Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
 \condition{5}{The novelty and positioning of the study are insufficiently justified}
 \textbf{Response.}
 Thank you for identifying the relevant prior work.
-The Related Work section was expanded, and the novelty claim was repositioned.
+We agree that browser-based, web-deployable, edge-based, and privacy-oriented rPPG systems have already been explored.
+The Related Work section was expanded, and the contribution claim was repositioned accordingly.
 
 \textbf{Revision.}
 The Related Work section now includes all studies, systems, and public demonstrations explicitly identified by the reviewer: Gupta and Etemad, Ayesha et al., LabVanced rPPG, FacePhys-Demo, RhythmEdge, and Di Lernia et al.
 LabVanced and FacePhys-Demo are described as public tools/demonstrations rather than peer-reviewed empirical validation studies.
-The manuscript now states that browser-based, web-deployable, edge-based, and privacy-oriented rPPG systems have already been explored, and it withdraws novelty claims based on local rPPG processing or privacy preservation as an algorithm.
-The novelty claim is instead repositioned around the integrated browser-native runtime that combines psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
+We removed or substantially weakened contribution claims based on browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
+The revised manuscript instead positions Camerala as a system-integration contribution for remote psychological/psychophysiological task experiments.
+Specifically, Camerala integrates browser-based task execution, face-derived feature extraction, timestamp alignment between task events and exported frame/window records, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+This contribution is presented as a limited research prototype and implementation example, not as a new rPPG estimator or a validated physiological measurement system.
 
 \textbf{Key revised text.}
-``These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored. We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm. The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.''
+``The contribution of Camerala is not browser-based rPPG functionality, local rPPG processing, edge-based heart-rate estimation, or privacy preservation as an algorithm. Instead, Camerala contributes a local-first browser-native implementation example that integrates remote task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention for remote psychological/psychophysiological task experiments.''
 
 \textbf{Location.}
 Related Work; Contributions; System Architecture; References.

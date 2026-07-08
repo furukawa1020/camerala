@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 13:55:09 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 14:12:29 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -218,10 +218,10 @@ At the trial level, trials were retained for descriptive analysis when reaction 
 At the exported-window level, landmark availability was evaluated using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; exported windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
 This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
-RQ2 was retained as a question about between-environment differences, but it was treated as a descriptive question about deployment-context differences in exported records.
-In the revised interpretation, the phrase ``physiological signals'' refers conservatively to task-synchronized face-derived and sensor-derived exported records rather than validated physiological state measurements.
+In RQ2, the term ``physiological signals'' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, including rPPG-oriented ROI values and related exported fields.
+These records are not treated as validated physiological-state measurements.
 The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
-Therefore, these differences were not interpreted as psychological, cognitive, motivational, or physiological effects.
+Therefore, laboratory/home differences were interpreted as deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 These analyses are intended only to describe operational completion and exported-record differences under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 }
 
@@ -229,9 +229,14 @@ These analyses are intended only to describe operational completion and exported
 In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture and its deployment feasibility. Specific contributions include}\DIFdelend \DIFaddbegin \DIFadd{on system integration and conservative deployment observations. The contributions are}\DIFaddend :
 
 \begin{enumerate}
-    \item \textbf{\DIFdelbegin \DIFdel{Privacy-Preserving Edge Architecture}\DIFdelend \DIFaddbegin \DIFadd{Browser-native local-first sensing architecture}\DIFaddend }: A \DIFdelbegin \DIFdel{browser-native sensing pipeline that performs real-time rPPGand facial landmark extraction entirely on-device, avoiding raw videotransmission}\DIFdelend \DIFaddbegin \DIFadd{client-side pipeline that extracts rPPG/FaceMesh-derived features and measurement-quality indicators without transmitting or storing raw video}\DIFaddend .
-    \item \textbf{\DIFdelbegin \DIFdel{System Design for Task-Aligned On-Device Sensing }\DIFdelend \DIFaddbegin \DIFadd{Task-aligned on-device sensing }\DIFaddend and \DIFdelbegin \DIFdel{Local Persistence}\DIFdelend \DIFaddbegin \DIFadd{local persistence}\DIFaddend }: \DIFdelbegin \DIFdel{An implementation that keeps psychophysical task execution, physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{A unified browser runtime that synchronizes psychophysical task events with frame-level sensor-derived features and stores timestamped local logs}\DIFaddend .
-    \item \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{remote task deployment in laboratory and home settings}\DIFaddend }: A \DIFdelbegin \DIFdel{longitudinal case deployment across }\DIFdelend \DIFaddbegin \DIFadd{limited N=1 author-participant deployment showing completion of a remote task procedure in }\DIFaddend laboratory and home settings, \DIFdelbegin \DIFdel{showing that heterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{with local export of task-synchronized face-derived and sensor-derived records}\DIFaddend .
+    \item \textbf{\DIFdelbegin \DIFdel{Privacy-Preserving Edge Architecture}%DIFDELCMD < \MBLOCKRIGHTBRACE%%%
+\DIFdel{: A }\DIFdelend \DIFaddbegin \DIFadd{Local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{sensing pipeline that performs real-time rPPG and facial landmark extraction entirely on-device, avoiding raw video transmission.
+    }%DIFDELCMD < \item %%%
+\item%DIFAUXCMD
+\textbf{\DIFdel{System Design for Task-Aligned On-Device Sensing and Local Persistence}}%DIFAUXCMD
+\DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{integration prototype}}\DIFadd{: A research prototype for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
+    \item \DIFaddbegin \textbf{\DIFadd{Task-synchronized feature logging pipeline}}\DIFadd{: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
+    }\item \DIFaddend \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{deployment under limited conditions}\DIFaddend }: \DIFdelbegin \DIFdel{A longitudinal case deployment across laboratory and home settings, showing thatheterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{An N=1 author-participant deployment showing that, under the tested configuration, the exported records satisfied the specified reaction-time and landmark-availability criteria for descriptive analysis}\DIFaddend .
 \end{enumerate}
 
 The remainder of this paper is organized as follows\DIFdelbegin \DIFdel{: }\DIFdelend \DIFaddbegin \DIFadd{.
@@ -297,8 +302,8 @@ Additional peer-reviewed work on open-source implementations, efficient/mobile s
 \cite{kooij_naber_open_rppg,efficientphys,mobilephys,rppg_toolbox,bhutani_privacy_rppg}}\hskip0pt%DIFAUXCMD
 .
 These related studies and systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-We therefore avoid claiming novelty in browser-based rPPG functionality, local rPPG processing alone, edge-oriented estimation, or privacy preservation as an algorithm.
-The contribution of Camerala is instead the system-level integration of psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, frame-level measurement-quality indicators, and timestamped local persistence within a unified browser-native runtime.
+Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
+Instead, Camerala is positioned as a system-integration prototype for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 }\DIFaddend 
 
 \DIFdelbegin %DIFDELCMD < \begin{table*}[t]
@@ -382,9 +387,10 @@ By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can enable browser-ba
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is a research prototype \DIFdelbegin \DIFdel{framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in the browser}\DIFaddend .
-The contribution is not a new physiological estimator\DIFdelbegin \DIFdel{in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized }\DIFdelend \DIFaddbegin \DIFadd{, a method for improving rPPG signal quality, or a dedicated privacy-preserving algorithm.
-Rather, Camerala is a deployment and logging architecture that combines psychophysical }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first }\DIFdelend \DIFaddbegin \DIFadd{on-device feature extraction, quality indicators, and local }\DIFaddend persistence in a single \DIFdelbegin \DIFdel{browser-native }\DIFdelend \DIFaddbegin \DIFadd{client-side }\DIFaddend runtime.
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is \DIFdelbegin \DIFdel{a research prototype framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction.
+The }\DIFdelend \DIFaddbegin \DIFadd{positioned as a local-first, browser-native research prototype for remote psychological and psychophysiological task experiments.
+Its }\DIFaddend contribution is not \DIFdelbegin \DIFdel{a new physiological estimator in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized }\DIFdelend \DIFaddbegin \DIFadd{browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
+Rather, it integrates }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first persistence in a single browser-native }\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser }\DIFaddend runtime.
 Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysical taskto measure feasibility}\DIFdelend \DIFaddbegin \DIFadd{deployment in this paper used one Gabor-orientation task}\DIFaddend , the runtime \DIFdelbegin \DIFdel{isolates the stimulus presentation }\DIFdelend \DIFaddbegin \DIFadd{separates task }\DIFaddend logic from the sensing pipeline \DIFdelbegin \DIFdel{(as depicted by the distinct modules in Fig. \ref{fig:system_architecture}). As a supporting example of this modularity beyond the primary task used in the deployment, we implemented a supplementary spatial-memory task using the same sensing and logging pipeline; an example configuration and resulting JSONL log are included in the Appendix}\DIFdelend \DIFaddbegin \DIFadd{so that other task procedures can be implemented without changing the feature-extraction loop}\DIFaddend .
 
 \DIFdelbegin \DIFdel{While asynchronous cloud analytics are awkward for tightly synchronized task deployments, and browser-native task runtimes currently do not provide built-in physiological extraction, Camerala bridges this gap via an Edge Computing philosophy. The combination of these features enables exploratory household deployments under privacy constraints. This architectural choice is driven by two critical non-functional requirements: }\textbf{\DIFdel{Privacy Preservation}} %DIFAUXCMD
@@ -1005,13 +1011,13 @@ Seventh, the study does not claim clinical or medical accuracy, general deployab
 The present study presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, local-first feature logging under limited laboratory and home }\DIFaddend conditions.
 
 \section{Conclusion}
-\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. }\DIFdelend We presented Camerala, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native\DIFdelbegin \DIFdel{framework that extracts rPPG}\DIFdelend \DIFaddbegin \DIFadd{, local-first framework that integrates psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
+\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. }\DIFdelend We presented Camerala, a \DIFdelbegin \DIFdel{privacy-conscious}\DIFdelend \DIFaddbegin \DIFadd{browser-native}\DIFaddend , \DIFaddbegin \DIFadd{local-first implementation example that integrates psychophysical task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention.
 In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, the system completed 600 trials under the tested configuration without raw video transmission by Camerala.
 After the specified reaction-time criterion, 541/600 trials remained for descriptive analysis.
-The deployment produced synchronized behavioral logs and face-derived }\DIFaddend and \DIFdelbegin \DIFdel{facial landmarks on-device.
-Our proof-of-concept deployment provided initial evidence of the framework's }\DIFdelend \DIFaddbegin \DIFadd{sensor-derived records, and it revealed descriptive deployment-context differences between the tested environments.
+The deployment produced synchronized behavioral logs and face-derived and sensor-derived records, and it revealed descriptive deployment-context differences between the tested environments.
 These observations should not be interpreted as evidence of general deployability, robustness, or physiological/cognitive effects.
-Instead, Camerala illustrates a task-aligned }\DIFaddend browser-native \DIFdelbegin \DIFdel{architecture and highlighted the degree to which heterogeneous physical environmentsare associated with changes in observed task and physiological signals.
+Instead, Camerala illustrates a task-aligned }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework that extracts rPPG and facial landmarks on-device.
+Our proof-of-concept deployment provided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environmentsare associated with changes in observed task and physiological signals.
 These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, }\DIFdelend \DIFaddbegin \DIFadd{implementation and highlights design safeguards needed for future }\DIFaddend local-first physiological \DIFdelbegin \DIFdel{sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{feature logging in home-based psychophysical experiments}\DIFaddend .
 
 \section*{Data availability}
