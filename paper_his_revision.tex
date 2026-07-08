@@ -100,13 +100,11 @@ To address this deployment scenario, we present \textbf{Camerala}, a browser-nat
 \subsection{Research Questions}
 The exploratory Research Questions (RQs) focus on operational completion and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
-    \item \textbf{RQ1:} Under the tested laptop, browser, camera, and task configuration, can Camerala complete the planned 10-session, 600-trial remote task deployment and export timestamp-linked local records that satisfy the reaction-time criterion of 100--1500 ms and the window-level landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8 for descriptive analysis?
+    \item \textbf{RQ1:} Under the tested laptop, browser, camera, and task configuration, can Camerala complete the planned 10-session, 600-trial remote task deployment and produce timestamp-linked local logs with trials retained under the reaction-time criterion of 100--1500 ms and windows satisfying the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8?
     \item \textbf{RQ2:} What differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors?
 \end{itemize}
 
-For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention after applying the reaction-time criterion of 100--1500 ms, and window-level landmark availability.
-The landmark-availability criterion was defined using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; windows with \texttt{mean\_quality} below 0.8 were treated as below the operational landmark-availability criterion.
-We also examined whether the exported logs contained reproducible fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+For RQ1, we examined completion of the planned 10 sessions and 600 trials, successful local CSV/ZIP export, timestamp linkage between task events and saved frame/window records, trial retention under the reaction-time criterion of 100--1500 ms, window-level landmark availability under the operational criterion of \texttt{mean\_quality} $\geq$ 0.8, and the presence of reproducible exported fields including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 
@@ -417,7 +415,7 @@ The results are reported descriptively as sensor-derived observations under the 
 The deployment completed all 10 planned sessions and 600 trials in total.
 After applying the reaction-time criterion of 100--1500 ms, 541/600 trials were retained for descriptive analysis.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
-All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion of 0.8; no window was excluded by this criterion.
+All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8; no window was excluded by this criterion.
 This retention count describes the available analyzed trials under the tested configuration and does not demonstrate general feasibility across devices, users, or environments.
 
 \subsection{Task and Exported Feature Summaries}
