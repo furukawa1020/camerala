@@ -58,14 +58,14 @@ Thank you for this comment.
 The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-We revised RQ1 to focus on the intended remote psychological/psychophysiological task use case: whether Camerala can obtain task-synchronized face-derived records, including rPPG-oriented ROI values, that satisfy an operational landmark-availability criterion and remain usable for descriptive analysis under the tested configuration.
-The revised manuscript defines concrete operational criteria at the trial and window levels: RT 100--1500 ms for trial-level retention and \texttt{mean\_quality} $\geq$ 0.8 for window-level landmark availability.
+We revised RQ1 to focus on the intended remote psychological/psychophysiological task use case: whether Camerala can export task-synchronized face-derived records, including rPPG-oriented ROI values, with exported windows satisfying an operational landmark-availability criterion and remaining usable for descriptive analysis under the tested configuration.
+The revised manuscript defines concrete operational criteria at the trial and exported-window levels: RT 100--1500 ms for trial-level retention and \texttt{mean\_quality} $\geq$ 0.8 for landmark availability within exported frame/window records.
 The completed deployment consisted of 600 trials in total.
 After applying the RT criterion, 541/600 trials were retained for descriptive analysis.
 All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion.
 
 \textbf{Key revised text.}
-``For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels. At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms. At the window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.''
+``For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels. At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms. At the window level, landmark availability was evaluated for exported frame records using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -219,8 +219,9 @@ The Abstract, Results, Discussion, Limitations, and Conclusion were revised to s
 We rechecked the logs and analysis description and limited the revised results to indicators directly recomputable from the exported CSV files.
 The manuscript no longer states that the study ``establishes'' a design pattern.
 We replaced the ambiguous ``Conf $<$ 0.8'' wording with an implementation-faithful description of \texttt{mean\_quality} as a window-level landmark-availability ratio.
-The \texttt{quality} field is a binary landmark-availability flag, and \texttt{mean\_quality} is the average of this flag within each 10-s window.
-Thus, \texttt{mean\_quality} $\geq$ 0.8 means that landmarks were available in at least 80\% of frames in that window.
+The \texttt{quality} field is defined as a binary landmark-availability flag, and \texttt{mean\_quality} is the average of this flag within each exported 10-s window.
+The current runtime forwards results to the logging callback only when FaceMesh landmarks are returned; therefore, the saved frame records in this deployment represent landmark-returned exported frames.
+Thus, \texttt{mean\_quality} $\geq$ 0.8 means that landmarks were available in at least 80\% of exported frame records in that window.
 This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
 In the present deployment, all 299 exported windows had \texttt{mean\_quality} = 1.0; therefore, no window was excluded by this criterion.
 The RT-based retained-trial count was updated to 541/600 after applying the 100--1500 ms reaction-time criterion.
@@ -229,7 +230,7 @@ The previous exposure-related term was replaced with a frame-to-frame green-chan
 The manuscript also clarifies that this indicator is not a measure of camera exposure settings, external illuminance, environmental events, psychological or physiological state, or rPPG accuracy.
 
 \textbf{Key revised text.}
-``For each 10-s window, \texttt{mean\_quality} was computed as the mean of this binary flag. Thus, \texttt{mean\_quality} represents the proportion of frames in that window for which landmarks were available.''
+``For each exported 10-s window, \texttt{mean\_quality} was computed as the mean of the \texttt{quality} flag over the exported frame records in that window. Thus, \texttt{mean\_quality} describes landmark availability within exported frame/window records and not face-detection availability across all camera frames.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.

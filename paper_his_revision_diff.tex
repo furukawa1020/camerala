@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 13:01:28 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 13:10:21 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -209,13 +209,14 @@ To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, can Camerala obtain task-synchronized face-derived records, including rPPG-oriented ROI values, that satisfy the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 and remain usable for descriptive analysis under the tested configuration}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, can Camerala export task-synchronized face-derived records, including rPPG-oriented ROI values, with exported windows satisfying the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 and remaining usable for descriptive analysis under the tested configuration}\DIFaddend ?
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors}\DIFaddend ?
 \end{itemize}
 
 \DIFaddbegin \DIFadd{For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels.
 At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms.
-At the window level, landmark availability was evaluated using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
+At the window level, landmark availability was evaluated for exported frame records using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; exported windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
+This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
 These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
@@ -722,10 +723,11 @@ All \DIFdelbegin \DIFdel{data were exported as JSONL and }\DIFdelend \DIFaddbegi
 The primary sensor-derived measures were rPPG-oriented ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel brightness-change indicator.
 Behavioral trials were retained when reaction times fell within 100--1500 ms.
 Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
-Frame records were synchronized with task events during active sessions.
-For each processed frame, Camerala logged a binary landmark-availability flag, }\texttt{\DIFadd{quality}}\DIFadd{, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
-For each 10-s window, }\texttt{\DIFadd{mean\_quality}} \DIFadd{was computed as the mean of this binary flag.
-Thus, }\texttt{\DIFadd{mean\_quality}} \DIFadd{represents the proportion of frames in that window for which landmarks were available.
+Frame records forwarded from the FaceMesh callback were synchronized with task events during active sessions.
+The feature extractor defines a binary landmark-availability flag, }\texttt{\DIFadd{quality}}\DIFadd{, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
+In the current runtime, however, the camera manager forwards results to the logging callback only when FaceMesh landmarks are returned; therefore, the saved frame records in this deployment represent landmark-returned exported frames.
+For each exported 10-s window, }\texttt{\DIFadd{mean\_quality}} \DIFadd{was computed as the mean of the }\texttt{\DIFadd{quality}} \DIFadd{flag over the exported frame records in that window.
+Thus, }\texttt{\DIFadd{mean\_quality}} \DIFadd{describes landmark availability within exported frame/window records and not face-detection availability across all camera frames.
 This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
 The FaceMesh }\texttt{\DIFadd{minDetectionConfidence}} \DIFadd{and }\texttt{\DIFadd{minTrackingConfidence}} \DIFadd{parameters were both set to 0.5 as implementation settings.
 They were not used as post-hoc analysis thresholds.
@@ -758,8 +760,8 @@ They were not used as post-hoc analysis thresholds.
 %DIFDELCMD <     \item %%%
 \item%DIFAUXCMD
 \textbf{\DIFdel{Head Motion Index ($M_t$)}}%DIFAUXCMD
-\DIFdel{: Calculated as the frame-by-frame Euclidean displacement of rigid facial landmarks .
-    }%DIFDELCMD < \item %%%
+\DIFdel{: Calculated as the frame-by-frame Euclidean displacement of rigid facial landmarks.
+}%DIFDELCMD < \item %%%
 \item%DIFAUXCMD
 \textbf{\DIFdel{rPPG Heart Rate}}%DIFAUXCMD
 \DIFdel{: The raw POS signal trace was bandpass filtered (0.7-3.0 Hz).
