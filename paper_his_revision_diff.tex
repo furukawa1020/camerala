@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 14:37:10 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 14:44:41 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -183,14 +183,16 @@ Differences between laboratory and home exported records are reported as deploym
 \section{Introduction}
 
 \DIFdelbegin \DIFdel{Continuous monitoring of physiological signals and task-derived metrics in naturalistic, "in-the-wild" environments provides critical insights for ubiquitous computing and human-computer interaction (HCI).
-While medical-grade sensors (e.g., electrocardiograms) succeed in controlled laboratories, deploying sensor systems in domestic environments introduces significant engineering challenges. 
-}\DIFdelend \DIFaddbegin \DIFadd{The intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private or home setting, where the participant sits in front of a laptop, views browser-based task stimuli, and responds through the browser.
-The goal is not continuous physiological sensing during ordinary daily activities.
+While medical-grade sensors (e.g., electrocardiograms) succeed in controlled laboratories, deploying sensor systems in domestic environments introduces significant engineering challenges.
+}\DIFdelend \DIFaddbegin \DIFadd{The intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings.
+In this use case, the participant sits in front of a laptop, views task stimuli, and responds by key press.
+Camerala is not intended for continuous physiological sensing during ordinary daily activities.
 Rather, Camerala supports task-synchronized acquisition of face-derived records while reducing the need to transmit or retain privacy-sensitive raw facial video.
-Even in this task-constrained setting, deployment outside a controlled laboratory introduces practical difficulties for human-interface research, including heterogeneous illumination, camera placement, posture, browser timing, and local data handling.
+Even in this task-based experiment, deployment outside a controlled laboratory introduces practical difficulties for human-interface research, including heterogeneous illumination, camera placement, posture, browser timing, and local data handling.
 }\DIFaddend 
 
-\DIFdelbegin \DIFdel{First, there are strict privacy constraints. In many practical pipelines, }\DIFdelend \DIFaddbegin \DIFadd{Many }\DIFaddend video-based physiological \DIFdelbegin \DIFdel{analysis relies on external processing }\DIFdelend \DIFaddbegin \DIFadd{measurement pipelines rely on raw video recording }\DIFaddend or server-side \DIFdelbegin \DIFdel{components.
+\DIFdelbegin \DIFdel{First, there are strict privacy constraints.
+In many practical pipelines, }\DIFdelend \DIFaddbegin \DIFadd{Many }\DIFaddend video-based physiological \DIFdelbegin \DIFdel{analysis relies on external processing }\DIFdelend \DIFaddbegin \DIFadd{measurement pipelines rely on raw video recording }\DIFaddend or server-side \DIFdelbegin \DIFdel{components.
 This approach raises privacy concerns, particularly }\DIFdelend \DIFaddbegin \DIFadd{processing.
 Such approaches can be difficult to deploy }\DIFaddend in private spaces \DIFdelbegin \DIFdel{like bedrooms or living rooms, which can limit user acceptance and longitudinal deployment.
 Second, heterogeneous physical environments introduce substantial variability in measurement quality. Uncontrolled lighting, variable camera placements, and unconstrained user postures routinely introduce measurement artifacts that corrupt signal extraction.
@@ -201,14 +203,11 @@ This does not constitute a dedicated privacy-preserving algorithm; rather, it is
 
 \DIFadd{Real-time processing is not treated as the only technically possible architecture.
 Local video recording followed by offline processing could preserve timestamps if implemented carefully.
-However, the intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private or home setting, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
+However, the intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
 Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
 In this sense, real-time browser-side processing is used to support feature-only local logging and timestamp alignment within the same client-side runtime, rather than to claim more accurate physiological estimates or online task adaptation}\DIFaddend .
 
-To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments.
-}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments.
-In the present exploratory deployment, the laboratory setting is treated as a comparison context and the home setting as an instance of the target private-setting scenario.
-}\DIFaddend 
+To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments}\DIFaddend .
 
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
@@ -246,7 +245,7 @@ In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture
 The remainder of this paper is organized as follows\DIFdelbegin \DIFdel{: }\DIFdelend \DIFaddbegin \DIFadd{.
 }\DIFaddend Section II reviews \DIFdelbegin \DIFdel{prior work in remote sensingand deployment-oriented data collection}\DIFdelend \DIFaddbegin \DIFadd{related work in rPPG, web/edge physiological sensing, and task-measurement platforms}\DIFaddend .
 Section III \DIFdelbegin \DIFdel{details the technical implementation of Camerala }\DIFdelend \DIFaddbegin \DIFadd{describes the Camerala system architecture}\DIFaddend .
-Section IV describes the \DIFdelbegin \DIFdel{exploratory deployment design and procedures}\DIFdelend \DIFaddbegin \DIFadd{task-constrained deployment and reporting details}\DIFaddend .
+Section IV describes the \DIFdelbegin \DIFdel{exploratory deployment design and procedures}\DIFdelend \DIFaddbegin \DIFadd{browser-based task deployment and reporting details}\DIFaddend .
 Section V presents descriptive \DIFdelbegin \DIFdel{deployment observationsand signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{observations}\DIFaddend .
 Section VI discusses \DIFdelbegin \DIFdel{implications for browser-native sensing }\DIFdelend \DIFaddbegin \DIFadd{design requirements and safeguards for future }\DIFaddend deployments, and Section VII concludes.
 
@@ -373,21 +372,19 @@ Table \ref{tab:related_work} maps this design trade-off space.
 .
 This approach focuses entirely on observing within-subject, between-environment (e.g., Lab vs.
 Home) variance in sensor behavior across numerous trials, avoiding cross-participant phenotypic variation in the initial deployment.
-}\DIFdelendFL \DIFaddbeginFL \footnotesize{\textit{Note: The table summarizes design emphasis rather than categorical superiority. Capabilities depend on implementation and deployment configuration.}}
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelFL{Recent advances in WebAssembly (Wasm) and WebGPU have made high-performance computer vision possible in the browser .
+By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can enable }\DIFdelendFL \DIFaddbeginFL \footnotesize{\textit{Note: The table summarizes design emphasis rather than categorical superiority. Capabilities depend on implementation and deployment configuration.}}
 \end{center}
 \end{table*}
 
 \DIFadd{We structure the initial evaluation as a single-case exploratory deployment.
 The deployment is not intended to estimate population-level psychological or physiological effects.
-Instead, it documents whether the integrated browser runtime can complete the planned task-constrained logging procedure and what measurement-quality differences are observed in the tested laboratory and home contexts.
-}\DIFaddend 
+Instead, it documents whether the integrated browser runtime can complete the planned }\DIFaddend browser-based \DIFdelbegin \DIFdel{inference without cloud offloading. This technical shift acts as the enabler for Camerala}\DIFdelend \DIFaddbegin \DIFadd{task logging procedure and what measurement-quality differences are observed in the tested laboratory and home contexts}\DIFaddend .
 
-\DIFdelbegin \DIFdel{Recent advances in WebAssembly (Wasm) and WebGPU have made high-performance computer vision possible in the browser.
-By compiling C++ libraries (OpenCV, MediaPipe) to Wasm, we can enable browser-based inference without cloud offloading. This technical shift acts as the enabler for Camerala.
-}%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend % =================================================================================
+% =================================================================================
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
@@ -414,7 +411,7 @@ Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysica
 \end{figure}
 
 \subsection{High-Level Architecture}
-The system enables a \DIFdelbegin \DIFdel{complete experimental loop entirely within }\DIFdelend \DIFaddbegin \DIFadd{task-constrained experimental loop inside }\DIFaddend the browser sandbox (\DIFdelbegin \DIFdel{see }\DIFdelend Fig. \ref{fig:system_architecture}).
+The system enables a \DIFdelbegin \DIFdel{complete experimental loop entirely within }\DIFdelend \DIFaddbegin \DIFadd{browser-based task experimental loop inside }\DIFaddend the browser sandbox (\DIFdelbegin \DIFdel{see }\DIFdelend Fig. \ref{fig:system_architecture}).
 The architecture consists of three coupled modules\DIFdelbegin \DIFdel{running on the main JavaScript thread and dedicated WebWorkers}\DIFdelend :
 \begin{enumerate}
     \item \textbf{\DIFdelbegin \DIFdel{The }\DIFdelend Task Engine}: \DIFdelbegin \DIFdel{Responsible for stimulus }\DIFdelend \DIFaddbegin \DIFadd{Stimulus }\DIFaddend rendering, trial logic, \DIFdelbegin \DIFdel{and reaction time measurement}\DIFdelend \DIFaddbegin \DIFadd{key responses, feedback, staircase updates, and reaction-time logging}\DIFaddend .
@@ -565,10 +562,10 @@ over the spatial frequency and contrast.
 \DIFdel{(on supported browsers) or a fallback to }\texttt{\DIFdel{Blob}} %DIFAUXCMD
 \DIFdel{download.
 Data is serialized into JSON Lines (.jsonl) format. Each line represents one frame or one trial event. This allows for streaming writes, ensuring that even if the browser crashes mid-session, data up to that point is preserved.
-At the end of a session}\DIFdelend \DIFaddbegin \DIFadd{The current implementation uses JSZip to export local log files as a ZIP archive.
-The archive contains }\texttt{\DIFadd{metadata.json}}\DIFadd{, }\texttt{\DIFadd{trials.csv}}\DIFaddend , \DIFdelbegin \DIFdel{the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk.
+At the end of a session }\DIFdelend \DIFaddbegin \DIFadd{The current implementation uses JSZip to export local log files as a ZIP archive.
+The archive contains }\texttt{\DIFadd{metadata.json}}\DIFadd{, }\texttt{\DIFadd{trials.csv}}\DIFadd{, }\texttt{\DIFadd{features\_raw.csv}}\DIFaddend , \DIFdelbegin \DIFdel{the user initiates a "Download Data" action, which zips the JSON logs and saves them to their local disk.
 This explicit user action reinforces the sense of agency and privacy control.
-}\DIFdelend \DIFaddbegin \texttt{\DIFadd{features\_raw.csv}}\DIFadd{, }\texttt{\DIFadd{windows.csv}}\DIFadd{, }\texttt{\DIFadd{blocks.csv}}\DIFadd{, and }\texttt{\DIFadd{subjective.csv}}\DIFadd{.
+}\DIFdelend \DIFaddbegin \texttt{\DIFadd{windows.csv}}\DIFadd{, }\texttt{\DIFadd{blocks.csv}}\DIFadd{, and }\texttt{\DIFadd{subjective.csv}}\DIFadd{.
 The metadata file stores the session ID, start time, user agent, and block plan.
 The user initiates the download at the end of the session.
 This design avoids Camerala-side raw-video storage and avoids raw-video transmission, but it also reduces the ability to inspect image artifacts retrospectively.
@@ -580,13 +577,12 @@ For this reason, Camerala logs reproducible exported fields such as rPPG-oriente
 %DIF >  =================================================================================
 \section{Methodology}
 
-\DIFdelbegin \subsection{\DIFdel{Longitudinal Exploratory Deployment}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{To evaluate the operational deployability of Camerala across different physical environments}\DIFdelend \DIFaddbegin \subsection{\DIFadd{Target Usage Scenario and Exploratory Deployment}}
-\DIFadd{The target usage scenario is a remote psychological or psychophysiological task experiment in which a participant performs a browser-based task from a private or home setting.
-In the present exploratory deployment, the same task procedure was conducted in one laboratory setting and one home setting to examine deployment-context differences.
-This deployment was not intended to represent continuous physiological sensing during ordinary daily activities such as walking, cooking, conversation, or sleep.
+\subsection{\DIFdelbegin \DIFdel{Longitudinal }\DIFdelend \DIFaddbegin \DIFadd{Target Usage Scenario and }\DIFaddend Exploratory Deployment\DIFdelbegin %DIFDELCMD < \MBLOCKRIGHTBRACE
+%DIFDELCMD < %%%
+\DIFdel{To evaluate the operational deployability of Camerala across different physical environments}\DIFdelend \DIFaddbegin }
+\DIFadd{The deployment was a browser-based task experiment conducted in one laboratory setting and one home setting.
+The participant sat in front of a laptop, viewed Gabor stimuli, and responded using the keyboard.
+This setting should be distinguished from unconstrained daily-life physiological sensing during walking, conversation, cooking, sleep, or other ordinary activities.
 }
 
 \DIFadd{To evaluate operational completion under this scenario}\DIFaddend , we conducted an exploratory longitudinal deployment \DIFdelbegin \DIFdel{(N=1).
