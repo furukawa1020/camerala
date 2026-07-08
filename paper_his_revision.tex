@@ -100,13 +100,13 @@ To address this deployment scenario, we present \textbf{Camerala}, a browser-nat
 \subsection{Research Questions}
 The exploratory Research Questions (RQs) focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
-    \item \textbf{RQ1:} In the intended remote psychological/psychophysiological task use case, can Camerala export task-synchronized face-derived records, including rPPG-oriented ROI values, with exported windows satisfying the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8 and remaining usable for descriptive analysis under the tested configuration?
+    \item \textbf{RQ1:} In the intended remote psychological/psychophysiological task use case, do Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria for descriptive analysis: trial-level reaction times within 100--1500 ms and exported-window-level landmark availability of \texttt{mean\_quality} $\geq$ 0.8 under the tested configuration?
     \item \textbf{RQ2:} What differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors?
 \end{itemize}
 
-For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels.
+For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels.
 At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms.
-At the window level, landmark availability was evaluated for exported frame records using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
+At the exported-window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
 This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
@@ -421,8 +421,7 @@ The deployment completed all 10 planned sessions and 600 trials in total.
 After applying the reaction-time criterion of 100--1500 ms, 541/600 trials were retained for descriptive analysis.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
 All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8; no window was excluded by this criterion.
-Thus, the reported retained-trial count reflects the reaction-time criterion, while the landmark-availability criterion was satisfied by all exported windows.
-These results describe the available analyzed trials and windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
+These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
 
 \subsection{Task and Exported Feature Summaries}
 Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.

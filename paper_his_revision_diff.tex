@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 13:10:21 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 13:25:16 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -209,13 +209,13 @@ To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, can Camerala export task-synchronized face-derived records, including rPPG-oriented ROI values, with exported windows satisfying the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 and remaining usable for descriptive analysis under the tested configuration}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, do Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria for descriptive analysis: trial-level reaction times within 100--1500 ms and exported-window-level landmark availability of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 under the tested configuration}\DIFaddend ?
     \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors}\DIFaddend ?
 \end{itemize}
 
-\DIFaddbegin \DIFadd{For RQ1, we evaluated whether the exported records met operational criteria at the trial and window levels.
+\DIFaddbegin \DIFadd{For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels.
 At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms.
-At the window level, landmark availability was evaluated for exported frame records using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; exported windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
+At the exported-window level, landmark availability was evaluated using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; exported windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
 This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
@@ -785,8 +785,7 @@ We filtered trials with extreme reaction times ($RT < 100ms$ or $RT > 1500ms$) a
 }\DIFdelend \DIFaddbegin \DIFadd{were retained for descriptive analysis.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
 All 299 exported windows had }\texttt{\DIFadd{mean\_quality}} \DIFadd{= 1.0 and therefore satisfied the operational landmark-availability criterion of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8; no window was excluded by this criterion.
-Thus, the reported retained-trial count reflects the reaction-time criterion, while the landmark-availability criterion was satisfied by all exported windows.
-These results describe the available analyzed trials and windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
+These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
 }\DIFaddend 
 
 \DIFdelbegin \subsection{\DIFdel{Environmental Noise and Signal Extraction Pipeline}}
