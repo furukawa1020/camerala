@@ -314,11 +314,12 @@ The order of blocks was randomized by the web application.
 \subsection{Participant (Autoethnography)}
 The participant was the primary author.
 This was a self-experimentation evaluation: no other participants were involved, no identifiable raw video was transmitted by Camerala, and the author provided informed consent for self-participation.
-Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
-They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.
+Because the participant was also the author and knew that the task instructions were experimentally constructed, the instruction blocks cannot be treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, motivational state, or psychological state.
+They are used only as exploratory task-interface contexts for demonstrating synchronized logging across task conditions.
 
 \subsection{Hardware and Software Configuration}
-Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment.
+Table \ref{tab:hardware_config} summarizes the hardware and software information available for the deployment.
+Values that were not logged during the deployment are explicitly marked as not logged rather than inferred from the revision-time environment.
 
 \begin{table*}[t]
 \caption{Hardware and software configuration}
@@ -329,23 +330,24 @@ Table \ref{tab:hardware_config} reports the hardware/software configuration used
 \toprule
 \textbf{Item} & \textbf{Reported value} \\
 \midrule
-Laptop/PC model & mouse Computer G-Tune P517G60ZO21CNHWT, 15.6-inch gaming notebook \\
-CPU & Intel Core i7-13620H \\
+Laptop/PC model & mouse Computer G-Tune P517G60ZO21CNHWT \\
+CPU & Intel Core i7-13620H, 10 cores (P6+E4), 16 threads \\
 GPU & NVIDIA GeForce RTX 5060 Laptop GPU \\
 RAM & 32 GB \\
 Storage & 1 TB SSD \\
-Operating system & Windows 11 Home 64-bit \\
+Operating system & Windows 11 Home 64-bit; exact deployment-time build not logged \\
+Display & 15.6-inch display, 2560$\times$1440 pixels, 165 Hz \\
 Browsers used & Mozilla Firefox and Google Chrome \\
-Recorded browser metadata & Session metadata stored browser user-agent strings. Mozilla Firefox and Google Chrome were used in the deployment, but browser effects were not independently manipulated or analyzed. \\
-Webcam type/model & Built-in laptop webcam \\
-Requested camera constraints & \texttt{getUserMedia}: ideal 640$\times$480 pixels, ideal 30 fps \\
-Camera capture behavior & Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied \\
-Processing rate & Not analyzed as a result metric in the present revision \\
-Display & Built-in 15.6-inch display, 2560$\times$1440 pixels, 165 Hz \\
-Screen brightness & Fixed across sessions using the built-in laptop display setting \\
-Viewing distance & Approximately 50--60 cm \\
-Auto-exposure & Device/browser default camera pipeline; no manual exposure control was applied \\
-Auto-white-balance & Device/browser default camera pipeline; no manual white-balance control was applied \\
+Browser versions & Firefox user-agent was available when recorded in exported metadata; exact Chrome deployment-time version was not systematically logged \\
+Webcam type & Built-in laptop webcam \\
+Webcam model & Exact internal webcam model not logged \\
+Camera capture API & Browser \texttt{getUserMedia} API \\
+Requested camera constraints & Ideal 640$\times$480 pixels, ideal 30 fps \\
+Actual camera resolution & Browser/device-negotiated; not programmatically logged as a verified deployment-time value \\
+Actual camera frame rate & Browser/device-negotiated; not programmatically logged as a verified camera frame rate \\
+Screen brightness & Fixed during the deployment; exact percentage not logged \\
+Auto-exposure & Device/browser default behavior; not manually constrained and exact state not programmatically logged \\
+Auto-white-balance & Device/browser default behavior; not manually constrained and exact state not programmatically logged \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -389,9 +391,9 @@ Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not trea
 
 \subsection{Experimental Procedure and Instructional Task Contexts}
 Each session began with a pre-session capture check for basic camera conditions, including approximate camera-derived brightness and pose, before the camera feed was hidden to reduce distraction.
-Before each block, the system presented one of three instructional task contexts: neutral instruction, negative instruction, or positive instruction.
-The negative and positive instruction blocks were not interpreted as validated cognitive or motivational manipulations.
-They were used to demonstrate that Camerala can synchronize behavioral logs and sensor-derived features across different task contexts.
+The task included negative, neutral, and positive instruction contexts as exploratory task-interface conditions.
+These contexts were used to demonstrate that Camerala can present different instruction frames while recording synchronized behavioral and face-derived records.
+Because the participant was the author and knew that the instructions were experimentally constructed, these contexts are not treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, or motivational state.
 
 \subsection{Psychophysical Task}
 The task was a two-alternative forced-choice orientation discrimination task using procedurally rendered Gabor stimuli.
@@ -463,6 +465,9 @@ They should not be interpreted as evidence that the instruction blocks induced p
 Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts.
 They are not interpreted as evidence of motion handling or correction of rPPG degradation.
 
+The instruction contexts were used only as task-interface contexts in the deployment.
+We do not report them as evidence that evaluation pressure, reward motivation, cognitive effects, or motivational effects were induced.
+Descriptive values are reported by instruction context only to document that the logging pipeline operated across different task-interface contexts.
 In the laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
 In the home context, the mean RT values across instruction blocks were closer together.
 Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
@@ -500,6 +505,8 @@ Motion estimates are logged only as deployment-context records; they do not indi
 The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences.
 They may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
 The present study was not designed to isolate psychological or physiological state changes from these factors.
+The present deployment also cannot validate the psychological effectiveness of the negative or positive instruction contexts.
+The author-participant knew that the instructions were experimentally constructed, and no manipulation check was included.
 Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
 
 \subsection{Design Safeguards for Future Camerala Deployments}

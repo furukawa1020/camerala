@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 14:44:41 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 15:01:04 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -614,13 +614,24 @@ The order of blocks was randomized by the web application}\DIFaddend .
 \DIFdelbegin \textit{\DIFdel{Ethical Note}}%DIFAUXCMD
 \DIFdel{: }\DIFdelend This was a self-experimentation \DIFdelbegin \DIFdel{(autoethnographic) evaluation. No }\DIFdelend \DIFaddbegin \DIFadd{evaluation: no }\DIFaddend other participants were involved, no identifiable \DIFaddbegin \DIFadd{raw }\DIFaddend video was transmitted \DIFdelbegin \DIFdel{or shared}\DIFdelend \DIFaddbegin \DIFadd{by Camerala}\DIFaddend , and the author provided informed consent for self-participation.
 \DIFdelbegin \DIFdel{We explicitly acknowledge that the author's prior knowledge of the experimental hypotheses precludes drawing population-level psychological conclusions.
-However, this deploymentis methodologically appropriate for the initial technical validation of the sensing pipeline.
-}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimental, the instruction blocks cannot be assumed to have induced evaluation pressure, reward motivation, or psychological effects.
-They are used only as different instructional task contexts for demonstrating synchronized logging across task conditions.
+However, this deployment is methodologically appropriate for the initial technical validation of the sensing pipeline.
+}\DIFdelend \DIFaddbegin \DIFadd{Because the participant was also the author and knew that the task instructions were experimentally constructed, the instruction blocks cannot be treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, motivational state, or psychological state.
+They are used only as exploratory task-interface contexts for demonstrating synchronized logging across task conditions.
 }\DIFaddend 
 
-\DIFaddbegin \subsection{\DIFadd{Hardware and Software Configuration}}
-\DIFadd{Table \ref{tab:hardware_config} reports the hardware/software configuration used in the deployment.
+\DIFdelbegin \subsection{\DIFdel{Apparatus and Physical Environment}}
+%DIFAUXCMD
+\addtocounter{subsection}{-1}%DIFAUXCMD
+\DIFdel{The experiment was deployed on a standard 13.5-inch laptop display (approximate 60Hz target refresh rate).
+To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meter at the eye level of the participant.
+}%DIFDELCMD < \begin{itemize}
+%DIFDELCMD <     \item %%%
+\textbf{\DIFdel{Lab Environment}}%DIFAUXCMD
+\DIFdel{: Mean illuminance $480 \pm 20$ lux (Standard fluorescent lighting ).
+}%DIFDELCMD < \item %%%
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Hardware and Software Configuration}}
+\DIFadd{Table \ref{tab:hardware_config} summarizes the hardware and software information available for the deployment.
+Values that were not logged during the deployment are explicitly marked as not logged rather than inferred from the revision-time environment.
 }
 
 \begin{table*}[t]
@@ -632,37 +643,31 @@ They are used only as different instructional task contexts for demonstrating sy
 \toprule
 \textbf{\DIFaddFL{Item}} & \textbf{\DIFaddFL{Reported value}} \\
 \midrule
-\DIFaddFL{Laptop/PC model }& \DIFaddFL{mouse Computer G-Tune P517G60ZO21CNHWT, 15.6-inch gaming notebook }\\
-\DIFaddFL{CPU }& \DIFaddFL{Intel Core i7-13620H }\\
+\DIFaddFL{Laptop/PC model }& \DIFaddFL{mouse Computer G-Tune P517G60ZO21CNHWT }\\
+\DIFaddFL{CPU }& \DIFaddFL{Intel Core i7-13620H, 10 cores (P6+E4), 16 threads }\\
 \DIFaddFL{GPU }& \DIFaddFL{NVIDIA GeForce RTX 5060 Laptop GPU }\\
 \DIFaddFL{RAM }& \DIFaddFL{32 GB }\\
 \DIFaddFL{Storage }& \DIFaddFL{1 TB SSD }\\
-\DIFaddFL{Operating system }& \DIFaddFL{Windows 11 Home 64-bit }\\
+\DIFaddFL{Operating system }& \DIFaddFL{Windows 11 Home 64-bit; exact deployment-time build not logged }\\
+\DIFaddFL{Display }& \DIFaddFL{15.6-inch display, 2560$\times$1440 pixels, 165 Hz }\\
 \DIFaddFL{Browsers used }& \DIFaddFL{Mozilla Firefox and Google Chrome }\\
-\DIFaddFL{Recorded browser metadata }& \DIFaddFL{Session metadata stored browser user-agent strings. Mozilla Firefox and Google Chrome were used in the deployment, but browser effects were not independently manipulated or analyzed. }\\
-\DIFaddFL{Webcam type/model }& \DIFaddFL{Built-in laptop webcam }\\
-\DIFaddFL{Requested camera constraints }& \texttt{\DIFaddFL{getUserMedia}}\DIFaddFL{: ideal 640$\times$480 pixels, ideal 30 fps }\\
-\DIFaddFL{Camera capture behavior }& \DIFaddFL{Browser-negotiated capture under the requested constraints; no manual exposure or white-balance constraints were applied }\\
-\DIFaddFL{Processing rate }& \DIFaddFL{Not analyzed as a result metric in the present revision }\\
-\DIFaddFL{Display }& \DIFaddFL{Built-in 15.6-inch display, 2560$\times$1440 pixels, 165 Hz }\\
-\DIFaddFL{Screen brightness }& \DIFaddFL{Fixed across sessions using the built-in laptop display setting }\\
-\DIFaddFL{Viewing distance }& \DIFaddFL{Approximately 50--60 cm }\\
-\DIFaddFL{Auto-exposure }& \DIFaddFL{Device/browser default camera pipeline; no manual exposure control was applied }\\
-\DIFaddFL{Auto-white-balance }& \DIFaddFL{Device/browser default camera pipeline; no manual white-balance control was applied }\\
+\DIFaddFL{Browser versions }& \DIFaddFL{Firefox user-agent was available when recorded in exported metadata; exact Chrome deployment-time version was not systematically logged }\\
+\DIFaddFL{Webcam type }& \DIFaddFL{Built-in laptop webcam }\\
+\DIFaddFL{Webcam model }& \DIFaddFL{Exact internal webcam model not logged }\\
+\DIFaddFL{Camera capture API }& \DIFaddFL{Browser }\texttt{\DIFaddFL{getUserMedia}} \DIFaddFL{API }\\
+\DIFaddFL{Requested camera constraints }& \DIFaddFL{Ideal 640$\times$480 pixels, ideal 30 fps }\\
+\DIFaddFL{Actual camera resolution }& \DIFaddFL{Browser/device-negotiated; not programmatically logged as a verified deployment-time value }\\
+\DIFaddFL{Actual camera frame rate }& \DIFaddFL{Browser/device-negotiated; not programmatically logged as a verified camera frame rate }\\
+\DIFaddFL{Screen brightness }& \DIFaddFL{Fixed during the deployment; exact percentage not logged }\\
+\DIFaddFL{Auto-exposure }& \DIFaddFL{Device/browser default behavior; not manually constrained and exact state not programmatically logged }\\
+\DIFaddFL{Auto-white-balance }& \DIFaddFL{Device/browser default behavior; not manually constrained and exact state not programmatically logged }\\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table*}
 
-\DIFaddend \subsection{\DIFdelbegin \DIFdel{Apparatus and Physical }\DIFdelend \DIFaddbegin \DIFadd{Deployment }\DIFaddend Environment \DIFaddbegin \DIFadd{and Lighting Conditions}\DIFaddend }
-The \DIFdelbegin \DIFdel{experiment was deployed on a standard 13.5-inch laptop display (approximate 60Hz target refresh rate).
-To contextualize the environmental differences, ambient illuminance was estimated using a digital lux meter at the eye level of the participant.
-}%DIFDELCMD < \begin{itemize}
-%DIFDELCMD <     \item %%%
-\textbf{\DIFdel{Lab Environment}}%DIFAUXCMD
-\DIFdel{: Mean illuminance $480 \pm 20$ lux (Standard fluorescent lighting ).
-}%DIFDELCMD < \item %%%
-\DIFdelend \DIFaddbegin \DIFadd{deployment was conducted during daytime in an indoor university laboratory/research room and an indoor private home room under general artificial room lighting.
+\subsection{\DIFadd{Deployment Environment and Lighting Conditions}}
+\DIFadd{The deployment was conducted during daytime in an indoor university laboratory/research room and an indoor private home room under general artificial room lighting.
 Both rooms had windows, but curtains were closed during the sessions.
 Direct natural light was not used as the primary illumination source in either context.
 The built-in laptop display brightness was fixed across sessions.
@@ -705,18 +710,18 @@ Table \ref{tab:environment_config} summarizes the deployment environment and lig
 
 \subsection{Experimental Procedure \DIFdelbegin \DIFdel{\& Cognitive Framing}\DIFdelend \DIFaddbegin \DIFadd{and Instructional Task Contexts}\DIFaddend }
 Each session began with \DIFdelbegin \DIFdel{an automated }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend pre-session \DIFdelbegin \DIFdel{check used to screen basic capture }\DIFdelend \DIFaddbegin \DIFadd{capture check for basic camera }\DIFaddend conditions, including \DIFdelbegin \DIFdel{luminance, pose, and face size prior to hiding }\DIFdelend \DIFaddbegin \DIFadd{approximate camera-derived brightness and pose, before }\DIFaddend the camera feed \DIFdelbegin \DIFdel{to prevent distraction.
-We then presented distinct instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) via full-screen text before each 20-trial block.
+We then presented distinct instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) via full-screen text before each 20-trial block. 
 The }\textbf{\DIFdel{Neutral}} %DIFAUXCMD
 \DIFdel{condition served as a baseline.
 The }\textbf{\DIFdel{Negative Evaluation}} %DIFAUXCMD
-\DIFdel{condition ("WARNING: CRITICAL. Poor performance is unacceptable") served as a negative task framing manipulation.
+\DIFdel{condition ("WARNING: CRITICAL.
+Poor performance is unacceptable") served as a negativetask framing manipulation.
 The }\textbf{\DIFdel{Positive Evaluation}} %DIFAUXCMD
-\DIFdel{condition ("BONUS. Break your record!") served as a positive task framing manipulation.
-}\DIFdelend \DIFaddbegin \DIFadd{was hidden to reduce distraction.
-Before each block, the system presented one of three instructional task contexts: neutral instruction, negative instruction, or positive instruction.
-The negative and positive instruction blocks were not interpreted as validated cognitive or motivational manipulations.
-They were used to demonstrate that Camerala can synchronize behavioral logs and sensor-derived features across different task contexts.
-}\DIFaddend 
+\DIFdel{condition ("BONUS. Break your record!") served as a positive task framing manipulation}\DIFdelend \DIFaddbegin \DIFadd{was hidden to reduce distraction.
+The task included negative, neutral, and positive instruction contexts as exploratory task-interface conditions.
+These contexts were used to demonstrate that Camerala can present different instruction frames while recording synchronized behavioral and face-derived records.
+The labels ``negative'' and ``positive'' refer only to instruction labels used in the task interface.
+Because the participant was the author and knew that the instructions were experimentally constructed, these contexts are not treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, or motivational state}\DIFaddend .
 
 \subsection{\DIFdelbegin \DIFdel{The }\DIFdelend Psychophysical Task}
 The \DIFdelbegin \DIFdel{psychophysical probe was a Gabor Orientation Discrimination task }\DIFdelend \DIFaddbegin \DIFadd{task was a two-alternative forced-choice orientation discrimination task using procedurally rendered Gabor stimuli}\DIFaddend .
@@ -873,7 +878,8 @@ Despite this, the tracking confidence remained above 96\% at home , supporting t
 \subsection{\DIFdel{Observation of Task Performance Differences}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{To investigate RQ2 (between-environment differences ), we aggregated Reaction Time (RT) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments. We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset.
+\DIFdel{To investigate }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
+\DIFadd{To address }\DIFaddend RQ2\DIFdelbegin \DIFdel{(between-environment differences ), we aggregated Reaction Time (RT) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments. We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset.
 }%DIFDELCMD < 
 
 %DIFDELCMD < \begin{figure}[t]
@@ -893,30 +899,27 @@ Despite this, the tracking confidence remained above 96\% at home , supporting t
 \subsubsection{\DIFdel{Laboratory Environment}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{In the controlledLab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) . This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in the laboratory setting.}%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\subsubsection{\DIFdel{Home Environment}}
-%DIFAUXCMD
-\addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{Conversely, in the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$).
-The descriptive separation observed in }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
-\DIFadd{To address RQ2, we compared descriptive task-synchronized records between the laboratory and home contexts.
+\DIFdel{In the controlledLab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) }\DIFdelend \DIFaddbegin \DIFadd{, we compared descriptive task-synchronized records between the laboratory and home contexts.
 The exported records showed differences in rPPG-oriented ROI green-channel values, motion estimates, and the frame-to-frame green-channel brightness-change indicator.
 Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
 They should not be interpreted as evidence that the instruction blocks induced psychological, cognitive, motivational, or physiological effects.
 Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts.
-They are not interpreted as evidence of motion handling or correction of rPPG degradation.
-}
+They are not interpreted as evidence of motion handling or correction of rPPG degradation}\DIFaddend .
+\DIFdelbegin \DIFdel{This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in the laboratory setting.
+}\DIFdelend 
 
-\DIFadd{In the laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
-In the home context, }\DIFaddend the \DIFdelbegin \DIFdel{laboratory setting was not apparent in the home setting.
-This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors.
-}\DIFdelend \DIFaddbegin \DIFadd{mean RT values across instruction blocks were closer together.
-Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
-}\DIFaddend 
+\DIFdelbegin \subsubsection{\DIFdel{Home Environment}}
+%DIFAUXCMD
+\addtocounter{subsubsection}{-1}%DIFAUXCMD
+\DIFdel{Conversely, in the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$).
+The descriptive separation observed in the laboratory setting was not apparent in the home setting.
+This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors}\DIFdelend \DIFaddbegin \DIFadd{The instruction contexts were used only as task-interface contexts in the deployment.
+We do not report them as evidence that evaluation pressure, reward motivation, cognitive effects, or motivational effects were induced.
+Descriptive values are reported by instruction context only to document that the logging pipeline operated across different task-interface contexts}\DIFaddend .
+\DIFdelbegin %DIFDELCMD < 
 
-\DIFdelbegin \subsection{\DIFdel{Between-Environment Differences in Physiological Features}}
+%DIFDELCMD < %%%
+\subsection{\DIFdel{Between-Environment Differences in Physiological Features}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
 \DIFdel{We further investigated if differences extended to the collected physiological estimates.
@@ -927,12 +930,14 @@ Because the deployment used one author-participant and did not isolate instructi
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
 \DIFdel{We analyzed the descriptive Head Motion Index ($M_t$) during the instruction-reading phase.
-In the Lab, the Negative Evaluation condition showed a reduction in head motion compared to the Neutral condition.
+}\DIFdelend In the \DIFdelbegin \DIFdel{Lab, the Negative Evaluation condition showed a reduction in head motion compared to the Neutral condition.
 At Home, however, higher motion variability was observed during the same instruction .
-}%DIFDELCMD < 
+}\DIFdelend \DIFaddbegin \DIFadd{laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
+In the home context, the mean RT values across instruction blocks were closer together.
+Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
+}\DIFaddend 
 
-%DIFDELCMD < %%%
-\subsubsection{\DIFdel{Heart Rate Analysis (rPPG)}}
+\DIFdelbegin \subsubsection{\DIFdel{Heart Rate Analysis (rPPG)}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
 \DIFdel{Due to the short trial duration (seconds per trial), we aggregated HR estimation across the entire block duration (approx.
@@ -994,6 +999,8 @@ Motion estimates are logged only as deployment-context records; they do not indi
 \DIFadd{The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences.
 They may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
 The present study was not designed to isolate psychological or physiological state changes from these factors.
+The present deployment also cannot validate the psychological effectiveness of the negative or positive instruction contexts.
+The author-participant knew that the instructions were experimentally constructed, and no manipulation check was included.
 Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
 }
 
