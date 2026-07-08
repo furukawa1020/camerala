@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 15:14:59 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 15:24:23 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -163,12 +163,12 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
 Furthermore, it integrates sensing, psychophysical task timing, and local data persistence within a unified client-side runtime.
 To evaluate the framework, we conducted an exploratory 10-session longitudinal deployment (}\DIFdelend \DIFaddbegin \DIFadd{framework for remote psychological and psychophysiological task experiments.
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
-In an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment, ten sessions were conducted in }\DIFaddend laboratory and home settings\DIFaddbegin \DIFadd{, yielding 600 trials in total.
+In an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment, ten sessions were conducted in }\DIFaddend laboratory and home settings\DIFdelbegin \DIFdel{. The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
+These results suggest that }\DIFdelend \DIFaddbegin \DIFadd{, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
-The exported logs contained timestamped task events and reproducible face-image-derived fields.
-Differences between laboratory and home exported records are reported as deployment-context differences in face-derived and sensor-derived records, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects}\DIFaddend .
-\DIFdelbegin \DIFdel{The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals. These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiologicalsensing across heterogeneous home and laboratory environments.
-}\DIFdelend \end{abstract}
+These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala operated as a local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous home and laboratory environments}\DIFdelend \DIFaddbegin \DIFadd{logging implementation and produced task-synchronized exported records that satisfied the study-specific operational criteria.
+They do not establish general feasibility, robustness, naturalistic deployment validity, rPPG accuracy, or psychological/physiological effects}\DIFaddend .
+\end{abstract}
 
 \begin{keyword}
 \DIFdelbegin \DIFdel{WebAssembly}\DIFdelend \DIFaddbegin \DIFadd{Browser-Native Sensing}\DIFaddend , Remote Photoplethysmography, \DIFdelbegin \DIFdel{Browser-Native Sensing, Privacy-Preserving Frameworks, In-the-Wild Deployment
@@ -967,38 +967,34 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 \section{Discussion}
 
 The \DIFdelbegin \DIFdel{central finding }\DIFdelend \DIFaddbegin \DIFadd{main implication }\DIFaddend of this deployment is not \DIFdelbegin \DIFdel{a population-level effect of instructional framing, but that identical task procedures produced different observed task and physiological patterns across environments.
-For system evaluation, this suggests that laboratory-only validation may overestimate signal stability and condition separability under domestic use.
-This highlights an engineering constraint for continuous sensing: systems evaluated purely on Lab data may exhibit environment-associated changes in observed signals and measurement quality when moved from laboratory to domestic settings.
+For system evaluation, this suggests that laboratory-only validation may overestimate signal stability and condition separability under domestic use. This highlights an engineering constraint for continuous sensing: systemsevaluated purely on Lab data may exhibit environment-associated changes in observed signals and measurement quality when moved from laboratory to domestic settings.
 }%DIFDELCMD < 
 
 %DIFDELCMD < %%%
 \subsection{\DIFdel{Prioritizing Browser-Native Architectures}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{Methodologically, we demonstrated that a }\DIFdelend \DIFaddbegin \DIFadd{that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
-Instead, the deployment illustrates design requirements for a local-first, }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework (Camerala) can operationally collect synchronized behavioral and physiological data in domestic spaces without transmitting raw video.
-By retaining computation purely on the client side, the architecture minimizes the privacy barriers that often inhibit exploratory "in-the-wild" deployments involving video sensors.
-}\DIFdelend \DIFaddbegin \DIFadd{logging architecture for remote psychological and psychophysiological task experiments.
-In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.
-Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records for descriptive analysis.
-However, the laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
-Future versions should include pre-session camera and lighting checks, explicit operational criteria, reference physiological sensors, multiple participants, multiple devices, and controlled lighting, posture, and camera conditions.
-}\DIFaddend 
-
-\DIFaddbegin \DIFadd{Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
-This can reduce raw-video handling and server-side timestamp reconciliation, but it also removes the possibility of visually inspecting many artifacts after data collection.
-The trade-off makes quality-aware logging important.
-The relevant indicators include landmark availability, rPPG-oriented ROI values, head-motion estimates, and camera-image-derived brightness-change records; these values can support pre-session checks and descriptive inspection, but they are not proof that rPPG estimates are accurate or that motion-induced rPPG degradation has been corrected.
+\DIFdel{Methodologically, we demonstrated that a }\DIFdelend \DIFaddbegin \DIFadd{that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
+Rather, this limited deployment identifies practical design requirements and safeguards for future local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework (Camerala ) can operationally collect synchronized behavioral and physiological data in domestic spaces without transmitting raw video.
+By retaining computation purely on the client side, the architecture minimizes the privacy barriers that often inhibit exploratory "in-the-wild" deployments involving video sensors}\DIFdelend \DIFaddbegin \DIFadd{logging systems: explicit operational criteria, task-event/frame-record timestamp alignment, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
+Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records that satisfied the study-specific operational criteria for descriptive analysis.
+The laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 }
 
-\DIFadd{The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+\DIFadd{Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
+This can reduce raw-video handling and server-side timestamp reconciliation, but it also removes the possibility of visually inspecting many artifacts after data collection.
+The trade-off makes quality-aware logging important.
+The relevant indicators include landmark availability, rPPG-oriented ROI values, head-motion estimates, and camera-image-derived brightness-change records; these values can support pre-session checks and descriptive inspection, but they are not proof that rPPG estimates are accurate or that motion-induced rPPG degradation has been corrected}\DIFaddend .
+
+\DIFaddbegin \DIFadd{The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
 The study was not designed to isolate psychological or physiological state changes from these factors, and it cannot validate the psychological effectiveness of the negative or positive instruction contexts.
 Future deployments should therefore incorporate task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images; for studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 }
 
 \DIFaddend \subsection{Limitations}
-\DIFdelbegin \DIFdel{There are several strict limitations to this work. First, this is a single-case exploratory deployment (}\DIFdelend \DIFaddbegin \DIFadd{This exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{); the results represent observational, deployment-oriented feasibility evidence rather than generalizable population inference.
+\DIFdelbegin \DIFdel{There are several strict limitations to this work.
+First, this is a single-case exploratory deployment (}\DIFdelend \DIFaddbegin \DIFadd{This exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{); the results represent observational, deployment-oriented feasibility evidence rather than generalizable population inference.
 Second, the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lightingchanges, subtle postureshifts, display luminescence, or camera placementartifacts inherent to unstructured deployments.
 Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitiveshifts through sensor-fused studies. Even with these limitations, the present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment used one primary laptop/camera configuration, no ECG or contact PPG reference, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs.
 It did not test multiple participants, devices, or home environments, and it did not experimentally separate lighting, screen light, posture, camera placement, task timing, participant state, and task context.
@@ -1007,12 +1003,12 @@ Future work should use reference physiological sensors, controlled posture/camer
 The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, local-first feature logging under limited laboratory and home }\DIFaddend conditions.
 
 \section{Conclusion}
-\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. }\DIFdelend We presented Camerala, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native\DIFdelbegin \DIFdel{framework that extracts rPPG and facial landmarks on-device.
-Our proof-of-concept deployment provided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environmentsare associated with changes in observed task and physiological signals.
-These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, }\DIFdelend \DIFaddbegin \DIFadd{, }\DIFaddend local-first \DIFaddbegin \DIFadd{implementation example that integrates psychophysical task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention.
-In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, Camerala completed 600 trials, and 541/600 trials remained after the specified reaction-time criterion.
-The deployment produced synchronized behavioral logs and face-derived and sensor-derived records with descriptive deployment-context differences between the tested environments.
-These observations should not be interpreted as evidence of general deployability or physiological/cognitive effects; instead, they highlight design safeguards needed for future local-first }\DIFaddend physiological \DIFdelbegin \DIFdel{sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{feature logging in home-based psychophysical experiments}\DIFaddend .
+\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. We presented Camerala , a privacy-conscious, }\DIFdelend \DIFaddbegin \DIFadd{This paper presented Camerala as a local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework that extracts rPPG and facial landmarks on-device.
+Our proof-of-concept deploymentprovided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environments are associated with changes in observed task and physiological signals.
+These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, local-first physiological sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation for remote psychological and psychophysiological task experiments.
+In the present single-case author-participant deployment, Camerala completed the planned task procedure and exported task-synchronized face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
+The retained data included 541/600 trials after the reaction-time criterion, and all 299 exported windows satisfied the }\texttt{\DIFadd{mean\_quality}} \DIFadd{criterion.
+These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, naturalistic deployment validity, validated rPPG accuracy, or psychological/physiological effects}\DIFaddend .
 
 \section*{\DIFdelbegin \DIFdel{Data availability}%DIFDELCMD < \MBLOCKRIGHTBRACE
 %DIFDELCMD < %%%

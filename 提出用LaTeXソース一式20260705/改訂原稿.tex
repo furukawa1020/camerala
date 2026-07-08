@@ -66,8 +66,8 @@ Camerala is a local-first, browser-native framework for remote psychological and
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
 In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
-The exported logs contained timestamped task events and reproducible face-image-derived fields.
-Differences between laboratory and home exported records are reported as deployment-context differences in face-derived and sensor-derived records, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects.
+These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala operated as a local-first browser-native logging implementation and produced task-synchronized exported records that satisfied the study-specific operational criteria.
+They do not establish general feasibility, robustness, naturalistic deployment validity, rPPG accuracy, or psychological/physiological effects.
 \end{abstract}
 
 \begin{keyword}
@@ -483,12 +483,10 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 % =================================================================================
 \section{Discussion}
 
-The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
-Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.
-In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.
-Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records for descriptive analysis.
-However, the laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
-Future versions should include pre-session camera and lighting checks, explicit operational criteria, reference physiological sensors, multiple participants, multiple devices, and controlled lighting, posture, and camera conditions.
+The main implication of this deployment is not that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
+Rather, this limited deployment identifies practical design requirements and safeguards for future local-first browser-native logging systems: explicit operational criteria, task-event/frame-record timestamp alignment, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
+Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records that satisfied the study-specific operational criteria for descriptive analysis.
+The laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 
 Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
 This can reduce raw-video handling and server-side timestamp reconciliation, but it also removes the possibility of visually inspecting many artifacts after data collection.
@@ -508,10 +506,10 @@ Future work should use reference physiological sensors, controlled posture/camer
 The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of browser-native, task-aligned, local-first feature logging under limited laboratory and home conditions.
 
 \section{Conclusion}
-We presented Camerala, a browser-native, local-first implementation example that integrates psychophysical task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention.
-In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, Camerala completed 600 trials, and 541/600 trials remained after the specified reaction-time criterion.
-The deployment produced synchronized behavioral logs and face-derived and sensor-derived records with descriptive deployment-context differences between the tested environments.
-These observations should not be interpreted as evidence of general deployability or physiological/cognitive effects; instead, they highlight design safeguards needed for future local-first physiological feature logging in home-based psychophysical experiments.
+This paper presented Camerala as a local-first browser-native system-integration implementation for remote psychological and psychophysiological task experiments.
+In the present single-case author-participant deployment, Camerala completed the planned task procedure and exported task-synchronized face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
+The retained data included 541/600 trials after the reaction-time criterion, and all 299 exported windows satisfied the \texttt{mean\_quality} criterion.
+These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, naturalistic deployment validity, validated rPPG accuracy, or psychological/physiological effects.
 
 \section*{Declarations}
 \textbf{Data availability.}
