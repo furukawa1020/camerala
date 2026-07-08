@@ -44,13 +44,13 @@ We revised the manuscript to explain that real-time processing is not claimed as
 We acknowledge that local video recording followed by offline processing could preserve timestamps if implemented carefully.
 
 \textbf{Revision.}
-The revised manuscript clarifies that Camerala targets remote psychological and psychophysiological task experiments conducted in private spaces.
+The revised manuscript clarifies that Camerala targets remote psychological and psychophysiological task experiments conducted in private or home settings.
 In such settings, retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
 Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
 The role of real-time browser-side processing is thus feature-only local logging and timestamp alignment within the same client-side runtime, not online task adaptation or a claim that physiological estimates are more accurate.
 
 \textbf{Key revised text.}
-``Local video recording followed by offline processing could preserve timestamps if implemented carefully. However, the intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private space, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.''
+``Local video recording followed by offline processing could preserve timestamps if implemented carefully. However, the intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private or home setting, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.''
 
 \textbf{Location.}
 Introduction; System Architecture; Data Management and Local-First Persistence.
@@ -134,14 +134,18 @@ Related Work; System Architecture, Feature Extraction Logic; Results; Discussion
 
 \condition{7}{Insufficient description of the concrete usage scenario}
 \textbf{Response.}
-Thank you for the comment.
-The intended usage scenario is now stated at the beginning of the paper and again in the Methodology.
+Thank you for this clarification request.
+We revised the manuscript to define Camerala's target use case as a remote psychological/psychophysiological task experiment conducted in private or home settings, rather than continuous physiological sensing during ordinary daily activities.
 
 \textbf{Revision.}
-The manuscript now defines the target use case as a remote psychological or psychophysiological task experiment conducted while the participant is seated in front of a laptop, views task stimuli, and responds through the browser, with synchronized browser-based logging of behavioral events and webcam-derived features.
+The revised manuscript now states that the participant is expected to sit in front of a laptop, view browser-based task stimuli, and respond through the browser.
+It also clarifies that Camerala is intended to support task-synchronized acquisition of face-derived records while reducing the need to transmit or retain privacy-sensitive raw facial video.
+The laboratory setting in the present deployment is described as a comparison context, not as the primary target scenario.
 
 \textbf{Key revised text.}
-``The target use case is a remote psychological or psychophysiological task experiment conducted while the participant is seated in front of a laptop.''
+``The intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private or home setting, where the participant sits in front of a laptop, views browser-based task stimuli, and responds through the browser. The goal is not continuous physiological sensing during ordinary daily activities.''
+
+``In the present exploratory deployment, the same task procedure was conducted in one laboratory setting and one home setting to examine deployment-context differences.''
 
 \textbf{Location.}
 Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
@@ -149,15 +153,16 @@ Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
 \condition{8}{Definition of ``in-the-wild'' and ``naturalistic physiological sensing'' are not clear}
 \textbf{Response.}
 Thank you for this point.
-The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life physiological sensing.
+The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life or continuous physiological sensing.
 
 \textbf{Revision.}
 Unqualified ``in-the-wild'' and ``naturalistic'' expressions were removed from the manuscript.
-The revised manuscript describes the study as a remote psychological or psychophysiological task experiment conducted in laboratory and home settings.
-It also explicitly states that the deployment is not continuous daily-life sensing: the participant was seated in front of a laptop, viewed task stimuli, and responded through the browser.
+The revised manuscript describes the target use case as a remote psychological or psychophysiological task experiment conducted in private or home settings.
+It also explicitly states that the deployment is not continuous physiological sensing during ordinary daily activities: the participant sits in front of a laptop, views browser-based task stimuli, and responds through the browser.
+The laboratory setting is described as a comparison context in the present exploratory deployment.
 
 \textbf{Key revised text.}
-``This use case is not unconstrained daily-life sensing: the participant is seated in front of a laptop, views task stimuli, and responds through the browser.''
+``The intended use case of Camerala is a remote psychological or psychophysiological task experiment conducted in a private or home setting, where the participant sits in front of a laptop, views browser-based task stimuli, and responds through the browser. The goal is not continuous physiological sensing during ordinary daily activities.''
 
 \textbf{Location.}
 Abstract; Introduction; Methodology; Discussion; Conclusion.
