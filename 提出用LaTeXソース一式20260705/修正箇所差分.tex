@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 13:45:33 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 13:55:09 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -166,9 +166,8 @@ It synchronizes task events with face-image-derived feature records and exports 
 In an exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment, ten sessions were conducted in }\DIFaddend laboratory and home settings\DIFaddbegin \DIFadd{, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
 The exported logs contained timestamped task events and reproducible face-image-derived fields.
-Differences between laboratory and home records are reported as deployment-specific sensor-derived observations, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects}\DIFaddend .
-\DIFdelbegin \DIFdel{The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
-These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiologicalsensing across heterogeneous home and laboratory environments.
+Differences between laboratory and home exported records are reported as deployment-context differences in face-derived and sensor-derived records, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects}\DIFaddend .
+\DIFdelbegin \DIFdel{The deployment showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals. These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiologicalsensing across heterogeneous home and laboratory environments.
 }\DIFdelend \end{abstract}
 
 \begin{keyword}
@@ -211,7 +210,7 @@ To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
     \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the intended remote psychological/psychophysiological task use case, do Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria for descriptive analysis: trial-level reaction times within 100--1500 ms and exported-window-level landmark availability of }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 under the tested configuration}\DIFaddend ?
-    \item \textbf{RQ2:} What \DIFdelbegin \DIFdel{kinds of between-environment differences are observable in the physiological signals collected through such a deployment }\DIFdelend \DIFaddbegin \DIFadd{differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors}\DIFaddend ?
+    \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
 \DIFaddbegin \DIFadd{For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels.
@@ -219,8 +218,11 @@ At the trial level, trials were retained for descriptive analysis when reaction 
 At the exported-window level, landmark availability was evaluated using }\texttt{\DIFadd{mean\_quality}}\DIFadd{, the mean of the binary landmark-availability flag within each 10-s window; exported windows with }\texttt{\DIFadd{mean\_quality}} \DIFadd{$\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
 This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
-RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
-These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
+RQ2 was retained as a question about between-environment differences, but it was treated as a descriptive question about deployment-context differences in exported records.
+In the revised interpretation, the phrase ``physiological signals'' refers conservatively to task-synchronized face-derived and sensor-derived exported records rather than validated physiological state measurements.
+The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+Therefore, these differences were not interpreted as psychological, cognitive, motivational, or physiological effects.
+These analyses are intended only to describe operational completion and exported-record differences under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 }
 
 \DIFaddend \subsection{Contributions}
@@ -229,7 +231,7 @@ In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture
 \begin{enumerate}
     \item \textbf{\DIFdelbegin \DIFdel{Privacy-Preserving Edge Architecture}\DIFdelend \DIFaddbegin \DIFadd{Browser-native local-first sensing architecture}\DIFaddend }: A \DIFdelbegin \DIFdel{browser-native sensing pipeline that performs real-time rPPGand facial landmark extraction entirely on-device, avoiding raw videotransmission}\DIFdelend \DIFaddbegin \DIFadd{client-side pipeline that extracts rPPG/FaceMesh-derived features and measurement-quality indicators without transmitting or storing raw video}\DIFaddend .
     \item \textbf{\DIFdelbegin \DIFdel{System Design for Task-Aligned On-Device Sensing }\DIFdelend \DIFaddbegin \DIFadd{Task-aligned on-device sensing }\DIFaddend and \DIFdelbegin \DIFdel{Local Persistence}\DIFdelend \DIFaddbegin \DIFadd{local persistence}\DIFaddend }: \DIFdelbegin \DIFdel{An implementation that keeps psychophysical task execution, physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{A unified browser runtime that synchronizes psychophysical task events with frame-level sensor-derived features and stores timestamped local logs}\DIFaddend .
-    \item \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{remote task deployment in laboratory and home settings}\DIFaddend }: A \DIFdelbegin \DIFdel{longitudinal case deployment across }\DIFdelend \DIFaddbegin \DIFadd{limited N=1 author-participant deployment showing completion of a remote task procedure in }\DIFaddend laboratory and home settings, \DIFdelbegin \DIFdel{showing that heterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{with local export of task-synchronized sensor-derived records}\DIFaddend .
+    \item \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{remote task deployment in laboratory and home settings}\DIFaddend }: A \DIFdelbegin \DIFdel{longitudinal case deployment across }\DIFdelend \DIFaddbegin \DIFadd{limited N=1 author-participant deployment showing completion of a remote task procedure in }\DIFaddend laboratory and home settings, \DIFdelbegin \DIFdel{showing that heterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{with local export of task-synchronized face-derived and sensor-derived records}\DIFaddend .
 \end{enumerate}
 
 The remainder of this paper is organized as follows\DIFdelbegin \DIFdel{: }\DIFdelend \DIFaddbegin \DIFadd{.
@@ -795,12 +797,14 @@ These results describe the available analyzed trials and exported windows under 
 \DIFdel{Before observing behavioral differences, we assessed the stability of }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task and Exported Feature Summaries}}
 \DIFadd{Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.
 After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in }\DIFaddend the \DIFdelbegin \DIFdel{client-side rPPG and FaceMesh pipeline across the two environments.
-As shown in Table \ref{tab:data_quality} }\DIFdelend \DIFaddbegin \DIFadd{home setting.
+As shown in Table \ref{tab:data_quality} and Fig. 2, the Home environment presented greater challenges for signal quality.
+}\DIFdelend \DIFaddbegin \DIFadd{home setting.
 Accuracy was 85.5\% and 82.1\%, respectively.
-Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, }\DIFaddend and \DIFdelbegin \DIFdel{Fig. 2, the Home environment presented greater challenges for signal quality.
-}%DIFDELCMD < 
+Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, and the brightness-change indicator between settings.
+Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
+}\DIFaddend 
 
-%DIFDELCMD < \begin{figure}[t]
+\DIFdelbegin %DIFDELCMD < \begin{figure}[t]
 %DIFDELCMD <     \begin{center}
 %DIFDELCMD <     \includegraphics[width=\linewidth]{paper_figures/Figure2_Quality.png}
 %DIFDELCMD <     %%%
@@ -819,8 +823,11 @@ Window-level exported records showed descriptive differences in ROI green-channe
 {%DIFAUXCMD
 \DIFdelFL{Descriptive Data Quality Comparison (Trial-Level Aggregation)}}
 %DIFAUXCMD
-%DIFDELCMD < \label{tab:data_quality}
-%DIFDELCMD < \begin{center}
+\DIFdelendFL \DIFaddbeginFL \begin{table*}[t]
+\centering
+\caption{\DIFaddFL{Descriptive task and exported feature summaries after reaction-time exclusion.}}
+\DIFaddendFL \label{tab:data_quality}
+\DIFdelbeginFL %DIFDELCMD < \begin{center}
 %DIFDELCMD <     \resizebox{0.65\textwidth}{!}{%
 %DIFDELCMD <     \begin{tabular}{lcc}
 %DIFDELCMD < \toprule
@@ -835,11 +842,23 @@ Window-level exported records showed descriptive differences in ROI green-channe
 %DIFDELCMD < \end{tabular}
 %DIFDELCMD <     }
 %DIFDELCMD < \end{center}
-%DIFDELCMD < \end{table*}
-%DIFDELCMD < 
-
 %DIFDELCMD < %%%
-\DIFdel{The "Exposure Fluctuation" ($E_{fluc}$) was noticeably higher in the Home environment on average, indicating a difference in environmental lighting artifacts.
+\DIFdelendFL \DIFaddbeginFL \footnotesize
+\begin{tabular}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.24\textwidth}@{}}
+\toprule
+\textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Laboratory}} & \textbf{\DIFaddFL{Home}} & \textbf{\DIFaddFL{Notes}} \\
+\midrule
+\DIFaddFL{Retained trials after RT exclusion }& \DIFaddFL{256/300 (85.3\%) }& \DIFaddFL{285/300 (95.0\%) }& \DIFaddFL{Trial-level; RT 100--1500 ms }\\
+\DIFaddFL{Mean RT after RT exclusion }& \DIFaddFL{721.1 $\pm$ 257.7 ms }& \DIFaddFL{676.5 $\pm$ 249.5 ms }& \DIFaddFL{Trial-level retained trials }\\
+\DIFaddFL{Accuracy after RT exclusion }& \DIFaddFL{85.5\% }& \DIFaddFL{82.1\% }& \DIFaddFL{Trial-level retained trials }\\
+\DIFaddFL{rPPG-oriented ROI green-channel value }& \DIFaddFL{46.69 $\pm$ 6.80 }& \DIFaddFL{34.32 $\pm$ 2.72 }& \DIFaddFL{Window-level; windows.csv }\\
+\DIFaddFL{Motion estimate }& \DIFaddFL{0.0011 $\pm$ 0.0005 }& \DIFaddFL{0.0010 $\pm$ 0.0004 }& \DIFaddFL{Window-level; windows.csv }\\
+\DIFaddFL{Frame-to-frame green-channel brightness-change indicator }& \DIFaddFL{0.0504 $\pm$ 0.0509 }& \DIFaddFL{0.0707 $\pm$ 0.0337 }& \DIFaddFL{Window-level; windows.csv }\\
+\bottomrule
+\end{tabular}
+\DIFaddendFL \end{table*}
+
+\DIFdelbegin \DIFdel{The "Exposure Fluctuation" ($E_{fluc}$) was noticeably higher in the Home environment on average, indicating a difference in environmental lighting artifacts.
 Despite this, the tracking confidence remained above 96\% at home , supporting the feasibility of using the MediaPipe + WebAssembly stack for this naturalistic deployment.
 }%DIFDELCMD < 
 
@@ -847,56 +866,42 @@ Despite this, the tracking confidence remained above 96\% at home , supporting t
 \subsection{\DIFdel{Observation of Task Performance Differences}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{To investigate RQ2 (between-environment differences ), we aggregated Reaction Time (RT) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments.
-We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset}\DIFdelend \DIFaddbegin \DIFadd{the brightness-change indicator between settings.
-These differences are treated as deployment-specific sensor-derived observations}\DIFaddend .
+\DIFdel{To investigate RQ2 (between-environment differences ), we aggregated Reaction Time (RT) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments. We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset.
+}%DIFDELCMD < 
 
-\DIFdelbegin %DIFDELCMD < \begin{figure}[t]
+%DIFDELCMD < \begin{figure}[t]
 %DIFDELCMD <     \begin{center}
 %DIFDELCMD <     \includegraphics[width=\linewidth]{paper_figures/Figure3_Interaction.png}
 %DIFDELCMD <     %%%
-\DIFdelendFL \DIFaddbeginFL \begin{table*}[t]
-\centering
-\DIFaddendFL \caption{Descriptive \DIFdelbeginFL \DIFdelFL{trends in Reaction Time (RT) grouped by framing condition}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{task and exported feature summaries after reaction-time exclusion}\DIFaddendFL .\DIFdelbeginFL \DIFdelFL{Under controlled Laboratory settings, the negative instructional framing exhibited descriptive deviations from the Neutral condition. At Home, variance across conditions appeared to mask task-induced deviations. Error bars represent Standard Error (SE).}\DIFdelendFL }
-\DIFdelbeginFL %DIFDELCMD < \label{fig:rt_results}
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{Descriptive trends in Reaction Time (RT) grouped by framing condition. Under controlled Laboratory settings, the negative instructional framing exhibited descriptive deviations from the Neutral condition. At Home, variance across conditions appeared to mask task-induced deviations. Error bars represent Standard Error (SE).}}
+    %DIFAUXCMD
+%DIFDELCMD < \label{fig:rt_results}
 %DIFDELCMD < \end{center}
 %DIFDELCMD < \end{figure}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \label{tab:data_quality}
-\footnotesize
-\begin{tabular}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.24\textwidth}@{}}
-\toprule
-\textbf{\DIFadd{Metric}} & \textbf{\DIFadd{Laboratory}} & \textbf{\DIFadd{Home}} & \textbf{\DIFadd{Notes}} \\
-\midrule
-\DIFadd{Retained trials after RT exclusion }& \DIFadd{256/300 (85.3\%) }& \DIFadd{285/300 (95.0\%) }& \DIFadd{Trial-level; RT 100--1500 ms }\\
-\DIFadd{Mean RT after RT exclusion }& \DIFadd{721.1 $\pm$ 257.7 ms }& \DIFadd{676.5 $\pm$ 249.5 ms }& \DIFadd{Trial-level retained trials }\\
-\DIFadd{Accuracy after RT exclusion }& \DIFadd{85.5\% }& \DIFadd{82.1\% }& \DIFadd{Trial-level retained trials }\\
-\DIFadd{rPPG-oriented ROI green-channel value }& \DIFadd{46.69 $\pm$ 6.80 }& \DIFadd{34.32 $\pm$ 2.72 }& \DIFadd{Window-level; windows.csv }\\
-\DIFadd{Motion estimate }& \DIFadd{0.0011 $\pm$ 0.0005 }& \DIFadd{0.0010 $\pm$ 0.0004 }& \DIFadd{Window-level; windows.csv }\\
-\DIFadd{Frame-to-frame green-channel brightness-change indicator }& \DIFadd{0.0504 $\pm$ 0.0509 }& \DIFadd{0.0707 $\pm$ 0.0337 }& \DIFadd{Window-level; windows.csv }\\
-\bottomrule
-\end{tabular}
-\end{table*}
-\DIFaddend 
+%DIFDELCMD < 
 
-\DIFdelbegin \subsubsection{\DIFdel{Laboratory Environment}}
+%DIFDELCMD < %%%
+\subsubsection{\DIFdel{Laboratory Environment}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{In the controlled Lab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
-\DIFadd{To address RQ2, we compared descriptive task-event and sensor-derived summaries across instructional task contexts and deployment contexts.
-The exported logs showed descriptive differences in head-motion estimates and RT across laboratory and home contexts.
-These differences should be interpreted as observations from this author-participant deployment, not as evidence that the instruction blocks induced psychological or motivational effects}\DIFaddend .
+\DIFdel{In the controlledLab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
+\DIFadd{To address RQ2, we compared descriptive task-synchronized records between the laboratory and home contexts.
+The exported records showed differences in rPPG-oriented ROI green-channel values, motion estimates, and the frame-to-frame green-channel brightness-change indicator.
+Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
+They should not be interpreted as evidence that the instruction blocks induced psychological, cognitive, motivational, or physiological effects}\DIFaddend .
 \DIFdelbegin \DIFdel{This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in the laboratory setting.}\DIFdelend 
 
 \DIFdelbegin \subsubsection{\DIFdel{Home Environment}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
 \DIFdel{Conversely, in the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$).
-The descriptive separation observed in the laboratory setting was not apparent in the home setting.
+The descriptive separation observed in }\DIFdelend \DIFaddbegin \DIFadd{In }\DIFaddend the \DIFdelbegin \DIFdel{laboratory setting was not apparent in the home setting.
 This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors.
-}\DIFdelend \DIFaddbegin \DIFadd{In the laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
+}\DIFdelend \DIFaddbegin \DIFadd{laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
 In the home context, the mean RT values across instruction blocks were closer together.
-Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, posture, or camera factors, these RT patterns are reported only as descriptive task-event observations.
+Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
 }\DIFaddend 
 
 \DIFdelbegin \subsection{\DIFdel{Between-Environment Differences in Physiological Features}}
@@ -939,7 +944,7 @@ Therefore, this paper does not interpret ROI-derived or }\DIFaddend block-level 
 %DIFDELCMD < \end{itemize}
 %DIFDELCMD < %%%
 \DIFdel{These physiological observations were reported alongside the task-derived trends and showed descriptive differences across environments}\DIFdelend \DIFaddbegin \DIFadd{summaries as validated heart-rate changes.
-The appropriate interpretation is that the tested deployment yielded sensor-derived records whose values differed descriptively between the tested laboratory and home contexts}\DIFaddend .
+The appropriate interpretation is that the tested deployment yielded face-derived and sensor-derived exported records whose values differed descriptively between the tested laboratory and home contexts}\DIFaddend .
 
 % =================================================================================
 % SECTION 6: DISCUSSION
@@ -973,10 +978,10 @@ They should not be treated as proof that rPPG estimates are accurate.
 }\DIFaddend 
 
 \DIFaddbegin \subsection{\DIFadd{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}}
-\DIFadd{The laboratory/home differences should be interpreted cautiously because deployment context, lighting, posture, camera geometry, task timing, and participant state were not independently controlled.
-The present design cannot isolate psychological, cognitive, motivational, or physiological effects.
-They are better understood as deployment-specific sensor-derived observations under environmental heterogeneity.
-Future work should include reference ECG or contact PPG, multiple participants, multiple devices, and controlled variation of environmental factors.
+\DIFadd{The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences.
+They may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+The present study was not designed to isolate psychological or physiological state changes from these factors.
+Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
 }
 
 \subsection{\DIFadd{Design Safeguards for Future Camerala Deployments}}
@@ -991,7 +996,7 @@ First, \DIFdelbegin \DIFdel{this is a single-case exploratory deployment (}\DIFd
 Second, \DIFdelbegin \DIFdel{the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lightingchanges, subtle postureshifts, display luminescence, or camera placementartifacts inherent to unstructured deployments. Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitive shifts through sensor-fused studies.
 Even with these limitations, }\DIFdelend \DIFaddbegin \DIFadd{there was no reference physiological sensor, ECG, or contact PPG.
 Third, the deployment used one primary laptop/camera configuration and did not test multiple devices, multiple participants, or multiple home environments.
-Fourth, lighting, posture, camera placement, and task context were not experimentally separated.
+Fourth, lighting, screen light, posture, camera placement, task timing, participant state, and task context were not experimentally separated.
 Fifth, no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
 Sixth, the current logs do not store continuous confidence values from }\DIFaddend the \DIFdelbegin \DIFdel{present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{face-processing pipeline for all frames.
 Therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
@@ -1000,13 +1005,13 @@ Seventh, the study does not claim clinical or medical accuracy, general deployab
 The present study presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, local-first feature logging under limited laboratory and home }\DIFaddend conditions.
 
 \section{Conclusion}
-\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. }\DIFdelend We presented Camerala, a \DIFdelbegin \DIFdel{privacy-conscious}\DIFdelend \DIFaddbegin \DIFadd{browser-native}\DIFaddend , \DIFaddbegin \DIFadd{local-first framework that integrates psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
+\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. }\DIFdelend We presented Camerala, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native\DIFdelbegin \DIFdel{framework that extracts rPPG}\DIFdelend \DIFaddbegin \DIFadd{, local-first framework that integrates psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
 In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, the system completed 600 trials under the tested configuration without raw video transmission by Camerala.
 After the specified reaction-time criterion, 541/600 trials remained for descriptive analysis.
-The deployment produced synchronized behavioral logs and sensor-derived records, and it revealed descriptive differences between the tested environments.
+The deployment produced synchronized behavioral logs and face-derived }\DIFaddend and \DIFdelbegin \DIFdel{facial landmarks on-device.
+Our proof-of-concept deployment provided initial evidence of the framework's }\DIFdelend \DIFaddbegin \DIFadd{sensor-derived records, and it revealed descriptive deployment-context differences between the tested environments.
 These observations should not be interpreted as evidence of general deployability, robustness, or physiological/cognitive effects.
-Instead, Camerala illustrates a task-aligned }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework that extracts rPPGand facial landmarks on-device.
-Our proof-of-concept deployment provided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environmentsare associated with changes in observed task and physiological signals.
+Instead, Camerala illustrates a task-aligned }\DIFaddend browser-native \DIFdelbegin \DIFdel{architecture and highlighted the degree to which heterogeneous physical environmentsare associated with changes in observed task and physiological signals.
 These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, }\DIFdelend \DIFaddbegin \DIFadd{implementation and highlights design safeguards needed for future }\DIFaddend local-first physiological \DIFdelbegin \DIFdel{sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{feature logging in home-based psychophysical experiments}\DIFaddend .
 
 \section*{Data availability}

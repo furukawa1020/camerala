@@ -67,7 +67,7 @@ It synchronizes task events with face-image-derived feature records and exports 
 In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
 After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
 The exported logs contained timestamped task events and reproducible face-image-derived fields.
-Differences between laboratory and home records are reported as deployment-specific sensor-derived observations, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects.
+Differences between laboratory and home exported records are reported as deployment-context differences in face-derived and sensor-derived records, not as evidence of psychological, physiological, cognitive, motivational, or rPPG-accuracy effects.
 \end{abstract}
 
 \begin{keyword}
@@ -102,7 +102,7 @@ To address this deployment scenario, we present \textbf{Camerala}, a browser-nat
 The exploratory Research Questions (RQs) focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
     \item \textbf{RQ1:} In the intended remote psychological/psychophysiological task use case, do Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria for descriptive analysis: trial-level reaction times within 100--1500 ms and exported-window-level landmark availability of \texttt{mean\_quality} $\geq$ 0.8 under the tested configuration?
-    \item \textbf{RQ2:} What differences in task-synchronized sensor-derived records are observed between the laboratory and home deployment contexts, and how should these differences be interpreted given uncontrolled environmental and measurement factors?
+    \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
 For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels.
@@ -110,8 +110,11 @@ At the trial level, trials were retained for descriptive analysis when reaction 
 At the exported-window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
 This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
 We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
-RQ2 was treated as a descriptive comparison of task-synchronized sensor-derived records across deployment contexts, not as a test of psychological or physiological effects.
-These criteria are intended only to describe operational completion under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
+RQ2 was retained as a question about between-environment differences, but it was treated as a descriptive question about deployment-context differences in exported records.
+In the revised interpretation, the phrase ``physiological signals'' refers conservatively to task-synchronized face-derived and sensor-derived exported records rather than validated physiological state measurements.
+The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+Therefore, these differences were not interpreted as psychological, cognitive, motivational, or physiological effects.
+These analyses are intended only to describe operational completion and exported-record differences under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 
 \subsection{Contributions}
 In this paper, we focus on system integration and conservative deployment observations. The contributions are:
@@ -119,7 +122,7 @@ In this paper, we focus on system integration and conservative deployment observ
 \begin{enumerate}
     \item \textbf{Browser-native local-first sensing architecture}: A client-side pipeline that extracts rPPG/FaceMesh-derived features and measurement-quality indicators without transmitting or storing raw video.
     \item \textbf{Task-aligned on-device sensing and local persistence}: A unified browser runtime that synchronizes psychophysical task events with frame-level sensor-derived features and stores timestamped local logs.
-    \item \textbf{Exploratory remote task deployment in laboratory and home settings}: A limited N=1 author-participant deployment showing completion of a remote task procedure in laboratory and home settings, with local export of task-synchronized sensor-derived records.
+    \item \textbf{Exploratory remote task deployment in laboratory and home settings}: A limited N=1 author-participant deployment showing completion of a remote task procedure in laboratory and home settings, with local export of task-synchronized face-derived and sensor-derived records.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
@@ -429,7 +432,7 @@ Table \ref{tab:data_quality} summarizes task-level and exported feature summarie
 After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in the home setting.
 Accuracy was 85.5\% and 82.1\%, respectively.
 Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, and the brightness-change indicator between settings.
-These differences are treated as deployment-specific sensor-derived observations.
+Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
 
 \begin{table*}[t]
 \centering
@@ -451,18 +454,19 @@ Frame-to-frame green-channel brightness-change indicator & 0.0504 $\pm$ 0.0509 &
 \end{table*}
 
 \subsection{Task-Event and Sensor-Derived Observations}
-To address RQ2, we compared descriptive task-event and sensor-derived summaries across instructional task contexts and deployment contexts.
-The exported logs showed descriptive differences in head-motion estimates and RT across laboratory and home contexts.
-These differences should be interpreted as observations from this author-participant deployment, not as evidence that the instruction blocks induced psychological or motivational effects.
+To address RQ2, we compared descriptive task-synchronized records between the laboratory and home contexts.
+The exported records showed differences in rPPG-oriented ROI green-channel values, motion estimates, and the frame-to-frame green-channel brightness-change indicator.
+Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
+They should not be interpreted as evidence that the instruction blocks induced psychological, cognitive, motivational, or physiological effects.
 
 In the laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
 In the home context, the mean RT values across instruction blocks were closer together.
-Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, posture, or camera factors, these RT patterns are reported only as descriptive task-event observations.
+Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
 
 \subsection{rPPG-Oriented ROI Estimates}
 The exported data include rPPG-oriented ROI brightness values and related quality indicators, but no ECG or contact PPG reference was collected.
 Therefore, this paper does not interpret ROI-derived or block-level summaries as validated heart-rate changes.
-The appropriate interpretation is that the tested deployment yielded sensor-derived records whose values differed descriptively between the tested laboratory and home contexts.
+The appropriate interpretation is that the tested deployment yielded face-derived and sensor-derived exported records whose values differed descriptively between the tested laboratory and home contexts.
 
 % =================================================================================
 % SECTION 6: DISCUSSION
@@ -488,10 +492,10 @@ These values can support pre-session checks and descriptive inspection.
 They should not be treated as proof that rPPG estimates are accurate.
 
 \subsection{Interpreting Sensor-Derived Estimates Under Environmental Heterogeneity}
-The laboratory/home differences should be interpreted cautiously because deployment context, lighting, posture, camera geometry, task timing, and participant state were not independently controlled.
-The present design cannot isolate psychological, cognitive, motivational, or physiological effects.
-They are better understood as deployment-specific sensor-derived observations under environmental heterogeneity.
-Future work should include reference ECG or contact PPG, multiple participants, multiple devices, and controlled variation of environmental factors.
+The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences.
+They may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+The present study was not designed to isolate psychological or physiological state changes from these factors.
+Future work should evaluate psychological task conditions under more controlled camera, lighting, posture, and environmental settings, ideally with reference ECG or contact PPG, multiple participants, multiple devices, and manipulation checks.
 
 \subsection{Design Safeguards for Future Camerala Deployments}
 Future deployments should incorporate clearer safeguards: documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, camera-derived brightness-change records, and specified quality-aware analysis rules.
@@ -503,7 +507,7 @@ This study has strict limitations.
 First, it was an exploratory N=1 deployment with the author as participant.
 Second, there was no reference physiological sensor, ECG, or contact PPG.
 Third, the deployment used one primary laptop/camera configuration and did not test multiple devices, multiple participants, or multiple home environments.
-Fourth, lighting, posture, camera placement, and task context were not experimentally separated.
+Fourth, lighting, screen light, posture, camera placement, task timing, participant state, and task context were not experimentally separated.
 Fifth, no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs was conducted.
 Sixth, the current logs do not store continuous confidence values from the face-processing pipeline for all frames.
 Therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
@@ -515,7 +519,7 @@ The present study presents an implementation example of browser-native, task-ali
 We presented Camerala, a browser-native, local-first framework that integrates psychophysical task execution, on-device rPPG/FaceMesh-derived feature extraction, measurement-quality indicators, and timestamped local persistence.
 In a limited 10-session N=1 author-participant deployment across one laboratory setting and one home setting, the system completed 600 trials under the tested configuration without raw video transmission by Camerala.
 After the specified reaction-time criterion, 541/600 trials remained for descriptive analysis.
-The deployment produced synchronized behavioral logs and sensor-derived records, and it revealed descriptive differences between the tested environments.
+The deployment produced synchronized behavioral logs and face-derived and sensor-derived records, and it revealed descriptive deployment-context differences between the tested environments.
 These observations should not be interpreted as evidence of general deployability, robustness, or physiological/cognitive effects.
 Instead, Camerala illustrates a task-aligned browser-native implementation and highlights design safeguards needed for future local-first physiological feature logging in home-based psychophysical experiments.
 
