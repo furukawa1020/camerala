@@ -116,18 +116,21 @@ Related Work; Contributions; System Architecture; References.
 \condition{6}{Unclear claim of robustness against rigid head motion}
 \textbf{Response.}
 Thank you for this comment.
-Unsupported robustness claims were removed.
+We removed unsupported claims of computational efficiency and robustness against rigid head motion.
+The revised manuscript presents Camerala as a deployment and logging architecture, not as a method for improving rPPG signal quality under motion.
 
 \textbf{Revision.}
-We removed unsupported robustness claims.
-The revised manuscript does not claim that Camerala corrects motion-induced rPPG degradation.
-Motion estimates are reported only as exported sensor-derived records for descriptive inspection.
+The revised manuscript no longer claims that Camerala corrects motion-induced rPPG degradation or provides motion-robust rPPG estimation.
+Motion estimates are retained only as task-synchronized face-derived records for descriptive inspection.
+The Results and Discussion now treat motion estimates as deployment-context records rather than evidence of motion handling or rPPG signal correction.
 
 \textbf{Key revised text.}
-``This feature is used as a motion-related quality and behavior indicator. It is not an algorithmic correction for motion artifacts in rPPG.''
+``This feature is retained as a motion-related exported field for descriptive inspection of task-synchronized records. It is not an algorithmic correction for motion artifacts in rPPG and is not used to compensate for motion-induced rPPG degradation.''
+
+``Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts. They are not interpreted as evidence of motion handling or correction of rPPG degradation.''
 
 \textbf{Location.}
-System Architecture, Feature Extraction Logic; Discussion.
+Related Work; System Architecture, Feature Extraction Logic; Results; Discussion; Limitations.
 
 \condition{7}{Insufficient description of the concrete usage scenario}
 \textbf{Response.}
@@ -214,7 +217,7 @@ The revised Discussion focuses on the fact that the system was built and ran und
 Future validation requirements and design safeguards were added.
 
 \textbf{Key revised text.}
-``The results do not establish general deployability, robustness, or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
+``The results do not establish general deployability or physiological/cognitive effects. Instead, they motivate design requirements and safeguards for future local-first deployments.''
 
 \textbf{Location.}
 Discussion.
