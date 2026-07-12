@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Wed Jul  8 16:43:57 2026
+%DIF ADD paper_his_revision.tex             Wed Jul  8 22:12:12 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -400,10 +400,8 @@ Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysica
 %DIFDELCMD < %%%
 \DIFdelend \begin{figure}[t]
     \begin{center}
-    \DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
-%DIFDELCMD <     %%%
-\DIFdelendFL \DIFaddbeginFL \includegraphics[width=.95\linewidth]{paper_figures/Figure1_SystemPipeline.png}
-    \DIFaddendFL \caption{Overview of the Camerala \DIFdelbeginFL \DIFdelFL{System Architecture}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{system architecture}\DIFaddendFL . The \DIFdelbeginFL \DIFdelFL{system runs entirely client-side, processing }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{browser obtains }\DIFaddendFL webcam frames\DIFdelbeginFL \DIFdelFL{via MediaPipe Face Mesh (Wasm) to extract rPPG }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{, extracts face-derived exported fields, aggregates 10-s window records, synchronizes them with task events, }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{Head Motion signals in real-time}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{exports local CSV/ZIP logs}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{Data is synchronized with }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Under }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{Psychophysics Task Engine (Canvas API) and stored locally}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{tested implementation}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{ensuring no }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{only extracted fields and task events are logged; }\DIFaddendFL raw \DIFaddbeginFL \DIFaddFL{facial }\DIFaddendFL video \DIFdelbeginFL \DIFdelFL{ever leaves the user's device}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{is neither transmitted nor stored by Camerala}\DIFaddendFL .}
+    \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
+    \caption{Overview of the Camerala \DIFdelbeginFL \DIFdelFL{System Architecture}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{system architecture}\DIFaddendFL . The \DIFdelbeginFL \DIFdelFL{system runs entirely client-side, processing }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{browser obtains }\DIFaddendFL webcam frames\DIFdelbeginFL \DIFdelFL{via MediaPipe Face Mesh (Wasm) to extract rPPG }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{, extracts face-derived exported fields, aggregates 10-s window records, synchronizes them with task events, }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{Head Motion signals in real-time}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{exports local CSV/ZIP logs}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{Data is synchronized with }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Under }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{Psychophysics Task Engine (Canvas API) and stored locally}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{tested implementation}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{ensuring no }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{only extracted fields and task events are logged; }\DIFaddendFL raw \DIFaddbeginFL \DIFaddFL{facial }\DIFaddendFL video \DIFdelbeginFL \DIFdelFL{ever leaves the user's device}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{is neither transmitted nor stored by Camerala}\DIFaddendFL .}
     \label{fig:system_architecture}
 \end{center}
 \end{figure}
