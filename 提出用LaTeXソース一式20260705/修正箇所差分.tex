@@ -1,7 +1,7 @@
 ﻿\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul 12 14:06:49 2026
+%DIF ADD paper_his_revision.tex             Sun Jul 12 14:44:21 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -239,8 +239,8 @@ In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture
 \item%DIFAUXCMD
 \textbf{\DIFdel{System Design for Task-Aligned On-Device Sensing and Local Persistence}}%DIFAUXCMD
 \DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation}}\DIFadd{: An implementation for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
-    \item \DIFaddbegin \textbf{\DIFadd{Task-synchronized feature logging pipeline}}\DIFadd{: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
-    }\item \DIFaddend \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{deployment under limited conditions}\DIFaddend }: \DIFdelbegin \DIFdel{A longitudinal case deployment across laboratory and home settings, showing that heterogeneous physical environments materially influence deployment conditions and are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{An N=1 author-participant deployment in which all planned sessions/trials were completed, 90.2\% of trials remained after the study-specific RT range, and timestamp-linked task-event and face-derived records were exported}\DIFaddend .
+    \item \DIFaddbegin \textbf{\DIFadd{Task-synchronized feature logging pipeline}}\DIFadd{: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, exported-record landmark summaries, and frame-derived brightness-change indicators without raw facial video persistence.
+    }\item \DIFaddend \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{deployment under limited conditions}\DIFaddend }: \DIFdelbegin \DIFdel{A longitudinal case deployment across laboratoryand home settings, showing that heterogeneous physical environments materially influence deployment conditionsand are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{An N=1 author-participant deployment used to assess the study-specific operational criteria under limited laboratory/home conditions}\DIFaddend .
 \end{enumerate}
 
 The remainder of this paper is organized as follows\DIFdelbegin \DIFdel{: }\DIFdelend \DIFaddbegin \DIFadd{.
@@ -304,7 +304,7 @@ Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions
 .
 Together, these related studies and public systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
-Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 }\DIFaddend 
 
 \DIFdelbegin %DIFDELCMD < \begin{table*}[t]
@@ -358,7 +358,7 @@ Table \ref{tab:related_work} maps this design trade-off space.
 \midrule
 \DIFaddFL{Web experiment libraries }& \DIFaddFL{N/A (task only) }& \DIFaddFL{Partial }& \DIFaddFL{Depends on setup }& \DIFaddFL{N/A }& \DIFaddFL{Behavioral tasks }\\
 \DIFaddFL{Experiment runtimes }& \DIFaddFL{Depends on deployment }& \DIFaddFL{Yes for task events }& \DIFaddFL{Depends on setup }& \DIFaddFL{Depends }& \DIFaddFL{Lab/online experiments }\\
-\DIFaddFL{Browser or web rPPG systems }& \DIFaddFL{Often possible }& \DIFaddFL{Usually not task-centered }& \DIFaddFL{Varies }& \DIFaddFL{Varies }& \DIFaddFL{Vital-sign estimation }\\
+\DIFaddFL{Browser or web rPPG systems }& \DIFaddFL{Often possible }& \DIFaddFL{Varies by platform }& \DIFaddFL{Varies }& \DIFaddFL{Varies }& \DIFaddFL{Vital-sign estimation }\\
 \DIFaddFL{Cloud sensing APIs }& \DIFaddFL{No }& \DIFaddFL{Low or asynchronous }& \DIFaddFL{No }& \DIFaddFL{Often required }& \DIFaddFL{Video analytics }\\
 \textbf{\DIFaddFL{Camerala}} & \DIFaddFL{Client-side feature extraction }& \DIFaddFL{Task events and frame features in one runtime }& \DIFaddFL{Local ZIP export of logs }& \DIFaddFL{Not used by Camerala }& \DIFaddFL{Remote task studies }\\
 \bottomrule
@@ -390,7 +390,7 @@ Instead, it documents whether the integrated browser runtime can complete the pl
 \textbf{Camerala} (derived from "Camera" + "Laboratory") is \DIFdelbegin \DIFdel{a research prototype framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction.
 The }\DIFdelend \DIFaddbegin \DIFadd{positioned as a local-first, browser-native research implementation for remote psychological and psychophysiological task experiments.
 Its }\DIFaddend contribution is not \DIFdelbegin \DIFdel{a new physiological estimator in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized }\DIFdelend \DIFaddbegin \DIFadd{browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
-Rather, it integrates }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first persistence in a single browser-native }\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser }\DIFaddend runtime.
+Rather, it integrates }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first persistence in a single browser-native }\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser }\DIFaddend runtime.
 Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysical taskto measure feasibility}\DIFdelend \DIFaddbegin \DIFadd{deployment in this paper used one Gabor-orientation task}\DIFaddend , the runtime \DIFdelbegin \DIFdel{isolates the stimulus presentation }\DIFdelend \DIFaddbegin \DIFadd{separates task }\DIFaddend logic from the sensing pipeline \DIFdelbegin \DIFdel{(as depicted by the distinct modules in Fig. \ref{fig:system_architecture}). As a supporting example of this modularity beyond the primary task used in the deployment, we implemented a supplementary spatial-memory task using the same sensing and logging pipeline; an example configuration and resulting JSONL log are included in the Appendix}\DIFdelend \DIFaddbegin \DIFadd{so that other task procedures can be implemented without changing the feature-extraction loop}\DIFaddend .
 
 \DIFdelbegin \DIFdel{While asynchronous cloud analytics are awkward for tightly synchronized task deployments, and browser-native task runtimes currently do not provide built-in physiological extraction, Camerala bridges this gap via an Edge Computing philosophy. The combination of these features enables exploratory household deployments under privacy constraints. This architectural choice is driven by two critical non-functional requirements: }\textbf{\DIFdel{Privacy Preservation}} %DIFAUXCMD
@@ -992,7 +992,7 @@ The relevant indicators include landmark availability, rPPG-oriented ROI values,
 
 \DIFaddbegin \DIFadd{The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
 The study was not designed to isolate psychological or physiological state changes from these factors, and it cannot validate the psychological effectiveness of the negative or positive instruction contexts.
-Future deployments should therefore incorporate task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
+Future deployments should therefore incorporate task-event/frame-record timestamp alignment, landmark-availability logging and its limitations, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images; for studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 }
 
@@ -1000,9 +1000,12 @@ If privacy-sensitive raw video is not stored, these safeguards become more impor
 \DIFdelbegin \DIFdel{There are several strict limitations to this work.
 First, this is a single-case exploratory deployment (}\DIFdelend \DIFaddbegin \DIFadd{This exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{); the results represent observational, deployment-oriented feasibility evidence rather than generalizable population inference.
 Second, the observed between-environment differences in physiological signals do not definitively prove cognitive state changes; they may be heavily confounded by uncontrolled physical variables including ambient lightingchanges, subtle postureshifts, display luminescence, or camera placementartifacts inherent to unstructured deployments.
-Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs. Future large-scale deployments must attempt to disentangle physical artifacts from cognitiveshifts through sensor-fused studies. Even with these limitations, the present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment used one primary laptop/camera configuration, no ECG or contact PPG reference, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs.
+Furthermore, the current work does not establish comparative superiority over existing runtimes or APIs.
+Future large-scale deployments must attempt to disentangle physical artifacts from cognitive shifts through sensor-fused studies.
+Even with these limitations, the present study establishes a concrete }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment used one primary laptop/camera configuration, no ECG or contact PPG reference, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs.
 It did not test multiple participants, devices, or home environments, and it did not experimentally separate lighting, screen light, posture, camera placement, task timing, participant state, and task context.
 The implementation does not correct motion-induced rPPG degradation, and the logs do not store continuous confidence values for all frames; therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
+RTs were based on browser-side }\texttt{\DIFadd{performance.now()}} \DIFadd{timestamps; physical stimulus onset was not externally verified.
 Future work should use reference physiological sensors, controlled posture/camera conditions, predefined artifact-handling rules, and continuous confidence logging with specified operational thresholds.
 The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, local-first feature logging under limited laboratory and home }\DIFaddend conditions.
 
@@ -1040,7 +1043,7 @@ These results provide limited implementation evidence and design considerations 
 \DIFdel{During the preparation of this work the author(s) used Google Gemini in order to refine the LaTeX code and format it according to the journal guidelines. After using this tool/service, the author(s)reviewed and edited the content as needed and take(s) full responsibility for the content of the published article.
 }\DIFdelend \DIFaddbegin {\footnotesize
 \begin{thebibliography}{99}
-\footnotesize\baselineskip=8.5pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+\footnotesize\baselineskip=8.0pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 \DIFaddend 
 
 \DIFdelbegin %DIFDELCMD < \begin{thebibliography}{1}

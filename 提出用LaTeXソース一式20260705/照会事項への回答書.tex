@@ -66,11 +66,14 @@ The deployment completed all 10 sessions and 600 trials.
 Of the 600 completed trials, 541 trials (90.2\%) had reaction times within the study-specific range of 100--1500 ms, exceeding the exploratory 80\% operational target.
 The 80\% threshold is a study-specific exploratory criterion, not a preregistered, independently validated, or general feasibility standard.
 \texttt{mean\_quality} is described only as an implementation/logging description for exported records, not as the primary RQ1 success criterion.
+We also added a timing limitation: RTs were based on browser-side \texttt{performance.now()} timestamps, and physical stimulus onset was not externally verified.
 
 \textbf{Key revised text.}
 ``RQ1. Under the tested remote psychological/psychophysiological task configuration, did the deployment meet the following study-specific operational criteria: completion of all 10 planned sessions and 600 trials, reaction times within 0.1--1.5 s for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions?''
 
 ``For RQ1, the study-specific operational criteria were completion of all 10 planned sessions and 600 trials, reaction times within 100--1500 ms for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions. The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.''
+
+``RTs were based on browser-side \texttt{performance.now()} timestamps; physical stimulus onset was not externally verified.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -106,11 +109,11 @@ The Related Work section now includes all studies, systems, and public demonstra
 LabVanced and FacePhys-Demo are described as public tools/demonstrations rather than peer-reviewed empirical validation studies.
 We removed or substantially weakened contribution claims based on browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
 The revised manuscript instead positions Camerala as a system-integration contribution for remote psychological/psychophysiological task experiments.
-Specifically, Camerala integrates browser-based task execution, face-derived feature extraction, timestamp alignment between task events and exported frame/window records, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Specifically, Camerala integrates browser-based task execution, face-derived feature extraction, timestamp alignment between task events and exported frame/window records, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 This work is presented as a limited system-development contribution and implementation example, not as a new rPPG estimator or a validated physiological measurement system.
 
 \textbf{Key revised text.}
-``The contribution of Camerala is not browser-based rPPG functionality, local rPPG processing, edge-based heart-rate estimation, or privacy preservation as an algorithm. Instead, Camerala contributes a local-first browser-native implementation example that integrates remote task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention for remote psychological/psychophysiological task experiments.''
+``The contribution of Camerala is not browser-based rPPG functionality, local rPPG processing, edge-based heart-rate estimation, or privacy preservation as an algorithm. Instead, Camerala contributes a local-first browser-native implementation example that integrates remote task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention for remote psychological/psychophysiological task experiments.''
 
 \textbf{Location.}
 Related Work; Contributions; System Architecture; References.
@@ -230,14 +233,14 @@ We revised the Discussion so that it no longer uses the known sensitivity of vid
 
 \textbf{Revision.}
 The revised Discussion now focuses on what the present deployment newly contributes as a system study: design requirements and safeguards for a local-first, browser-native logging architecture for remote psychological/psychophysiological task experiments.
-Specifically, it discusses the need for task-event/frame-record timestamp alignment, operational landmark-availability criteria, motion and brightness-change records, hardware/browser/camera reporting, environment reporting, and cautious interpretation when raw facial video is not retained.
+Specifically, it discusses the need for task-event/frame-record timestamp alignment, landmark-availability logging and its limitations, motion and brightness-change records, hardware/browser/camera reporting, environment reporting, and cautious interpretation when raw facial video is not retained.
 The Discussion also states that the observed laboratory/home differences are deployment-context differences, not psychological, cognitive, motivational, or physiological effects.
 
 \textbf{Key revised text.}
 ``The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
 Instead, the deployment illustrates design requirements for a local-first, browser-native logging architecture for remote psychological and psychophysiological task experiments.''
 
-``In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, operational landmark-availability checks, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.''
+``In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, landmark-availability logging and its limitations, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious post-hoc interpretation.''
 
 \textbf{Location.}
 Discussion.

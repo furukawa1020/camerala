@@ -64,10 +64,9 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
 \begin{abstract}
 Camerala is a local-first, browser-native framework for remote psychological and psychophysiological task experiments.
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
-In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
-Of the 600 completed trials, 541 trials (90.2\%) had reaction times within the study-specific range of 100--1500 ms.
-Timestamp-linked task-event and face-image-derived records were exported for all 10 sessions.
-These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala completed the planned task deployment and produced task-synchronized exported records that satisfied the study-specific operational criteria.
+An exploratory N=1 author-participant deployment was evaluated as a 10-session, 600-trial browser-based task experiment in laboratory and home settings.
+The deployment was assessed against study-specific operational criteria for planned-session/trial completion, reaction-time range, and timestamp-linked export of task-event and face-image-derived records.
+The findings support a limited implementation-level conclusion under the tested author-participant, device, environment, posture, lighting, and task-execution context.
 They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
 \end{abstract}
 
@@ -123,8 +122,8 @@ In this paper, we focus on system integration and conservative deployment observ
 
 \begin{enumerate}
     \item \textbf{Local-first browser-native system-integration implementation}: An implementation for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
-    \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
-    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment in which all planned sessions/trials were completed, 90.2\% of trials remained after the study-specific RT range, and timestamp-linked task-event and face-derived records were exported.
+    \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, exported-record landmark summaries, and frame-derived brightness-change indicators without raw facial video persistence.
+    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment used to assess the study-specific operational criteria under limited laboratory/home conditions.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
@@ -157,7 +156,7 @@ Gupta and Etemad investigated privacy-preserving remote heart-rate estimation fr
 Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \cite{di_lernia_rppg_wild}.
 Together, these related studies and public systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
 Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
-Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
 Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych_joss} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
@@ -177,7 +176,7 @@ Table \ref{tab:related_work} maps this design trade-off space.
 \midrule
 Web experiment libraries & N/A (task only) & Partial & Depends on setup & N/A & Behavioral tasks \\
 Experiment runtimes & Depends on deployment & Yes for task events & Depends on setup & Depends & Lab/online experiments \\
-Browser or web rPPG systems & Often possible & Usually not task-centered & Varies & Varies & Vital-sign estimation \\
+Browser or web rPPG systems & Often possible & Varies by platform & Varies & Varies & Vital-sign estimation \\
 Cloud sensing APIs & No & Low or asynchronous & No & Often required & Video analytics \\
 \textbf{Camerala} & Client-side feature extraction & Task events and frame features in one runtime & Local ZIP export of logs & Not used by Camerala & Remote task studies \\
 \bottomrule
@@ -198,7 +197,7 @@ Instead, it documents whether the integrated browser runtime can complete the pl
 \section{System Architecture: Camerala}
 \textbf{Camerala} (derived from "Camera" + "Laboratory") is positioned as a local-first, browser-native research implementation for remote psychological and psychophysiological task experiments.
 Its contribution is not browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
-Rather, it integrates task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, operational landmark-availability checking, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Rather, it integrates task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 Although the deployment in this paper used one Gabor-orientation task, the runtime separates task logic from the sensing pipeline so that other task procedures can be implemented without changing the feature-extraction loop.
 
 \begin{figure}[t]
@@ -498,13 +497,14 @@ The relevant indicators include landmark availability, rPPG-oriented ROI values,
 
 The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
 The study was not designed to isolate psychological or physiological state changes from these factors, and it cannot validate the psychological effectiveness of the negative or positive instruction contexts.
-Future deployments should therefore incorporate task-event/frame-record timestamp alignment, operational landmark-availability criteria, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
+Future deployments should therefore incorporate task-event/frame-record timestamp alignment, landmark-availability logging and its limitations, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images; for studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 
 \subsection{Limitations}
 This exploratory N=1 author-participant deployment used one primary laptop/camera configuration, no ECG or contact PPG reference, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs.
 It did not test multiple participants, devices, or home environments, and it did not experimentally separate lighting, screen light, posture, camera placement, task timing, participant state, and task context.
 The implementation does not correct motion-induced rPPG degradation, and the logs do not store continuous confidence values for all frames; therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
+RTs were based on browser-side \texttt{performance.now()} timestamps; physical stimulus onset was not externally verified.
 Future work should use reference physiological sensors, controlled posture/camera conditions, predefined artifact-handling rules, and continuous confidence logging with specified operational thresholds.
 The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of browser-native, task-aligned, local-first feature logging under limited laboratory and home conditions.
 
@@ -529,7 +529,7 @@ This work was supported by the College of Transdisciplinary Sciences for Innovat
 
 {\footnotesize
 \begin{thebibliography}{99}
-\footnotesize\baselineskip=8.5pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+\footnotesize\baselineskip=8.0pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
 \bibitem{verkruysse2008}
 Wim Verkruysse, Lars~O. Svaasand, and J. Stuart Nelson.
