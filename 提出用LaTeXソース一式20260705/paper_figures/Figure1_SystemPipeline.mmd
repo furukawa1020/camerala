@@ -32,7 +32,7 @@ flowchart TB
     BE["Blink / EAR"]
     ROI["ROI Green<br/>Brightness"]
     BF["Brightness-Change<br/>Indicator"]
-    QF["Binary Landmark<br/>Availability Flag"]
+    QF["Landmark-Returned<br/>Frame Flag<br/>(current export path)"]
 
     RB["Ring Buffer<br/>10 s"]
     WA{"Window Records"}
@@ -47,7 +47,7 @@ flowchart TB
     F -->|"EAR formula"| BE
     F -->|"green channel"| ROI
     F -->|"frame-to-frame delta"| BF
-    F -->|"quality = 0/1"| QF
+    F -->|"landmarks returned"| QF
 
     ME --> RB
     BE --> RB
@@ -56,7 +56,7 @@ flowchart TB
     QF --> RB
 
     RB --> WA
-    WA -->|"10-s windows / 5-s overlap<br/>mean_quality summary"| DA
+    WA -->|"10-s windows / 5-s overlap<br/>exported-record summary"| DA
 
     TE -->|"frame / response"| DA
     TE -->|"staircase"| SD

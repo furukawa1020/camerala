@@ -61,16 +61,16 @@ Thank you for this comment.
 The Research Questions were rewritten to define the tested configuration and the observation criteria more concretely.
 
 \textbf{Revision.}
-We revised RQ1 to specify concrete operational criteria appropriate to the tested deployment: completion of all 10 planned sessions and 600 trials, retention of at least 80\% of completed trials after applying the study-specific RT range of 100--1500 ms, and successful export of timestamp-linked task-event and face-derived records for all sessions.
+We revised RQ1 to specify concrete operational criteria appropriate to the tested deployment: completion of all 10 planned sessions and 600 trials, reaction times within the study-specific RT range of 100--1500 ms for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions.
 The deployment completed all 10 sessions and 600 trials.
-After applying the RT range, 541/600 trials (90.2\%) were retained for descriptive analysis, exceeding the exploratory 80\% operational target.
+Of the 600 completed trials, 541 trials (90.2\%) had reaction times within the study-specific range of 100--1500 ms, exceeding the exploratory 80\% operational target.
 The 80\% threshold is a study-specific exploratory criterion, not a preregistered, independently validated, or general feasibility standard.
-\texttt{mean\_quality} is retained only as an implementation/logging description for exported records, not as the primary RQ1 success criterion.
+\texttt{mean\_quality} is described only as an implementation/logging description for exported records, not as the primary RQ1 success criterion.
 
 \textbf{Key revised text.}
-``RQ1. Under the tested remote psychological/psychophysiological task configuration, did Camerala complete the planned 10-session, 600-trial deployment, retain at least 80\% of completed trials within the study-specific reaction-time range of 0.1--1.5 s, and produce timestamp-linked task-event and face-derived records for all sessions?''
+``RQ1. Under the tested remote psychological/psychophysiological task configuration, did the deployment meet the following study-specific operational criteria: completion of all 10 planned sessions and 600 trials, reaction times within 0.1--1.5 s for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions?''
 
-``For RQ1, the study-specific operational criteria were: (1) completion of all 10 planned sessions and 600 trials; (2) retention of at least 80\% of completed trials after applying the reaction-time range of 100--1500 ms; and (3) successful export of timestamp-linked task-event and face-derived records for all sessions. The 80\% threshold was an exploratory criterion used in this study to assess whether most completed trials remained available for descriptive analysis. It was not preregistered, independently validated, or intended as a general feasibility threshold.''
+``For RQ1, the study-specific operational criteria were completion of all 10 planned sessions and 600 trials, reaction times within 100--1500 ms for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions. The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.''
 
 \textbf{Location.}
 Introduction, Research Questions.
@@ -253,10 +253,10 @@ The revised manuscript no longer states that Camerala establishes a general desi
 It also removes the previous tracking-confidence percentage claim and does not present \texttt{mean\_quality} $\geq$ 0.8 as primary evidence of successful deployment.
 
 The revised manuscript now states that the current data support only a limited implementation-level conclusion for this author-participant, this home/laboratory setting, time period, posture, laptop/camera configuration, lighting condition, and task-execution context.
-Under these conditions, Camerala completed the planned task deployment, retained 541/600 trials (90.2\%) after the study-specific RT range, and exported timestamp-linked task-event and face-derived records for all sessions.
+Under these conditions, Camerala completed the planned task deployment, had 541/600 trials (90.2\%) within the study-specific RT range, and exported timestamp-linked task-event and face-derived records for all sessions.
 The manuscript explicitly states that these observations do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
-\texttt{mean\_quality} is retained only as an implementation/logging description for exported records: it is the exported-window-level mean of a binary landmark-availability flag, not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
-The limitation that no-landmark camera frames are not captured by the normal logging path is also retained.
+\texttt{mean\_quality} is described only as an implementation/logging description for exported records: it is the exported-window-level mean of a landmark-availability flag in exported records, not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
+The limitation that no-landmark camera frames are not captured by the normal logging path is also stated.
 
 \textbf{Key revised text.}
 ``These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala completed the planned task deployment and produced task-synchronized exported records that satisfied the study-specific operational criteria. They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.''
