@@ -65,8 +65,9 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
 Camerala is a local-first, browser-native framework for remote psychological and psychophysiological task experiments.
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
 In an exploratory N=1 author-participant deployment, ten sessions were conducted in laboratory and home settings, yielding 600 trials in total.
-After applying a reaction-time criterion of 100--1500 ms, 541/600 trials remained for descriptive analysis.
-These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala operated as a local-first browser-native logging implementation and produced task-synchronized exported records that satisfied the study-specific operational criteria.
+After applying a reaction-time criterion of 100--1500 ms, 541/600 trials (90.2\%) remained for descriptive analysis.
+Timestamp-linked task-event and face-image-derived records were exported for all 10 sessions.
+These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala completed the planned task deployment and produced task-synchronized exported records that satisfied the study-specific operational criteria.
 They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
 \end{abstract}
 
@@ -103,15 +104,14 @@ To address this deployment scenario, we present \textbf{Camerala}, a browser-nat
 \subsection{Research Questions}
 The exploratory Research Questions (RQs) focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
-    \item \textbf{RQ1:} In the intended remote psychological/psychophysiological task use case, do Camerala's task-synchronized face-derived records, including rPPG-oriented ROI values, satisfy the operational criteria for descriptive analysis: trial-level reaction times within 100--1500 ms and exported-window-level landmark availability of \texttt{mean\_quality} $\geq$ 0.8 under the tested configuration?
+    \item \textbf{RQ1:} Under the tested remote psychological/psychophysiological task configuration, did Camerala complete the planned 10-session, 600-trial deployment, retain at least 80\% of completed trials within the study-specific reaction-time range of 0.1--1.5 s, and produce timestamp-linked task-event and face-derived records for all sessions?
     \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
-For RQ1, we evaluated the exported records using operational criteria at the trial and exported-window levels.
-At the trial level, trials were retained for descriptive analysis when reaction times fell within 100--1500 ms.
-At the exported-window level, landmark availability was evaluated using \texttt{mean\_quality}, the mean of the binary landmark-availability flag within each 10-s window; exported windows with \texttt{mean\_quality} $\geq$ 0.8 were treated as satisfying the operational landmark-availability criterion.
-This criterion describes the exported frame/window records and should not be interpreted as face-detection availability across all camera frames.
-We also examined whether the exported records contained reproducible face-derived fields, including rPPG-oriented ROI values, motion estimates, and a frame-to-frame green-channel brightness-change indicator.
+For RQ1, the study-specific operational criteria were completion of all 10 planned sessions and 600 trials, retention of at least 80\% of completed trials after applying the reaction-time range of 100--1500 ms, and successful export of timestamp-linked task-event and face-derived records for all sessions.
+The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
+We also examined whether the exported records contained face-derived fields, including rPPG-oriented ROI values, motion estimates, landmark-availability summaries, and a frame-to-frame green-channel brightness-change indicator.
+\texttt{mean\_quality} is reported only as a descriptive exported-window-level landmark-availability summary; it is not used as the main RQ1 criterion and should not be interpreted as face-detection availability across all camera frames.
 In RQ2, the term ``physiological signals'' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, including rPPG-oriented ROI values and related exported fields.
 These records are not treated as validated physiological-state measurements.
 The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
@@ -124,7 +124,7 @@ In this paper, we focus on system integration and conservative deployment observ
 \begin{enumerate}
     \item \textbf{Local-first browser-native system-integration implementation}: An implementation for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
     \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, operational landmark-availability ratios, and frame-derived brightness-change indicators without raw facial video persistence.
-    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment showing that, under the tested configuration, the exported records satisfied the specified reaction-time and landmark-availability criteria for descriptive analysis.
+    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment in which all planned sessions/trials were completed, 90.2\% of trials remained after the study-specific RT range, and timestamp-linked task-event and face-derived records were exported.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
@@ -203,7 +203,7 @@ Although the deployment in this paper used one Gabor-orientation task, the runti
 
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=\linewidth]{paper_figures/Figure1_SystemPipeline.png}
+    \includegraphics[width=.95\linewidth]{paper_figures/Figure1_SystemPipeline.png}
     \caption{Overview of the Camerala system architecture. The browser obtains webcam frames, extracts face-derived exported fields, aggregates 10-s window records, synchronizes them with task events, and exports local CSV/ZIP logs. Under the tested implementation, only extracted fields and task events are logged; raw facial video is neither transmitted nor stored by Camerala.}
     \label{fig:system_architecture}
 \end{center}
@@ -409,7 +409,7 @@ These task parameters are reported for reproducibility; the instruction blocks a
 All exported logs were processed sequentially.
 The primary behavioral measure was reaction time (RT), with an operational analysis range of 100--1500 ms.
 The primary sensor-derived measures were rPPG-oriented ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel brightness-change indicator.
-Behavioral trials were retained when reaction times fell within 100--1500 ms.
+Behavioral trials were retained when reaction times satisfied $100 \leq RT \leq 1500$ ms; retaining at least 80\% of completed trials after this range was used only as a study-specific exploratory target, not a preregistered, independently validated, or general feasibility threshold.
 Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
 Frame records forwarded from the FaceMesh callback were synchronized with task events during active sessions.
 The feature extractor defines a binary landmark-availability flag, \texttt{quality}, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
@@ -426,10 +426,12 @@ They were not used as post-hoc analysis thresholds.
 \section{Results}
 
 The results are reported descriptively as sensor-derived observations under the tested configuration.
-The deployment completed all 10 planned sessions and 600 trials in total.
-After applying the reaction-time criterion of 100--1500 ms, 541/600 trials were retained for descriptive analysis.
+The deployment completed all 10 planned sessions and 600 trials.
+After applying the study-specific reaction-time range of 100--1500 ms, 541/600 trials (90.2\%) were retained for descriptive analysis, exceeding the exploratory operational target of 80\%.
 The retained trials were 256/300 in the laboratory setting and 285/300 in the home setting.
-All 299 exported windows had \texttt{mean\_quality} = 1.0 and therefore satisfied the operational landmark-availability criterion of \texttt{mean\_quality} $\geq$ 0.8; no window was excluded by this criterion.
+Timestamp-linked task-event and face-derived records were exported for all 10 sessions.
+Each session contained trial records and face-derived frame/window records with timestamp fields for linkage.
+Descriptively, all 299 exported windows had \texttt{mean\_quality} = 1.0; this exported-window summary was not used as the primary evidence for RQ1.
 These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
 
 \subsection{Task and Exported Feature Summaries}
@@ -485,7 +487,7 @@ The appropriate interpretation is that the tested deployment yielded face-derive
 
 The main implication of this deployment is not that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
 Rather, this limited deployment identifies practical design requirements and safeguards for future local-first browser-native logging systems: explicit operational criteria, task-event/frame-record timestamp alignment, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
-Under the tested configuration, Camerala completed the planned task procedure and exported task-synchronized records that satisfied the study-specific operational criteria for descriptive analysis.
+Under the tested configuration, Camerala completed all planned sessions/trials, retained 541/600 trials (90.2\%) after the study-specific RT range, and exported timestamp-linked task-event and face-derived records for all sessions.
 The laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 
 Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
@@ -507,8 +509,8 @@ The study does not claim clinical or medical accuracy, general deployability, ge
 
 \section{Conclusion}
 This paper presented Camerala as a local-first browser-native system-integration implementation for remote psychological and psychophysiological task experiments.
-In the present single-case author-participant deployment, Camerala completed the planned task procedure and exported task-synchronized face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
-The retained data included 541/600 trials after the reaction-time criterion, and all 299 exported windows satisfied the \texttt{mean\_quality} criterion.
+In the present single-case author-participant deployment, Camerala completed all 10 planned sessions and 600 trials and exported timestamp-linked task-event and face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
+After the study-specific RT range, 541/600 trials (90.2\%) remained, exceeding the exploratory 80\% target; all 299 exported windows had \texttt{mean\_quality} = 1.0 as a descriptive exported-record summary.
 These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, validity in other settings, validated rPPG accuracy, or psychological/physiological effects.
 
 \section*{Declarations}
@@ -526,7 +528,7 @@ This work was supported by the College of Transdisciplinary Sciences for Innovat
 
 {\footnotesize
 \begin{thebibliography}{99}
-\footnotesize\baselineskip=9pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+\footnotesize\baselineskip=8.5pt\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 
 \bibitem{verkruysse2008}
 Wim Verkruysse, Lars~O. Svaasand, and J. Stuart Nelson.
