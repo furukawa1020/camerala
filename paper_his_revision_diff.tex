@@ -1,7 +1,7 @@
-﻿\documentclass[dvipdfmx]{ehis}
+\documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Sun Jul 12 14:49:52 2026
+%DIF ADD paper_his_revision.tex             Thu Jul 16 16:01:45 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -31,6 +31,9 @@
   morecomment=[l]{\#}, %DIF > 
 %DIF -------
 }
+\lstdefinelanguage{json}{
+  morestring=[b]\",
+}
 
 \newcommand{\etal}{\textit{et al.}}
 \newcommand{\ie}{\textit{i.e.}}
@@ -39,7 +42,7 @@
 %DIF 31c31
 %DIF < \etitle{Camerala: A Privacy-Preserving Browser-Native Framework for In-the-Wild Physiological Sensing and Task Measurement}
 %DIF -------
-\etitle{Camerala: A Local-First Browser-Native Framework for Remote Psychophysiological Task Sensing} %DIF > 
+\etitle{Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments with rPPG Sensing} %DIF > 
 %DIF -------
 
 \eauthor{
@@ -159,21 +162,20 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
 \begin{document}
 
 \begin{abstract}
-\DIFdelbegin \DIFdel{Continuous physiological sensing and synchronized task measurement in naturalistic environments is challenging. Systems relying on cloud-based video transmission face privacy constraints, while uncontrolled conditions—such as variable lighting, posture, motion, and camera placement—can severely degrade measurement quality and cross-environment comparability. We present Camerala , a privacy-conscious}\DIFdelend \DIFaddbegin \DIFadd{Camerala is a local-first}\DIFaddend , browser-native \DIFdelbegin \DIFdel{sensing framework designed to address these challenges. By utilizing WebAssembly (Wasm) and WebGL backends, the framework extracts remote photoplethysmography (rPPG) and facial landmarks entirely on the client device, avoiding raw video transmission.
-Furthermore, it integrates sensing, psychophysical task timing, and local data persistence within a unified client-side runtime.
-To evaluate the framework, we conducted an exploratory 10-session longitudinal deployment (}\DIFdelend \DIFaddbegin \DIFadd{framework for remote psychological and psychophysiological task experiments.
+\DIFdelbegin \DIFdel{Continuous physiological sensing and synchronized task measurement in naturalistic environments is challenging. Systems relying on cloud-based video transmission face privacy constraints, while uncontrolled conditions—such as variable lighting, posture, motion, and camera placement—can severely degrade measurement quality and cross-environment comparability. We present Camerala, a privacy-conscious, }\DIFdelend \DIFaddbegin \DIFadd{Camerala is an edge-side, }\DIFaddend browser-native \DIFdelbegin \DIFdel{sensing framework designed to address these challenges. By utilizing WebAssembly (Wasm) and WebGL backends, the framework extracts remote photoplethysmography (rPPG ) and facial landmarks entirely on the client device, avoiding raw video transmission. Furthermore, it integrates sensing, psychophysical task timing, and local data persistence within a unified client-side runtime.
+To evaluate the framework, we conducted an exploratory 10-session longitudinal deployment (}\DIFdelend \DIFaddbegin \DIFadd{framework for remote psychophysiological experiments with rPPG sensing.
 It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
 An exploratory }\DIFaddend N=1 \DIFdelbegin \DIFdel{) across }\DIFdelend \DIFaddbegin \DIFadd{author-participant deployment was evaluated as a 10-session, 600-trial browser-based task experiment in }\DIFaddend laboratory and home settings.
 The deployment \DIFdelbegin \DIFdel{showed that the system could operate across diverse physical contexts and that between-environment differences were observable in the resulting physiological signals.
 These results suggest that browser-native edge architectures can support deployment-oriented, privacy-conscious physiological sensing across heterogeneous home and laboratory environments.
-}\DIFdelend \DIFaddbegin \DIFadd{was assessed against study-specific operational criteria for planned-session/trial completion, reaction-time range, and timestamp-linked export of task-event and face-image-derived records.
+}\DIFdelend \DIFaddbegin \DIFadd{was assessed against a study-specific exploratory 80\% behavioral-response reference level and temporally alignable export of task-event and face-image-derived records.
 The findings support a limited implementation-level conclusion under the tested author-participant, device, environment, posture, lighting, and task-execution context.
 They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
 }\DIFaddend \end{abstract}
 
 \begin{keyword}
 \DIFdelbegin \DIFdel{WebAssembly}\DIFdelend \DIFaddbegin \DIFadd{Browser-Native Sensing}\DIFaddend , Remote Photoplethysmography, \DIFdelbegin \DIFdel{Browser-Native Sensing, Privacy-Preserving Frameworks, In-the-Wild Deployment
-}\DIFdelend \DIFaddbegin \DIFadd{FaceMesh, Local-First Logging, Task-Aligned Measurement, Laboratory and Home Settings
+}\DIFdelend \DIFaddbegin \DIFadd{FaceMesh, Edge-Side Processing, Task-Aligned Measurement, Laboratory and Home Settings
 }\DIFaddend \end{keyword}
 
 \maketitle
@@ -188,7 +190,8 @@ While medical-grade sensors (e.g., electrocardiograms) succeed in controlled lab
 }\DIFdelend \DIFaddbegin \DIFadd{The intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings.
 In this use case, the participant sits in front of a laptop, views task stimuli, and responds by key press.
 Camerala is not intended for continuous physiological sensing during ordinary daily activities.
-Rather, Camerala supports task-synchronized acquisition of face-derived records while reducing the need to transmit or retain privacy-sensitive raw facial video.
+In this paper, edge-side processing means that webcam frames are processed within the participant's browser on the client device, reducing the need to transmit or retain privacy-sensitive raw facial video.
+In this paper, rPPG sensing refers to acquiring and logging facial ROI color traces for possible subsequent rPPG analysis; the present prototype does not estimate validated heart rate or establish rPPG accuracy.
 Even in this task-based experiment, deployment outside a controlled laboratory introduces practical difficulties for human-interface research, including heterogeneous illumination, camera placement, posture, browser timing, and local data handling.
 }\DIFaddend 
 
@@ -198,7 +201,7 @@ This approach raises privacy concerns, particularly }\DIFdelend \DIFaddbegin \DI
 Such approaches can be difficult to deploy }\DIFaddend in private spaces \DIFdelbegin \DIFdel{like bedrooms or living rooms, which can limit user acceptance and longitudinal deployment.
 Second, heterogeneous physical environments introduce substantial variability in measurement quality. Uncontrolled lighting, variable camera placements, and unconstrained user postures routinely introduce measurement artifacts that corrupt signal extraction.
 Consequently, deploying sensors in the wild requires studying not just the user, but how the physical environment interacts with the sensor pipeline}\DIFdelend \DIFaddbegin \DIFadd{because raw facial video is privacy-sensitive and may be identifiable.
-A local-first browser architecture offers an architectural privacy advantage: raw frames can be processed on the client device, while only extracted features, task events, and quality indicators are stored.
+An edge-side browser architecture offers an architectural privacy advantage: raw frames can be processed on the client device, while only extracted features, task events, and quality indicators are stored.
 This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.
 }
 
@@ -208,16 +211,19 @@ However, the intended use case of Camerala is a browser-based remote psychologic
 Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
 In this sense, real-time browser-side processing is used to support feature-only local logging and timestamp alignment within the same client-side runtime, rather than to claim more accurate physiological estimates or online task adaptation}\DIFaddend .
 
-To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, a \DIFdelbegin \DIFdel{privacy-conscious, }\DIFdelend browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensing and task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for task-aligned physiological feature logging in remote task experiments}\DIFaddend .
+To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd{this deployment scenario}\DIFaddend , we present \textbf{Camerala}, \DIFdelbegin \DIFdel{a privacy-conscious}\DIFdelend \DIFaddbegin \DIFadd{an edge-side}\DIFaddend , browser-native framework \DIFdelbegin \DIFdel{designed for exploratory physiological sensingand task measurement across heterogeneous real-world environments}\DIFdelend \DIFaddbegin \DIFadd{for remote psychophysiological experiments with rPPG sensing}\DIFaddend .
 
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{Under the tested remote psychological/psychophysiological task configuration, did the deployment meet the following study-specific operational criteria: completion of all 10 planned sessions and 600 trials, reaction times within 0.1--1.5 s for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form}\DIFaddend ?
     \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
-\DIFaddbegin \DIFadd{For RQ1, the study-specific operational criteria were completion of all 10 planned sessions and 600 trials, reaction times within 100--1500 ms for at least 80\% of completed trials, and successful export of timestamp-linked task-event and face-derived records for all sessions.
+\DIFaddbegin \DIFadd{A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
+For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive.
+The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.
+Temporally alignable form means that the exported task-event records and face-image-derived records contain timestamps that allow them to be related on the same session timeline.
 The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
 We also examined whether the exported records contained face-derived fields, including rPPG-oriented ROI values, motion estimates, landmark-availability summaries, and a frame-to-frame green-channel brightness-change indicator.
 }\texttt{\DIFadd{mean\_quality}} \DIFadd{is reported only as a descriptive exported-window-level landmark-availability summary; it is not used as the main RQ1 criterion and should not be interpreted as face-detection availability across all camera frames.
@@ -233,11 +239,11 @@ In this paper, we focus \DIFdelbegin \DIFdel{strictly on the system architecture
 
 \begin{enumerate}
     \item \textbf{\DIFdelbegin \DIFdel{Privacy-Preserving Edge Architecture}%DIFDELCMD < \MBLOCKRIGHTBRACE%%%
-\DIFdel{: A }\DIFdelend \DIFaddbegin \DIFadd{Local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{sensing pipeline that performs real-time rPPG and facial landmark extraction entirely on-device, avoiding raw video transmission.
+\DIFdel{: A }\DIFdelend \DIFaddbegin \DIFadd{Edge-side }\DIFaddend browser-native \DIFdelbegin \DIFdel{sensing pipeline that performs real-time rPPG and facial landmark extraction entirely on-device, avoiding raw video transmission.
     }%DIFDELCMD < \item %%%
 \item%DIFAUXCMD
 \textbf{\DIFdel{System Design for Task-Aligned On-Device Sensing and Local Persistence}}%DIFAUXCMD
-\DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation}}\DIFadd{: An implementation for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
+\DIFdel{: An implementation that keeps psychophysical }\DIFdelend \DIFaddbegin \DIFadd{system integration}}\DIFadd{: An implementation for remote psychological and psychophysiological task experiments that combines }\DIFaddend task execution, \DIFdelbegin \DIFdel{physiological signal extraction, and timestamped logging within the same client-side runtime, avoiding raw video export and server-side timing reconciliation}\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime}\DIFaddend .
     \item \DIFaddbegin \textbf{\DIFadd{Task-synchronized feature logging pipeline}}\DIFadd{: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, exported-record landmark summaries, and frame-derived brightness-change indicators without raw facial video persistence.
     }\item \DIFaddend \textbf{Exploratory \DIFdelbegin \DIFdel{In-the-Wild Deployment}\DIFdelend \DIFaddbegin \DIFadd{deployment under limited conditions}\DIFaddend }: \DIFdelbegin \DIFdel{A longitudinal case deployment across laboratoryand home settings, showing that heterogeneous physical environments materially influence deployment conditionsand are associated with differences in observed signal characteristics}\DIFdelend \DIFaddbegin \DIFadd{An N=1 author-participant deployment used to assess the study-specific operational criteria under limited laboratory/home conditions}\DIFaddend .
 \end{enumerate}
@@ -337,7 +343,7 @@ Instead, Camerala is positioned as a system-integration implementation for remot
 and PsychoPy/PsychoJS/Pavlovia \mbox{%DIFAUXCMD
 \cite{psychopy2}}\hskip0pt%DIFAUXCMD
 , support }\DIFaddend browser-based task \DIFdelbegin \DIFdel{timing but do not natively integrate continuous webcam-based physiological sensing}\DIFdelend \DIFaddbegin \DIFadd{execution and online experiments.
-However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and local-first feature logging as a single browser runtime}\DIFaddend .
+However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and client-side feature logging as a single browser runtime}\DIFaddend .
 Conversely, \DIFdelbegin \DIFdel{rich Cloud sensing APIs provide deep analytics but fundamentally }\DIFdelend \DIFaddbegin \DIFadd{cloud analytics APIs can provide rich video-based analysis but often }\DIFaddend require transmitting video streams away from the \DIFdelbegin \DIFdel{client device, raising privacy barriers for domestic use.
 Camerala is designed to occupy a specific niche: merging the local execution of behavioral task timing with on-device physiological extraction (rPPG and facial landmarks) , creating a unified runtime for exploratory "in-the-wild" deployments.
 }\DIFdelend \DIFaddbegin \DIFadd{participant's device.
@@ -353,7 +359,7 @@ Table \ref{tab:related_work} maps this design trade-off space.
 \setlength{\tabcolsep}{2pt}
 \begin{tabular}{p{0.20\textwidth}p{0.14\textwidth}p{0.15\textwidth}p{0.14\textwidth}p{0.11\textwidth}p{0.11\textwidth}}
 \toprule
-\textbf{\DIFaddFL{System / Platform}} & \textbf{\DIFaddFL{On-device video processing}} & \textbf{\DIFaddFL{Task-sensing synchronization}} & \textbf{\DIFaddFL{Local-first persistence}} & \textbf{\DIFaddFL{Raw video export}} & \textbf{\DIFaddFL{Typical use}} \\
+\textbf{\DIFaddFL{System / Platform}} & \textbf{\DIFaddFL{On-device video processing}} & \textbf{\DIFaddFL{Task-sensing synchronization}} & \textbf{\DIFaddFL{Client-side persistence}} & \textbf{\DIFaddFL{Raw video export}} & \textbf{\DIFaddFL{Typical use}} \\
 \midrule
 \DIFaddFL{Web experiment libraries }& \DIFaddFL{N/A (task only) }& \DIFaddFL{Partial }& \DIFaddFL{Depends on setup }& \DIFaddFL{N/A }& \DIFaddFL{Behavioral tasks }\\
 \DIFaddFL{Experiment runtimes }& \DIFaddFL{Depends on deployment }& \DIFaddFL{Yes for task events }& \DIFaddFL{Depends on setup }& \DIFaddFL{Depends }& \DIFaddFL{Lab/online experiments }\\
@@ -387,7 +393,7 @@ Instead, it documents whether the integrated browser runtime can complete the pl
 % =================================================================================
 \section{System Architecture: Camerala}
 \textbf{Camerala} (derived from "Camera" + "Laboratory") is \DIFdelbegin \DIFdel{a research prototype framework designed to merge tightly synchronized psychophysical task procedures with on-device physiological signal extraction.
-The }\DIFdelend \DIFaddbegin \DIFadd{positioned as a local-first, browser-native research implementation for remote psychological and psychophysiological task experiments.
+The }\DIFdelend \DIFaddbegin \DIFadd{positioned as an edge-side, browser-native research implementation for remote psychological and psychophysiological task experiments.
 Its }\DIFaddend contribution is not \DIFdelbegin \DIFdel{a new physiological estimator in isolation, but a deployment-oriented integration that combines on-device video analysis, synchronized }\DIFdelend \DIFaddbegin \DIFadd{browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
 Rather, it integrates }\DIFaddend task execution, \DIFdelbegin \DIFdel{and local-first persistence in a single browser-native }\DIFdelend \DIFaddbegin \DIFadd{face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser }\DIFaddend runtime.
 Although the \DIFdelbegin \DIFdel{current deployment used a single psychophysical taskto measure feasibility}\DIFdelend \DIFaddbegin \DIFadd{deployment in this paper used one Gabor-orientation task}\DIFaddend , the runtime \DIFdelbegin \DIFdel{isolates the stimulus presentation }\DIFdelend \DIFaddbegin \DIFadd{separates task }\DIFaddend logic from the sensing pipeline \DIFdelbegin \DIFdel{(as depicted by the distinct modules in Fig. \ref{fig:system_architecture}). As a supporting example of this modularity beyond the primary task used in the deployment, we implemented a supplementary spatial-memory task using the same sensing and logging pipeline; an example configuration and resulting JSONL log are included in the Appendix}\DIFdelend \DIFaddbegin \DIFadd{so that other task procedures can be implemented without changing the feature-extraction loop}\DIFaddend .
@@ -555,7 +561,7 @@ over the spatial frequency and contrast.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Data Management and \DIFdelbegin \DIFdel{Privacy}\DIFdelend \DIFaddbegin \DIFadd{Local-First Persistence}\DIFaddend }
+\subsection{Data Management and \DIFdelbegin \DIFdel{Privacy}\DIFdelend \DIFaddbegin \DIFadd{Client-Side Persistence}\DIFaddend }
 \DIFdelbegin \DIFdel{Since no server is involved, data persistence is handled via the }\textbf{\DIFdel{File System Access API}} %DIFAUXCMD
 \DIFdel{(on supported browsers) or a fallback to }\texttt{\DIFdel{Blob}} %DIFAUXCMD
 \DIFdel{download.
@@ -588,7 +594,7 @@ While traditional between-subjects group designs (Large-N) are strictly necessar
 The deployment consisted of 10 sessions and }\DIFaddend 600 \DIFdelbegin \DIFdel{) serves as a technical proof-of-concept for the }\textit{\DIFdel{system architecture}}%DIFAUXCMD
 \DIFdel{.
 This design allows us to observe the system's operational continuity across contrasting ecological conditions without the compounding variance of diverse user demographics.
-The study followed an A-B-C logic within each session (see Fig. 4), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
+The study followed an A-B-C logic within each session (see Fig. \ref{fig:sced_design}), varying the explicit instructional framing conditions presented to the user (Neutral, Negative Evaluation, Positive Evaluation).
 Each session consisted of 3 Blocks (60 trials total), order-balanced via a Latin Square design to prevent order effects}\DIFdelend \DIFaddbegin \DIFadd{total trials.
 Each session consisted of six 10-trial blocks, with two blocks for each instructional task context (neutral instruction, negative instruction, and positive instruction), as reflected in the exported block plans.
 The order of blocks was randomized by the web application}\DIFaddend .
@@ -607,7 +613,9 @@ The order of blocks was randomized by the web application}\DIFaddend .
 %DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdelend \subsection{Participant (Autoethnography)}
+\DIFdelend
+\begingroup\makeatletter\def\@currentlabel{2}\label{fig:sced_design}\makeatother\endgroup
+\subsection{Participant (Autoethnography)}
 \DIFdelbegin \DIFdel{In line with standard systems feasibility evaluation, the }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend participant was the primary author.
 \DIFdelbegin \textit{\DIFdel{Ethical Note}}%DIFAUXCMD
 \DIFdel{: }\DIFdelend This was a self-experimentation \DIFdelbegin \DIFdel{(autoethnographic) evaluation. No }\DIFdelend \DIFaddbegin \DIFadd{evaluation: no }\DIFaddend other participants were involved, no identifiable \DIFaddbegin \DIFadd{raw }\DIFaddend video was transmitted \DIFdelbegin \DIFdel{or shared}\DIFdelend \DIFaddbegin \DIFadd{by Camerala}\DIFaddend , and the author provided informed consent for self-participation.
@@ -795,18 +803,28 @@ Peak detection was applied to estimate inter-beat intervals (IBI).
 Data from }\DIFdelend \DIFaddbegin \DIFadd{The results are reported descriptively as sensor-derived observations under the tested configuration.
 The deployment completed all }\DIFaddend 10 \DIFdelbegin \DIFdel{sessions (30 blocks, }\DIFdelend \DIFaddbegin \DIFadd{planned sessions and }\DIFaddend 600 trials\DIFdelbegin \DIFdel{) were successfully collected and persisted entirely via the local browser framework.
 We filtered trialswith extreme reaction times ($RT < 100ms$ or $RT > 1500ms$) and low face tracking confidence ($Conf < 0.8$), resulting in 582 valid trials (97.0\%retention) }\DIFdelend .
-\DIFdelbegin %DIFDELCMD < 
+\DIFaddbegin \DIFadd{Of the 600 completed trials, 541 trials (90.2\%) had reaction times between 100 and 1500 ms, exceeding the exploratory 80\% reference level.
+Trials within this RT range were 256/300 in the laboratory setting and 285/300 in the home setting.
+Timestamped task-event and rPPG-sensing records were exported for all 10 sessions in a temporally alignable form, with timestamp fields that allowed task and face-image-derived frame/window records to be related on the same session timeline.
+Descriptively, all 299 exported windows had }\texttt{\DIFadd{mean\_quality}} \DIFadd{= 1.0; this exported-window summary was not used as the primary evidence for RQ1.
+These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
+}\DIFaddend 
 
-%DIFDELCMD < %%%
-\subsection{\DIFdel{Environmental Noise and Signal Extraction Pipeline}}
+\DIFdelbegin \subsection{\DIFdel{Environmental Noise and Signal Extraction Pipeline}}
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
 \DIFdel{Before observing behavioral differences, we assessed the stability of the client-side rPPG and FaceMesh pipeline across the two environments.
 As shown in Table \ref{tab:data_quality} and Fig.
-Fig. 2, the Home environment presented greater challenges for signal quality.
-}%DIFDELCMD < 
+\ref{fig:data_quality}, }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task and Exported Feature Summaries}}
+\DIFadd{Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.
+After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in }\DIFaddend the \DIFdelbegin \DIFdel{Home environment presented greater challenges for signal quality.
+}\DIFdelend \DIFaddbegin \DIFadd{home setting.
+Accuracy was 85.5\% and 82.1\%, respectively.
+Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, and the brightness-change indicator between settings.
+Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
+}\DIFaddend 
 
-%DIFDELCMD < \begin{figure}[t]
+\DIFdelbegin %DIFDELCMD < \begin{figure}[t]
 %DIFDELCMD <     \begin{center}
 %DIFDELCMD <     \includegraphics[width=\linewidth]{paper_figures/Figure2_Quality.png}
 %DIFDELCMD <     %%%
@@ -818,6 +836,7 @@ Fig. 2, the Home environment presented greater challenges for signal quality.
 %DIFDELCMD < \end{center}
 %DIFDELCMD < \end{figure}
 %DIFDELCMD < 
+\begingroup\makeatletter\def\@currentlabel{3}\label{fig:data_quality}\makeatother\endgroup
 
 %DIFDELCMD < \begin{table*}[t!]
 %DIFDELCMD <     %%%
@@ -825,8 +844,11 @@ Fig. 2, the Home environment presented greater challenges for signal quality.
 {%DIFAUXCMD
 \DIFdelFL{Descriptive Data Quality Comparison (Trial-Level Aggregation)}}
 %DIFAUXCMD
-%DIFDELCMD < \label{tab:data_quality}
-%DIFDELCMD < \begin{center}
+\DIFdelendFL \DIFaddbeginFL \begin{table*}[t]
+\centering
+\caption{\DIFaddFL{Descriptive task and exported feature summaries after reaction-time exclusion.}}
+\DIFaddendFL \label{tab:data_quality}
+\DIFdelbeginFL %DIFDELCMD < \begin{center}
 %DIFDELCMD <     \resizebox{0.65\textwidth}{!}{%
 %DIFDELCMD <     \begin{tabular}{lcc}
 %DIFDELCMD < \toprule
@@ -841,20 +863,32 @@ Fig. 2, the Home environment presented greater challenges for signal quality.
 %DIFDELCMD < \end{tabular}
 %DIFDELCMD <     }
 %DIFDELCMD < \end{center}
-%DIFDELCMD < \end{table*}
-%DIFDELCMD < 
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \footnotesize
+\begin{tabular}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.24\textwidth}@{}}
+\toprule
+\textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Laboratory}} & \textbf{\DIFaddFL{Home}} & \textbf{\DIFaddFL{Notes}} \\
+\midrule
+\DIFaddFL{Trials within RT range }& \DIFaddFL{256/300 (85.3\%) }& \DIFaddFL{285/300 (95.0\%) }& \DIFaddFL{Trial-level; RT 100--1500 ms }\\
+\DIFaddFL{Mean RT within RT range }& \DIFaddFL{721.1 $\pm$ 257.7 ms }& \DIFaddFL{676.5 $\pm$ 249.5 ms }& \DIFaddFL{Trial-level included trials }\\
+\DIFaddFL{Accuracy within RT range }& \DIFaddFL{85.5\% }& \DIFaddFL{82.1\% }& \DIFaddFL{Trial-level included trials }\\
+\DIFaddFL{rPPG-oriented ROI green-channel value }& \DIFaddFL{46.69 $\pm$ 6.80 }& \DIFaddFL{34.32 $\pm$ 2.72 }& \DIFaddFL{Window-level; windows.csv }\\
+\DIFaddFL{Motion estimate }& \DIFaddFL{0.0011 $\pm$ 0.0005 }& \DIFaddFL{0.0010 $\pm$ 0.0004 }& \DIFaddFL{Window-level; windows.csv }\\
+\DIFaddFL{Frame-to-frame green-channel brightness-change indicator }& \DIFaddFL{0.0504 $\pm$ 0.0509 }& \DIFaddFL{0.0707 $\pm$ 0.0337 }& \DIFaddFL{Window-level; windows.csv }\\
+\bottomrule
+\end{tabular}
+\DIFaddendFL \end{table*}
+
+\DIFdelbegin \DIFdel{The "Exposure Fluctuation" ($E_{fluc}$) was noticeably higher in the Home environment on average, indicating a difference in environmental lighting artifacts.
+Despite this, the tracking confidence remained above 96\% at home , supporting the feasibility of using the MediaPipe + WebAssembly stack for this naturalistic deployment.
+}%DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdel{The "Exposure Fluctuation" ($E_{fluc}$) was noticeably higher in the Home environment on average, indicating a difference in environmental lighting artifacts.
-Despite this, the tracking confidence remained above 96\% at home, supporting the feasibility of using the MediaPipe + WebAssembly stack for this naturalistic deployment}\DIFdelend \DIFaddbegin \DIFadd{Of the 600 completed trials, 541 trials (90.2\%) had reaction times within the study-specific range of 100--1500 ms, exceeding the exploratory operational target of 80\%.
-Trials within this RT range were 256/300 in the laboratory setting and 285/300 in the home setting.
-Timestamp-linked task-event and face-derived records were exported for all 10 sessions.
-Each session contained trial records and face-derived frame/window records with timestamp fields for linkage.
-Descriptively, all 299 exported windows had }\texttt{\DIFadd{mean\_quality}} \DIFadd{= 1.0; this exported-window summary was not used as the primary evidence for RQ1.
-These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments}\DIFaddend .
-
-\subsection{\DIFdelbegin \DIFdel{Observation of }\DIFdelend Task \DIFdelbegin \DIFdel{Performance Differences}\DIFdelend \DIFaddbegin \DIFadd{and Exported Feature Summaries}\DIFaddend }
-\DIFdelbegin \DIFdel{To investigate RQ2 (between-environment differences), we aggregated Reaction Time (RT ) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments.
+\subsection{\DIFdel{Observation of Task Performance Differences}}
+%DIFAUXCMD
+\addtocounter{subsection}{-1}%DIFAUXCMD
+\DIFdel{To investigate }\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
+\DIFadd{To address }\DIFaddend RQ2\DIFdelbegin \DIFdel{(between-environment differences), we aggregated Reaction Time (RT ) across the three instructional framing conditions (Neutral, Negative Evaluation, Positive Evaluation) in both the Laboratory and Home environments.
 We summarize trial-level variation descriptively to examine whether coarse between-environment differences were observable in this exploratory dataset.
 }%DIFDELCMD < 
 
@@ -875,63 +909,38 @@ We summarize trial-level variation descriptively to examine whether coarse betwe
 \subsubsection{\DIFdel{Laboratory Environment}}
 %DIFAUXCMD
 \addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{In the controlled Lab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) . This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in }\DIFdelend \DIFaddbegin \DIFadd{Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.
-After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in }\DIFaddend the \DIFdelbegin \DIFdel{laboratory setting.
-}%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\subsubsection{\DIFdel{Home Environment}}
-%DIFAUXCMD
-\addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{Conversely, }\DIFdelend \DIFaddbegin \DIFadd{home setting.
-Accuracy was 85.5\% and 82.1\%, respectively.
-Window-level exported records showed descriptive differences }\DIFaddend in \DIFdelbegin \DIFdel{the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$).
-The descriptive separation observed in the laboratory setting was not apparent in the home setting.
-This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors.
-}\DIFdelend \DIFaddbegin \DIFadd{ROI green-channel values, motion estimates, and the brightness-change indicator between settings.
-Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
-}\DIFaddend 
-
-\DIFdelbegin \subsection{\DIFdel{Between-Environment Differences in Physiological Features}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdel{We further investigated if differences extended to the collected physiological estimates.
-}\DIFdelend \DIFaddbegin \begin{table*}[t]
-\centering
-\caption{\DIFaddFL{Descriptive task and exported feature summaries after reaction-time exclusion.}}
-\label{tab:data_quality}
-\footnotesize
-\begin{tabular}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.24\textwidth}@{}}
-\toprule
-\textbf{\DIFaddFL{Metric}} & \textbf{\DIFaddFL{Laboratory}} & \textbf{\DIFaddFL{Home}} & \textbf{\DIFaddFL{Notes}} \\
-\midrule
-\DIFaddFL{Trials within RT range }& \DIFaddFL{256/300 (85.3\%) }& \DIFaddFL{285/300 (95.0\%) }& \DIFaddFL{Trial-level; RT 100--1500 ms }\\
-\DIFaddFL{Mean RT within RT range }& \DIFaddFL{721.1 $\pm$ 257.7 ms }& \DIFaddFL{676.5 $\pm$ 249.5 ms }& \DIFaddFL{Trial-level included trials }\\
-\DIFaddFL{Accuracy within RT range }& \DIFaddFL{85.5\% }& \DIFaddFL{82.1\% }& \DIFaddFL{Trial-level included trials }\\
-\DIFaddFL{rPPG-oriented ROI green-channel value }& \DIFaddFL{46.69 $\pm$ 6.80 }& \DIFaddFL{34.32 $\pm$ 2.72 }& \DIFaddFL{Window-level; windows.csv }\\
-\DIFaddFL{Motion estimate }& \DIFaddFL{0.0011 $\pm$ 0.0005 }& \DIFaddFL{0.0010 $\pm$ 0.0004 }& \DIFaddFL{Window-level; windows.csv }\\
-\DIFaddFL{Frame-to-frame green-channel brightness-change indicator }& \DIFaddFL{0.0504 $\pm$ 0.0509 }& \DIFaddFL{0.0707 $\pm$ 0.0337 }& \DIFaddFL{Window-level; windows.csv }\\
-\bottomrule
-\end{tabular}
-\end{table*}
-\DIFaddend 
-
-\DIFdelbegin \subsubsection{\DIFdel{Head Motion}}
-%DIFAUXCMD
-\addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdel{We analyzed the descriptive Head Motion Index ($M_t$) during the instruction-reading phase}\DIFdelend \DIFaddbegin \subsection{\DIFadd{Task-Event and Sensor-Derived Observations}}
-\DIFadd{To address RQ2, we compared descriptive task-synchronized records between the laboratory and home contexts.
+\DIFdel{In the controlled Lab environment, the Negative Evaluation condition exhibited an observable acceleration in mean responses ($M = 485ms, SD = 82$) relative to the Neutral condition ($M = 520ms, SD = 95$) }\DIFdelend \DIFaddbegin \DIFadd{, we compared descriptive task-synchronized records between the laboratory and home contexts.
 The exported records showed differences in rPPG-oriented ROI green-channel values, motion estimates, and the frame-to-frame green-channel brightness-change indicator.
 Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
 They should not be interpreted as evidence that the instruction blocks induced psychological, cognitive, motivational, or physiological effects.
 Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts.
 They are not interpreted as evidence of motion handling or correction of rPPG degradation}\DIFaddend .
-\DIFaddbegin 
+\DIFdelbegin \DIFdel{This pattern indicates that the task-derived response metric was more clearly separated from the neutral condition in the laboratory setting.
+}\DIFdelend 
 
-\DIFadd{The instruction contexts were used only as task-interface contexts in the deployment.
+\DIFdelbegin \subsubsection{\DIFdel{Home Environment}}
+%DIFAUXCMD
+\addtocounter{subsubsection}{-1}%DIFAUXCMD
+\DIFdel{Conversely, in the Home environment, RTs across all conditions clustered closely around the Neutral condition (Negative: $M = 512ms$; Neutral: $M = 515ms$).
+The descriptive separation observed in the laboratory setting was not apparent in the home setting.
+This highlights the susceptibility of specific task-derived metrics to masking by uncontrolled domestic noise factors}\DIFdelend \DIFaddbegin \DIFadd{The instruction contexts were used only as task-interface contexts in the deployment.
 We do not report them as evidence that evaluation pressure, reward motivation, cognitive effects, or motivational effects were induced.
-Descriptive values are reported by instruction context only to document that the logging pipeline operated across different task-interface contexts.
-}\DIFaddend In the \DIFdelbegin \DIFdel{Lab, the Negative Evaluation condition showed a reduction in head motion compared to the Neutral condition.
+Descriptive values are reported by instruction context only to document that the logging pipeline operated across different task-interface contexts}\DIFaddend .
+\DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\subsection{\DIFdel{Between-Environment Differences in Physiological Features}}
+%DIFAUXCMD
+\addtocounter{subsection}{-1}%DIFAUXCMD
+\DIFdel{We further investigated if differences extended to the collected physiological estimates.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\subsubsection{\DIFdel{Head Motion}}
+%DIFAUXCMD
+\addtocounter{subsubsection}{-1}%DIFAUXCMD
+\DIFdel{We analyzed the descriptive Head Motion Index ($M_t$) during the instruction-reading phase.
+}\DIFdelend In the \DIFdelbegin \DIFdel{Lab, the Negative Evaluation condition showed a reduction in head motion compared to the Neutral condition.
 At Home, however, higher motion variability was observed during the same instruction .
 }\DIFdelend \DIFaddbegin \DIFadd{laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
 In the home context, the mean RT values across instruction blocks were closer together.
@@ -978,9 +987,9 @@ For system evaluation, this suggests that laboratory-only validation may overest
 %DIFAUXCMD
 \addtocounter{subsection}{-1}%DIFAUXCMD
 \DIFdel{Methodologically, we demonstrated that a }\DIFdelend \DIFaddbegin \DIFadd{that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
-Rather, this limited deployment identifies practical design requirements and safeguards for future local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework (Camerala ) can operationally collect synchronized behavioral and physiological data in domestic spaces without transmitting raw video.
+This limited deployment instead identifies practical requirements and safeguards for future edge-side }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework (Camerala ) can operationally collect synchronized behavioral and physiological data in domestic spaces without transmitting raw video.
 By retaining computation purely on the client side, the architecture minimizes the privacy barriers that often inhibit exploratory "in-the-wild" deployments involving video sensors}\DIFdelend \DIFaddbegin \DIFadd{logging systems: explicit operational criteria, task-event/frame-record timestamp alignment, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
-Under the tested configuration, Camerala completed all planned sessions/trials, had 541/600 trials (90.2\%) within the study-specific RT range, and exported timestamp-linked task-event and face-derived records for all sessions.
+Under the tested configuration, Camerala completed all planned sessions/trials, had 541/600 trials (90.2\%) within the study-specific RT range, and exported task-event and rPPG-sensing records in a temporally alignable form for all sessions.
 The laboratory/home differences should be interpreted as mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 }
 
@@ -1006,17 +1015,18 @@ It did not test multiple participants, devices, or home environments, and it did
 The implementation does not correct motion-induced rPPG degradation, and the logs do not store continuous confidence values for all frames; therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
 RTs were based on browser-side }\texttt{\DIFadd{performance.now()}} \DIFadd{timestamps; physical stimulus onset was not externally verified.
 Future work should use reference physiological sensors, controlled posture/camera conditions, predefined artifact-handling rules, and continuous confidence logging with specified operational thresholds.
-The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, local-first feature logging under limited laboratory and home }\DIFaddend conditions.
+The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of }\DIFaddend browser-native\DIFdelbegin \DIFdel{design pattern for privacy-conscious}\DIFdelend , task-aligned\DIFdelbegin \DIFdel{sensing under heterogeneous physical }\DIFdelend \DIFaddbegin \DIFadd{, client-side feature logging under limited laboratory and home }\DIFaddend conditions.
 
 \section{Conclusion}
-\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. We presented Camerala , a privacy-conscious, }\DIFdelend \DIFaddbegin \DIFadd{This paper presented Camerala as a local-first }\DIFaddend browser-native \DIFdelbegin \DIFdel{framework that extracts rPPG and facial landmarks on-device.
+\DIFdelbegin \DIFdel{Continuous physiological sensing in naturalistic environments requires tools that balance operational stability with stringent privacy protections. We presented Camerala , a privacy-conscious, }\DIFdelend \DIFaddbegin \DIFadd{This paper presented Camerala as an edge-side, }\DIFaddend browser-native framework \DIFdelbegin \DIFdel{that extracts rPPG and facial landmarks on-device.
 Our proof-of-concept deployment provided initial evidence of the framework's browser-native architecture and highlighted the degree to which heterogeneous physical environments are associated with changes in observed task and physiological signals.
-These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, local-first physiological sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{system-integration implementation for remote psychological and psychophysiological task experiments.
-In the present single-case author-participant deployment, Camerala completed all 10 planned sessions and 600 trials and exported timestamp-linked task-event and face-derived records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
+These findings underscore the importance of evaluating sensor pipelines under domestic conditions and establish a concrete browser-native design pattern for synchronized, local-first physiological sensing under heterogeneous physical environments}\DIFdelend \DIFaddbegin \DIFadd{for remote psychophysiological experiments with rPPG sensing.
+In the present single-case author-participant deployment, Camerala completed all 10 planned sessions and 600 trials and exported temporally alignable task-event and rPPG-sensing records under the tested laptop, camera, browser, environment, posture, lighting, and task-execution context.
 Of the 600 completed trials, 541 trials (90.2\%) had reaction times within the study-specific RT range, exceeding the exploratory 80\% target.
 These results provide limited implementation evidence and design considerations for future Camerala versions, but they do not establish general feasibility, robustness, validity in other settings, validated rPPG accuracy, or psychological/physiological effects}\DIFaddend .
 
-\section*{\DIFdelbegin \DIFdel{Data availability}%DIFDELCMD < \MBLOCKRIGHTBRACE
+\DIFaddbegin \enlargethispage{2\baselineskip}
+\DIFaddend \section*{\DIFdelbegin \DIFdel{Data availability}%DIFDELCMD < \MBLOCKRIGHTBRACE
 %DIFDELCMD < %%%
 \DIFdel{The dataset containing facial landmarks, extracted rPPG signals, and behavioral responses associated with this study }\DIFdelend \DIFaddbegin \DIFadd{Declarations}}
 \textbf{\DIFadd{Data availability.}}
@@ -1182,7 +1192,7 @@ By standardizing the event logging interval around the }\texttt{\DIFdel{window.r
 %DIFDELCMD < %%%
 %DIFAUXCMD NEXT
 \DIFmodbegin
-\begin{lstlisting}[basicstyle=\ttfamily\tiny, frame=single, language=JavaScript,alsolanguage=DIFcode]
+\begin{lstlisting}[basicstyle=\ttfamily\tiny, frame=single, language=json,alsolanguage=DIFcode]
 %DIF < {"time_ms": 4015.2, "event": "grid_on", "load": 4, "rppg_g": 110.4, "mot_x": 0.02}
 %DIF < {"time_ms": 4016.8, "event": "frame_sync", "load": 4, "rppg_g": 109.8, "mot_x": 0.02}
 %DIF < {"time_ms": 4032.5, "event": "frame_sync", "load": 4, "rppg_g": 111.1, "mot_x": 0.01}
