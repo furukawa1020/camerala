@@ -248,10 +248,8 @@ Specifically, it discusses the need for shared-clock session-relative timestampi
 The Discussion also states that the observed laboratory/home differences are deployment-context differences, not psychological, cognitive, motivational, or physiological effects.
 
 \textbf{Key revised text.}
-``The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
-Instead, the deployment illustrates design requirements for an edge-side, browser-native logging architecture for remote psychological and psychophysiological task experiments.''
-
-``In particular, when raw facial video is not retained, the system must preserve session-relative timestamps for trial/event and exported face-derived records, landmark-availability logging and its limitations, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious interpretation.''
+``The main implication of this deployment is not that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
+This limited deployment instead identifies practical requirements and safeguards for future edge-side browser-native logging systems: explicit operational criteria, shared-clock task/frame timestamps, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.''
 
 \textbf{Location.}
 Discussion.
@@ -273,7 +271,8 @@ The manuscript explicitly states that these observations do not establish genera
 The limitation that no-landmark camera frames are not captured by the normal logging path is also stated.
 
 \textbf{Key revised text.}
-``These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala completed the planned task deployment and produced task-synchronized exported records that satisfied the study-specific operational criteria. They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.''
+``In the tested single-case deployment, Camerala completed all 10 sessions and 600 trials, had 541/600 trials (90.2\%) within the RT range, and exported temporally alignable task-event and rPPG-sensing records.
+This limited implementation evidence does not establish general feasibility, robustness, validity in other settings, validated rPPG accuracy, or psychological/physiological effects.''
 
 \textbf{Location.}
 Abstract; Results; Discussion; Limitations; Conclusion.
