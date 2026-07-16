@@ -1,0 +1,290 @@
+\documentclass[11pt]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\newcommand{\condition}[2]{\section*{Condition #1: #2}}
+
+\begin{document}
+
+\begin{center}
+{\Large Response to Reviewers}\\[4pt]
+Paper No. S-28-4-002\\
+Original title: Camerala: A Privacy-Preserving Browser-Native Framework for In-the-Wild Physiological Sensing and Task Measurement
+\end{center}
+
+We thank the handling editor and the reviewers for their careful reading and constructive comments.
+The manuscript was revised according to Reviewer 1's required Conditions 1--13.
+The revision narrows unsupported claims while preserving the intended contribution: an edge-side, browser-native framework for remote psychophysiological experiments with rPPG sensing.
+We also thank Reviewer 2 for the positive evaluation.
+
+\condition{1}{The title of the manuscript should be reconsidered}
+\textbf{Response.}
+Thank you for this comment.
+We revised the title to remove wording that could imply a dedicated privacy-preserving method and to describe the actual execution architecture and intended use case directly.
+
+\textbf{Revision.}
+The revised title is ``Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments with rPPG Sensing.''
+In this manuscript, edge-side means that webcam frames are processed in the participant's browser on the client device.
+The term rPPG sensing refers to acquiring and logging facial ROI color traces for possible subsequent rPPG analysis; the present prototype does not estimate validated heart rate or establish rPPG accuracy.
+Privacy is presented as an architectural advantage of avoiding raw-video transmission and retention, not as a dedicated privacy-preserving algorithm.
+
+\textbf{Key revised text.}
+``Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments with rPPG Sensing''
+
+\textbf{Location.}
+Title page; Abstract; Introduction; Contributions; System Architecture; Conclusion.
+
+\condition{2}{The necessity of real-time processing is not sufficiently explained}
+\textbf{Response.}
+Thank you for this important clarification.
+We revised the manuscript to explain that real-time processing is not claimed as the only technically possible architecture.
+We acknowledge that local video recording followed by offline processing could preserve timestamps if implemented carefully.
+
+\textbf{Revision.}
+The revised manuscript clarifies that Camerala targets browser-based remote psychological and psychophysiological task experiments conducted in laboratory and home settings.
+In such settings, retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
+The role of real-time browser-side processing is thus feature-only local logging and timestamp alignment within the same client-side runtime, not online task adaptation or a claim that physiological estimates are more accurate.
+
+\textbf{Key revised text.}
+``Local video recording followed by offline processing could preserve timestamps if implemented carefully. However, the intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.''
+
+\textbf{Location.}
+Introduction; System Architecture; Data Management and Client-Side Persistence.
+
+\condition{3}{The Research Questions are not defined clearly enough}
+\textbf{Response.}
+Thank you for this comment.
+We revised RQ1 to state the intended measurement target directly: behavioral responses during the remote task experiment.
+
+\textbf{Revision.}
+RQ1 now asks whether Camerala recorded behavioral responses in at least 80\% of completed trials while exporting task-event and rPPG-sensing records in a temporally alignable form.
+A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
+For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive.
+The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.
+Of the 600 completed trials, 541 trials (90.2\%) met this criterion, exceeding the exploratory 80\% reference level.
+The manuscript also clarifies that task-event and rPPG-sensing records were exported with timestamps that allow them to be related on the same session timeline.
+This statement does not claim exact matching of individual face frames to each stimulus-onset-to-response interval.
+The 80\% value is not a face-detection rate, an rPPG-quality threshold, or a general feasibility standard.
+It is exploratory and study-specific, not preregistered or independently validated.
+We retain the timing limitation that RTs were based on browser-side \texttt{performance.now()} timestamps and that physical stimulus onset was not externally verified.
+
+\textbf{Key revised text.}
+``RQ1: In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?''
+
+``A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus. For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive. The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.''
+
+``Temporally alignable form means that the exported task-event records and face-image-derived records contain timestamps that allow them to be related on the same session timeline.''
+
+``Of the 600 completed trials, 541 trials (90.2\%) had reaction times between 100 and 1500 ms.''
+
+``RTs were based on browser-side \texttt{performance.now()} timestamps; physical stimulus onset was not externally verified.''
+
+\textbf{Location.}
+Introduction, Research Questions; Methodology, Dependent Measures and Pre-processing; Results; Limitations.
+
+\condition{4}{It is unclear what the ``between-environment differences'' in RQ2 refer to}
+\textbf{Response.}
+Thank you for this important clarification.
+We retained the original intent of RQ2, which asks what kinds of between-environment differences are observable in the physiological signals collected through the deployment.
+However, the revised manuscript clarifies that the term ``physiological signals'' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, not validated physiological-state measurements.
+The Results and Discussion now interpret laboratory/home differences as deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, task timing, the measurement pipeline, participant state, or their mixture, and not as psychological or physiological effects.
+
+\textbf{Revision.}
+The Abstract, the explanatory text immediately following RQ2, Results, Discussion, and Conclusion were revised to state that the observed laboratory/home differences are deployment-context differences in exported records.
+Because the present design did not include reference physiological sensors, multiple participants, or controlled separation of lighting, screen light, posture, camera geometry, task timing, measurement-pipeline factors, and participant state, the observed differences are not interpreted as psychological, cognitive, motivational, or physiological effects.
+Future work requirements were added, including reference ECG or contact PPG, multiple participants, multiple devices, controlled lighting/camera/posture conditions, and manipulation checks.
+
+\textbf{Key revised text.}
+``In RQ2, the term `physiological signals' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, including rPPG-oriented ROI values and related exported fields. These records are not treated as validated physiological-state measurements.''
+
+``The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture. Therefore, laboratory/home differences were interpreted as deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.''
+
+\textbf{Location.}
+Abstract; Introduction, Research Questions; Results; Discussion; Conclusion.
+
+\condition{5}{The novelty and positioning of the study are insufficiently justified}
+\textbf{Response.}
+Thank you for identifying the relevant prior work.
+We agree that browser-based, web-deployable, edge-based, and privacy-oriented rPPG systems have already been explored.
+The Related Work section was expanded, and the contribution claim was repositioned accordingly.
+
+\textbf{Revision.}
+The Related Work section now includes all studies, systems, and public demonstrations explicitly identified by the reviewer: Gupta and Etemad, Ayesha et al., LabVanced rPPG, FacePhys-Demo, RhythmEdge, and Di Lernia et al.
+LabVanced and FacePhys-Demo are described as public tools/demonstrations rather than peer-reviewed empirical validation studies.
+We removed or substantially weakened contribution claims based on browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
+The revised manuscript instead positions Camerala as a system-integration contribution for remote psychological/psychophysiological task experiments.
+Specifically, Camerala integrates browser-based task execution, face-derived feature extraction, timestamp alignment between task events and exported frame/window records, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+This work is presented as a limited system-development contribution and implementation example, not as a new rPPG estimator or a validated physiological measurement system.
+
+\textbf{Key revised text.}
+``The contribution of Camerala is not browser-based rPPG functionality, local rPPG processing, edge-based heart-rate estimation, or privacy preservation as an algorithm. Instead, Camerala contributes an edge-side browser-native implementation example that integrates remote task execution, face-derived feature extraction, task-event/frame-record timestamp alignment, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention for remote psychological/psychophysiological task experiments.''
+
+\textbf{Location.}
+Related Work; Contributions; System Architecture; References.
+
+\condition{6}{Unclear claim of robustness against rigid head motion}
+\textbf{Response.}
+Thank you for this comment.
+We removed unsupported claims of computational efficiency and robustness against rigid head motion.
+The revised manuscript presents Camerala as a deployment and logging architecture, not as a method for improving rPPG signal quality under motion.
+
+\textbf{Revision.}
+The revised manuscript no longer claims that Camerala corrects motion-induced rPPG degradation or provides motion-robust rPPG estimation.
+Motion estimates are retained only as task-synchronized face-derived records for descriptive inspection.
+The Results and Discussion now treat motion estimates as deployment-context records rather than evidence of motion handling or rPPG signal correction.
+
+\textbf{Key revised text.}
+``This feature is retained as a motion-related exported field for descriptive inspection of task-synchronized records. It is not an algorithmic correction for motion artifacts in rPPG and is not used to compensate for motion-induced rPPG degradation.''
+
+``Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts. They are not interpreted as evidence of motion handling or correction of rPPG degradation.''
+
+\textbf{Location.}
+Related Work; System Architecture, Feature Extraction Logic; Results; Discussion; Limitations.
+
+\condition{7}{Insufficient description of the concrete usage scenario}
+\textbf{Response.}
+Thank you for this clarification request.
+We revised the manuscript to define Camerala's target use case as a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings, rather than continuous physiological sensing during ordinary daily activities.
+
+\textbf{Revision.}
+The revised manuscript now states that the participant sits in front of a laptop, views task stimuli, and responds by key press.
+It also clarifies that Camerala is intended to support task-synchronized acquisition of face-derived records while reducing the need to transmit or retain privacy-sensitive raw facial video.
+The Methodology further states that the deployment was a browser-based task experiment conducted in one laboratory setting and one home setting, not unconstrained daily-life physiological sensing.
+
+\textbf{Key revised text.}
+``The intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings. In this use case, the participant sits in front of a laptop, views task stimuli, and responds by key press. Camerala is not intended for continuous physiological sensing during ordinary daily activities.''
+
+``The deployment was a browser-based task experiment conducted in one laboratory setting and one home setting. The participant sat in front of a laptop, viewed Gabor stimuli, and responded using the keyboard.''
+
+\textbf{Location.}
+Introduction; Methodology, Target Usage Scenario and Exploratory Deployment.
+
+\condition{8}{Definition of ``in-the-wild'' and ``naturalistic physiological sensing'' are not clear}
+\textbf{Response.}
+Thank you for this point.
+The manuscript was revised to avoid giving the impression that Camerala was evaluated for unconstrained daily-life or continuous physiological sensing.
+
+\textbf{Revision.}
+Unqualified ``in-the-wild'' and ``naturalistic'' expressions were removed from the manuscript.
+The revised manuscript describes the study as a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings.
+We also clarified that the participant sat in front of a laptop, viewed Gabor stimuli, and responded by key press.
+The deployment was not continuous physiological sensing during ordinary daily activities.
+
+\textbf{Key revised text.}
+``The intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings. In this use case, the participant sits in front of a laptop, views task stimuli, and responds by key press. Camerala is not intended for continuous physiological sensing during ordinary daily activities.''
+
+\textbf{Location.}
+Abstract; Introduction; Methodology; Discussion; Conclusion.
+
+\condition{9}{The description of the system hardware is insufficient for reproducibility}
+\textbf{Response.}
+Thank you for this comment.
+We added a hardware and software configuration table to improve reproducibility.
+
+\textbf{Revision.}
+The revised manuscript reports the author-confirmed PC model, CPU, GPU, RAM, storage, operating system, display, browser names, built-in webcam, requested camera constraints, and camera-control behavior.
+We also explicitly mark deployment-time details that were not logged, such as exact browser versions when unavailable, the actual negotiated camera resolution/frame rate, and the exact auto-exposure and auto-white-balance states.
+
+\textbf{Key revised text.}
+``Table 2 summarizes the hardware and software information available for the deployment.
+Values that were not logged during the deployment are explicitly marked as not logged rather than inferred from the revision-time environment.''
+
+\textbf{Location.}
+Methodology, Hardware and Software Configuration; Table 2.
+
+\condition{10}{The description of the experimental environments is insufficient}
+\textbf{Response.}
+Thank you for the detailed request.
+An environment and lighting conditions table was added.
+
+\textbf{Revision.}
+We limited the environmental description to setup/check information and camera-derived records.
+The brightness range is not reported as lux or externally measured illuminance.
+The revised section reports the laboratory/research room and private home room, daytime sessions, windows present, curtains closed, general artificial indoor lighting, fixed screen brightness, and camera-derived brightness ranges observed during setup/checks.
+
+\textbf{Key revised text.}
+``Because the deployment used camera-derived setup checks rather than external light-meter measurements, this paper reports brightness ranges only as author-confirmed setup/check information.''
+
+\textbf{Location.}
+Methodology, Deployment Environment and Lighting Conditions; Table 3.
+
+\condition{11}{The validity of the cognitive framing manipulation is questionable}
+\textbf{Response.}
+Thank you for this important clarification.
+We agree that the original wording could imply that the negative and positive instruction blocks successfully induced evaluation pressure or reward motivation, which cannot be supported by the present N=1 author-participant deployment.
+
+\textbf{Revision.}
+The revised manuscript no longer treats the negative, neutral, and positive blocks as validated cognitive or motivational manipulations.
+They are repositioned as exploratory instructional task contexts used to demonstrate that Camerala can present different task-interface contexts while recording synchronized behavioral and face-derived records.
+The manuscript explicitly states that these contexts are not interpreted as inducing evaluation pressure, reward motivation, cognitive effects, motivational effects, or psychological effects.
+
+\textbf{Key revised text.}
+``The task included negative, neutral, and positive instruction contexts as exploratory task-interface conditions.
+These contexts were used to demonstrate that Camerala can present different instruction frames while recording synchronized behavioral and face-derived records.
+The labels `negative' and `positive' refer only to instruction labels used in the task interface.
+Because the participant was the author and knew that the instructions were experimentally constructed, these contexts are not treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, or motivational state.''
+
+``The instruction contexts were used only as task-interface contexts in the deployment.
+We do not report them as evidence that evaluation pressure, reward motivation, cognitive effects, or motivational effects were induced.''
+
+\textbf{Location.}
+Participant section; Experimental Procedure and Instructional Task Contexts; Results; Discussion and Limitations.
+
+\condition{12}{The central claim in the Discussion should be reconsidered}
+\textbf{Response.}
+Thank you for this important suggestion.
+We revised the Discussion so that it no longer uses the known sensitivity of video-based physiological sensing to home/laboratory conditions as the central claim.
+
+\textbf{Revision.}
+The revised Discussion now focuses on what the present deployment newly contributes as a system study: design requirements and safeguards for an edge-side, browser-native logging architecture for remote psychological/psychophysiological task experiments.
+Specifically, it discusses the need for task-event/frame-record timestamp alignment, landmark-availability logging and its limitations, motion and brightness-change records, hardware/browser/camera reporting, environment reporting, and cautious interpretation when raw facial video is not retained.
+The Discussion also states that the observed laboratory/home differences are deployment-context differences, not psychological, cognitive, motivational, or physiological effects.
+
+\textbf{Key revised text.}
+``The main implication of this deployment is not that home or laboratory settings affect camera-based physiological records; this is a known limitation of video-based sensing.
+Instead, the deployment illustrates design requirements for an edge-side, browser-native logging architecture for remote psychological and psychophysiological task experiments.''
+
+``In particular, when raw facial video is not retained, the system must preserve task-event timestamps, exported face-derived records, landmark-availability logging and its limitations, motion and brightness-change records, and sufficient hardware/environment metadata to support cautious interpretation.''
+
+\textbf{Location.}
+Discussion.
+
+\condition{13}{Several claims are not sufficiently supported and should be weakened}
+\textbf{Response.}
+Thank you for this important comment.
+We agree that several claims in the original manuscript were too strong for the present N=1 author-participant deployment.
+
+\textbf{Revision.}
+The Abstract, Discussion, and Conclusion were revised to narrow the claims.
+The revised manuscript no longer states that Camerala establishes a general design pattern, demonstrates general feasibility, provides robustness, or supports validity in other settings.
+It also removes the previous tracking-confidence percentage claim and does not present \texttt{mean\_quality} $\geq$ 0.8 as primary evidence of successful deployment.
+
+The revised manuscript now states that the current data support only a limited implementation-level conclusion for this author-participant, this home/laboratory setting, time period, posture, laptop/camera configuration, lighting condition, and task-execution context.
+Under these conditions, Camerala completed the planned task deployment, had 541/600 trials (90.2\%) within the study-specific RT range, and exported task-event and rPPG-sensing records in a temporally alignable form for all sessions.
+The manuscript explicitly states that these observations do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
+\texttt{mean\_quality} is described only as an implementation/logging description for exported records: it is the exported-window-level mean of a landmark-availability flag in exported records, not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
+The limitation that no-landmark camera frames are not captured by the normal logging path is also stated.
+
+\textbf{Key revised text.}
+``These observations support a limited implementation-level conclusion: under the tested author-participant, device, environment, posture, lighting, and task-execution context, Camerala completed the planned task deployment and produced task-synchronized exported records that satisfied the study-specific operational criteria. They do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.''
+
+\textbf{Location.}
+Abstract; Results; Discussion; Limitations; Conclusion.
+
+\section*{Reviewer 1 Other Comments}
+\textbf{Response.}
+Thank you for the additional comments on figure and table readability.
+
+\textbf{Revision.}
+Table 1 was reformatted with clearer column widths.
+The previous longitudinal and task-result figures contained overstrong embedded labels, so they were removed from the revised manuscript rather than retained.
+The remaining results presentation relies on conservative text and tables without p-values, significance marks, or causal wording.
+
+\textbf{Location.}
+Table 1; Results; removed previous Figure 2, Figure 3, and Figure 4 from the revised manuscript.
+
+\end{document}
