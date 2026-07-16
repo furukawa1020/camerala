@@ -61,7 +61,7 @@ Thank you for this comment.
 We revised RQ1 to state the intended measurement target directly: behavioral responses during the remote task experiment.
 
 \textbf{Revision.}
-RQ1 now asks whether Camerala recorded behavioral responses in at least 80\% of completed trials while exporting task-event and rPPG-sensing records in a temporally alignable form.
+RQ1 now asks whether Camerala recorded behavioral responses meeting the study-specific reaction-time criterion in at least 80\% of completed trials while exporting task-event and rPPG-sensing records in a temporally alignable form.
 A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
 For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive.
 The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.
@@ -71,10 +71,10 @@ The exported trial rows retained a browser-relative trial-start timestamp and co
 This statement does not claim exact matching of individual face frames to each stimulus-onset-to-response interval.
 The 80\% value is not a face-detection rate, an rPPG-quality threshold, or a general feasibility standard.
 It is exploratory and study-specific, not preregistered or independently validated.
-We retain the timing limitation that RTs were based on browser-side \texttt{performance.now()} timestamps and that physical stimulus onset was not externally verified.
+The browser-side RT reference was captured immediately after the synchronous Canvas draw call returned; physical display onset was not externally verified.
 
 \textbf{Key revised text.}
-``RQ1: In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?''
+``RQ1: In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses meeting the study-specific reaction-time criterion in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?''
 
 ``A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus. For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive. The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.''
 
@@ -84,7 +84,7 @@ We retain the timing limitation that RTs were based on browser-side \texttt{perf
 
 ``Of the 600 completed trials, 541 trials (90.2\%) had reaction times between 100 and 1500 ms.''
 
-``RTs were based on browser-side \texttt{performance.now()} timestamps; physical stimulus onset was not externally verified.''
+``The browser-side RT reference was captured immediately after the synchronous Canvas draw call returned; physical display onset was not externally verified.''
 
 \textbf{Location.}
 Introduction, Research Questions; Methodology, Dependent Measures and Pre-processing; Results; Limitations.

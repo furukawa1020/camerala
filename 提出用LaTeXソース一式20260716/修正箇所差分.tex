@@ -1,7 +1,7 @@
 \documentclass[dvipdfmx]{ehis}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL paper_his_original_submitted.tex   Sun Apr 26 12:44:05 2026
-%DIF ADD paper_his_revision.tex             Thu Jul 16 17:25:20 2026
+%DIF ADD paper_his_revision.tex             Thu Jul 16 18:02:25 2026
 \usepackage{graphicx}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -215,13 +215,12 @@ To address \DIFdelbegin \DIFdel{these challenges}\DIFdelend \DIFaddbegin \DIFadd
 \subsection{Research Questions}
 \DIFdelbegin \DIFdel{We formulated two }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend exploratory Research Questions (RQs) \DIFdelbegin \DIFdel{to guide our deployment}\DIFdelend \DIFaddbegin \DIFadd{focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration}\DIFaddend :
 \begin{itemize}
-    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form}\DIFaddend ?
+    \item \textbf{RQ1:} \DIFdelbegin \DIFdel{Can a browser-native, privacy-conscious sensing framework be operationally deployed across heterogeneous real-world environments without relying on external hardware or cloud video processing}\DIFdelend \DIFaddbegin \DIFadd{In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses meeting the study-specific reaction-time criterion in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form}\DIFaddend ?
     \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
 \DIFaddbegin \DIFadd{A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
-For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive.
-The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.
+For RQ1, the numerator was completed trials with stored RTs of 100--1500 ms, inclusive, and the denominator was all completed trials.
 Temporally alignable form means that the exported task-event records and face-image-derived records contain timestamps that allow them to be related on the same session timeline.
 The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
 We also examined whether the exported records contained face-derived fields, including rPPG-oriented ROI values, motion estimates, landmark-availability summaries, and a frame-to-frame green-channel brightness-change indicator.
@@ -516,7 +515,7 @@ over the spatial frequency and contrast.
 \subsubsection{Timing and Synchronization}
 \DIFdelbegin \DIFdel{Web-based reaction time measurement is notoriously jittery. To mitigate this, we employ}\DIFdelend \DIFaddbegin \DIFadd{The implementation uses the following timing strategy}\DIFaddend :
 \begin{enumerate}
-    \item \textbf{\DIFdelbegin \DIFdel{High-Res Time}\DIFdelend \DIFaddbegin \DIFadd{High-resolution timestamps}\DIFaddend }: \DIFdelbegin \DIFdel{All timestamps }\DIFdelend \DIFaddbegin \DIFadd{Trial starts, block events, and frame features }\DIFaddend use \texttt{performance.now()} \DIFdelbegin \DIFdel{, which provides high-resolution timestampsindependent of the system clock}\DIFdelend \DIFaddbegin \DIFadd{timestamps}\DIFaddend .
+    \item \textbf{\DIFdelbegin \DIFdel{High-Res Time}\DIFdelend \DIFaddbegin \DIFadd{High-resolution timestamps}\DIFaddend }: \DIFdelbegin \DIFdel{All }\DIFdelend \DIFaddbegin \DIFadd{Trial, block, and frame }\DIFaddend timestamps use \texttt{performance.now()}\DIFdelbegin \DIFdel{, which provides high-resolution timestamps independent of the system clock}\DIFdelend \DIFaddbegin \DIFadd{; the RT reference is captured immediately after the synchronous Canvas draw call returns}\DIFaddend .
     \item \textbf{\DIFdelbegin \DIFdel{Frame-Locked Rendering}\DIFdelend \DIFaddbegin \DIFadd{Frame-loop alignment}\DIFaddend }: \DIFdelbegin \DIFdel{Stimulus rendering is synchronized using }\texttt{\DIFdel{requestAnimationFrame}}%DIFAUXCMD
 \DIFdel{.
     We log the timestamp of the frame }\textit{\DIFdel{immediately}} %DIFAUXCMD
@@ -544,15 +543,15 @@ over the spatial frequency and contrast.
         \STATE \DIFdelbegin \DIFdel{DrawGaborPatch($\theta_i$)
         }\DIFdelend \DIFaddbegin \DIFadd{$\theta \leftarrow$ SampleOrientation(\{-45$^\circ$, +45$^\circ$\})
         }\STATE \DIFadd{ShowFixation(400--600 ms)
-        }\STATE \DIFadd{DrawOrientationStimulus($\theta$, 200 ms)
-        }\STATE \DIFadd{$t_{stim} \leftarrow$ performance.now()
+        }\STATE \DIFadd{IssueCanvasDrawCommands($\theta$)
+        }\STATE \DIFadd{$t_{ref} \leftarrow$ performance.now()
         }\DIFaddend \WHILE{No KeyPress}
             \STATE Poll \DIFdelbegin \DIFdel{Keyboard Input
         }\DIFdelend \DIFaddbegin \DIFadd{F/J KeyPress
         }\DIFaddend \ENDWHILE
         \STATE \DIFdelbegin \DIFdel{$t_{response} \leftarrow$ }\DIFdelend \DIFaddbegin \DIFadd{$t_{key} \leftarrow$ }\DIFaddend performance.now()
         \STATE \DIFdelbegin \DIFdel{$RT \leftarrow t_{response} - t_{onset}$
-        }\DIFdelend \DIFaddbegin \DIFadd{$RT \leftarrow t_{key} - t_{stim}$
+        }\DIFdelend \DIFaddbegin \DIFadd{$RT \leftarrow t_{key} - t_{ref}$
         }\DIFaddend \STATE \DIFdelbegin \DIFdel{$Accuracy \leftarrow (Key == Target)$
         }%DIFDELCMD < \STATE %%%
 \textbf{\DIFdel{Feedback}}%DIFAUXCMD

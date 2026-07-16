@@ -104,13 +104,12 @@ To address this deployment scenario, we present \textbf{Camerala}, an edge-side,
 \subsection{Research Questions}
 The exploratory Research Questions (RQs) focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
-    \item \textbf{RQ1:} In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?
+    \item \textbf{RQ1:} In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses meeting the study-specific reaction-time criterion in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?
     \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
 A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
-For RQ1, a completed trial was counted in the numerator when its stored reaction time was between 100 and 1500 ms, inclusive.
-The RQ1 behavioral-response rate was calculated as the number of such trials divided by the total number of completed trials.
+For RQ1, the numerator was completed trials with stored RTs of 100--1500 ms, inclusive, and the denominator was all completed trials.
 Temporally alignable form means that the exported task-event records and face-image-derived records contain timestamps that allow them to be related on the same session timeline.
 The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
 We also examined whether the exported records contained face-derived fields, including rPPG-oriented ROI values, motion estimates, landmark-availability summaries, and a frame-to-frame green-channel brightness-change indicator.
@@ -259,7 +258,7 @@ Procedural rendering avoids network-dependent stimulus loading during a trial an
 \subsubsection{Timing and Synchronization}
 The implementation uses the following timing strategy:
 \begin{enumerate}
-    \item \textbf{High-resolution timestamps}: Trial starts, block events, and frame features use \texttt{performance.now()} timestamps.
+    \item \textbf{High-resolution timestamps}: Trial, block, and frame timestamps use \texttt{performance.now()}; the RT reference is captured immediately after the synchronous Canvas draw call returns.
     \item \textbf{Frame-loop alignment}: Feature extraction and task rendering are coordinated with the browser frame loop.
     \item \textbf{Local runtime alignment}: Task events and sensor-derived features are logged in the same browser runtime, avoiding server-side reconciliation.
 \end{enumerate}
@@ -277,13 +276,13 @@ The implementation uses the following timing strategy:
         \STATE $t_{trial} \leftarrow$ performance.now()
         \STATE $\theta \leftarrow$ SampleOrientation(\{-45$^\circ$, +45$^\circ$\})
         \STATE ShowFixation(400--600 ms)
-        \STATE DrawOrientationStimulus($\theta$, 200 ms)
-        \STATE $t_{stim} \leftarrow$ performance.now()
+        \STATE IssueCanvasDrawCommands($\theta$)
+        \STATE $t_{ref} \leftarrow$ performance.now()
         \WHILE{No KeyPress}
             \STATE Poll F/J KeyPress
         \ENDWHILE
         \STATE $t_{key} \leftarrow$ performance.now()
-        \STATE $RT \leftarrow t_{key} - t_{stim}$
+        \STATE $RT \leftarrow t_{key} - t_{ref}$
         \STATE LogTrialRecord($t_{trial}$, Key, $RT$, Accuracy, Context)
         \STATE UpdateStaircase(Accuracy, relative $\pm$5\% contrast step)
     \ENDFOR
