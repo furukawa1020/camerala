@@ -12,7 +12,6 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{listings}
-\setlength{\headheight}{18pt}
 \lstdefinelanguage{JavaScript}{
   keywords={const, let, var, function, return, if, else, for, while, switch, case, break, try, catch, finally, window, camerala_logger},
   sensitive=true,
@@ -28,24 +27,17 @@
 \newcommand{\etal}{\textit{et al.}}
 \newcommand{\ie}{\textit{i.e.}}
 \newcommand{\eg}{\textit{e.g.}}
-\AtBeginDvi{\special{pdf:docinfo <<
-  /Title (Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments)
-  /Author (Kotaro Furukawa)
-  /Subject (Human Interface Society Transactions Paper S-28-4-002)
->>}}
 
-\etitle{Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments}
+\etitle{Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments with rPPG Sensing}
 
 \eauthor{
 Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kanazawa University, Japan}
 }
 
-\YEAR{2026}
-\VOL{28}
-\NO{4}
+\YEAR{}
+\VOL{}
+\NO{}
 \TYPE{}
-\received{2026}{April}{26}
-\revised{2026}{July}{17}
 
 
 \lstset{
@@ -55,7 +47,13 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
   keepspaces=true
 }
 \makeatletter
+\def\@oddhead{}
+\def\@evenhead{}
 \def\ps@vr{
+ \def\@oddhead{}
+ \def\@evenhead{}
+}
+\def\ps@his{
  \def\@oddhead{}
  \def\@evenhead{}
 }
@@ -64,12 +62,12 @@ Kotaro Furukawa\thanks{College of Transdisciplinary Sciences for Innovation, Kan
 \begin{document}
 
 \begin{abstract}
-Camerala is an edge-side, browser-native framework for remote psychophysiological experiments.
-It synchronizes behavioral task events with face-image-derived records and exports local CSV/ZIP files without transmitting or storing raw facial video.
-We examined an exploratory N=1 author-participant deployment comprising 10 sessions and 600 trials in laboratory and home settings.
-Under the tested configuration, all planned sessions and trials were completed, and timestamped task-event and face-image-derived records were exported using the same browser clock domain.
-The exported records showed descriptive laboratory/home differences in facial ROI green-channel values, head-motion estimates, and a frame-to-frame green-channel change indicator; these were interpreted only as deployment-context differences.
-The findings are limited to the tested participant and configuration and do not establish validated physiological measurement or general performance across users, devices, and environments.
+Camerala is an edge-side, browser-native framework for remote psychophysiological experiments with rPPG sensing.
+It synchronizes task events with face-image-derived feature records and exports local CSV/ZIP files without transmitting or storing raw facial video.
+An exploratory N=1 author-participant deployment was evaluated as a 10-session, 600-trial browser-based task experiment in laboratory and home settings.
+The deployment was assessed against a study-specific exploratory 80\% behavioral-response reference level and temporally alignable export of task-event and face-image-derived records.
+Of 600 completed trials, 541 (90.2\%) had reaction times within 100--1500 ms; timestamped task-event and face-image-derived records were exported for all 10 sessions, with laboratory/home differences treated only as deployment-context differences.
+These findings are limited to the tested author-participant and configuration and do not establish general feasibility, robustness, validity in other settings, rPPG accuracy, or psychological/physiological effects.
 \end{abstract}
 
 \begin{keyword}
@@ -83,43 +81,52 @@ Browser-Native Sensing, Remote Photoplethysmography, FaceMesh, Edge-Side Process
 % =================================================================================
 \section{Introduction}
 
-Remote psychological and psychophysiological task experiments require behavioral task events and webcam-derived records to be related in time.
-When such experiments are conducted in a participant's home or another private space, retaining or transmitting identifiable raw facial video also creates a data-handling burden.
-Browser-side processing can address this practical concern by deriving task-relevant records on the participant's device and persisting only the resulting fields.
+The intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings.
+In this use case, the participant sits in front of a laptop, views task stimuli, and responds by key press.
+Camerala is not intended for continuous physiological sensing during ordinary daily activities.
+In this paper, edge-side processing means that webcam frames are processed within the participant's browser on the client device, reducing the need to transmit or retain privacy-sensitive raw facial video.
+In this paper, rPPG sensing refers to acquiring and logging facial ROI color traces for possible subsequent rPPG analysis; the present prototype does not estimate validated heart rate or establish rPPG accuracy.
+Even in this task-based experiment, deployment outside a controlled laboratory introduces practical difficulties for human-interface research, including heterogeneous illumination, camera placement, posture, browser timing, and local data handling.
 
-Browser-based task platforms already support remote behavioral experiments \cite{jspsych_joss,psychopy2}, and browser-, web-, and edge-based rPPG systems have also been reported \cite{ayesha_web_vital,labvanced_rppg,facephys_demo,rhythmedge}.
-The contribution sought here is therefore not a new rPPG estimator.
-The implementation challenge addressed by Camerala is to combine task execution, client-side face-derived recording, shared-clock timestamps, and local persistence within one browser runtime for a remote task experiment.
+Many video-based physiological measurement pipelines rely on raw video recording or server-side processing.
+Such approaches can be difficult to deploy in private spaces because raw facial video is privacy-sensitive and may be identifiable.
+An edge-side browser architecture offers an architectural privacy advantage: raw frames can be processed on the client device, while only extracted features, task events, and quality indicators are stored.
+This does not constitute a dedicated privacy-preserving algorithm; rather, it is a system-design choice that reduces the need to transmit or retain raw video.
 
-To address this challenge, we present \textbf{Camerala}, an edge-side, browser-native framework for remote psychophysiological experiments.
-Here, edge-side means that webcam frames are processed within the participant's browser on the client device.
-During task execution, Camerala records task events and face-image-derived fields on the same browser clock and exports them locally as CSV files in a ZIP archive, without transmitting or retaining raw facial video.
-Processing during task execution supports feature-only local logging and avoids a separate server-side timestamp-reconciliation stage.
+Real-time processing is not treated as the only technically possible architecture.
+Local video recording followed by offline processing could preserve timestamps if implemented carefully.
+However, the intended use case of Camerala is a browser-based remote psychological/psychophysiological task experiment conducted in laboratory and home settings, where retaining identifiable facial video for later analysis can itself be a privacy and acceptability burden.
+Camerala therefore extracts face-image-derived records during task execution and stores only task events, exported feature fields, and auxiliary context fields, without raw facial video persistence.
+In this sense, real-time browser-side processing is used to support feature-only local logging and timestamp alignment within the same client-side runtime, rather than to claim more accurate physiological estimates or online task adaptation.
 
-The scope of this study is a seated browser task conducted in laboratory and home settings and evaluated as a system-integration implementation.
-The participant views stimuli on a laptop and responds by key press; the study does not address continuous sensing during ordinary daily activities.
-The recorded facial ROI color traces are intended for possible subsequent rPPG analysis, but the present evaluation does not validate a heart-rate waveform or estimate heart-rate accuracy.
+To address this deployment scenario, we present \textbf{Camerala}, an edge-side, browser-native framework for remote psychophysiological experiments with rPPG sensing.
 
 \subsection{Research Questions}
-The exploratory Research Questions (RQs) focus on procedure completion, exported records, and descriptive between-environment observations under the tested configuration:
+The exploratory Research Questions (RQs) focus on task-synchronized face-derived records and descriptive sensor-derived observations under the tested configuration:
 \begin{itemize}
-    \item \textbf{RQ1:} Under the tested configuration, did Camerala complete all planned sessions and trials and export timestamped task-event and face-image-derived records using the same browser clock domain?
-    \item \textbf{RQ2:} What between-environment differences are observable in the task-synchronized face-image-derived and sensor-derived exported records?
+    \item \textbf{RQ1:} In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses meeting the study-specific reaction-time criterion in at least 80\% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?
+    \item \textbf{RQ2:} What kinds of between-environment differences are observable in the physiological signals collected through such a deployment?
 \end{itemize}
 
-For RQ1, the planned procedure comprised 10 sessions of six 10-trial blocks, yielding 600 trials in total.
-Task, block, and exported frame records were timestamped with \texttt{performance.now()} in the same client-side browser runtime.
-Reaction times of 100--1500 ms were used separately as a study-specific preprocessing range for descriptive trial-level summaries, not as a criterion for system completion or timestamp accuracy.
-For RQ2, the exported records included facial ROI green-channel values, motion estimates, and a frame-to-frame green-channel change indicator.
-Laboratory/home differences in these records were interpreted as mixed deployment-context differences because lighting, screen light, posture, camera geometry, task timing, the measurement pipeline, and participant state were not independently separated.
+A behavioral response was the participant's F/J key response to the orientation of the presented Gabor stimulus.
+For RQ1, the numerator was completed trials with stored RTs of 100--1500 ms, inclusive, and the denominator was all completed trials.
+Temporally alignable form means that the exported task-event records and face-image-derived records contain timestamps that allow them to be related on the same session timeline.
+The 80\% target was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
+We also examined whether the exported records contained face-derived fields, including rPPG-oriented ROI values, motion estimates, landmark-availability summaries, and a frame-to-frame green-channel brightness-change indicator.
+\texttt{mean\_quality} is reported only as a descriptive exported-window-level landmark-availability summary; it is not used as the main RQ1 criterion and should not be interpreted as face-detection availability across all camera frames.
+In RQ2, the term ``physiological signals'' is used operationally to refer to task-synchronized face-derived and sensor-derived exported records, including rPPG-oriented ROI values and related exported fields.
+These records are not treated as validated physiological-state measurements.
+The present design was not able to determine whether laboratory/home differences reflected psychological state, physiological state, lighting, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
+Therefore, laboratory/home differences were interpreted as deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
+These analyses are intended only to describe operational completion and exported-record differences under the tested configuration; they do not demonstrate general deployability across users, devices, or environments.
 
 \subsection{Contributions}
 In this paper, we focus on system integration and conservative deployment observations. The contributions are:
 
 \begin{enumerate}
     \item \textbf{Edge-side browser-native system integration}: An implementation for remote psychological and psychophysiological task experiments that combines task execution, face-derived feature extraction, timestamp alignment, and local persistence within one browser runtime.
-    \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, facial ROI green-channel values, FaceMesh-derived motion estimates, and frame-derived green-channel change indicators without raw facial video persistence.
-    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment documenting planned-procedure completion and descriptive exported-record differences under laboratory/home conditions.
+    \item \textbf{Task-synchronized feature logging pipeline}: A logging pipeline that records task events, rPPG-oriented ROI values, FaceMesh-derived motion estimates, exported-record landmark summaries, and frame-derived brightness-change indicators without raw facial video persistence.
+    \item \textbf{Exploratory deployment under limited conditions}: An N=1 author-participant deployment used to assess the study-specific operational criteria under limited laboratory/home conditions.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
@@ -139,7 +146,8 @@ Remote photoplethysmography (rPPG) estimates pulse-related color changes from fa
 Classic approaches include ambient-light remote plethysmographic imaging and blind-source video methods \cite{verkruysse2008,poh_ica}, while more recent work includes deep-learning-based estimators \cite{deepphys}.
 These studies show that camera-based and webcam-based rPPG functionality already exists.
 They also show that uncontrolled capture conditions, implementation choices, and evaluation pipelines are important factors in remote heart-rate imaging.
-Accordingly, this work uses facial ROI color traces as task-aligned exported records rather than proposing a new rPPG estimator.
+Accordingly, Camerala does not claim to introduce a new rPPG estimator or to solve rPPG degradation under uncontrolled conditions.
+It records rPPG-oriented ROI values and exported indicators so that task-aligned records can be inspected descriptively.
 
 \subsection{Browser-Based, Web-Deployable, Edge-Based, and Privacy-Oriented rPPG Systems}
 Several closely related prior studies and systems are directly relevant to Camerala's positioning.
@@ -150,11 +158,12 @@ RhythmEdge addresses contactless heart-rate estimation on edge devices \cite{rhy
 Gupta and Etemad investigated privacy-preserving remote heart-rate estimation from facial videos \cite{gupta_privacy}.
 Di Lernia \etal\ evaluated rPPG via online webcams under uncontrolled conditions \cite{di_lernia_rppg_wild}.
 Together, these related studies and public systems indicate that browser-based, web-deployable, edge-based, and privacy-oriented rPPG have already been explored.
-Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, shared-clock task/frame timestamps, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+Camerala therefore does not claim novelty in browser-based rPPG functionality, local rPPG processing, edge-oriented heart-rate estimation, or privacy preservation as an algorithm.
+Instead, Camerala is positioned as a system-integration implementation for remote psychological and psychophysiological task experiments: it combines browser-based task execution, face-derived feature extraction, shared-clock task/frame timestamps, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 
 \subsection{Task Measurement and Physiological Data Collection Platforms}
 Well-established web experiment libraries and experiment runtimes, such as jsPsych \cite{jspsych_joss} and PsychoPy/PsychoJS/Pavlovia \cite{psychopy2}, support browser-based task execution and online experiments.
-Although such integrations can be constructed, these libraries focus primarily on task execution, leaving webcam processing and client-side feature persistence deployment-specific.
+However, they do not generally provide an integrated webcam-derived physiological feature pipeline, task-sensing synchronization, and client-side feature logging as a single browser runtime.
 Conversely, cloud analytics APIs can provide rich video-based analysis but often require transmitting video streams away from the participant's device.
 Table \ref{tab:related_work} maps this design trade-off space.
 
@@ -181,14 +190,17 @@ Cloud sensing APIs & No & Low or asynchronous & No & Often required & Video anal
 \end{center}
 \end{table*}
 
-We structure the initial evaluation as a single-case exploratory deployment that documents whether the integrated browser runtime can complete the planned browser-based task logging procedure and what differences appear in the exported records from the tested laboratory and home contexts.
+We structure the initial evaluation as a single-case exploratory deployment.
+The deployment is not intended to estimate population-level psychological or physiological effects.
+Instead, it documents whether the integrated browser runtime can complete the planned browser-based task logging procedure and what measurement-quality differences are observed in the tested laboratory and home contexts.
 
 % =================================================================================
 % SECTION 3: SYSTEM ARCHITECTURE
 % =================================================================================
 \section{System Architecture: Camerala}
-\textbf{Camerala} (derived from "Camera" + "Laboratory") is an edge-side, browser-native research implementation for remote psychological and psychophysiological task experiments.
-It integrates task execution, face-derived feature extraction, shared-clock task/frame timestamps, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
+\textbf{Camerala} (derived from "Camera" + "Laboratory") is positioned as an edge-side, browser-native research implementation for remote psychological and psychophysiological task experiments.
+Its contribution is not browser-based rPPG, local rPPG processing, or privacy preservation as an algorithm.
+Rather, it integrates task execution, face-derived feature extraction, shared-clock task/frame timestamps, exported-record landmark summaries, and local CSV/ZIP persistence without raw facial video retention within one browser runtime.
 Although the deployment in this paper used one Gabor-orientation task, the runtime separates task logic from the sensing pipeline so that other task procedures can be implemented without changing the feature-extraction loop.
 
 \begin{figure}[t]
@@ -204,8 +216,8 @@ The system enables a browser-based task experimental loop inside the browser san
 The architecture consists of three coupled modules:
 \begin{enumerate}
     \item \textbf{Task Engine}: Stimulus rendering, trial logic, key responses, feedback, staircase updates, and reaction-time logging.
-    \item \textbf{Vision Pipeline}: Webcam ingestion, MediaPipe Face Mesh inference, facial ROI green-channel extraction, head-motion estimates, blink/EAR features, and frame-derived fields.
-    \item \textbf{Data Manager}: Shared-clock timestamping, trial/frame aggregation, CSV serialization, ZIP packaging, and local persistence without raw-video storage.
+    \item \textbf{Vision Pipeline}: Webcam ingestion, MediaPipe Face Mesh inference, rPPG-oriented ROI feature extraction, head-motion estimates, blink/EAR features, and frame-level quality indicators.
+    \item \textbf{Data Manager}: Timestamp alignment, trial/frame aggregation, CSV serialization, ZIP packaging, and local persistence without raw-video storage.
 \end{enumerate}
 
 \subsection{Technical Implementation: The Vision Pipeline}
@@ -214,7 +226,7 @@ The camera stream is requested through \texttt{getUserMedia} with ideal constrai
 Because actual camera settings can depend on the browser and device, these constraints should be interpreted as requested settings rather than verified hardware settings.
 
 \subsubsection{Feature Extraction Logic}
-The present implementation records face-image-derived and sensor-derived fields for descriptive analysis.
+The present implementation records sensor-derived features and quality indicators rather than validated clinical or medical measurements.
 Two categories are central to this paper:
 
 \textbf{1. Head Motion Index ($M_t$)}
@@ -228,13 +240,14 @@ This feature is retained as a motion-related exported field for descriptive insp
 It is not an algorithmic correction for motion artifacts in rPPG and is not used to compensate for motion-induced rPPG degradation.
 
 \textbf{2. ROI Green-Channel Value and Brightness-Change Indicator}
-The implementation samples a small forehead region around a FaceMesh landmark and records its green-channel intensity as a facial ROI value intended for possible subsequent rPPG analysis.
+The implementation samples a small forehead region around a FaceMesh landmark and records the green-channel brightness as an rPPG-oriented ROI value.
 It also computes a frame-to-frame green-channel brightness-change indicator:
 \begin{equation}
     B_{\Delta}(t) = | G_t - G_{t-1} | ,
 \end{equation}
 where $G_t$ is the downsampled frame-level green-channel average at frame $t$.
-Camerala records this field together with the motion estimate for descriptive inspection of exported records.
+Camerala is presented as a deployment and logging architecture, not as a method for improving rPPG signal quality under motion or illumination changes.
+Instead, it records motion-related and brightness-related exported fields for descriptive inspection of exported records.
 The brightness-change indicator does not measure camera exposure settings, external illuminance, specific environmental events, psychological or physiological state, or rPPG accuracy.
 
 \subsection{Technical Implementation: The Task Engine}
@@ -283,7 +296,7 @@ The archive contains \texttt{metadata.json}, \texttt{trials.csv}, \texttt{featur
 The metadata file stores the session ID, start time, user agent, and block plan.
 The user initiates the download at the end of the session.
 This design avoids Camerala-side raw-video storage and avoids raw-video transmission, but it also reduces the ability to inspect image artifacts retrospectively.
-For this reason, Camerala logs reproducible exported fields such as facial ROI green-channel values, head-motion estimates, and a frame-to-frame green-channel change indicator.
+For this reason, Camerala logs reproducible exported fields such as rPPG-oriented ROI green-channel values, head-motion estimates, and a frame-to-frame green-channel brightness-change indicator.
 
 % =================================================================================
 % SECTION 4: METHODOLOGY
@@ -303,11 +316,12 @@ The order of blocks was randomized by the web application.
 \subsection{Participant (Autoethnography)}
 The participant was the primary author.
 This was a self-experimentation evaluation: no other participants were involved, no identifiable raw video was transmitted by Camerala, and the author provided informed consent for self-participation.
-Because the participant was also the author and knew that the task instructions were experimentally constructed, the instruction blocks are used only as exploratory task-interface contexts for demonstrating synchronized logging.
+Because the participant was also the author and knew that the task instructions were experimentally constructed, the instruction blocks cannot be treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, motivational state, or psychological state.
+They are used only as exploratory task-interface contexts for demonstrating synchronized logging across task conditions.
 
 \subsection{Hardware and Software Configuration}
 Table \ref{tab:hardware_config} summarizes the hardware and software information available for the deployment.
-Values unavailable from the deployment records are explicitly marked as not logged.
+Values that were not logged during the deployment are explicitly marked as not logged rather than inferred from the revision-time environment.
 
 \begin{table*}[t]
 \caption{Hardware and software configuration}
@@ -346,7 +360,8 @@ The deployment was conducted during daytime in an indoor university laboratory/r
 Both rooms had windows, but curtains were closed during the sessions.
 Direct natural light was not used as the primary illumination source in either context.
 The built-in laptop display brightness was fixed across sessions.
-No external illuminance measurement was performed.
+Because the deployment used camera-derived setup checks rather than external light-meter measurements, this paper reports brightness ranges only as author-confirmed setup/check information.
+The camera-derived brightness range observed during setup/checks was 105--114 in the laboratory setting and 102--111 in the home setting.
 Table \ref{tab:environment_config} summarizes the deployment environment and lighting conditions.
 
 \begin{table*}[t]
@@ -364,9 +379,10 @@ Primary lighting & General indoor artificial lighting & General indoor artificia
 Window presence & Windows present & Windows present \\
 Curtain/blind condition & Curtains present and closed & Curtains present and closed \\
 Natural light contribution & Direct natural light was not used as the primary illumination source & Direct natural light was not used as the primary illumination source \\
-External illuminance measurement & \multicolumn{2}{p{0.64\textwidth}}{No external illuminance measurement was performed.} \\
+Camera-derived brightness range observed during setup/checks & 105--114 & 102--111 \\
+External light-meter measurement & \multicolumn{2}{p{0.64\textwidth}}{External light-meter values were not used; the reported ranges are camera-derived setup/check information, not lux measurements.} \\
 Screen brightness & \multicolumn{2}{p{0.64\textwidth}}{Fixed across sessions using the built-in laptop display setting.} \\
-Task display & \multicolumn{2}{p{0.64\textwidth}}{Stimuli were presented on the built-in laptop display. Display output was part of the tested configuration rather than an independently manipulated factor.} \\
+Task display & \multicolumn{2}{p{0.64\textwidth}}{Stimuli were presented on the built-in laptop display. Screen luminance was part of the tested configuration rather than an independently manipulated factor.} \\
 Window aggregation & \multicolumn{2}{p{0.64\textwidth}}{Exported window-level features used 10-s windows with 5-s overlap.} \\
 Brightness-change indicator aggregation & \multicolumn{2}{p{0.64\textwidth}}{The frame-to-frame green-channel brightness-change indicator was summarized in 10-s windows with 5-s overlap.} \\
 Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not treated as observed experimental events; possible brightness variation was handled only as camera-image-derived record variation.} \\
@@ -376,10 +392,11 @@ Clouds/screen flicker/power cycles & \multicolumn{2}{p{0.64\textwidth}}{Not trea
 \end{table*}
 
 \subsection{Experimental Procedure and Instructional Task Contexts}
-Each session began with a pre-session capture check for basic camera framing and pose before the camera feed was hidden to reduce distraction.
+Each session began with a pre-session capture check for basic camera conditions, including approximate camera-derived brightness and pose, before the camera feed was hidden to reduce distraction.
 The task included negative, neutral, and positive instruction contexts as exploratory task-interface conditions.
 These contexts were used to demonstrate that Camerala can present different instruction frames while recording synchronized behavioral and face-derived records.
 The labels ``negative'' and ``positive'' refer only to instruction labels used in the task interface.
+Because the participant was the author and knew that the instructions were experimentally constructed, these contexts are not treated as validated manipulations of evaluation pressure, reward motivation, cognitive state, or motivational state.
 
 \subsection{Psychophysical Task}
 The task was a two-alternative forced-choice orientation discrimination task using procedurally rendered Gabor stimuli.
@@ -388,99 +405,113 @@ The participant responded using the F/J keys: the F key corresponded to $-45^\ci
 Exported trials stored browser-relative \texttt{startTime}, response, RT, correctness, and task fields but not separate onset/response timestamps; face-derived records used the same browser clock.
 To maintain adaptive task difficulty, the implementation used a standard 1-up 1-down staircase procedure on stimulus contrast.
 Stimulus contrast was adjusted by relative $\pm 5\%$ steps according to the previous response.
-These task parameters are reported for reproducibility.
+These task parameters are reported for reproducibility; the instruction blocks are not interpreted as validated cognitive or motivational manipulations.
 
 \subsection{Dependent Measures and Pre-processing}
 All exported logs were processed sequentially.
 The primary behavioral measure was reaction time (RT), with an operational analysis range of 100--1500 ms.
-The primary sensor-derived measures were facial ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel change indicator.
+The primary sensor-derived measures were rPPG-oriented ROI green-channel values, head-motion estimates, and the frame-to-frame green-channel brightness-change indicator.
 Behavioral trials were included in descriptive task analyses when reaction times satisfied $100 \leq RT \leq 1500$ ms.
+The 80\% target referred to the proportion of completed trials whose RTs fell within this study-specific range; it was exploratory and study-specific, not preregistered, independently validated, or intended as a general feasibility threshold.
 Camerala used MediaPipe FaceMesh to obtain facial landmarks in the browser.
-Task records and frame records were timestamped with \texttt{performance.now()} within the same browser runtime during active sessions.
+Frame records forwarded from the FaceMesh callback were synchronized with task events during active sessions.
+The feature extractor defines a binary landmark-availability flag, \texttt{quality}, where 1 indicates that FaceMesh landmarks were returned and 0 indicates that no landmarks were returned.
+In the current runtime, however, the camera manager forwards results to the logging callback only when FaceMesh landmarks are returned; therefore, the saved frame records in this deployment represent landmark-returned exported frames.
+For each exported 10-s window, \texttt{mean\_quality} was computed as the mean of the \texttt{quality} flag over the exported frame records in that window.
+Thus, \texttt{mean\_quality} describes landmark availability within exported frame/window records and not face-detection availability across all camera frames.
+This value is not a continuous MediaPipe confidence score, an indicator of rPPG measurement quality, or evidence of physiological measurement accuracy.
+The FaceMesh \texttt{minDetectionConfidence} and \texttt{minTrackingConfidence} parameters were both set to 0.5 as implementation settings.
+They were not used as analysis thresholds.
 
 % =================================================================================
 % SECTION 5: RESULTS
 % =================================================================================
 \section{Results}
 
-The results are reported descriptively under the tested configuration.
-For RQ1, all 10 planned sessions and 600 trials were completed, and timestamped task-event and face-image-derived records were exported for every session.
-Trial, block, and frame timestamps were generated with \texttt{performance.now()} in the same client-side browser runtime and therefore used the same browser clock domain.
-
-For descriptive RT summaries, 541/600 trials (90.2\%) were included after applying the study-specific 100--1500 ms preprocessing range; the counts were 256/300 in the laboratory setting and 285/300 at home.
-This preprocessing range was not used as a criterion for procedure completion or timestamp accuracy.
+The results are reported descriptively as sensor-derived observations under the tested configuration.
+All 10 planned sessions and 600 trials were completed.
+Of these trials, 541 (90.2\%) had RTs of 100--1500 ms, exceeding the exploratory 80\% reference level; the counts were 256/300 in the laboratory setting and 285/300 at home.
+Session-relative trial/event and face-image-derived frame/window timestamps were exported for all 10 sessions, allowing the record streams to be related on the same browser-session timeline.
+Descriptively, all 299 exported windows had \texttt{mean\_quality} = 1.0; this exported-window summary was not used as the primary evidence for RQ1.
+These results describe the available analyzed trials and exported windows under the tested configuration and do not demonstrate general feasibility across devices, users, or environments.
 
 \subsection{Task and Exported Feature Summaries}
-Table \ref{tab:data_quality} summarizes task-level and exported-record values in the laboratory and home contexts.
+Table \ref{tab:data_quality} summarizes task-level and exported feature summaries in the laboratory and home contexts.
 After RT exclusion, mean RT was 721.1 $\pm$ 257.7 ms in the laboratory setting and 676.5 $\pm$ 249.5 ms in the home setting.
 Accuracy was 85.5\% and 82.1\%, respectively.
-Window-level exported records showed descriptive differences in facial ROI green-channel values, motion estimates, and the green-channel change indicator between settings.
+Window-level exported records showed descriptive differences in ROI green-channel values, motion estimates, and the brightness-change indicator between settings.
 Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
 
 \begin{table*}[t]
 \centering
-\caption{Descriptive task and exported-record summaries; RT summaries use the study-specific 100--1500 ms preprocessing range.}
+\caption{Descriptive task and exported feature summaries after reaction-time exclusion.}
 \label{tab:data_quality}
 \footnotesize
 \begin{tabular}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.24\textwidth}@{}}
 \toprule
 \textbf{Metric} & \textbf{Laboratory} & \textbf{Home} & \textbf{Notes} \\
 \midrule
-Trials included in descriptive RT summaries after applying the study-specific range & 256/300 (85.3\%) & 285/300 (95.0\%) & Trial-level; RT 100--1500 ms \\
+Trials within RT range & 256/300 (85.3\%) & 285/300 (95.0\%) & Trial-level; RT 100--1500 ms \\
 Mean RT within RT range & 721.1 $\pm$ 257.7 ms & 676.5 $\pm$ 249.5 ms & Trial-level included trials \\
 Accuracy within RT range & 85.5\% & 82.1\% & Trial-level included trials \\
-Facial ROI green-channel value & 46.69 $\pm$ 6.80 & 34.32 $\pm$ 2.72 & Window-level; windows.csv \\
+rPPG-oriented ROI green-channel value & 46.69 $\pm$ 6.80 & 34.32 $\pm$ 2.72 & Window-level; windows.csv \\
 Motion estimate & 0.0011 $\pm$ 0.0005 & 0.0010 $\pm$ 0.0004 & Window-level; windows.csv \\
-Frame-to-frame green-channel change indicator & 0.0504 $\pm$ 0.0509 & 0.0707 $\pm$ 0.0337 & Window-level; windows.csv \\
+Frame-to-frame green-channel brightness-change indicator & 0.0504 $\pm$ 0.0509 & 0.0707 $\pm$ 0.0337 & Window-level; windows.csv \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-\subsection{Between-Environment Exported-Record Differences}
+\subsection{Task-Event and Sensor-Derived Observations}
 To address RQ2, we compared descriptive task-synchronized records between the laboratory and home contexts.
-The exported records showed differences in facial ROI green-channel values, motion estimates, and the frame-to-frame green-channel change indicator.
+The exported records showed differences in rPPG-oriented ROI green-channel values, motion estimates, and the frame-to-frame green-channel brightness-change indicator.
 Because lighting, screen light, posture, camera geometry, task timing, and participant state were not independently controlled, these differences are reported only as deployment-context differences in exported records.
+They should not be interpreted as evidence that the instruction blocks induced psychological, cognitive, motivational, or physiological effects.
 Motion estimates are reported as exported face-derived records for descriptive comparison between the laboratory and home contexts.
+They are not interpreted as evidence of motion handling or correction of rPPG degradation.
 
-The instruction contexts are reported only to document operation of the logging pipeline across different task-interface contexts.
+The instruction contexts were used only as task-interface contexts in the deployment.
+We do not report them as evidence that evaluation pressure, reward motivation, cognitive effects, or motivational effects were induced.
+Descriptive values are reported by instruction context only to document that the logging pipeline operated across different task-interface contexts.
 In the laboratory context, the negative instruction block showed a lower mean RT than the neutral block in this dataset.
 In the home context, the mean RT values across instruction blocks were closer together.
-Because the deployment used one author-participant and did not isolate instruction effects from deployment factors, these RT patterns are descriptive task-event observations rather than evidence of an instruction-induced effect.
+Because the deployment used one author-participant and did not isolate instruction effects from environment, lighting, screen light, posture, camera geometry, or measurement-pipeline factors, these RT patterns are reported only as descriptive task-event observations.
 
-\subsection{Facial ROI Green-Channel Records}
-The exported data include facial ROI green-channel values intended for possible subsequent rPPG analysis, but no ECG or contact PPG reference was collected.
-These values are therefore reported as face-image-derived records rather than validated heart-rate changes.
+\subsection{rPPG-Oriented ROI Estimates}
+The exported data include rPPG-oriented ROI brightness values and related quality indicators, but no ECG or contact PPG reference was collected.
+Therefore, this paper does not interpret ROI-derived or block-level summaries as validated heart-rate changes.
+The appropriate interpretation is that the tested deployment yielded face-derived and sensor-derived exported records whose values differed descriptively between the tested laboratory and home contexts.
 
 % =================================================================================
 % SECTION 6: DISCUSSION
 % =================================================================================
 \section{Discussion}
 
-This limited deployment identifies practical requirements for future edge-side browser-native logging systems: shared-clock task/frame timestamps, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
-Under the tested configuration, Camerala completed the planned sessions and trials and exported task-event and face-image-derived records from the same browser clock domain.
-The laboratory/home values answer RQ2 only as descriptive differences in exported records; they combine environmental, camera, task, and participant factors that were not independently separated.
+The main implication of this deployment is not that Camerala establishes a general design pattern or that home/laboratory differences demonstrate physiological effects.
+This limited deployment instead identifies practical requirements and safeguards for future edge-side browser-native logging systems: explicit operational criteria, shared-clock task/frame timestamps, feature-only local persistence, hardware/environment reporting, and cautious interpretation when raw facial video and reference physiological sensors are not retained.
+Under the tested configuration, Camerala completed all sessions/trials, had 541/600 trials (90.2\%) within the RT range, and exported temporally alignable records; laboratory/home differences remain mixed deployment-context differences rather than psychological, cognitive, motivational, or physiological effects.
 
-Camerala's useful system property is integration: task timing, frame-level feature extraction, and local export are handled in one client-side workflow.
+Camerala's useful system property is integration: task timing, frame-level feature extraction, quality indicators, and local export are handled in one client-side workflow.
 This can reduce raw-video handling and server-side timestamp reconciliation, but it also removes the possibility of visually inspecting many artifacts after data collection.
-The retained facial ROI, head-motion, and green-channel change fields support descriptive inspection, while physiological validation requires a reference sensor and a larger evaluation.
+The trade-off makes quality-aware logging important.
+The relevant indicators include landmark availability, rPPG-oriented ROI values, head-motion estimates, and camera-image-derived brightness-change records; these values can support pre-session checks and descriptive inspection, but they are not proof that rPPG estimates are accurate or that motion-induced rPPG degradation has been corrected.
 
 The laboratory/home differences observed in this deployment should be interpreted as mixed deployment-context differences that may reflect environmental conditions, screen light, posture, camera geometry, the measurement pipeline, task timing, participant state, or their mixture.
-Future deployments should therefore incorporate shared-clock task/frame timestamps, documented hardware/browser/camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, motion and camera-derived green-channel change records, environment reporting, and predefined artifact-handling rules.
-Future evaluations should log the actual negotiated camera resolution and effective frame rate, together with relevant camera-control settings such as auto-exposure and auto-white-balance, to improve reproducibility and interpretation.
+The study was not designed to isolate psychological or physiological state changes from these factors, and it cannot validate the psychological effectiveness of the negative or positive instruction contexts.
+Future deployments should therefore incorporate shared-clock task/frame timestamps, landmark-availability logging and its limitations, documented hardware/browser/camera settings, explicit reporting of camera constraints and actual camera settings, fixed screen-brightness settings, pre-session camera/lighting checks, landmark-availability warnings, motion and camera-derived brightness-change records, environment reporting, and specified quality-aware analysis rules.
 If privacy-sensitive raw video is not stored, these safeguards become more important because many artifacts cannot be retrospectively inspected from images; for studies that aim to make claims about physiological responses, a reference physiological sensor and a multi-participant design are necessary.
 
 \subsection{Limitations}
 This exploratory N=1 author-participant deployment used one primary laptop/camera configuration, no ECG or contact PPG reference, and no comparison with existing experiment runtimes, browser rPPG tools, or cloud APIs.
 It did not test multiple participants, devices, or home environments, and it did not experimentally separate lighting, screen light, posture, camera placement, task timing, participant state, and task context.
-The normal export path stored frame records only when FaceMesh landmarks were returned; therefore, the saved records cannot be used to estimate an overall landmark-detection success rate across all camera frames.
+The implementation does not correct motion-induced rPPG degradation, and the logs do not store continuous confidence values for all frames; therefore, failed landmark-detection frames and overall tracking-success rates cannot be recovered.
 RT used browser-side \texttt{performance.now()}; physical onset was not externally verified and separate onset/response timestamps were not exported, precluding exact frame-interval matching.
-Future work should use reference physiological sensors, controlled posture/camera conditions, predefined artifact-handling rules, and logging paths that retain detection outcomes for all processed frames.
-The study is limited to a system-integration example of browser-native, task-aligned, client-side feature logging under the tested laboratory and home conditions.
+Future work should use reference physiological sensors, controlled posture/camera conditions, predefined artifact-handling rules, and continuous confidence logging with specified operational thresholds.
+The study does not claim clinical or medical accuracy, general deployability, general feasibility, or validated cognitive, motivational, psychological, or physiological effects; it presents an implementation example of browser-native, task-aligned, client-side feature logging under limited laboratory and home conditions.
 
 \section{Conclusion}
-This paper presented Camerala as an edge-side, browser-native framework for remote psychophysiological experiments.
-In the tested N=1 deployment, Camerala completed all 10 sessions and 600 trials and exported timestamped task-event and face-image-derived records using the same browser clock domain.
-The between-environment observations are limited to descriptive differences in exported records, and the implementation evidence does not establish validated physiological measurement or general performance across other users, devices, and environments.
+This paper presented Camerala as an edge-side, browser-native framework for remote psychophysiological experiments with rPPG sensing.
+In the tested single-case deployment, Camerala completed all 10 sessions and 600 trials, had 541/600 trials (90.2\%) within the RT range, and exported temporally alignable task-event and rPPG-sensing records.
+This limited implementation evidence does not establish general feasibility, robustness, validity in other settings, validated rPPG accuracy, or psychological/physiological effects.
 
 \enlargethispage{2\baselineskip}
 \section*{Declarations}
@@ -567,9 +598,5 @@ Google AI Edge.
 
 \end{thebibliography}
 }
-
-\begin{biography}
-\profile{n}{Kotaro Furukawa}{Kotaro Furukawa is with the College of Transdisciplinary Sciences for Innovation, Kanazawa University, Japan.}
-\end{biography}
 
 \end{document}

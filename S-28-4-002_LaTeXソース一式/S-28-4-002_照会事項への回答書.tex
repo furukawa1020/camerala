@@ -1,0 +1,193 @@
+\documentclass[11pt]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+
+\hypersetup{
+  hidelinks,
+  pdftitle={Response to the A1 Administrative Inquiry for S-28-4-002},
+  pdfauthor={Kotaro Furukawa}
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\newcommand{\responseitem}[2]{\section*{#1: #2}}
+
+\begin{document}
+
+\begin{center}
+{\Large Response to the A1 Administrative Inquiry}\\[4pt]
+Paper No. S-28-4-002\\
+Final title: \textit{Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments}
+\end{center}
+
+We thank the Editorial Committee for the A1 decision and for identifying the remaining points requiring correction before publication.
+We addressed all six required conditions and four additional comments through factual verification and limited textual revision.
+The revised claims remain restricted to the tested N=1 deployment and system-integration implementation.
+
+\responseitem{Required Condition 1}{Resolve inconsistencies in the reported experimental conditions}
+
+\textbf{Comment.}
+Please verify and unify the inconsistent descriptions of the block/trial structure, display specifications, and use of an external illuminance meter.
+
+\textbf{Response.}
+We verified and unified these experimental conditions throughout the manuscript.
+The task used six blocks of ten trials per session, yielding 60 trials per session and 600 trials across ten sessions.
+The deployment computer was a mouse Computer G-Tune P517G60ZO21CNHWT with a built-in 15.6-inch, 2560$\times$1440-pixel, 165-Hz display.
+No external illuminance measurement was performed.
+
+\textbf{Revision.}
+The Methodology now states: ``Each session consisted of six 10-trial blocks, with two blocks for each instructional task context (neutral instruction, negative instruction, and positive instruction), as reflected in the exported block plans.''
+The hardware table reports the confirmed computer and display specifications.
+The environment section and table now state: ``No external illuminance measurement was performed.''
+The inconsistent 3-block $\times$ 20-trial, 13.5-inch/approximately 60-Hz, and lux-meter descriptions do not remain in the revised manuscript.
+
+\textbf{Location.}
+Methodology, Target Usage Scenario and Exploratory Deployment (p.~5); Table~2 (p.~6); Deployment Environment and Lighting Conditions and Table~3 (pp.~5--7).
+
+\responseitem{Required Condition 2}{Remove ``with rPPG Sensing'' from the title}
+
+\textbf{Comment.}
+The title should not imply validated rPPG waveform extraction or heart-rate estimation when the implementation records facial green-channel intensity traces.
+
+\textbf{Response.}
+We removed ``with rPPG Sensing'' from the title.
+
+\textbf{Revision.}
+The final title is ``Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments.''
+The manuscript describes the current outputs as facial ROI color traces, facial ROI green-channel values, or face-image-derived records.
+It uses rPPG terminology only for related work and for the possible subsequent analysis for which those color traces may be used.
+
+\textbf{Location.}
+Title and Abstract (p.~1); Introduction (p.~1); System Architecture (p.~3); Conclusion (p.~9).
+
+\responseitem{Required Condition 3}{Remove the percentage-based criterion from RQ1}
+
+\textbf{Comment.}
+The post-hoc percentage criterion should not be used as a criterion for successful system operation.
+
+\textbf{Response.}
+We removed the 80\% criterion from RQ1 and from all principal completion claims.
+
+\textbf{Revision.}
+RQ1 now reads: ``RQ1: Under the tested configuration, did Camerala complete all planned sessions and trials and export timestamped task-event and face-image-derived records using the same browser clock domain?''
+The Results answer this question from completion of all 10 sessions and 600 trials, export of both record streams for every session, and their use of \texttt{performance.now()} in the same client-side browser runtime.
+The 100--1500 ms range and 541/600 count remain only as trial-level descriptive preprocessing information and are not used as criteria for procedure completion, timestamp accuracy, or general performance.
+
+\textbf{Location.}
+Introduction, Research Questions (pp.~1--2); Methodology, Dependent Measures and Pre-processing (p.~6); Results and Table~4 (pp.~6--8); Conclusion (p.~9).
+
+\responseitem{Required Condition 4}{Replace ``physiological signals'' in RQ2}
+
+\textbf{Comment.}
+RQ2 should name the records that were actually exported rather than describing them as validated physiological signals.
+
+\textbf{Response.}
+We replaced the physiological-signal wording in RQ2 with terminology that directly identifies the exported records.
+
+\textbf{Revision.}
+RQ2 now reads: ``RQ2: What between-environment differences are observable in the task-synchronized face-image-derived and sensor-derived exported records?''
+The Results and Discussion describe laboratory/home differences only as differences in exported facial ROI green-channel values, motion estimates, and the frame-to-frame green-channel change indicator.
+They are interpreted as mixed deployment-context differences because environmental, camera, task, and participant factors were not independently separated.
+
+\textbf{Location.}
+Introduction, Research Questions (pp.~1--2); Results, Between-Environment Exported-Record Differences (p.~7); Discussion (p.~8); Conclusion (p.~9).
+
+\responseitem{Required Condition 5}{Define or remove the camera-derived brightness ranges}
+
+\textbf{Comment.}
+The previously reported values 105--114 and 102--111 require a reproducible definition and provenance; otherwise, they should be removed.
+
+\textbf{Response.}
+We removed the two setup ranges because their calculation procedure and provenance could not be reconstructed from the saved code and logs.
+
+\textbf{Revision.}
+The ranges were deleted from the Methodology, environment table, and all summary passages rather than assigned an unsupported definition.
+The manuscript now states only that ``No external illuminance measurement was performed.''
+The separately implemented frame-to-frame green-channel change indicator remains defined in the System Architecture from its verified calculation.
+
+\textbf{Location.}
+System Architecture, Feature Extraction Logic (p.~4); Methodology, Deployment Environment and Lighting Conditions and Table~3 (pp.~5--7).
+
+\responseitem{Required Condition 6}{Remove the \texttt{mean\_quality = 1.0} result}
+
+\textbf{Comment.}
+The exported-window \texttt{mean\_quality} value should not be reported as a quality or tracking-success result because of the structure of the export path.
+
+\textbf{Response.}
+We removed the \texttt{mean\_quality} result from the Results, tables, summary passages, RQ criteria, and conclusion.
+
+\textbf{Revision.}
+The numeric 299-window/1.0 result is no longer reported.
+Only the following structural limitation remains: ``The normal export path stored frame records only when FaceMesh landmarks were returned; therefore, the saved records cannot be used to estimate an overall landmark-detection success rate across all camera frames.''
+
+\textbf{Location.}
+Discussion, Limitations (p.~8).
+
+\responseitem{Other Comment 1}{Reorganize the Introduction}
+
+\textbf{Comment.}
+The Introduction should begin from the research background and gap rather than a repeated list of claims that the system does not make.
+
+\textbf{Response.}
+We reorganized the Introduction into a background-to-scope progression.
+
+\textbf{Revision.}
+The four opening paragraphs now address: (1) synchronization and raw-video handling in remote task experiments; (2) existing browser task/rPPG systems and the integration gap; (3) Camerala's integrated browser-side implementation; and (4) the tested seated-task scope.
+The detailed limitations are concentrated in the Limitations subsection.
+
+\textbf{Location.}
+Introduction (pp.~1--2); Discussion, Limitations (p.~8).
+
+\responseitem{Other Comment 2}{Report camera settings as future reproducibility requirements}
+
+\textbf{Comment.}
+Actual negotiated camera resolution, effective frame rate, auto-exposure state, and auto-white-balance state were not recorded and should not be inferred.
+
+\textbf{Response.}
+We retained these values as unlogged and added the requested future-work statement.
+
+\textbf{Revision.}
+The hardware table distinguishes requested camera constraints from unlogged negotiated values.
+The Discussion now states: ``Future evaluations should log the actual negotiated camera resolution and effective frame rate, together with relevant camera-control settings such as auto-exposure and auto-white-balance, to improve reproducibility and interpretation.''
+
+\textbf{Location.}
+Table~2 (p.~6); Discussion (p.~8).
+
+\responseitem{Other Comment 3}{Remove revision-process meta-language}
+
+\textbf{Comment.}
+Revision-process wording should not appear in the manuscript body.
+
+\textbf{Response.}
+We removed the revision-process meta-language from the manuscript.
+
+\textbf{Revision.}
+The phrase ``rather than inferred from the revision-time environment'' was replaced with the manuscript-facing statement: ``Values unavailable from the deployment records are explicitly marked as not logged.''
+A full-text search confirmed that revision-time and reviewer-facing expressions do not remain in the manuscript body.
+
+\textbf{Location.}
+Methodology, Hardware and Software Configuration (p.~5).
+
+\responseitem{Other Comment 4}{Reduce repeated negative statements}
+
+\textbf{Comment.}
+Repeated negative claims and limitations should be consolidated without strengthening the manuscript's claims.
+
+\textbf{Response.}
+We reduced repeated negative statements and consolidated the detailed limitations.
+
+\textbf{Revision.}
+The Abstract gives one concise scope limitation, the end of the Introduction defines the study scope once, and the Limitations subsection contains the detailed constraints concerning N=1, reference sensors, camera settings, landmark-returned export records, and browser timing.
+The Conclusion now gives a short limited implementation claim without using RT inclusion or landmark-summary values as evidence of system success.
+
+\textbf{Location.}
+Abstract and Introduction (pp.~1--2); Discussion, Limitations (p.~8); Conclusion (p.~9).
+
+\section*{Publication Information}
+
+The final source specifies Vol.~28, No.~4, a received date of April 26, 2026, and a revised date of July 17, 2026 using the commands provided by \texttt{ehis.cls}.
+No acceptance date was added.
+
+\end{document}

@@ -2,17 +2,47 @@
 
 Working manuscript: `paper_his_revision.tex`
 
-Final revised title: `Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments with rPPG Sensing`
+Final revised title: `Camerala: An Edge-Side, Browser-Native Framework for Remote Psychophysiological Experiments`
 
-Final RQ1: `RQ1: In the tested remote psychological/psychophysiological task setting, did Camerala record behavioral responses meeting the study-specific reaction-time criterion in at least 80% of completed trials while exporting the task-event and rPPG-sensing records in a temporally alignable form?`
+Final RQ1: `RQ1: Under the tested configuration, did Camerala complete all planned sessions and trials and export timestamped task-event and face-image-derived records using the same browser clock domain?`
 
-Protected submitted manuscript: `paper_his.tex` and `paper_his.pdf`
+Final RQ2: `RQ2: What between-environment differences are observable in the task-synchronized face-image-derived and sensor-derived exported records?`
+
+Protected A1-submitted baseline: `paper_his_a1_submitted.tex` and `paper_his_a1_submitted.pdf`
+
+Current A1 response: `response_to_a1_minor_revision.tex`
+
+Current A1 difference manuscript: `paper_his_a1_minor_revision_diff.tex`
+
+## A1 Administrative Inquiry
+
+| No. | A1 item | Final action | Response evidence | Status |
+| --- | --- | --- | --- | --- |
+| Required 1 | Resolve task/display/illuminance contradictions | Six 10-trial blocks; G-Tune 15.6-inch 2560x1440 165-Hz display; no external illuminance measurement | `response_to_a1_minor_revision.tex`, Required Condition 1 | Complete |
+| Required 2 | Remove `with rPPG Sensing` | Removed from title and current-output claims | Required Condition 2 | Complete |
+| Required 3 | Remove percentage criterion from RQ1 | Replaced with planned-completion and same-browser-clock RQ; RT range retained only for descriptive preprocessing | Required Condition 3 | Complete |
+| Required 4 | Replace `physiological signals` in RQ2 | RQ2 now names task-synchronized face-image-derived and sensor-derived exported records | Required Condition 4 | Complete |
+| Required 5 | Define or remove setup brightness ranges | Removed 105--114 / 102--111 because provenance could not be reconstructed | Required Condition 5 | Complete |
+| Required 6 | Remove `mean_quality = 1.0` result | Removed numeric result and retained one export-path limitation | Required Condition 6 | Complete |
+| Other 1 | Reorganize Introduction | Rewritten as background, prior work/gap, Camerala purpose, and scope | Other Comment 1 | Complete |
+| Other 2 | Add camera-setting future work | Added negotiated-resolution/frame-rate and camera-control logging requirement | Other Comment 2 | Complete |
+| Other 3 | Remove revision meta-language | Removed revision-time wording from manuscript | Other Comment 3 | Complete |
+| Other 4 | Reduce repeated negatives | Consolidated scope and limitations | Other Comment 4 | Complete |
+
+The author portrait has been supplied as `古川耕太郎顔写真.jpg`, verified as a
+731x981 JPEG, and copied to the submission name
+`S-28-4-002_古川耕太郎_顔写真.jpg` in both the standalone deliverables and the
+LaTeX source package.
 
 This tracker exists so that every required condition can later be answered in a
 one-question-one-answer response letter. Do not mark a condition as complete
 until the manuscript edit and the response text both exist.
 
-## Required Conditions
+## July Conditional-Acceptance Conditions (Historical)
+
+The following table records the earlier Reviewer 1 Conditions 1--13 addressed
+in the July A1-submitted revision. The current A1 response above supersedes the
+July response letter for the final submission.
 
 | No. | Reviewer 1 condition | Manuscript response needed | Response-letter evidence | Status |
 | --- | --- | --- | --- | --- |
@@ -41,11 +71,11 @@ until the manuscript edit and the response text both exist.
 
 ## Response Letter Rule
 
-For each condition in `response_to_reviewers.tex`, fill:
+For each item in `response_to_a1_minor_revision.tex`, include:
 
-1. Response
-2. Revision
-3. Key revised manuscript text
+1. Comment
+2. Response
+3. Revision
 4. Location
 
 Do not leave TODO placeholders in the final manuscript or response letter.

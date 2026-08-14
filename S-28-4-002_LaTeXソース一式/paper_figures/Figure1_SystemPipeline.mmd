@@ -1,0 +1,82 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Consolas, Arial, sans-serif",
+    "fontSize": "22px",
+    "primaryColor": "#ffffff",
+    "primaryBorderColor": "#242436",
+    "primaryTextColor": "#242436",
+    "lineColor": "#000000",
+    "secondaryColor": "#f7f7fb",
+    "tertiaryColor": "#ffffff",
+    "clusterBkg": "#fbfbfd",
+    "clusterBorder": "#242436",
+    "edgeLabelBackground": "#d8d8dc"
+  },
+  "flowchart": {
+    "curve": "basis",
+    "htmlLabels": true,
+    "nodeSpacing": 38,
+    "rankSpacing": 54
+  }
+}}%%
+flowchart TB
+  subgraph C["Client Browser"]
+    direction TB
+
+    W["Webcam Input"]
+    M("MediaPipe Face Mesh")
+    F{"Feature Extraction"}
+
+    ME["Motion Estimate"]
+    BE["Blink / EAR"]
+    ROI["ROI Green<br/>Brightness"]
+    BF["Brightness-Change<br/>Indicator"]
+    QF["Landmark-Returned<br/>Frame Flag<br/>(current export path)"]
+
+    RB["Ring Buffer<br/>10 s"]
+    WA{"Window Records"}
+
+    TE["Task Engine"]
+    SD["Stimulus Difficulty"]
+    DA["Data Aggregation"]
+    LS["Local Storage / ZIP"]
+
+    W --> M --> F
+    F -->|"L2 displacement"| ME
+    F -->|"EAR formula"| BE
+    F -->|"green channel"| ROI
+    F -->|"frame-to-frame delta"| BF
+    F -->|"landmarks returned"| QF
+
+    ME --> RB
+    BE --> RB
+    ROI --> RB
+    BF --> RB
+    QF --> RB
+
+    RB --> WA
+    WA -->|"10-s windows / 5-s overlap<br/>exported-record summary"| DA
+
+    TE -->|"frame / response"| DA
+    TE -->|"staircase"| SD
+    DA --> LS
+  end
+
+  RV["No raw facial video<br/>transmitted or stored"]
+  LB["Interpretation boundary:<br/>exported records only;<br/>not rPPG accuracy or<br/>psychological/physiological effects"]
+
+  LS --> RV
+  LS --> LB
+
+  classDef input fill:#f08aec,stroke:#242436,stroke-width:3px,color:#242436;
+  classDef task fill:#fff894,stroke:#242436,stroke-width:3px,color:#242436;
+  classDef storage fill:#c8c4ff,stroke:#242436,stroke-width:3px,color:#242436;
+  classDef process fill:#ffffff,stroke:#242436,stroke-width:3px,color:#242436;
+  classDef note fill:#f3f3f6,stroke:#242436,stroke-width:2px,color:#242436;
+
+  class W input;
+  class TE task;
+  class LS storage;
+  class M,F,ME,BE,ROI,BF,QF,RB,WA,SD,DA process;
+  class RV,LB note;
